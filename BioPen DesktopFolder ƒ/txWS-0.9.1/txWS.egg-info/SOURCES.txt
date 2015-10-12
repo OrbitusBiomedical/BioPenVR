@@ -1,0 +1,12 @@
+CHANGELOG.rst
+LICENSE
+MANIFEST.in
+README.rst
+setup.cfg
+setup.py
+txws.py
+version.txt
+txWS.egg-info/PKG-INFO
+txWS.egg-info/SOURCES.txt
+txWS.egg-info/dependency_links.txt
+txWS.egg-info/top_level.txt
