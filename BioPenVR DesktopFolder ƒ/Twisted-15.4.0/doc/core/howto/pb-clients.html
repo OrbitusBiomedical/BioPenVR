@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Managing Clients of Perspectives &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="PB Copyable: Passing Complex Types" href="pb-copyable.html" />
+    <link rel="prev" title="Using Perspective Broker" href="pb-usage.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pb-copyable.html" title="PB Copyable: Passing Complex Types"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pb-usage.html" title="Using Perspective Broker"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="managing-clients-of-perspectives">
+<h1>Managing Clients of Perspectives<a class="headerlink" href="#managing-clients-of-perspectives" title="Permalink to this headline">¶</a></h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Kevin Turner</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>In all the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.IPerspective.html">IPerspective</a> uses
+we have shown so far, we ignored the <code class="docutils literal"><span class="pre">mind</span></code> argument and created
+a new <code class="docutils literal"><span class="pre">Avatar</span></code> for every connection. This is usually an easy
+design choice, and it works well for simple cases.</p>
+<p>In more complicated cases, for example an <code class="docutils literal"><span class="pre">Avatar</span></code> that
+represents a player object which is persistent in the game universe,
+we will want connections from the same player to use the same <code class="docutils literal"><span class="pre">Avatar</span></code> .</p>
+<p>Another thing which is necessary in more complicated scenarios
+is notifying a player asynchronously. While it is possible, of
+course, to allow a player to call <code class="docutils literal"><span class="pre">perspective_remoteListener(referencable)</span></code> that would
+mean both duplication of code and a higher latency in logging in,
+both bad.</p>
+<p>In previous sections all realms looked to be identical.
+In this one we will show the usefulness of realms in accomplishing
+those two objectives.</p>
+</div>
+<div class="section" id="managing-avatars">
+<h2>Managing Avatars<a class="headerlink" href="#managing-avatars" title="Permalink to this headline">¶</a></h2>
+<p>The simplest way to manage persistent avatars is to use a straight-forward
+caching mechanism:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implements</span>
+
+<span class="k">class</span> <span class="nc">SimpleAvatar</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Avatar</span><span class="p">):</span>
+    <span class="n">greetings</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">perspective_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">greetings</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="s">&quot;&lt;</span><span class="si">%d</span><span class="s">&gt;hello </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">greetings</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CachingRealm</span><span class="p">:</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">portal</span><span class="o">.</span><span class="n">IRealm</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarId</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">interfaces</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">if</span> <span class="n">avatarId</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span><span class="p">[</span><span class="n">avatarId</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span><span class="p">[</span><span class="n">avatarId</span><span class="p">]</span> <span class="o">=</span> <span class="n">SimpleAvatar</span><span class="p">(</span><span class="n">avatarId</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span><span class="bp">None</span>
+</pre></div>
+</div>
+<p>This gives us a perspective which counts the number of greetings it
+sent its client. Implementing a caching strategy, as opposed to generating
+a realm with the correct avatars already in it, is usually easier. This
+makes adding new checkers to the portal, or adding new users to a checker
+database, transparent. Otherwise, careful synchronization is needed between
+the checker and avatar is needed (much like the synchronization between
+UNIX&#8217;s <code class="docutils literal"><span class="pre">/etc/shadow</span></code> and <code class="docutils literal"><span class="pre">/etc/passwd</span></code> ).</p>
+<p>Sometimes, however, an avatar will need enough per-connection state
+that it would be easier to generate a new avatar and cache something
+else. Here is an example of that:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implements</span>
+
+<span class="k">class</span> <span class="nc">Greeter</span><span class="p">:</span>
+    <span class="n">greetings</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">greetings</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="s">&quot;&lt;</span><span class="si">%d</span><span class="s">&gt;hello&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">greetings</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SimpleAvatar</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Avatar</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">greeter</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">greeter</span> <span class="o">=</span> <span class="n">greeter</span>
+    <span class="k">def</span> <span class="nf">perspective_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">greeter</span><span class="o">.</span><span class="n">hello</span><span class="p">()</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<span class="k">class</span> <span class="nc">CachingRealm</span><span class="p">:</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">portal</span><span class="o">.</span><span class="n">IRealm</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">greeters</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarId</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">interfaces</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">if</span> <span class="n">avatarId</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">greeters</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">greeters</span><span class="p">[</span><span class="n">avatarId</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">greeters</span><span class="p">[</span><span class="n">avatarId</span><span class="p">]</span> <span class="o">=</span> <span class="n">Greeter</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="n">SimpleAvatar</span><span class="p">(</span><span class="n">avatarId</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="k">lambda</span><span class="p">:</span><span class="bp">None</span>
+</pre></div>
+</div>
+<p>It might seem tempting to use this pattern to have an avatar which
+is notified of new connections. However, the problems here are twofold:
+it would lead to a thin class which needs to forward all of its methods,
+and it would be impossible to know when disconnections occur. Luckily,
+there is a better pattern:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implements</span>
+
+<span class="k">class</span> <span class="nc">SimpleAvatar</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Avatar</span><span class="p">):</span>
+    <span class="n">greetings</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">connections</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connections</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connections</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">def</span> <span class="nf">perspective_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">greetings</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="s">&quot;&lt;</span><span class="si">%d</span><span class="s">&gt;hello </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">greetings</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CachingRealm</span><span class="p">:</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">portal</span><span class="o">.</span><span class="n">IRealm</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarId</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">interfaces</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">if</span> <span class="n">avatarId</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span><span class="p">[</span><span class="n">avatarId</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span><span class="p">[</span><span class="n">avatarId</span><span class="p">]</span> <span class="o">=</span> <span class="n">SimpleAvatar</span><span class="p">(</span><span class="n">avatarId</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">disconnect</span>
+</pre></div>
+</div>
+<p>It is possible to use such a pattern to define an arbitrary limit for
+the number of concurrent connections:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implements</span>
+
+<span class="k">class</span> <span class="nc">SimpleAvatar</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Avatar</span><span class="p">):</span>
+    <span class="n">greetings</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">connections</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connections</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connections</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">def</span> <span class="nf">perspective_greet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">greetings</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="s">&quot;&lt;</span><span class="si">%d</span><span class="s">&gt;hello </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">greetings</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CachingRealm</span><span class="p">:</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">portal</span><span class="o">.</span><span class="n">IRealm</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">max</span>
+
+    <span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarId</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">interfaces</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">if</span> <span class="n">avatarId</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span><span class="p">[</span><span class="n">avatarId</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span><span class="p">[</span><span class="n">avatarId</span><span class="p">]</span> <span class="o">=</span> <span class="n">SimpleAvatar</span><span class="p">(</span><span class="n">avatarId</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">connections</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;too many connections&quot;</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">disconnect</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="managing-clients">
+<h2>Managing Clients<a class="headerlink" href="#managing-clients" title="Permalink to this headline">¶</a></h2>
+<p>So far, all our realms have ignored the <code class="docutils literal"><span class="pre">mind</span></code> argument.
+In the case of PB, the <code class="docutils literal"><span class="pre">mind</span></code> is an object supplied by
+the remote login method &#8211; usually, when it passes over the wire,
+it becomes a <code class="docutils literal"><span class="pre">pb.RemoteReference</span></code> . This object allows
+sending messages to the client as soon as the connection is established
+and authenticated.</p>
+<p>Here is a simple remote-clock application which shows the usefulness
+of the <code class="docutils literal"><span class="pre">mind</span></code> argument:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implements</span>
+
+<span class="k">class</span> <span class="nc">SimpleAvatar</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Avatar</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">internet</span><span class="o">.</span><span class="n">TimerService</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">telltime</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">startService</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
+    <span class="k">def</span> <span class="nf">telltime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;notifyTime&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">perspective_setperiod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">stopService</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">internet</span><span class="o">.</span><span class="n">TimerService</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">telltime</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">startService</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">logout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">stopService</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Realm</span><span class="p">:</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">portal</span><span class="o">.</span><span class="n">IRealm</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarId</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">interfaces</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">SimpleAvatar</span><span class="p">(</span><span class="n">mind</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">logout</span>
+</pre></div>
+</div>
+<p>In more complicated situations, you might want to cache the avatars
+and give each one a set of &#8220;current clients&#8221; or something similar.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Managing Clients of Perspectives</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#managing-avatars">Managing Avatars</a></li>
+<li><a class="reference internal" href="#managing-clients">Managing Clients</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="pb-usage.html"
+                                  title="previous chapter">Using Perspective Broker</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="pb-copyable.html"
+                                  title="next chapter">PB Copyable: Passing Complex Types</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/pb-clients.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

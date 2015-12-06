@@ -1,0 +1,965 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using the Twisted Web Client &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Glossary" href="glossary.html" />
+    <link rel="prev" title="Light Weight Templating With Resource Templates" href="resource-templates.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="glossary.html" title="Glossary"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="resource-templates.html" title="Light Weight Templating With Resource Templates"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Web</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="using-the-twisted-web-client">
+<h1>Using the Twisted Web Client<a class="headerlink" href="#using-the-twisted-web-client" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This document describes how to use the HTTP client included in Twisted
+Web.  After reading it, you should be able to make HTTP and HTTPS
+requests using Twisted Web.  You will be able to specify the request
+method, headers, and body and you will be able to retrieve the response
+code, headers, and body.</p>
+<p>A number of higher-level features are also explained, including proxying,
+automatic content encoding negotiation, and cookie handling.</p>
+<div class="section" id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h3>
+<p>This document assumes that you are familiar with <a class="reference internal" href="../../core/howto/defer.html"><span class="doc">Deferreds and Failures</span></a> , and <a class="reference internal" href="../../core/howto/producers.html"><span class="doc">producers and consumers</span></a> .
+It also assumes you are familiar with the basic concepts of HTTP, such
+as requests and responses, methods, headers, and message bodies.  The
+HTTPS section of this document also assumes you are somewhat familiar with
+SSL and have read about <a class="reference internal" href="../../core/howto/ssl.html"><span class="doc">using SSL in Twisted</span></a> .</p>
+</div>
+</div>
+<div class="section" id="the-agent">
+<h2>The Agent<a class="headerlink" href="#the-agent" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="issuing-requests">
+<h3>Issuing Requests<a class="headerlink" href="#issuing-requests" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.Agent.html">twisted.web.client.Agent</a> class is the entry
+point into the client API.  Requests are issued using the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.Agent.request.html">request</a> method, which
+takes as parameters a request method, a request URI, the request headers,
+and an object which can produce the request body (if there is to be one).
+The agent is responsible for connection setup.  Because of this, it
+requires a reactor as an argument to its initializer.  An example of
+creating an agent and issuing a request using it might look like this:</p>
+<p><a class="reference download internal" href="../../_downloads/request.py"><code class="xref download docutils literal"><span class="pre">request.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">Agent</span>
+<span class="kn">from</span> <span class="nn">twisted.web.http_headers</span> <span class="kn">import</span> <span class="n">Headers</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">reactor</span><span class="p">)</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
+    <span class="s">&#39;GET&#39;</span><span class="p">,</span>
+    <span class="s">&#39;http://example.com/&#39;</span><span class="p">,</span>
+    <span class="n">Headers</span><span class="p">({</span><span class="s">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;Twisted Web Client Example&#39;</span><span class="p">]}),</span>
+    <span class="bp">None</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">cbResponse</span><span class="p">(</span><span class="n">ignored</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Response received&#39;</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">cbResponse</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">cbShutdown</span><span class="p">(</span><span class="n">ignored</span><span class="p">):</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addBoth</span><span class="p">(</span><span class="n">cbShutdown</span><span class="p">)</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>As may be obvious, this issues a new <em>GET</em> request for <em>/</em>
+to the web server on <code class="docutils literal"><span class="pre">example.com</span></code> .  <code class="docutils literal"><span class="pre">Agent</span></code> is
+responsible for resolving the hostname into an IP address and connecting
+to it on port 80 (for <em>HTTP</em> URIs), port 443 (for <em>HTTPS</em>
+URIs), or on the port number specified in the URI itself.  It is also
+responsible for cleaning up the connection afterwards.  This code sends
+a request which includes one custom header, <em>User-Agent</em> .  The
+last argument passed to <code class="docutils literal"><span class="pre">Agent.request</span></code> is <code class="docutils literal"><span class="pre">None</span></code> ,
+though, so the request has no body.</p>
+<p>Sending a request which does include a body requires passing an object
+providing <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.iweb.IBodyProducer.html">twisted.web.iweb.IBodyProducer</a>
+to <code class="docutils literal"><span class="pre">Agent.request</span></code> .  This interface extends the more general
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IPushProducer.html">IPushProducer</a>
+by adding a new <code class="docutils literal"><span class="pre">length</span></code> attribute and adding several
+constraints to the way the producer and consumer interact.</p>
+<ul class="simple">
+<li>The length attribute must be a non-negative integer or the constant
+<code class="docutils literal"><span class="pre">twisted.web.iweb.UNKNOWN_LENGTH</span></code> .  If the length is known,
+it will be used to specify the value for the
+<em>Content-Length</em> header in the request.  If the length is
+unknown the attribute should be set to <code class="docutils literal"><span class="pre">UNKNOWN_LENGTH</span></code> .
+Since more servers support <em>Content-Length</em> , if a length can be
+provided it should be.</li>
+<li>An additional method is required on <code class="docutils literal"><span class="pre">IBodyProducer</span></code>
+implementations: <code class="docutils literal"><span class="pre">startProducing</span></code> .  This method is used to
+associate a consumer with the producer.  It should return a
+<code class="docutils literal"><span class="pre">Deferred</span></code> which fires when all data has been produced.</li>
+<li><code class="docutils literal"><span class="pre">IBodyProducer</span></code> implementations should never call the
+consumer&#8217;s <code class="docutils literal"><span class="pre">unregisterProducer</span></code> method.  Instead, when it
+has produced all of the data it is going to produce, it should only
+fire the <code class="docutils literal"><span class="pre">Deferred</span></code> returned by <code class="docutils literal"><span class="pre">startProducing</span></code> .</li>
+</ul>
+<p>For additional details about the requirements of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.iweb.IBodyProducer.html">IBodyProducer</a> implementations, see
+the API documentation.</p>
+<p>Here&#8217;s a simple <code class="docutils literal"><span class="pre">IBodyProducer</span></code> implementation which
+writes an in-memory string to the consumer:</p>
+<p><a class="reference download internal" href="../../_downloads/stringprod.py"><code class="xref download docutils literal"><span class="pre">stringprod.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implements</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet.defer</span> <span class="kn">import</span> <span class="n">succeed</span>
+<span class="kn">from</span> <span class="nn">twisted.web.iweb</span> <span class="kn">import</span> <span class="n">IBodyProducer</span>
+
+<span class="k">class</span> <span class="nc">StringProducer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">IBodyProducer</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">body</span> <span class="o">=</span> <span class="n">body</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">startProducing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">consumer</span><span class="p">):</span>
+        <span class="n">consumer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">succeed</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">pauseProducing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">stopProducing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>This producer can be used to issue a request with a body:</p>
+<p><a class="reference download internal" href="../../_downloads/sendbody.py"><code class="xref download docutils literal"><span class="pre">sendbody.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">Agent</span>
+<span class="kn">from</span> <span class="nn">twisted.web.http_headers</span> <span class="kn">import</span> <span class="n">Headers</span>
+
+<span class="kn">from</span> <span class="nn">stringprod</span> <span class="kn">import</span> <span class="n">StringProducer</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">reactor</span><span class="p">)</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">StringProducer</span><span class="p">(</span><span class="s">&quot;hello, world&quot;</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
+    <span class="s">&#39;GET&#39;</span><span class="p">,</span>
+    <span class="s">&#39;http://example.com/&#39;</span><span class="p">,</span>
+    <span class="n">Headers</span><span class="p">({</span><span class="s">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;Twisted Web Client Example&#39;</span><span class="p">],</span>
+             <span class="s">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;text/x-greeting&#39;</span><span class="p">]}),</span>
+    <span class="n">body</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">cbResponse</span><span class="p">(</span><span class="n">ignored</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Response received&#39;</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">cbResponse</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">cbShutdown</span><span class="p">(</span><span class="n">ignored</span><span class="p">):</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addBoth</span><span class="p">(</span><span class="n">cbShutdown</span><span class="p">)</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you want to upload a file or you just have some data in a string, you
+don&#8217;t have to copy <code class="docutils literal"><span class="pre">StringProducer</span></code> though.  Instead, you can
+use <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.FileBodyProducer.html">FileBodyProducer</a> .
+This <code class="docutils literal"><span class="pre">IBodyProducer</span></code> implementation works with any file-like
+object (so use it with a <code class="docutils literal"><span class="pre">StringIO</span></code> if your upload data is
+already in memory as a string); the idea is the same
+as <code class="docutils literal"><span class="pre">StringProducer</span></code> from the previous example, but with a
+little extra code to only send data as fast as the server will take it.</p>
+<p><a class="reference download internal" href="../../_downloads/filesendbody.py"><code class="xref download docutils literal"><span class="pre">filesendbody.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">Agent</span>
+<span class="kn">from</span> <span class="nn">twisted.web.http_headers</span> <span class="kn">import</span> <span class="n">Headers</span>
+
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">FileBodyProducer</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">reactor</span><span class="p">)</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">FileBodyProducer</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="s">&quot;hello, world&quot;</span><span class="p">))</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
+    <span class="s">&#39;GET&#39;</span><span class="p">,</span>
+    <span class="s">&#39;http://example.com/&#39;</span><span class="p">,</span>
+    <span class="n">Headers</span><span class="p">({</span><span class="s">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;Twisted Web Client Example&#39;</span><span class="p">],</span>
+             <span class="s">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;text/x-greeting&#39;</span><span class="p">]}),</span>
+    <span class="n">body</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">cbResponse</span><span class="p">(</span><span class="n">ignored</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Response received&#39;</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">cbResponse</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">cbShutdown</span><span class="p">(</span><span class="n">ignored</span><span class="p">):</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addBoth</span><span class="p">(</span><span class="n">cbShutdown</span><span class="p">)</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">FileBodyProducer</span></code> closes the file when it no longer needs it.</p>
+<p>If the connection or the request take too much time, you can cancel the
+<code class="docutils literal"><span class="pre">Deferred</span></code> returned by the <code class="docutils literal"><span class="pre">Agent.request</span></code> method.
+This will abort the connection, and the <code class="docutils literal"><span class="pre">Deferred</span></code> will errback
+with <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.CancelledError.html">CancelledError</a> .</p>
+</div>
+<div class="section" id="receiving-responses">
+<h3>Receiving Responses<a class="headerlink" href="#receiving-responses" title="Permalink to this headline">¶</a></h3>
+<p>So far, the examples have demonstrated how to issue a request.  However,
+they have ignored the response, except for showing that it is a
+<code class="docutils literal"><span class="pre">Deferred</span></code> which seems to fire when the response has been
+received.  Next we&#8217;ll cover what that response is and how to interpret
+it.</p>
+<p><code class="docutils literal"><span class="pre">Agent.request</span></code> , as with most <code class="docutils literal"><span class="pre">Deferred</span></code> -returning
+APIs, can return a <code class="docutils literal"><span class="pre">Deferred</span></code> which fires with a
+<code class="docutils literal"><span class="pre">Failure</span></code> .  If the request fails somehow, this will be
+reflected with a failure.  This may be due to a problem looking up the
+host IP address, or it may be because the HTTP server is not accepting
+connections, or it may be because of a problem parsing the response, or
+any other problem which arises which prevents the response from being
+received.  It does <em>not</em> include responses with an error status.</p>
+<p>If the request succeeds, though, the <code class="docutils literal"><span class="pre">Deferred</span></code> will fire with
+a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.Response.html">Response</a> .  This
+happens as soon as all the response headers have been received.  It
+happens before any of the response body, if there is one, is processed.
+The <code class="docutils literal"><span class="pre">Response</span></code> object has several attributes giving the
+response information: its code, version, phrase, and headers, as well as
+the length of the body to expect. In addition to these, the
+<code class="docutils literal"><span class="pre">Response</span></code> also contains a reference to the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.iweb.IClientRequest.request.html">request</a> that it is
+a response to; one particularly useful attribute on the request is <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.iweb.IClientRequest.absoluteURI.html">absoluteURI</a> :
+The absolute URI to which the request was made.  The
+<code class="docutils literal"><span class="pre">Response</span></code> object has a method which makes the response body
+available: <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.Response.deliverBody.html">deliverBody</a> .  Using the
+attributes of the response object and this method, here&#8217;s an example
+which displays part of the response to a request:</p>
+<p><a class="reference download internal" href="../../_downloads/response.py"><code class="xref download docutils literal"><span class="pre">response.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pformat</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.defer</span> <span class="kn">import</span> <span class="n">Deferred</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">Protocol</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">Agent</span>
+<span class="kn">from</span> <span class="nn">twisted.web.http_headers</span> <span class="kn">import</span> <span class="n">Headers</span>
+
+<span class="k">class</span> <span class="nc">BeginningPrinter</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">finished</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finished</span> <span class="o">=</span> <span class="n">finished</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span> <span class="o">=</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">10</span>
+
+    <span class="k">def</span> <span class="nf">dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span><span class="p">:</span>
+            <span class="n">display</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">remaining</span><span class="p">]</span>
+            <span class="k">print</span> <span class="s">&#39;Some data received:&#39;</span>
+            <span class="k">print</span> <span class="n">display</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">display</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Finished receiving body:&#39;</span><span class="p">,</span> <span class="n">reason</span><span class="o">.</span><span class="n">getErrorMessage</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finished</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">reactor</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
+    <span class="s">&#39;GET&#39;</span><span class="p">,</span>
+    <span class="s">&#39;http://example.com/&#39;</span><span class="p">,</span>
+    <span class="n">Headers</span><span class="p">({</span><span class="s">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;Twisted Web Client Example&#39;</span><span class="p">]}),</span>
+    <span class="bp">None</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">cbRequest</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Response version:&#39;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">version</span>
+    <span class="k">print</span> <span class="s">&#39;Response code:&#39;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">code</span>
+    <span class="k">print</span> <span class="s">&#39;Response phrase:&#39;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">phrase</span>
+    <span class="k">print</span> <span class="s">&#39;Response headers:&#39;</span>
+    <span class="k">print</span> <span class="n">pformat</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">getAllRawHeaders</span><span class="p">()))</span>
+    <span class="n">finished</span> <span class="o">=</span> <span class="n">Deferred</span><span class="p">()</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">deliverBody</span><span class="p">(</span><span class="n">BeginningPrinter</span><span class="p">(</span><span class="n">finished</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">finished</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">cbRequest</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">cbShutdown</span><span class="p">(</span><span class="n">ignored</span><span class="p">):</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addBoth</span><span class="p">(</span><span class="n">cbShutdown</span><span class="p">)</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">BeginningPrinter</span></code> protocol in this example is passed to
+<code class="docutils literal"><span class="pre">Response.deliverBody</span></code> and the response body is then delivered
+to its <code class="docutils literal"><span class="pre">dataReceived</span></code> method as it arrives.  When the body has
+been completely delivered, the protocol&#8217;s <code class="docutils literal"><span class="pre">connectionLost</span></code>
+method is called.  It is important to inspect the <code class="docutils literal"><span class="pre">Failure</span></code>
+passed to <code class="docutils literal"><span class="pre">connectionLost</span></code> .  If the response body has been
+completely received, the failure will wrap a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.ResponseDone.html">twisted.web.client.ResponseDone</a> exception.  This
+indicates that it is <em>known</em> that all data has been received.  It
+is also possible for the failure to wrap a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.http.PotentialDataLoss.html">twisted.web.http.PotentialDataLoss</a> exception: this
+indicates that the server framed the response such that there is no way
+to know when the entire response body has been received.  Only
+HTTP/1.0 servers should behave this way.  Finally, it is possible for
+the exception to be of another type, indicating guaranteed data loss for
+some reason (a lost connection, a memory error, etc).</p>
+<p>Just as protocols associated with a TCP connection are given a transport,
+so will be a protocol passed to <code class="docutils literal"><span class="pre">deliverBody</span></code> .  Since it makes
+no sense to write more data to the connection at this stage of the
+request, though, the transport <em>only</em> provides <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IPushProducer.html">IPushProducer</a> .  This allows the
+protocol to control the flow of the response data: a call to the
+transport&#8217;s <code class="docutils literal"><span class="pre">pauseProducing</span></code> method will pause delivery; a
+later call to <code class="docutils literal"><span class="pre">resumeProducing</span></code> will resume it.  If it is
+decided that the rest of the response body is not desired,
+<code class="docutils literal"><span class="pre">stopProducing</span></code> can be used to stop delivery permanently;
+after this, the protocol&#8217;s <code class="docutils literal"><span class="pre">connectionLost</span></code> method will be
+called.</p>
+<p>An important thing to keep in mind is that the body will only be read
+from the connection after <code class="docutils literal"><span class="pre">Response.deliverBody</span></code> is called.
+This also means that the connection will remain open until this is done
+(and the body read).  So, in general, any response with a body
+<em>must</em> have that body read using <code class="docutils literal"><span class="pre">deliverBody</span></code> .  If the
+application is not interested in the body, it should issue a
+<em>HEAD</em> request or use a protocol which immediately calls
+<code class="docutils literal"><span class="pre">stopProducing</span></code> on its transport.</p>
+<p>If the body of the response isn&#8217;t going to be consumed incrementally, then <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.readBody.html">readBody</a> can be used to get the body as a byte-string.
+This function returns a <code class="docutils literal"><span class="pre">Deferred</span></code> that fires with the body after the request has been completed; cancelling this <code class="docutils literal"><span class="pre">Deferred</span></code> will close the connection to the HTTP server immediately.</p>
+<p><a class="reference download internal" href="../../_downloads/responseBody.py"><code class="xref download docutils literal"><span class="pre">responseBody.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">argv</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pformat</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet.task</span> <span class="kn">import</span> <span class="n">react</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">readBody</span>
+<span class="kn">from</span> <span class="nn">twisted.web.http_headers</span> <span class="kn">import</span> <span class="n">Headers</span>
+
+
+<span class="k">def</span> <span class="nf">cbRequest</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Response version:&#39;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">version</span>
+    <span class="k">print</span> <span class="s">&#39;Response code:&#39;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">code</span>
+    <span class="k">print</span> <span class="s">&#39;Response phrase:&#39;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">phrase</span>
+    <span class="k">print</span> <span class="s">&#39;Response headers:&#39;</span>
+    <span class="k">print</span> <span class="n">pformat</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">getAllRawHeaders</span><span class="p">()))</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">readBody</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">cbBody</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+<span class="k">def</span> <span class="nf">cbBody</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Response body:&#39;</span>
+    <span class="k">print</span> <span class="n">body</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">b</span><span class="s">&quot;http://example.com/&quot;</span><span class="p">):</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">reactor</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
+        <span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span>
+        <span class="n">Headers</span><span class="p">({</span><span class="s">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;Twisted Web Client Example&#39;</span><span class="p">]}),</span>
+        <span class="bp">None</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">cbRequest</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+<span class="n">react</span><span class="p">(</span><span class="n">main</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="http-over-ssl">
+<h3>HTTP over SSL<a class="headerlink" href="#http-over-ssl" title="Permalink to this headline">¶</a></h3>
+<p>Everything you&#8217;ve read so far applies whether the scheme of the request
+URI is <em>HTTP</em> or <em>HTTPS</em> .  However, to control the SSL
+negotiation performed when an <em>HTTPS</em> URI is requested, there&#8217;s
+one extra object to pay attention to: the SSL context factory.</p>
+<p><code class="docutils literal"><span class="pre">Agent</span></code> &#8216;s constructor takes an optional second argument, a
+context factory.  This is an object like the context factory described
+in <a class="reference internal" href="../../core/howto/ssl.html"><span class="doc">Using SSL in Twisted</span></a> but has
+one small difference.  The <code class="docutils literal"><span class="pre">getContext</span></code> method of this factory
+accepts the address from the URL being requested.  This allows it to
+return a context object which verifies that the server&#8217;s certificate
+matches the URL being requested.</p>
+<p>Here&#8217;s an example which shows how to use <code class="docutils literal"><span class="pre">Agent</span></code> to request
+an <em>HTTPS</em> URL with no certificate verification.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.python.log</span> <span class="kn">import</span> <span class="n">err</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">Agent</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.ssl</span> <span class="kn">import</span> <span class="n">ClientContextFactory</span>
+
+<span class="k">class</span> <span class="nc">WebClientContextFactory</span><span class="p">(</span><span class="n">ClientContextFactory</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">getContext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ClientContextFactory</span><span class="o">.</span><span class="n">getContext</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;Received response&quot;</span>
+    <span class="k">print</span> <span class="n">response</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">contextFactory</span> <span class="o">=</span> <span class="n">WebClientContextFactory</span><span class="p">()</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="n">contextFactory</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="s">&quot;https://example.com/&quot;</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallbacks</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ignored</span><span class="p">:</span> <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The important point to notice here is that <code class="docutils literal"><span class="pre">getContext</span></code> now
+accepts two arguments, a hostname and a port number.  These two arguments,
+a <code class="docutils literal"><span class="pre">str</span></code> and an <code class="docutils literal"><span class="pre">int</span></code> , give the address to which a
+connection is being established to request an HTTPS URL.  Because an agent
+might make multiple requests over a single connection,
+<code class="docutils literal"><span class="pre">getContext</span></code> may not be called once for each request.  A second
+or later request for a URL with the same hostname as a previous request
+may re-use an existing connection, and therefore will re-use the
+previously returned context object.</p>
+<p>To configure SSL options or enable certificate verification or hostname
+checking, provide a context factory which creates suitably configured
+context objects.</p>
+</div>
+<div class="section" id="http-persistent-connection">
+<h3>HTTP Persistent Connection<a class="headerlink" href="#http-persistent-connection" title="Permalink to this headline">¶</a></h3>
+<p>HTTP persistent connections use the same TCP connection to send and
+receive multiple HTTP requests/responses. This reduces latency and TCP
+connection establishment overhead.</p>
+<p>The constructor of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.Agent.html">twisted.web.client.Agent</a>
+takes an optional parameter pool, which should be an instance
+of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.HTTPConnectionPool.html">HTTPConnectionPool</a> , which will be used
+to manage the connections.  If the pool is created with the
+parameter <code class="docutils literal"><span class="pre">persistent</span></code> set to <code class="docutils literal"><span class="pre">True</span></code> (the
+default), it will not close connections when the request is done, and
+instead hold them in its cache to be re-used.</p>
+<p>Here&#8217;s an example which sends requests over a persistent connection:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.defer</span> <span class="kn">import</span> <span class="n">Deferred</span><span class="p">,</span> <span class="n">DeferredList</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">Protocol</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">HTTPConnectionPool</span>
+
+<span class="k">class</span> <span class="nc">IgnoreBody</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deferred</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deferred</span> <span class="o">=</span> <span class="n">deferred</span>
+
+    <span class="k">def</span> <span class="nf">dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deferred</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">cbRequest</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Response code:&#39;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">code</span>
+    <span class="n">finished</span> <span class="o">=</span> <span class="n">Deferred</span><span class="p">()</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">deliverBody</span><span class="p">(</span><span class="n">IgnoreBody</span><span class="p">(</span><span class="n">finished</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">finished</span>
+
+<span class="n">pool</span> <span class="o">=</span> <span class="n">HTTPConnectionPool</span><span class="p">(</span><span class="n">reactor</span><span class="p">)</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="n">pool</span><span class="o">=</span><span class="n">pool</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">requestGet</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">cbRequest</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+<span class="c"># Two requests to the same host:</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">requestGet</span><span class="p">(</span><span class="s">&#39;http://localhost:8080/foo&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">ign</span><span class="p">:</span> <span class="n">requestGet</span><span class="p">(</span><span class="s">&quot;http://localhost:8080/bar&quot;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">cbShutdown</span><span class="p">(</span><span class="n">ignored</span><span class="p">):</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">cbShutdown</span><span class="p">)</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here, the two requests are to the same host, one after the each
+other. In most cases, the same connection will be used for the second
+request, instead of two different connections when using a
+non-persistent pool.</p>
+</div>
+<div class="section" id="multiple-connections-to-the-same-server">
+<h3>Multiple Connections to the Same Server<a class="headerlink" href="#multiple-connections-to-the-same-server" title="Permalink to this headline">¶</a></h3>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.HTTPConnectionPool.html">twisted.web.client.HTTPConnectionPool</a> instances
+have an attribute
+called <code class="docutils literal"><span class="pre">maxPersistentPerHost</span></code> which limits the
+number of cached persistent connections to the same server. The default
+value is 2.  This is effective only when the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.HTTPConnectionPool.persistent.html">persistent</a> option is
+True. You can change the value like bellow:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">HTTPConnectionPool</span>
+
+<span class="n">pool</span> <span class="o">=</span> <span class="n">HTTPConnectionPool</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="n">persistent</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">pool</span><span class="o">.</span><span class="n">maxPersistentPerHost</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>With the default value of 2, the pool keeps around two connections to
+the same host at most. Eventually the cached persistent connections will
+be closed, by default after 240 seconds; you can change this timeout
+value with the <code class="docutils literal"><span class="pre">cachedConnectionTimeout</span></code>
+attribute of the pool. To force all connections to close use
+the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.HTTPConnectionPool.closeCachedConnections.html">closeCachedConnections</a>
+method.</p>
+<div class="section" id="automatic-retries">
+<h4>Automatic Retries<a class="headerlink" href="#automatic-retries" title="Permalink to this headline">¶</a></h4>
+<p>If a request fails without getting a response, and the request is
+something that hopefully can be retried without having any side-effects
+(e.g. a request with method GET), it will be retried automatically when
+sending a request over a previously-cached persistent connection. You can
+disable this behavior by setting <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.HTTPConnectionPool.retryAutomatically.html">retryAutomatically</a>
+to <code class="docutils literal"><span class="pre">False</span></code> . Note that each request will only be retried
+once.</p>
+</div>
+</div>
+<div class="section" id="following-redirects">
+<h3>Following redirects<a class="headerlink" href="#following-redirects" title="Permalink to this headline">¶</a></h3>
+<p>By itself, <code class="docutils literal"><span class="pre">Agent</span></code> doesn&#8217;t follow HTTP redirects (responses
+with 301, 302, 303, 307 status codes and a <code class="docutils literal"><span class="pre">location</span></code> header
+field). You need to use the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.RedirectAgent.html">twisted.web.client.RedirectAgent</a> class to do so. It
+implements a rather strict behavior of the RFC, meaning it will redirect
+301 and 302 as 307, only on <code class="docutils literal"><span class="pre">GET</span></code> and <code class="docutils literal"><span class="pre">HEAD</span></code>
+requests.</p>
+<p>The following example shows how to have a redirect-enabled agent.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.python.log</span> <span class="kn">import</span> <span class="n">err</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">RedirectAgent</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;Received response&quot;</span>
+    <span class="k">print</span> <span class="n">response</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">RedirectAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">(</span><span class="n">reactor</span><span class="p">))</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="s">&quot;http://example.com/&quot;</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallbacks</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ignored</span><span class="p">:</span> <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In contrast, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.BrowserLikeRedirectAgent.html">twisted.web.client.BrowserLikeRedirectAgent</a> implements
+more lenient behaviour that closely emulates what web browsers do; in
+other words 301 and 302 <code class="docutils literal"><span class="pre">POST</span></code> redirects are treated like 303,
+meaning the method is changed to <code class="docutils literal"><span class="pre">GET</span></code> before making the redirect
+request.</p>
+<p>As mentioned previously, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.Response.html">Response</a> contains a reference to both
+the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.iweb.IClientRequest.request.html">request</a> that it is a response
+to, and the previously received <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.Response.response.html">response</a> , accessible by <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/previousResponse.html">previousResponse</a> .
+In most cases there will not be a previous response, but in the case of
+<code class="docutils literal"><span class="pre">RedirectAgent</span></code> the response history can be obtained by
+following the previous responses from response to response.</p>
+</div>
+<div class="section" id="using-a-http-proxy">
+<h3>Using a HTTP proxy<a class="headerlink" href="#using-a-http-proxy" title="Permalink to this headline">¶</a></h3>
+<p>To be able to use HTTP proxies with an agent, you can use the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.ProxyAgent.html">twisted.web.client.ProxyAgent</a> class.
+It supports the same interface as <code class="docutils literal"><span class="pre">Agent</span></code>, but takes the endpoint of the proxy as initializer argument.
+This is specifically intended for talking to servers that implement the proxying variation of the HTTP protocol; for other types of proxies you will want <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.Agent.usingEndpointFactory.html">Agent.usingEndpointFactory</a> (see documentation below).</p>
+<p>Here&#8217;s an example demonstrating the use of an HTTP proxy running on
+localhost:8000.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.python.log</span> <span class="kn">import</span> <span class="n">err</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">ProxyAgent</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.endpoints</span> <span class="kn">import</span> <span class="n">TCP4ClientEndpoint</span>
+
+<span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;Received response&quot;</span>
+    <span class="k">print</span> <span class="n">response</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">TCP4ClientEndpoint</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">)</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">ProxyAgent</span><span class="p">(</span><span class="n">endpoint</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="s">&quot;https://example.com/&quot;</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallbacks</span><span class="p">(</span><span class="n">display</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ignored</span><span class="p">:</span> <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Please refer to the <a class="reference internal" href="../../core/howto/endpoints.html"><span class="doc">endpoints documentation</span></a> for
+more information about how they work and the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.endpoints.html">twisted.internet.endpoints</a> API documentation to learn
+what other kinds of endpoints exist.</p>
+</div>
+<div class="section" id="handling-http-cookies">
+<h3>Handling HTTP cookies<a class="headerlink" href="#handling-http-cookies" title="Permalink to this headline">¶</a></h3>
+<p>An existing agent instance can be wrapped with
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.CookieAgent.html">twisted.web.client.CookieAgent</a> to automatically
+store, send and track HTTP cookies. A <code class="docutils literal"><span class="pre">CookieJar</span></code>
+instance, from the Python standard library module
+<a class="reference external" href="http://docs.python.org/library/cookielib.html">cookielib</a> , is
+used to store the cookie information. An example of using
+<code class="docutils literal"><span class="pre">CookieAgent</span></code> to perform a request and display the collected
+cookies might look like this:</p>
+<p><a class="reference download internal" href="../../_downloads/cookies.py"><code class="xref download docutils literal"><span class="pre">cookies.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">cookielib</span> <span class="kn">import</span> <span class="n">CookieJar</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">CookieAgent</span>
+
+<span class="k">def</span> <span class="nf">displayCookies</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">cookieJar</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Received response&#39;</span>
+    <span class="k">print</span> <span class="n">response</span>
+    <span class="k">print</span> <span class="s">&#39;Cookies:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">cookieJar</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">cookie</span> <span class="ow">in</span> <span class="n">cookieJar</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">cookie</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">cookieJar</span> <span class="o">=</span> <span class="n">CookieJar</span><span class="p">()</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">CookieAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">(</span><span class="n">reactor</span><span class="p">),</span> <span class="n">cookieJar</span><span class="p">)</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="s">&#39;http://www.google.com/&#39;</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">displayCookies</span><span class="p">,</span> <span class="n">cookieJar</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">err</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ignored</span><span class="p">:</span> <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="automatic-content-encoding-negotiation">
+<h3>Automatic Content Encoding Negotiation<a class="headerlink" href="#automatic-content-encoding-negotiation" title="Permalink to this headline">¶</a></h3>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.ContentDecoderAgent.html">twisted.web.client.ContentDecoderAgent</a> adds
+support for sending <em>Accept-Encoding</em> request headers and
+interpreting <em>Content-Encoding</em> response headers.  These headers
+allow the server to encode the response body somehow, typically with some
+compression scheme to save on transfer
+costs.  <code class="docutils literal"><span class="pre">ContentDecoderAgent</span></code> provides this functionality as a
+wrapper around an existing agent instance.  Together with one or more
+decoder objects (such as
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.GzipDecoder.html">twisted.web.client.GzipDecoder</a> ), this wrapper
+automatically negotiates an encoding to use and decodes the response body
+accordingly.  To application code using such an agent, there is no visible
+difference in the data delivered.</p>
+<p><a class="reference download internal" href="../../_downloads/gzipdecoder.py"><code class="xref download docutils literal"><span class="pre">gzipdecoder.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.defer</span> <span class="kn">import</span> <span class="n">Deferred</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">Protocol</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">ContentDecoderAgent</span><span class="p">,</span> <span class="n">GzipDecoder</span>
+
+<span class="k">class</span> <span class="nc">BeginningPrinter</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">finished</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finished</span> <span class="o">=</span> <span class="n">finished</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span> <span class="o">=</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">10</span>
+
+
+    <span class="k">def</span> <span class="nf">dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span><span class="p">:</span>
+            <span class="n">display</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">remaining</span><span class="p">]</span>
+            <span class="k">print</span> <span class="s">&#39;Some data received:&#39;</span>
+            <span class="k">print</span> <span class="n">display</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">display</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Finished receiving body:&#39;</span><span class="p">,</span> <span class="n">reason</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">reason</span><span class="o">.</span><span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finished</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+
+
+
+<span class="k">def</span> <span class="nf">printBody</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="n">finished</span> <span class="o">=</span> <span class="n">Deferred</span><span class="p">()</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">deliverBody</span><span class="p">(</span><span class="n">BeginningPrinter</span><span class="p">(</span><span class="n">finished</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">finished</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">ContentDecoderAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">(</span><span class="n">reactor</span><span class="p">),</span> <span class="p">[(</span><span class="s">&#39;gzip&#39;</span><span class="p">,</span> <span class="n">GzipDecoder</span><span class="p">)])</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="s">&#39;http://www.yahoo.com/&#39;</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printBody</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">err</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ignored</span><span class="p">:</span> <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Implementing support for new content encodings is as simple as writing a
+new class like <code class="docutils literal"><span class="pre">GzipDecoder</span></code> that can decode a response using
+the new encoding.  As there are not many content encodings in widespread
+use, gzip is the only encoding supported by Twisted itself.</p>
+</div>
+<div class="section" id="connecting-to-non-standard-destinations">
+<h3>Connecting To Non-standard Destinations<a class="headerlink" href="#connecting-to-non-standard-destinations" title="Permalink to this headline">¶</a></h3>
+<p>Typically you want your HTTP client to open a TCP connection directly to the web server.
+Sometimes however it&#8217;s useful to be able to connect some other way, e.g. making an HTTP request over a SOCKS proxy connection or connecting to a server listening on a UNIX socket.
+For this reason, there is an alternate constructor called <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.Agent.usingEndpointFactory.html">Agent.usingEndpointFactory</a> that takes an <code class="docutils literal"><span class="pre">endpointFactory</span></code> argument.
+This argument must provide the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.iweb.IAgentEndpointFactory.html">twisted.web.iweb.IAgentEndpointFactory</a> interface.
+Note that when talking to a HTTP proxy, i.e. a server that implements the proxying-specific variant of HTTP you should use <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.ProxyAgent.html">ProxyAgent</a> - see documentation above.</p>
+<p><a class="reference download internal" href="../../_downloads/endpointconstructor.py"><code class="xref download docutils literal"><span class="pre">endpointconstructor.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Send a HTTP request to Docker over a Unix socket.</span>
+
+<span class="sd">Will probably need to be run as root.</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">    $ sudo python endpointconstructor.py [&lt;docker API path&gt;]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">argv</span>
+
+<span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implementer</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet.endpoints</span> <span class="kn">import</span> <span class="n">UNIXClientEndpoint</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.task</span> <span class="kn">import</span> <span class="n">react</span>
+<span class="kn">from</span> <span class="nn">twisted.web.iweb</span> <span class="kn">import</span> <span class="n">IAgentEndpointFactory</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">readBody</span>
+
+
+<span class="nd">@implementer</span><span class="p">(</span><span class="n">IAgentEndpointFactory</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">DockerEndpointFactory</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Connect to Docker&#39;s Unix socket.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reactor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reactor</span> <span class="o">=</span> <span class="n">reactor</span>
+
+
+    <span class="k">def</span> <span class="nf">endpointForURI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">UNIXClientEndpoint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reactor</span><span class="p">,</span> <span class="n">b</span><span class="s">&quot;/var/run/docker.sock&quot;</span><span class="p">)</span>
+
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">b</span><span class="s">&quot;/containers/json?all=1&quot;</span><span class="p">):</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="o">.</span><span class="n">usingEndpointFactory</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="n">DockerEndpointFactory</span><span class="p">(</span><span class="n">reactor</span><span class="p">))</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">b</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">b</span><span class="s">&quot;unix://localhost&quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">readBody</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="k">print</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+<span class="n">react</span><span class="p">(</span><span class="n">main</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>You should now understand the basics of the Twisted Web HTTP client.  In
+particular, you should understand:</p>
+<ul class="simple">
+<li>How to issue requests with arbitrary methods, headers, and bodies.</li>
+<li>How to access the response version, code, phrase, headers, and body.</li>
+<li>How to store, send, and track cookies.</li>
+<li>How to control the streaming of the response body.</li>
+<li>How to enable the HTTP persistent connection, and control the
+number of connections.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Using the Twisted Web Client</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-agent">The Agent</a><ul>
+<li><a class="reference internal" href="#issuing-requests">Issuing Requests</a></li>
+<li><a class="reference internal" href="#receiving-responses">Receiving Responses</a></li>
+<li><a class="reference internal" href="#http-over-ssl">HTTP over SSL</a></li>
+<li><a class="reference internal" href="#http-persistent-connection">HTTP Persistent Connection</a></li>
+<li><a class="reference internal" href="#multiple-connections-to-the-same-server">Multiple Connections to the Same Server</a><ul>
+<li><a class="reference internal" href="#automatic-retries">Automatic Retries</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#following-redirects">Following redirects</a></li>
+<li><a class="reference internal" href="#using-a-http-proxy">Using a HTTP proxy</a></li>
+<li><a class="reference internal" href="#handling-http-cookies">Handling HTTP cookies</a></li>
+<li><a class="reference internal" href="#automatic-content-encoding-negotiation">Automatic Content Encoding Negotiation</a></li>
+<li><a class="reference internal" href="#connecting-to-non-standard-destinations">Connecting To Non-standard Destinations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="resource-templates.html"
+                                  title="previous chapter">Light Weight Templating With Resource Templates</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="glossary.html"
+                                  title="next chapter">Glossary</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/web/howto/client.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

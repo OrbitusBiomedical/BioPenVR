@@ -1,0 +1,488 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Twisted Writing Standard &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Twisted Development Policy" href="index.html" />
+    <link rel="next" title="Unit Tests in Twisted" href="test-standard.html" />
+    <link rel="prev" title="Twisted Coding Standard" href="coding-standard.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="test-standard.html" title="Unit Tests in Twisted"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="coding-standard.html" title="Twisted Coding Standard"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="../index.html" >Development of Twisted</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Twisted Development Policy</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="twisted-writing-standard">
+<h1>Twisted Writing Standard<a class="headerlink" href="#twisted-writing-standard" title="Permalink to this headline">¶</a></h1>
+<p>The Twisted writing standard describes the documentation writing
+styles we prefer in our documentation. This standard applies particularly
+to howtos and other descriptive documentation.</p>
+<p>This document is meant to help Twisted documentation authors produce
+documentation that does not have the following problems:</p>
+<ul class="simple">
+<li>misleads users about what is good Twisted style;</li>
+<li>misleads users into thinking that an advanced howto is an introduction
+to writing their first Twisted server; and</li>
+<li>misleads users about whether they fit the document&#8217;s target audience:
+for example, that they are able to use enterprise without knowing how to
+write SQL queries.</li>
+</ul>
+<div class="section" id="general-style">
+<h2>General style<a class="headerlink" href="#general-style" title="Permalink to this headline">¶</a></h2>
+<p>Documents should aim to be clear and concise, allowing the API
+documentation and the example code to tell as much of the story as they
+can. Demonstrations and where necessary supported arguments should always
+preferred to simple statements (&#8220;here is how you would simplify this
+code with Deferreds&#8221; rather than &#8220;Deferreds make code
+simpler&#8221;).</p>
+<p>Documents should be clearly delineated into sections and subsections.
+Each of these sections, like the overall document, should have a single
+clear purpose. This is most easily tested by trying to have meaningful
+headings: a section which is headed by &#8220;More details&#8221; or
+&#8220;Advanced stuff&#8221; is not purposeful enough. There should be
+fairly obvious ways to split a document. The two most common are task
+based sectioning and sectioning which follows module and class
+separations.</p>
+<p>Documentation must use American English spelling, and where possible
+avoid any local variants of either vocabulary or grammar. Grammatically
+complex sentences should ideally be avoided: these make reading
+unnecessarily difficult, particularly for non-native speakers.</p>
+<p>When referring to a hypothetical person, (such as &#8220;a user of a website written with twisted.web&#8221;), gender neutral pronouns (they/their/them) should be used.</p>
+<p>For reStructuredText documents which are handled by the Sphinx documentation generator make lines short, and break lines at natural places, such as after commas and semicolons, rather than after the 79th column.
+We call this <em>semantic newlines</em>.
+This rule <strong>does not</strong> apply to docstrings.</p>
+<div class="highlight-text"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre>Sometimes when editing a narrative documentation file, I wrap the lines semantically.
+Instead of inserting a newline at 79 columns (or whatever),
+or making paragraphs one long line,
+I put in newlines at a point that seems logical to me.
+Modern code-oriented text editors are very good at wrapping and arranging long lines.
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="evangelism-and-usage-documents">
+<h2>Evangelism and usage documents<a class="headerlink" href="#evangelism-and-usage-documents" title="Permalink to this headline">¶</a></h2>
+<p>The Twisted documentation should maintain a reasonable distinction
+between &#8220;evangelism&#8221; documentation, which compares the Twisted
+design or Twisted best practice with other approaches and argues for the
+Twisted approach, and &#8220;usage&#8221; documentation, which describes the
+Twisted approach in detail without comparison to other possible
+approaches.</p>
+<p>While both kinds of documentation are useful, they have different
+audiences. The first kind of document, evangelical documents, is useful to
+a reader who is researching and comparing approaches and seeking to
+understand the Twisted approach or Twisted functionality in order to
+decide whether it is useful to them. The second kind of document, usage
+documents, are useful to a reader who has decided to use Twisted and
+simply wants further information about available functions and
+architectures they can use to accomplish their goal.</p>
+<p>Since they have distinct audiences, evangelism and detailed usage
+documentation belongs in separate files. There should be links between
+them in &#8216;Further reading&#8217; or similar sections.</p>
+</div>
+<div class="section" id="descriptions-of-features">
+<h2>Descriptions of features<a class="headerlink" href="#descriptions-of-features" title="Permalink to this headline">¶</a></h2>
+<p>Descriptions of any feature added since release 2.0 of Twisted core
+must have a note describing which release of which Twisted project they
+were added in at the first mention in each document. If they are not yet
+released, give them the number of the next minor release.</p>
+<p>For example, a substantial change might have a version number added in
+the introduction:</p>
+<blockquote>
+<div>This document describes the Application infrastructure for deploying
+Twisted applications <em>(added in Twisted 1.3)</em> .</div></blockquote>
+<p>The version does not need to be mentioned elsewhere in the document
+except for specific features which were added in subsequent releases,
+which might should be mentioned separately.</p>
+<blockquote>
+<div>The simplest way to create a <code class="docutils literal"><span class="pre">.tac</span></code> file, SuperTac <em>(added in Twisted Core 99.7)</em> ...</div></blockquote>
+<p>In the case where the usage of a feature has substantially changed, the
+number should be that of the release in which the current usage became
+available. For example:</p>
+<blockquote>
+<div>This document describes the Application infrastructure for
+deploying Twisted applications <em>(updated[/substantially updated] in Twisted 2.7)</em> .</div></blockquote>
+</div>
+<div class="section" id="linking">
+<h2>Linking<a class="headerlink" href="#linking" title="Permalink to this headline">¶</a></h2>
+<p>The first occurrence of the name of any module, class or function should
+always link to the API documents. Subsequent mentions may or may not link
+at the author&#8217;s discretion: discussions which are very closely bound to a
+particular API should probably link in the first mention in the given
+section.</p>
+<p>Links between howtos are encouraged. Overview documents and tutorials
+should always link to reference documents and in depth documents. These
+documents should link among themselves wherever it&#8217;s needed: if you&#8217;re
+tempted to re-describe the functionality of another module, you should
+certainly link instead.</p>
+<p>Linking to standard library documentation is also encouraged when referencing
+standard library objects. <a class="reference external" href="http://sphinx-doc.org/ext/intersphinx.html">Intersphinx</a>
+is supported in Twisted documentation, with prefixes for linking to either
+the Python 2 standard library documentation (via <code class="docutils literal"><span class="pre">py2</span></code>) or Python 3 (via
+<code class="docutils literal"><span class="pre">py3</span></code>) as needed.</p>
+</div>
+<div class="section" id="introductions">
+<h2>Introductions<a class="headerlink" href="#introductions" title="Permalink to this headline">¶</a></h2>
+<p>The introductory section of a Twisted howto should immediately follow
+the top-level heading and precede any subheadings.</p>
+<p>The following items should be present in the introduction to Twisted
+howtos: the introductory paragraph and the description of the target
+audience.</p>
+<div class="section" id="introductory-paragraph">
+<h3>Introductory paragraph<a class="headerlink" href="#introductory-paragraph" title="Permalink to this headline">¶</a></h3>
+<p>The introductory paragraph of a document should summarize what the
+document is designed to present. It should use the both proper names for
+the Twisted technologies and simple non-Twisted descriptions of the
+technologies. For example, in this paragraph both the name of the technology
+(&#8220;Conch&#8221;) and a description (&#8220;SSH server&#8221;) are used:</p>
+<blockquote>
+<div>This document describes setting up a SSH server to serve data from the
+file system using Conch, the Twisted SSH implementation.</div></blockquote>
+<p>The introductory paragraph should be relatively short, but should, like
+the above, somewhere define the document&#8217;s objective: what the reader
+should be able to do using instructions in the document.</p>
+</div>
+<div class="section" id="description-of-target-audience">
+<h3>Description of target audience<a class="headerlink" href="#description-of-target-audience" title="Permalink to this headline">¶</a></h3>
+<p>Subsequent paragraphs in the introduction should describe the target
+audience of the document: who would want to read it, and what they should
+know before they can expect to use your document. For example:</p>
+<blockquote>
+<div><p>The target audience of this document is a Twisted user who has a set of
+filesystem like data objects that they would like to make available to
+authenticated users over SFTP.</p>
+<p>Following the directions in this document will require that you are
+familiar with managing authentication via the Twisted Cred system.</p>
+</div></blockquote>
+<p>Use your discretion about the extent to which you list assumed
+knowledge. Very introductory documents that are going to be among a
+reader&#8217;s first exposure to Twisted will even need to specify that they
+rely on knowledge of Python and of certain networking concepts (ports,
+servers, clients, connections) but documents that are going to be sought
+out by existing Twisted users for particular purposes only need to specify
+other Twisted knowledge that is assumed.</p>
+<p>Any knowledge of technologies that wouldn&#8217;t be considered &#8220;core
+Python&#8221; and/or &#8220;simple networking&#8221; need to be explicitly
+specified, no matter how obvious they seem to someone familiar with the
+technology. For example, it needs to be stated that someone using
+enterprise should know SQL and should know how to set up and populate
+databases for testing purposes.</p>
+<p>Where possible, link to other documents that will fill in missing
+knowledge for the reader. Linking to documents in the Twisted repository
+is preferred but not essential.</p>
+</div>
+<div class="section" id="goals-of-document">
+<h3>Goals of document<a class="headerlink" href="#goals-of-document" title="Permalink to this headline">¶</a></h3>
+<p>The introduction should finish with a list of tasks that the user can
+expect to see the document accomplish. These tasks should be concrete
+rather than abstract, so rather than telling the user that they will
+&#8220;understand Twisted Conch&#8221;, you would list the specific tasks
+that they will see the document do. For example:</p>
+<blockquote>
+<div><p>This document will demonstrate the following tasks using Twisted Conch:</p>
+<ul class="simple">
+<li>creating an anonymous access read-only SFTP server using a filesystem
+backend;</li>
+<li>creating an anonymous access read-only SFTP server using a proxy
+backend connecting to an HTTP server; and</li>
+<li>creating a anonymous access read and write SFTP server using a
+filesystem backend.</li>
+</ul>
+</div></blockquote>
+<p>In many cases this will essentially be a list of your code examples,
+but it need not be. If large sections of your code are devoted to design
+discussions, your goals might resemble the following:</p>
+<blockquote>
+<div><p>This document will discuss the following design aspects of writing Conch
+servers:</p>
+<ul class="simple">
+<li>authentication of users; and</li>
+<li>choice of data backends.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="example-code">
+<h2>Example code<a class="headerlink" href="#example-code" title="Permalink to this headline">¶</a></h2>
+<p>Wherever possible, example code should be provided to illustrate a
+certain technique or piece of functionality.</p>
+<p>Example code should try and meet as many of the following requirements
+as possible:</p>
+<ul class="simple">
+<li>example code should be a complete working example suitable for copying
+and pasting and running by the reader (where possible, provide a link to a
+file to download);</li>
+<li>example code should be short;</li>
+<li>example code should be commented very extensively, with the assumption
+that this code may be read by a Twisted newcomer;</li>
+<li>example code should conform to the <a class="reference internal" href="coding-standard.html"><span class="doc">coding standard</span></a> ; and</li>
+<li>example code should exhibit &#8216;best practice&#8217;, not only for dealing with
+the target functionality, but also for use of the application framework
+and so on.</li>
+</ul>
+<p>The requirement to have a complete working example will occasionally
+impose upon authors the need to have a few dummy functions: in Twisted
+documentation the most common example is where a function is needed to
+generate a Deferred and fire it after some time has passed. An example
+might be this, where <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.task.deferLater.html">deferLater</a> is used to fire a callback
+after a period of time:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">task</span><span class="p">,</span> <span class="n">reactor</span>
+
+<span class="k">def</span> <span class="nf">getDummyDeferred</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dummy method which returns a deferred that will fire in 5 seconds with</span>
+<span class="sd">    a result</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">task</span><span class="o">.</span><span class="n">deferLater</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s">&quot;RESULT&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As in the above example, it is imperative to clearly mark that the
+function is a dummy in as many ways as you can: using <code class="docutils literal"><span class="pre">Dummy</span></code> in
+the function name, explaining that it is a dummy in the docstring, and
+marking particular lines as being required to create an effect for the
+purposes of demonstration. In most cases, this will save the reader from
+mistaking this dummy method for an idiom they should use in their Twisted
+code.</p>
+</div>
+<div class="section" id="conclusions">
+<h2>Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this headline">¶</a></h2>
+<p>The conclusion of a howto should follow the very last section heading
+in a file. This heading would usually be called &#8220;Conclusion&#8221;.</p>
+<p>The conclusion of a howto should remind the reader of the tasks that
+they have done while reading the document. For example:</p>
+<blockquote>
+<div><p>In this document, you have seen how to:</p>
+<ol class="arabic simple">
+<li>set up an anonymous read-only SFTP server;</li>
+<li>set up a SFTP server where users authenticate;</li>
+<li>set up a SFTP server where users are restricted to some parts of the
+filesystem based on authentication; and</li>
+<li>set up a SFTP server where users have write access to some parts of
+the filesystem based on authentication.</li>
+</ol>
+</div></blockquote>
+<p>If appropriate, the howto could follow this description with links to
+other documents that might be of interest to the reader with their
+newfound knowledge. However, these links should be limited to fairly
+obvious extensions of at least one of the listed tasks.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Twisted Writing Standard</a><ul>
+<li><a class="reference internal" href="#general-style">General style</a></li>
+<li><a class="reference internal" href="#evangelism-and-usage-documents">Evangelism and usage documents</a></li>
+<li><a class="reference internal" href="#descriptions-of-features">Descriptions of features</a></li>
+<li><a class="reference internal" href="#linking">Linking</a></li>
+<li><a class="reference internal" href="#introductions">Introductions</a><ul>
+<li><a class="reference internal" href="#introductory-paragraph">Introductory paragraph</a></li>
+<li><a class="reference internal" href="#description-of-target-audience">Description of target audience</a></li>
+<li><a class="reference internal" href="#goals-of-document">Goals of document</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example-code">Example code</a></li>
+<li><a class="reference internal" href="#conclusions">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="coding-standard.html"
+                                  title="previous chapter">Twisted Coding Standard</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="test-standard.html"
+                                  title="next chapter">Unit Tests in Twisted</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../../_sources/core/development/policy/writing-standard.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

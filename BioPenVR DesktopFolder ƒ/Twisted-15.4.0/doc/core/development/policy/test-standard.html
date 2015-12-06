@@ -1,0 +1,539 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Unit Tests in Twisted &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Twisted Development Policy" href="index.html" />
+    <link rel="next" title="Working from Twisted’s Subversion repository" href="svn-dev.html" />
+    <link rel="prev" title="Twisted Writing Standard" href="writing-standard.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="svn-dev.html" title="Working from Twisted’s Subversion repository"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="writing-standard.html" title="Twisted Writing Standard"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="../index.html" >Development of Twisted</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Twisted Development Policy</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="unit-tests-in-twisted">
+<h1>Unit Tests in Twisted<a class="headerlink" href="#unit-tests-in-twisted" title="Permalink to this headline">¶</a></h1>
+<p>Each <em>unit test</em> tests one bit of functionality in the
+software.  Unit tests are entirely automated and complete quickly.
+Unit tests for the entire system are gathered into one test suite,
+and may all be run in a single batch.  The result of a unit test
+is simple: either it passes, or it doesn&#8217;t.  All this means you
+can test the entire system at any time without inconvenience, and
+quickly see what passes and what fails.</p>
+<div class="section" id="unit-tests-in-the-twisted-philosophy">
+<h2>Unit Tests in the Twisted Philosophy<a class="headerlink" href="#unit-tests-in-the-twisted-philosophy" title="Permalink to this headline">¶</a></h2>
+<p>The Twisted development team adheres to the practice of <a class="reference external" href="http://c2.com/cgi/wiki?ExtremeProgramming">Extreme Programming</a> (XP),
+and the usage of unit tests is a cornerstone XP practice.  Unit tests are a
+tool to give you increased confidence.  You changed an algorithm &#8211; did you
+break something?  Run the unit tests.  If a test fails, you know where to
+look, because each test covers only a small amount of code, and you know it
+has something to do with the changes you just made.  If all the tests pass,
+you&#8217;re good to go, and you don&#8217;t need to second-guess yourself or worry that
+you just accidentally broke someone else&#8217;s program.</p>
+</div>
+<div class="section" id="what-to-test-what-not-to-test">
+<h2>What to Test, What Not to Test<a class="headerlink" href="#what-to-test-what-not-to-test" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>You don&#8217;t have to write a test for every single
+method you write, only production methods that could possibly break.</div></blockquote>
+<p>&#8211; Kent Beck, Extreme Programming Explained</p>
+</div>
+<div class="section" id="running-the-tests">
+<h2>Running the Tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how">
+<h3>How<a class="headerlink" href="#how" title="Permalink to this headline">¶</a></h3>
+<p>From the root of the Twisted source tree, run
+<a class="reference external" href="http://twistedmatrix.com/trac/wiki/TwistedTrial">Trial</a> :</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> bin/trial twisted
+</pre></div>
+</div>
+<p>You&#8217;ll find that having something like this in your emacs init
+files is quite handy:</p>
+<div class="highlight-python"><div class="highlight"><pre>(defun runtests () (interactive)
+  (compile &quot;python /somepath/Twisted/bin/trial /somepath/Twisted&quot;))
+
+(global-set-key [(alt t)] &#39;runtests)
+</pre></div>
+</div>
+</div>
+<div class="section" id="when">
+<h3>When<a class="headerlink" href="#when" title="Permalink to this headline">¶</a></h3>
+<p>Always, always, <em>always</em> be sure <a class="reference external" href="http://www.xprogramming.com/xpmag/expUnitTestsAt100.htm">all the     tests pass</a> before committing any code.  If someone else
+checks out code at the start of a development session and finds
+failing tests, they will not be happy and may decide to <em>hunt you down</em> .</p>
+<p>Since this is a geographically dispersed team, the person who can help
+you get your code working probably isn&#8217;t in the room with you.  You may want
+to share your work in progress over the network, but you want to leave the
+main Subversion tree in good working order.
+So <a class="reference external" href="http://svnbook.red-bean.com/en/1.0/ch04.html">use a branch</a> ,
+and merge your changes back in only after your problem is solved and all the
+unit tests pass again.</p>
+</div>
+</div>
+<div class="section" id="adding-a-test">
+<h2>Adding a Test<a class="headerlink" href="#adding-a-test" title="Permalink to this headline">¶</a></h2>
+<p>Please don&#8217;t add new modules to Twisted without adding tests
+for them too.  Otherwise we could change something which breaks
+your module and not find out until later, making it hard to know
+exactly what the change that broke it was, or until after a
+release, and nobody wants broken code in a release.</p>
+<p>Tests go into dedicated test packages such as
+<code class="docutils literal"><span class="pre">twisted/test/</span></code> or <code class="docutils literal"><span class="pre">twisted/conch/test/</span></code> ,
+and are named <code class="docutils literal"><span class="pre">test_foo.py</span></code> , where <code class="docutils literal"><span class="pre">foo</span></code> is the name
+of the module or package being tested. Extensive documentation on using
+the PyUnit framework for writing unit tests can be found in the
+<a class="reference internal" href="#core-development-policy-test-standard-links"><span class="std std-ref">links section</span></a> below.</p>
+<p>One deviation from the standard PyUnit documentation: To ensure
+that any variations in test results are due to variations in the
+code or environment and not the test process itself, Twisted ships
+with its own, compatible, testing framework.  That just
+means that when you import the unittest module, you will <code class="docutils literal"><span class="pre">from</span> <span class="pre">twisted.trial</span> <span class="pre">import</span> <span class="pre">unittest</span></code> instead of the
+standard <code class="docutils literal"><span class="pre">import</span> <span class="pre">unittest</span></code> .</p>
+<p>As long as you have followed the module naming and placement
+conventions, <code class="docutils literal"><span class="pre">trial</span></code> will be smart
+enough to pick up any new tests you write.</p>
+<p>PyUnit provides a large number of assertion methods to be used when
+writing tests.  Many of these are redundant.  For consistency, Twisted
+unit tests should use the <code class="docutils literal"><span class="pre">assert</span></code> forms rather than the
+<code class="docutils literal"><span class="pre">fail</span></code> forms.  Also, use <code class="docutils literal"><span class="pre">assertEqual</span></code> ,
+<code class="docutils literal"><span class="pre">assertNotEqual</span></code> , and <code class="docutils literal"><span class="pre">assertAlmostEqual</span></code> rather
+than <code class="docutils literal"><span class="pre">assertEquals</span></code> , <code class="docutils literal"><span class="pre">assertNotEquals</span></code> , and
+<code class="docutils literal"><span class="pre">assertAlmostEquals</span></code> .  <code class="docutils literal"><span class="pre">assertTrue</span></code> is also
+preferred over <code class="docutils literal"><span class="pre">assert_</span></code> .  You may notice this convention is
+not followed everywhere in the Twisted codebase.  If you are changing
+some test code and notice the wrong method being used in nearby code,
+feel free to adjust it.</p>
+<p>When you add a unit test, make sure all methods have docstrings
+specifying at a high level the intent of the test. That is, a description
+that users of the method would understand.</p>
+</div>
+<div class="section" id="test-implementation-guidelines">
+<h2>Test Implementation Guidelines<a class="headerlink" href="#test-implementation-guidelines" title="Permalink to this headline">¶</a></h2>
+<p>Here are some guidelines to follow when writing tests for the Twisted
+test suite.  Many tests predate these guidelines and so do not follow them.
+When in doubt, follow the guidelines given here, not the example of old unit
+tests.</p>
+<div class="section" id="naming-test-classes">
+<h3>Naming Test Classes<a class="headerlink" href="#naming-test-classes" title="Permalink to this headline">¶</a></h3>
+<p>When writing tests for the Twisted test suite, test classes are named
+<code class="docutils literal"><span class="pre">FooTests</span></code>, where <code class="docutils literal"><span class="pre">Foo</span></code> is the name of the component being tested.
+Here is an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SSHClientTests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_sshClient</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">foo</span><span class="p">()</span> <span class="c"># the actual test</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="real-i-o">
+<h3>Real I/O<a class="headerlink" href="#real-i-o" title="Permalink to this headline">¶</a></h3>
+<p>Most unit tests should avoid performing real, platform-implemented I/O
+operations.  Real I/O is slow, unreliable, and unwieldy.  When implementing
+a protocol, <code class="docutils literal"><span class="pre">twisted.test.proto_helpers.StringTransport</span></code> can be
+used instead of a real TCP transport.  <code class="docutils literal"><span class="pre">StringTransport</span></code> is fast,
+deterministic, and can easily be used to exercise all possible network
+behaviors.</p>
+</div>
+<div class="section" id="real-time">
+<h3>Real Time<a class="headerlink" href="#real-time" title="Permalink to this headline">¶</a></h3>
+<p>Most unit tests should also avoid waiting for real time to pass.  Unit
+tests which construct and advance
+a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.task.Clock.html">twisted.internet.task.Clock</a> are fast and
+deterministic.</p>
+</div>
+<div class="section" id="the-global-reactor">
+<h3>The Global Reactor<a class="headerlink" href="#the-global-reactor" title="Permalink to this headline">¶</a></h3>
+<p>Since unit tests are avoiding real I/O and real time, they can usually
+avoid using a real reactor.  The only exceptions to this are unit tests for
+a real reactor implementation.  Unit tests for protocol implementations or
+other application code should not use a reactor.  Unit tests for real
+reactor implementations should not use the global reactor, but should
+instead use <code class="docutils literal"><span class="pre">twisted.internet.test.reactormixins.ReactorBuilder</span></code>
+so they can be applied to all of the reactor implementations automatically.
+In no case should new unit tests use the global reactor.</p>
+</div>
+</div>
+<div class="section" id="skipping-tests">
+<h2>Skipping Tests<a class="headerlink" href="#skipping-tests" title="Permalink to this headline">¶</a></h2>
+<p>Trial, the Twisted unit test framework, has some extensions which are
+designed to encourage developers to add new tests. One common situation is
+that a test exercises some optional functionality: maybe it depends upon
+certain external libraries being available, maybe it only works on certain
+operating systems. The important common factor is that nobody considers
+these limitations to be a bug.</p>
+<p>To make it easy to test as much as possible, some tests may be skipped in
+certain situations. Individual test cases can raise the <code class="docutils literal"><span class="pre">SkipTest</span></code> exception to indicate that they should be skipped, and
+the remainder of the test is not run. In the summary (the very last thing
+printed, at the bottom of the test output) the test is counted as a&#8221;skip&#8221; instead of a &#8220;success&#8221; or &#8220;fail&#8221; . This should be used
+inside a conditional which looks for the necessary prerequisites:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SSHClientTests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_sshClient</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ssh_path</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">unittest</span><span class="o">.</span><span class="n">SkipTest</span><span class="p">(</span><span class="s">&quot;cannot find ssh, nothing to test&quot;</span><span class="p">)</span>
+        <span class="n">foo</span><span class="p">()</span> <span class="c"># do actual test after the SkipTest</span>
+</pre></div>
+</div>
+<p>You can also set the <code class="docutils literal"><span class="pre">.skip</span></code> attribute on the method, with a
+string to indicate why the test is being skipped. This is convenient for
+temporarily turning off a test case, but it can also be set conditionally (by
+manipulating the class attributes after they&#8217;ve been defined):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SomeThingTests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_thing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dotest</span><span class="p">()</span>
+    <span class="n">test_thing</span><span class="o">.</span><span class="n">skip</span> <span class="o">=</span> <span class="s">&quot;disabled locally&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyTests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_one</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">test_thing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dotest</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">haveThing</span><span class="p">:</span>
+    <span class="n">MyTests</span><span class="o">.</span><span class="n">test_thing</span><span class="o">.</span><span class="n">im_func</span><span class="o">.</span><span class="n">skip</span> <span class="o">=</span> <span class="s">&quot;cannot test without Thing&quot;</span>
+    <span class="c"># but test_one() will still run</span>
+</pre></div>
+</div>
+<p>Finally, you can turn off an entire TestCase at once by setting the .skip
+attribute on the class. If you organize your tests by the functionality they
+depend upon, this is a convenient way to disable just the tests which cannot
+be run.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">TCPTests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="o">...</span>
+<span class="k">class</span> <span class="nc">SSLTests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">haveSSL</span><span class="p">:</span>
+        <span class="n">skip</span> <span class="o">=</span> <span class="s">&quot;cannot test without SSL support&quot;</span>
+    <span class="c"># but TCPTests will still run</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-new-functionality">
+<h2>Testing New Functionality<a class="headerlink" href="#testing-new-functionality" title="Permalink to this headline">¶</a></h2>
+<p>Two good practices which arise from the &#8220;XP&#8221; development process are
+sometimes at odds with each other:</p>
+<ul class="simple">
+<li>Unit tests are a good thing. Good developers recoil in horror when
+they see a failing unit test. They should drop everything until the test
+has been fixed.</li>
+<li>Good developers write the unit tests first. Once tests are done, they
+write implementation code until the unit tests pass. Then they stop.</li>
+</ul>
+<p>These two goals will sometimes conflict. The unit tests that are written
+first, before any implementation has been done, are certain to fail. We want
+developers to commit their code frequently, for reliability and to improve
+coordination between multiple people working on the same problem together.
+While the code is being written, other developers (those not involved in the
+new feature) should not have to pay attention to failures in the new code.
+We should not dilute our well-indoctrinated Failing Test Horror Syndrome by
+crying wolf when an incomplete module has not yet started passing its unit
+tests. To do so would either teach the module author to put off writing or
+committing their unit tests until <em>after</em> all the functionality is
+working, or it would teach the other developers to ignore failing test
+cases. Both are bad things.</p>
+<p>&#8221;.todo&#8221; is intended to solve this problem. When a developer first
+starts writing the unit tests for functionality that has not yet been
+implemented, they can set the <code class="docutils literal"><span class="pre">.todo</span></code> attribute on the test
+methods that are expected to fail. These methods will still be run, but
+their failure will not be counted the same as normal failures: they will go
+into an &#8220;expected failures&#8221; category. Developers should learn to treat
+this category as a second-priority queue, behind actual test failures.</p>
+<p>As the developer implements the feature, the tests will eventually start
+passing. This is surprising: after all those tests are marked as being
+expected to fail. The .todo tests which nevertheless pass are put into a&#8221;unexpected success&#8221; category. The developer should remove the .todo
+tag from these tests. At that point, they become normal tests, and their
+failure is once again cause for immediate action by the entire development
+team.</p>
+<p>The life cycle of a test is thus:</p>
+<ol class="arabic simple">
+<li>Test is created, marked <code class="docutils literal"><span class="pre">.todo</span></code> . Test fails: &#8220;expected failure&#8221; .</li>
+<li>Code is written, test starts to pass. &#8220;unexpected success&#8221; .</li>
+<li><code class="docutils literal"><span class="pre">.todo</span></code> tag is removed. Test passes. &#8220;success&#8221; .</li>
+<li>Code is broken, test starts to fail. &#8220;failure&#8221; . Developers spring
+into action.</li>
+<li>Code is fixed, test passes once more. &#8220;success&#8221; .</li>
+</ol>
+<p><code class="docutils literal"><span class="pre">.todo</span></code> may be of use while you are developing a feature, but by the time you are ready to commit anything all the tests you have written should be passing.
+In other words <strong>never</strong> commit to trunk tests marked as <code class="docutils literal"><span class="pre">.todo</span></code>.
+For unfinished tests you should create a follow up ticket and add the tests to the ticket&#8217;s description.</p>
+<p>You can also ignore the <code class="docutils literal"><span class="pre">.todo</span></code> marker and just make sure you write test first to see them failing before starting to work on the fix.</p>
+</div>
+<div class="section" id="line-coverage-information">
+<h2>Line Coverage Information<a class="headerlink" href="#line-coverage-information" title="Permalink to this headline">¶</a></h2>
+<p>Trial provides line coverage information, which is very useful to ensure
+old code has decent coverage. Passing the <code class="docutils literal"><span class="pre">--coverage</span></code> option to Trial will generate the coverage information in a file called <code class="docutils literal"><span class="pre">coverage</span></code> which can be found in the <code class="docutils literal"><span class="pre">_trial_temp</span></code>
+folder.</p>
+</div>
+<div class="section" id="associating-test-cases-with-source-files">
+<h2>Associating Test Cases With Source Files<a class="headerlink" href="#associating-test-cases-with-source-files" title="Permalink to this headline">¶</a></h2>
+<p>Please add a <code class="docutils literal"><span class="pre">test-case-name</span></code> tag to the source file that is
+covered by your new test. This is a comment at the beginning of the file
+which looks like one of the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- test-case-name: twisted.test.test_defer -*-</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- test-case-name: twisted.test.test_defer -*-</span>
+</pre></div>
+</div>
+<p>This format is understood by emacs to mark &#8220;File Variables&#8221; . The
+intention is to accept <code class="docutils literal"><span class="pre">test-case-name</span></code> anywhere emacs would on
+the first or second line of the file (but not in the <code class="docutils literal"><span class="pre">File</span> <span class="pre">Variables:</span></code> block that emacs accepts at the end of the file). If you
+need to define other emacs file variables, you can either put them in the``File Variables:`` block or use a semicolon-separated list of
+variable definitions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- test-case-name: twisted.test.test_defer; fill-column: 75; -*-</span>
+</pre></div>
+</div>
+<p>If the code is exercised by multiple test cases, those may be marked by
+using a comma-separated list of tests, as follows: (NOTE: not all tools can
+handle this yet.. <code class="docutils literal"><span class="pre">trial</span> <span class="pre">--testmodule</span></code> does, though)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- test-case-name: twisted.test.test_defer,twisted.test.test_tcp -*-</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">test-case-name</span></code> tag will allow <code class="docutils literal"><span class="pre">trial</span> <span class="pre">--testmodule</span> <span class="pre">twisted/dir/myfile.py</span></code> to determine which test cases need
+to be run to exercise the code in <code class="docutils literal"><span class="pre">myfile.py</span></code> . Several tools (as
+well as <a class="reference external" href="http://launchpad.net/twisted-emacs's">http://launchpad.net/twisted-emacs&#8217;s</a> <code class="docutils literal"><span class="pre">twisted-dev.el</span></code> &#8216;s F9 command) use this to automatically
+run the right tests.</p>
+</div>
+<div class="section" id="links">
+<h2>Links<a class="headerlink" href="#links" title="Permalink to this headline">¶</a></h2>
+<ul class="simple" id="core-development-policy-test-standard-links">
+<li>A chapter on <a class="reference external" href="http://diveintopython.org/unit_testing/index.html">Unit Testing</a>
+in Mark Pilgrim&#8217;s <a class="reference external" href="http://diveintopython.org">Dive Into      Python</a> .</li>
+<li><a class="reference external" href="http://docs.python.org/library/unittest.html">unittest</a> module documentation, in the <a class="reference external" href="http://docs.python.org/library">Python Library      Reference</a> .</li>
+<li><a class="reference external" href="http://c2.com/cgi/wiki?UnitTest">UnitTest</a> on
+the <a class="reference external" href="http://c2.com/cgi/wiki">PortlandPatternRepository      Wiki</a> , where all the cool <a class="reference external" href="http://c2.com/cgi/wiki?ExtremeProgramming">ExtremeProgramming</a> kids hang out.</li>
+<li><a class="reference external" href="http://www.extremeprogramming.org/rules/unittests.html">Unit      Tests</a> in <a class="reference external" href="http://www.extremeprogramming.org">Extreme Programming: A Gentle Introduction</a> .</li>
+<li>Ron Jeffries expounds on the importance of <a class="reference external" href="http://www.xprogramming.com/xpmag/expUnitTestsAt100.htm">Unit      Tests at 100%</a> .</li>
+<li>Ron Jeffries writes about the <a class="reference external" href="http://www.xprogramming.com/Practices/PracUnitTest.html">Unit      Test</a> in the <a class="reference external" href="http://www.xprogramming.com/Practices/xpractices.htm">Extreme      Programming practices of C3</a> .</li>
+<li><a class="reference external" href="http://pyunit.sourceforge.net">PyUnit&#8217;s homepage</a> .</li>
+<li>The top-level tests directory, <a class="reference external" href="http://twistedmatrix.com/trac/browser/trunk/twisted/test">twisted/test</a> , in Subversion.</li>
+</ul>
+<p>See also <a class="reference internal" href="../../howto/testing.html"><span class="doc">Tips for writing tests for Twisted code</span></a> .</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Unit Tests in Twisted</a><ul>
+<li><a class="reference internal" href="#unit-tests-in-the-twisted-philosophy">Unit Tests in the Twisted Philosophy</a></li>
+<li><a class="reference internal" href="#what-to-test-what-not-to-test">What to Test, What Not to Test</a></li>
+<li><a class="reference internal" href="#running-the-tests">Running the Tests</a><ul>
+<li><a class="reference internal" href="#how">How</a></li>
+<li><a class="reference internal" href="#when">When</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#adding-a-test">Adding a Test</a></li>
+<li><a class="reference internal" href="#test-implementation-guidelines">Test Implementation Guidelines</a><ul>
+<li><a class="reference internal" href="#naming-test-classes">Naming Test Classes</a></li>
+<li><a class="reference internal" href="#real-i-o">Real I/O</a></li>
+<li><a class="reference internal" href="#real-time">Real Time</a></li>
+<li><a class="reference internal" href="#the-global-reactor">The Global Reactor</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#skipping-tests">Skipping Tests</a></li>
+<li><a class="reference internal" href="#testing-new-functionality">Testing New Functionality</a></li>
+<li><a class="reference internal" href="#line-coverage-information">Line Coverage Information</a></li>
+<li><a class="reference internal" href="#associating-test-cases-with-source-files">Associating Test Cases With Source Files</a></li>
+<li><a class="reference internal" href="#links">Links</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="writing-standard.html"
+                                  title="previous chapter">Twisted Writing Standard</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="svn-dev.html"
+                                  title="next chapter">Working from Twisted&#8217;s Subversion repository</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../../_sources/core/development/policy/test-standard.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Web Application Development &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="HTML Templating with twisted.web.template" href="twisted-templates.html" />
+    <link rel="prev" title="Configuring and Using the Twisted Web Server" href="using-twistedweb.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="twisted-templates.html" title="HTML Templating with twisted.web.template"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="using-twistedweb.html" title="Configuring and Using the Twisted Web Server"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Web</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="web-application-development">
+<h1>Web Application Development<a class="headerlink" href="#web-application-development" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="code-layout">
+<h2>Code layout<a class="headerlink" href="#code-layout" title="Permalink to this headline">¶</a></h2>
+<p>The development of a Twisted Web application should be orthogonal to its
+deployment.  This means is that if you are developing a web application, it
+should be a resource with children, and internal links.  Some of the children
+might use <a class="reference external" href="https://launchpad.net/nevow">Nevow</a> , some
+might be resources manually using <code class="docutils literal"><span class="pre">.write</span></code> , and so on.  Regardless,
+the code should be in a Python module, or package, <em>outside</em> the web
+tree.</p>
+<p>You will probably want to test your application as you develop it.  There are
+many ways to test, including dropping an <code class="docutils literal"><span class="pre">.rpy</span></code> which looks
+like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">mypackage</span> <span class="kn">import</span> <span class="n">toplevel</span>
+<span class="n">resource</span> <span class="o">=</span> <span class="n">toplevel</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&quot;foo/bar&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>into a directory, and then running:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">%</span> twistd web --path<span class="o">=</span>/directory
+</pre></div>
+</div>
+<p>You can also write a Python script like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">twisted.web</span> <span class="kn">import</span> <span class="n">server</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">mypackage</span> <span class="kn">import</span> <span class="n">toplevel</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8080</span><span class="p">,</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">Site</span><span class="p">(</span><span class="n">toplevel</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s">&quot;foo/bar&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)))</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="web-application-deployment">
+<h2>Web application deployment<a class="headerlink" href="#web-application-deployment" title="Permalink to this headline">¶</a></h2>
+<p>Which one of these development strategies you use is not terribly important,
+since (and this is the important part) deployment is <em>orthogonal</em> .
+Later, when you want users to actually <em>use</em> your code, you should worry
+about what to do &#8211; or rather, don&#8217;t.  Users may have widely different needs.
+Some may want to run your code in a different process, so they&#8217;ll use
+distributed web (<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.distrib.html">twisted.web.distrib</a> ).  Some may be
+using the <code class="docutils literal"><span class="pre">twisted-web</span></code> Debian package, and will drop in:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">%</span> cat &gt; /etc/local.d/99addmypackage.py
+<span class="go">from mypackage import toplevel</span>
+<span class="go">default.putChild(&quot;mypackage&quot;, toplevel.Resource(file=&quot;foo/bar&quot;, color=&quot;blue&quot;))</span>
+<span class="go">^D</span>
+</pre></div>
+</div>
+<p>If you want to be friendly to your users, you can supply many examples in
+your package, like the above <code class="docutils literal"><span class="pre">.rpy</span></code> and the Debian-package drop-in.
+But the <em>ultimate</em> friendliness is to write a useful resource which does
+not have deployment assumptions built in.</p>
+</div>
+<div class="section" id="understanding-resource-scripts-rpy-files">
+<h2>Understanding resource scripts (<code class="docutils literal"><span class="pre">.rpy</span></code>  files)<a class="headerlink" href="#understanding-resource-scripts-rpy-files" title="Permalink to this headline">¶</a></h2>
+<p>Twisted Web is not PHP &#8211; it has better tools for organizing code Python
+modules and packages, so use them.  In PHP, the only tool for organizing code is
+a web page, which leads to silly things like PHP pages full of functions that
+other pages import, and so on.  If you were to write your code this way with
+Twisted Web, you would do web development using many <code class="docutils literal"><span class="pre">.rpy</span></code> files,
+all importing some Python module. This is a <em>bad idea</em> &#8211; it mashes
+deployment with development, and makes sure your users will be <em>tied</em> to
+the file-system.</p>
+<p>We have <code class="docutils literal"><span class="pre">.rpy</span></code> s because they are useful and necessary.
+But using them incorrectly leads to horribly unmaintainable
+applications.  The best way to ensure you are using them correctly is
+to not use them at all, until you are on your <em>final</em>
+deployment stages.  You should then find your <code class="docutils literal"><span class="pre">.rpy</span></code> files
+will be less than 10 lines, because you will not <em>have</em> more
+than 10 lines to write.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Web Application Development</a><ul>
+<li><a class="reference internal" href="#code-layout">Code layout</a></li>
+<li><a class="reference internal" href="#web-application-deployment">Web application deployment</a></li>
+<li><a class="reference internal" href="#understanding-resource-scripts-rpy-files">Understanding resource scripts (<code class="docutils literal"><span class="pre">.rpy</span></code>  files)</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="using-twistedweb.html"
+                                  title="previous chapter">Configuring and Using the Twisted Web Server</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="twisted-templates.html"
+                                  title="next chapter">HTML Templating with twisted.web.template</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/web/howto/web-development.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

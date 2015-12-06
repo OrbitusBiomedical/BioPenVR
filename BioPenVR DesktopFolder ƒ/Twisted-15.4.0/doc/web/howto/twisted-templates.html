@@ -1,0 +1,750 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>HTML Templating with twisted.web.template &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Creating XML-RPC Servers and Clients with Twisted" href="xmlrpc.html" />
+    <link rel="prev" title="Web Application Development" href="web-development.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="xmlrpc.html" title="Creating XML-RPC Servers and Clients with Twisted"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="web-development.html" title="Web Application Development"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Web</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="html-templating-with-twisted-web-template">
+<h1>HTML Templating with twisted.web.template<a class="headerlink" href="#html-templating-with-twisted-web-template" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="a-very-quick-introduction-to-templating-in-python">
+<h2>A Very Quick Introduction To Templating In Python<a class="headerlink" href="#a-very-quick-introduction-to-templating-in-python" title="Permalink to this headline">¶</a></h2>
+<p>HTML templating is the process of transforming a template document (one which
+describes style and structure, but does not itself include any content) into
+some HTML output which includes information about objects in your application.
+There are many, many libraries for doing this in Python: to name a few, <a class="reference external" href="http://jinja.pocoo.org/">jinja2</a> , <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/templates/">django templates</a> ,
+and <a class="reference external" href="http://www.clearsilver.net/">clearsilver</a> .  You can easily use
+any of these libraries in your Twisted Web application, either by running them
+as <a class="reference internal" href="web-in-60/wsgi.html"><span class="doc">WSGI applications</span></a> or by calling your
+preferred templating system&#8217;s APIs to produce their output as strings, and then
+writing those strings to <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.http.Request.write.html">Request.write</a> .</p>
+<p>Before we begin explaining how to use it, I&#8217;d like to stress that you
+don&#8217;t <em>need</em> to use Twisted&#8217;s templating system if you prefer some other
+way to generate HTML.  Use it if it suits your personal style or your
+application, but feel free to use other things.  Twisted includes templating for
+its own use, because the <code class="docutils literal"><span class="pre">twisted.web</span></code> server needs to produce HTML
+in various places, and we didn&#8217;t want to add another large dependency for that.
+Twisted is <em>not</em> in any way incompatible with other systems, so that has
+nothing to do with the fact that we use our own.</p>
+</div>
+<div class="section" id="twisted-web-template-why-and-how-you-might-want-to-use-it">
+<h2>twisted.web.template - Why And How you Might Want to Use It<a class="headerlink" href="#twisted-web-template-why-and-how-you-might-want-to-use-it" title="Permalink to this headline">¶</a></h2>
+<p>Twisted includes a templating system, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.html">twisted.web.template</a> .  This can be convenient for Twisted
+applications that want to produce some basic HTML for a web interface without an
+additional dependency.</p>
+<p><code class="docutils literal"><span class="pre">twisted.web.template</span></code> also includes
+support for <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> s, so
+you can incrementally render the output of a page based on the results of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> s that your application
+has returned.  This feature is fairly unique among templating libraries.</p>
+<p>In <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.html">twisted.web.template</a> , templates are XHTML files
+which also contain a special namespace for indicating dynamic portions of the
+document. For example:</p>
+<p><a class="reference download internal" href="../../_downloads/template-1.xml"><code class="xref download docutils literal"><span class="pre">template-1.xml</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;html xmlns:t=&quot;http://twistedmatrix.com/ns/twisted.web.template/0.1&quot;&gt;
+&lt;body&gt;
+  &lt;div t:render=&quot;header&quot; /&gt;
+  &lt;div id=&quot;content&quot;&gt;
+    &lt;p&gt;Content goes here.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div t:render=&quot;footer&quot; /&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<p>The basic unit of templating is <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.Element.html">twisted.web.template.Element</a> . An Element is given a way of
+loading a bit of markup like the above example, and knows how to
+correlate <code class="docutils literal"><span class="pre">render</span></code>  attributes within that markup to Python methods
+exposed with <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.renderer.html">twisted.web.template.renderer</a> :</p>
+<p><a class="reference download internal" href="../../_downloads/element_1.py"><code class="xref download docutils literal"><span class="pre">element_1.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.template</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">XMLFile</span>
+<span class="kn">from</span> <span class="nn">twisted.python.filepath</span> <span class="kn">import</span> <span class="n">FilePath</span>
+
+<span class="k">class</span> <span class="nc">ExampleElement</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">XMLFile</span><span class="p">(</span><span class="n">FilePath</span><span class="p">(</span><span class="s">&#39;template-1.xml&#39;</span><span class="p">))</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tag</span><span class="p">(</span><span class="s">&#39;Header.&#39;</span><span class="p">)</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">footer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tag</span><span class="p">(</span><span class="s">&#39;Footer.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In order to combine the two, we must render the element.  For this simple
+example, we can use the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.flattenString.html">flattenString</a>  API, which will convert a
+single template object - such as an <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.Element.html">Element</a>  - into a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a>  which fires with a single string,
+the HTML output of the rendering process.</p>
+<p><a class="reference download internal" href="../../_downloads/render_1.py"><code class="xref download docutils literal"><span class="pre">render_1.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.template</span> <span class="kn">import</span> <span class="n">flattenString</span>
+<span class="kn">from</span> <span class="nn">element_1</span> <span class="kn">import</span> <span class="n">ExampleElement</span>
+<span class="k">def</span> <span class="nf">renderDone</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">output</span>
+<span class="n">flattenString</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">ExampleElement</span><span class="p">())</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">renderDone</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This short program cheats a little bit; we know that there are no <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> s in the template which
+require the reactor to eventually fire; therefore, we can simply add a callback
+which outputs the result.  Also, none of the <code class="docutils literal"><span class="pre">renderer</span></code> functions
+require the <code class="docutils literal"><span class="pre">request</span></code> object, so it&#8217;s acceptable to
+pass <code class="docutils literal"><span class="pre">None</span></code> through here.  (The &#8216;request&#8217; object here is used only to
+relay information about the rendering process to each renderer, so you may
+always use whatever object makes sense for your application.  Note, however,
+that renderers from library code may require an <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.iweb.IRequest.html">IRequest</a> .)</p>
+<p>If you run it yourself, you can see that it produces the following output:</p>
+<p><a class="reference download internal" href="../../_downloads/output-1.html"><code class="xref download docutils literal"><span class="pre">output-1.html</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;html&gt;
+&lt;body&gt;
+  &lt;div&gt;Header.&lt;/div&gt;
+  &lt;div id=&quot;content&quot;&gt;
+    &lt;p&gt;Content goes here.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div&gt;Footer.&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<p>The third parameter to a renderer method is a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.Tag.html">Tag</a>  object which represents the XML element
+with the <code class="docutils literal"><span class="pre">t:render</span></code>  attribute in the template. Calling a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.Tag.html">Tag</a>  adds children to the element
+in the DOM, which may be strings, more <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.Tag.html">Tag</a> s, or other renderables such as <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.Element.html">Element</a> s.
+For example, to make the header and footer bold:</p>
+<p><a class="reference download internal" href="../../_downloads/element_2.py"><code class="xref download docutils literal"><span class="pre">element_2.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.template</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">XMLFile</span><span class="p">,</span> <span class="n">tags</span>
+<span class="kn">from</span> <span class="nn">twisted.python.filepath</span> <span class="kn">import</span> <span class="n">FilePath</span>
+
+<span class="k">class</span> <span class="nc">ExampleElement</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">XMLFile</span><span class="p">(</span><span class="n">FilePath</span><span class="p">(</span><span class="s">&#39;template-1.xml&#39;</span><span class="p">))</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tag</span><span class="p">(</span><span class="n">tags</span><span class="o">.</span><span class="n">b</span><span class="p">(</span><span class="s">&#39;Header.&#39;</span><span class="p">))</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">footer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tag</span><span class="p">(</span><span class="n">tags</span><span class="o">.</span><span class="n">b</span><span class="p">(</span><span class="s">&#39;Footer.&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Rendering this in a similar way to the first example would produce:</p>
+<p><a class="reference download internal" href="../../_downloads/output-2.html"><code class="xref download docutils literal"><span class="pre">output-2.html</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;html&gt;
+&lt;body&gt;
+  &lt;div&gt;&lt;b&gt;Header.&lt;/b&gt;&lt;/div&gt;
+  &lt;div id=&quot;content&quot;&gt;
+    &lt;p&gt;Content goes here.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div&gt;&lt;b&gt;Footer.&lt;/b&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<p>In addition to adding children, call syntax can be used to set attributes on a
+tag. For example, to change the <code class="docutils literal"><span class="pre">id</span></code>  on the <code class="docutils literal"><span class="pre">div</span></code>  while
+adding children:</p>
+<p><a class="reference download internal" href="../../_downloads/element_3.py"><code class="xref download docutils literal"><span class="pre">element_3.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.template</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">XMLFile</span><span class="p">,</span> <span class="n">tags</span>
+<span class="kn">from</span> <span class="nn">twisted.python.filepath</span> <span class="kn">import</span> <span class="n">FilePath</span>
+
+<span class="k">class</span> <span class="nc">ExampleElement</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">XMLFile</span><span class="p">(</span><span class="n">FilePath</span><span class="p">(</span><span class="s">&#39;template-1.xml&#39;</span><span class="p">))</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tag</span><span class="p">(</span><span class="n">tags</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="s">&#39;Header.&#39;</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="s">&#39;header&#39;</span><span class="p">)</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">footer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tag</span><span class="p">(</span><span class="n">tags</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="s">&#39;Footer.&#39;</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="s">&#39;footer&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And this would produce the following page:</p>
+<p><a class="reference download internal" href="../../_downloads/output-3.html"><code class="xref download docutils literal"><span class="pre">output-3.html</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;html&gt;
+&lt;body&gt;
+  &lt;div id=&quot;header&quot;&gt;&lt;p&gt;Header.&lt;/p&gt;&lt;/div&gt;
+  &lt;div id=&quot;content&quot;&gt;
+    &lt;p&gt;Content goes here.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;footer&quot;&gt;&lt;p&gt;Footer.&lt;/p&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<p>Calling a tag mutates it, it and returns the tag itself, so you can pass it
+forward and call it multiple times if you have multiple children or attributes
+to add to it. <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.html">twisted.web.template</a> also exposes some
+convenient objects for building more complex markup structures from within
+renderer methods in the <code class="docutils literal"><span class="pre">tags</span></code> object.  In the examples above, we&#8217;ve
+only used <code class="docutils literal"><span class="pre">tags.p</span></code> and <code class="docutils literal"><span class="pre">tags.b</span></code> , but there should be a <code class="docutils literal"><span class="pre">tags.x</span></code> for each <em>x</em> which is a valid HTML tag.  There may be
+some omissions, but if you find one, please feel free to file a bug.</p>
+<div class="section" id="template-attributes">
+<h3>Template Attributes<a class="headerlink" href="#template-attributes" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">t:attr</span></code>  tags allow you to set HTML attributes
+(like <code class="docutils literal"><span class="pre">href</span></code>  in an <code class="docutils literal"><span class="pre">&lt;a</span> <span class="pre">href=&quot;...</span></code> ) on an enclosing
+element.</p>
+</div>
+<div class="section" id="slots">
+<h3>Slots<a class="headerlink" href="#slots" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">t:slot</span></code>  tags allow you to specify &#8220;slots&#8221; which you can
+conveniently fill with multiple pieces of data straight from your Python
+program.</p>
+<p>The following example demonstrates both <code class="docutils literal"><span class="pre">t:attr</span></code>
+and <code class="docutils literal"><span class="pre">t:slot</span></code>  in action. Here we have a layout which displays a person&#8217;s
+profile on your snazzy new Twisted-powered social networking site. We use
+the <code class="docutils literal"><span class="pre">t:attr</span></code>  tag to drop in the &#8220;src&#8221; attribute on the profile picture,
+where the actual value of src attribute gets specified by a <code class="docutils literal"><span class="pre">t:slot</span></code>
+tag <em>within</em>  the <code class="docutils literal"><span class="pre">t:attr</span></code>  tag. Confused? It should make more
+sense when you see the code:</p>
+<p><a class="reference download internal" href="../../_downloads/slots-attributes-1.xml"><code class="xref download docutils literal"><span class="pre">slots-attributes-1.xml</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;div xmlns:t=&quot;http://twistedmatrix.com/ns/twisted.web.template/0.1&quot;
+    t:render=&quot;person_profile&quot;
+    class=&quot;profile&quot;&gt;
+&lt;img&gt;&lt;t:attr name=&quot;src&quot;&gt;&lt;t:slot name=&quot;profile_image_url&quot; /&gt;&lt;/t:attr&gt;&lt;/img&gt; 
+&lt;p&gt;&lt;t:slot name=&quot;person_name&quot; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/slots_attributes_1.py"><code class="xref download docutils literal"><span class="pre">slots_attributes_1.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.template</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">XMLFile</span>
+<span class="kn">from</span> <span class="nn">twisted.python.filepath</span> <span class="kn">import</span> <span class="n">FilePath</span>
+
+<span class="k">class</span> <span class="nc">ExampleElement</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">XMLFile</span><span class="p">(</span><span class="n">FilePath</span><span class="p">(</span><span class="s">&#39;slots-attributes-1.xml&#39;</span><span class="p">))</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">person_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="c"># Note how convenient it is to pass these attributes in!</span>
+        <span class="n">tag</span><span class="o">.</span><span class="n">fillSlots</span><span class="p">(</span><span class="n">person_name</span><span class="o">=</span><span class="s">&#39;Luke&#39;</span><span class="p">,</span>
+                      <span class="n">profile_image_url</span><span class="o">=</span><span class="s">&#39;http://example.com/user.png&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tag</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/slots-attributes-output.html"><code class="xref download docutils literal"><span class="pre">slots-attributes-output.html</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;div class=&quot;profile&quot;&gt;
+&lt;img src=&quot;http://example.com/user.png&quot; /&gt; 
+&lt;p&gt;Luke&lt;/p&gt;
+&lt;/div&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="iteration">
+<h3>Iteration<a class="headerlink" href="#iteration" title="Permalink to this headline">¶</a></h3>
+<p>Often, you will have a sequence of things, and want to render each of them,
+repeating a part of the template for each one. This can be done by
+cloning <code class="docutils literal"><span class="pre">tag</span></code> in your renderer:</p>
+<p><a class="reference download internal" href="../../_downloads/iteration-1.xml"><code class="xref download docutils literal"><span class="pre">iteration-1.xml</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;ul xmlns:t=&quot;http://twistedmatrix.com/ns/twisted.web.template/0.1&quot;&gt;
+    &lt;li t:render=&quot;widgets&quot;&gt;&lt;t:slot name=&quot;widgetName&quot;/&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/iteration-1.py"><code class="xref download docutils literal"><span class="pre">iteration-1.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.template</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">XMLFile</span><span class="p">,</span> <span class="n">flattenString</span>
+<span class="kn">from</span> <span class="nn">twisted.python.filepath</span> <span class="kn">import</span> <span class="n">FilePath</span>
+
+<span class="k">class</span> <span class="nc">WidgetsElement</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">XMLFile</span><span class="p">(</span><span class="n">FilePath</span><span class="p">(</span><span class="s">&#39;iteration-1.xml&#39;</span><span class="p">))</span>
+
+    <span class="n">widgetData</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;gadget&#39;</span><span class="p">,</span> <span class="s">&#39;contraption&#39;</span><span class="p">,</span> <span class="s">&#39;gizmo&#39;</span><span class="p">,</span> <span class="s">&#39;doohickey&#39;</span><span class="p">]</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgetData</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">tag</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span><span class="o">.</span><span class="n">fillSlots</span><span class="p">(</span><span class="n">widgetName</span><span class="o">=</span><span class="n">widget</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">printResult</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">result</span>
+
+<span class="n">flattenString</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">WidgetsElement</span><span class="p">())</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printResult</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/iteration-output-1.xml"><code class="xref download docutils literal"><span class="pre">iteration-output-1.xml</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;ul&gt;
+    &lt;li&gt;gadget&lt;/li&gt;&lt;li&gt;contraption&lt;/li&gt;&lt;li&gt;gizmo&lt;/li&gt;&lt;li&gt;doohickey&lt;/li&gt;
+&lt;/ul&gt;
+</pre></div>
+</div>
+<p>This renderer works because a renderer can return anything that can be
+rendered, not just <code class="docutils literal"><span class="pre">tag</span></code> . In this case, we define a generator, which
+returns a thing that is iterable. We also could have returned
+a <code class="docutils literal"><span class="pre">list</span></code> . Anything that is iterable will be rendered by <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.html">twisted.web.template</a> rendering each item in it. In
+this case, each item is a copy of the tag the renderer received, each filled
+with the name of a widget.</p>
+</div>
+<div class="section" id="sub-views">
+<h3>Sub-views<a class="headerlink" href="#sub-views" title="Permalink to this headline">¶</a></h3>
+<p>Another common pattern is to delegate the rendering logic for a small part of
+the page to a separate <code class="docutils literal"><span class="pre">Element</span></code> .  For example, the widgets from the
+iteration example above might be more complicated to render.  You can define
+an <code class="docutils literal"><span class="pre">Element</span></code> subclass which can render a single widget.  The renderer
+method on the container can then yield instances of this
+new <code class="docutils literal"><span class="pre">Element</span></code> subclass.</p>
+<p><a class="reference download internal" href="../../_downloads/subviews-1.xml"><code class="xref download docutils literal"><span class="pre">subviews-1.xml</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;ul xmlns:t=&quot;http://twistedmatrix.com/ns/twisted.web.template/0.1&quot;&gt;
+    &lt;li t:render=&quot;widgets&quot;&gt;&lt;span t:render=&quot;name&quot; /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/subviews-1.py"><code class="xref download docutils literal"><span class="pre">subviews-1.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.template</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">XMLFile</span><span class="p">,</span> <span class="n">TagLoader</span><span class="p">,</span> <span class="n">Element</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">flattenString</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">twisted.python.filepath</span> <span class="kn">import</span> <span class="n">FilePath</span>
+
+<span class="k">class</span> <span class="nc">WidgetsElement</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">XMLFile</span><span class="p">(</span><span class="n">FilePath</span><span class="p">(</span><span class="s">&#39;subviews-1.xml&#39;</span><span class="p">))</span>
+
+    <span class="n">widgetData</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;gadget&#39;</span><span class="p">,</span> <span class="s">&#39;contraption&#39;</span><span class="p">,</span> <span class="s">&#39;gizmo&#39;</span><span class="p">,</span> <span class="s">&#39;doohickey&#39;</span><span class="p">]</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgetData</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">WidgetElement</span><span class="p">(</span><span class="n">TagLoader</span><span class="p">(</span><span class="n">tag</span><span class="p">),</span> <span class="n">widget</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">WidgetElement</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">Element</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">printResult</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">result</span>
+
+<span class="n">flattenString</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">WidgetsElement</span><span class="p">())</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printResult</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/subviews-output-1.xml"><code class="xref download docutils literal"><span class="pre">subviews-output-1.xml</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;ul&gt;
+      &lt;li&gt;&lt;span&gt;gadget&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span&gt;contraption&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span&gt;gizmo&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span&gt;doohickey&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">TagLoader</span></code> lets the portion of the overall template related to
+widgets be re-used for <code class="docutils literal"><span class="pre">WidgetElement</span></code> , which is otherwise a
+normal <code class="docutils literal"><span class="pre">Element</span></code> subclass not much different
+from <code class="docutils literal"><span class="pre">WidgetsElement</span></code> .  Notice that the <em>name</em> renderer on
+the <code class="docutils literal"><span class="pre">span</span></code> tag in this template is satisfied
+from <code class="docutils literal"><span class="pre">WidgetElement</span></code> , not <code class="docutils literal"><span class="pre">WidgetsElement</span></code> .</p>
+</div>
+<div class="section" id="transparent">
+<h3>Transparent<a class="headerlink" href="#transparent" title="Permalink to this headline">¶</a></h3>
+<p>Note how renderers, slots and attributes require you to specify a renderer on
+some outer HTML element. What if you don&#8217;t want to be forced to add an element
+to your DOM just to drop some content into it? Maybe it messes with your
+layout, and you can&#8217;t get it to work in IE with that extra <code class="docutils literal"><span class="pre">div</span></code>
+tag? Perhaps you need <code class="docutils literal"><span class="pre">t:transparent</span></code> , which allows you to drop some
+content in without any surrounding &#8220;container&#8221; tag. For example:</p>
+<p><a class="reference download internal" href="../../_downloads/transparent-1.xml"><code class="xref download docutils literal"><span class="pre">transparent-1.xml</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;div xmlns:t=&quot;http://twistedmatrix.com/ns/twisted.web.template/0.1&quot;&gt;
+&lt;!-- layout decision - these things need to be *siblings* --&gt;
+&lt;t:transparent t:render=&quot;renderer1&quot; /&gt;
+&lt;t:transparent t:render=&quot;renderer2&quot; /&gt;
+&lt;/div&gt;
+
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/transparent_element.py"><code class="xref download docutils literal"><span class="pre">transparent_element.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.template</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">XMLFile</span>
+<span class="kn">from</span> <span class="nn">twisted.python.filepath</span> <span class="kn">import</span> <span class="n">FilePath</span>
+
+<span class="k">class</span> <span class="nc">ExampleElement</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">XMLFile</span><span class="p">(</span><span class="n">FilePath</span><span class="p">(</span><span class="s">&#39;transparent-1.xml&#39;</span><span class="p">))</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">renderer1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tag</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">renderer2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tag</span><span class="p">(</span><span class="s">&quot;world&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/transparent-output.html"><code class="xref download docutils literal"><span class="pre">transparent-output.html</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;div&gt;
+&lt;!-- layout decision - these things need to be *siblings* --&gt;
+hello
+world
+&lt;/div&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="quoting">
+<h2>Quoting<a class="headerlink" href="#quoting" title="Permalink to this headline">¶</a></h2>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.html">twisted.web.template</a>  will quote any strings that place
+into the DOM.  This provides protection against <a class="reference external" href="http://en.wikipedia.org/wiki/Cross-site_scripting">XSS attacks</a> , in
+addition to just generally making it easy to put arbitrary strings onto a web
+page, without worrying about what they might have in them.  This can easily be
+demonstrated with an element using the same template from our earlier examples.
+Here&#8217;s an element that returns some &#8220;special&#8221; characters in HTML (&#8216;&lt;&#8217;, &#8216;&gt;&#8217;,
+and &#8216;&#8221;&#8217;, which is special in attribute values):</p>
+<p><a class="reference download internal" href="../../_downloads/quoting_element.py"><code class="xref download docutils literal"><span class="pre">quoting_element.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.template</span> <span class="kn">import</span> <span class="n">Element</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">XMLFile</span>
+<span class="kn">from</span> <span class="nn">twisted.python.filepath</span> <span class="kn">import</span> <span class="n">FilePath</span>
+
+<span class="k">class</span> <span class="nc">ExampleElement</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">XMLFile</span><span class="p">(</span><span class="n">FilePath</span><span class="p">(</span><span class="s">&#39;template-1.xml&#39;</span><span class="p">))</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tag</span><span class="p">(</span><span class="s">&#39;&lt;&lt;&lt;Header&gt;&gt;&gt;!&#39;</span><span class="p">)</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">footer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tag</span><span class="p">(</span><span class="s">&#39;&gt;&gt;&gt;&quot;Footer!&quot;&lt;&lt;&lt;&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s">&#39;&lt;&quot;fun&quot;&gt;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that they are all safely quoted in the output, and will appear in a web
+browser just as you returned them from your Python method:</p>
+<p><a class="reference download internal" href="../../_downloads/quoting-output.html"><code class="xref download docutils literal"><span class="pre">quoting-output.html</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;html&gt;
+&lt;body&gt;
+  &lt;div&gt;&amp;lt;&amp;lt;&amp;lt;Header&amp;gt;&amp;gt;&amp;gt;!&lt;/div&gt;
+  &lt;div id=&quot;content&quot;&gt;
+    &lt;p&gt;Content goes here.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;&amp;lt;&amp;quot;fun&amp;quot;&amp;gt;&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&quot;Footer!&quot;&amp;lt;&amp;lt;&amp;lt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="deferreds">
+<h2>Deferreds<a class="headerlink" href="#deferreds" title="Permalink to this headline">¶</a></h2>
+<p>Finally, a simple demonstration of Deferred support, the unique feature of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.html">twisted.web.template</a> .  Simply put, any renderer may
+return a Deferred which fires with some template content instead of the template
+content itself.  As shown above, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.flattenString.html">flattenString</a>  will return a Deferred that
+fires with the full content of the string.  But if there&#8217;s a lot of content, you
+might not want to wait before starting to send some of it to your HTTP client:
+for that case, you can use <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.flatten.html">flatten</a> .
+It&#8217;s difficult to demonstrate this directly in a browser-based application;
+unless you insert very long delays before firing your Deferreds, it just looks
+like your browser is instantly displaying everything.  Here&#8217;s an example that
+just prints out some HTML template, with markers inserted for where certain
+events happen:</p>
+<p><a class="reference download internal" href="../../_downloads/wait_for_it.py"><code class="xref download docutils literal"><span class="pre">wait_for_it.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">twisted.web.template</span> <span class="kn">import</span> <span class="n">XMLString</span><span class="p">,</span> <span class="n">Element</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">flatten</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.defer</span> <span class="kn">import</span> <span class="n">Deferred</span>
+
+<span class="n">sample</span> <span class="o">=</span> <span class="n">XMLString</span><span class="p">(</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &lt;div xmlns:t=&quot;http://twistedmatrix.com/ns/twisted.web.template/0.1&quot;&gt;</span>
+<span class="sd">    Before waiting ...</span>
+<span class="sd">    &lt;span t:render=&quot;wait&quot;&gt;&lt;/span&gt;</span>
+<span class="sd">    ... after waiting.</span>
+<span class="sd">    &lt;/div&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">WaitForIt</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Element</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="o">=</span><span class="n">sample</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deferred</span> <span class="o">=</span> <span class="n">Deferred</span><span class="p">()</span>
+
+    <span class="nd">@renderer</span>
+    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">deferred</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">aValue</span><span class="p">:</span> <span class="n">tag</span><span class="p">(</span><span class="s">&quot;A value: &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">aValue</span><span class="p">)))</span>
+
+<span class="k">def</span> <span class="nf">done</span><span class="p">(</span><span class="n">ignore</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;[[[Deferred fired.]]]&quot;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;[[[Rendering the template.]]]&#39;</span><span class="p">)</span>
+<span class="n">it</span> <span class="o">=</span> <span class="n">WaitForIt</span><span class="p">()</span>
+<span class="n">flatten</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">)</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">done</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;[[[In progress... now firing the Deferred.]]]&#39;</span><span class="p">)</span>
+<span class="n">it</span><span class="o">.</span><span class="n">deferred</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="s">&quot;&lt;value&gt;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;[[[All done.]]]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you run this example, you should get the following output:</p>
+<p><a class="reference download internal" href="../../_downloads/waited-for-it.html"><code class="xref download docutils literal"><span class="pre">waited-for-it.html</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>[[[Rendering the template.]]]
+&lt;div&gt;
+    Before waiting ...
+    [[[In progress... now firing the Deferred.]]]
+&lt;span&gt;A value: &#39;&amp;lt;value&amp;gt;&#39;&lt;/span&gt;
+    ... after waiting.
+    &lt;/div&gt;[[[Deferred fired.]]]
+[[[All done.]]]
+</pre></div>
+</div>
+<p>This demonstrates that part of the output (everything up to
+&#8220;<code class="docutils literal"><span class="pre">[[[In</span> <span class="pre">progress...</span></code> &#8221;) is written out immediately as it&#8217;s rendered.
+But once it hits the Deferred, <code class="docutils literal"><span class="pre">WaitForIt</span></code> &#8216;s rendering needs to pause
+until <code class="docutils literal"><span class="pre">.callback(...)</span></code>  is called on that Deferred.  You can see that
+no further output is produced until the message indicating that the Deferred is
+being fired is complete.  By returning Deferreds and using <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.template.flatten.html">flatten</a> , you can avoid buffering large
+amounts of data.</p>
+</div>
+<div class="section" id="a-brief-note-on-formats-and-doctypes">
+<h2>A Brief Note on Formats and DOCTYPEs<a class="headerlink" href="#a-brief-note-on-formats-and-doctypes" title="Permalink to this headline">¶</a></h2>
+<p>The goal of <code class="docutils literal"><span class="pre">twisted.web.template</span></code> is to emit both valid <a class="reference external" href="http://whatwg.org/html">HTML</a> or <a class="reference external" href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-xhtml-syntax.html#the-xhtml-syntax">XHTML</a> .
+However, in order to get the maximally standards-compliant output format you
+desire, you have to know which one you want, and take a few simple steps to emit
+it correctly.  Many browsers will probably work with most output if you ignore
+this section entirely, but <a class="reference external" href="http://www.whatwg.org/specs/web-apps/current-work/multipage/syntax.html#the-doctype">the    HTML specification recommends that you specify an appropriate DOCTYPE</a> .</p>
+<p>As a <code class="docutils literal"><span class="pre">DOCTYPE</span></code> declaration in your template would describe the
+template itself, rather than its output, it won&#8217;t be included in your output.
+If you wish to annotate your template output with a DOCTYPE, you will have to
+write it to the browser out of band.  One way to do this would be to simply
+do <code class="docutils literal"><span class="pre">request.write('&lt;!DOCTYPE</span> <span class="pre">html&gt;\n')</span></code> when you are ready to
+begin emitting your response.  The same goes for an XML <code class="docutils literal"><span class="pre">DOCTYPE</span></code>
+declaration.</p>
+<p><code class="docutils literal"><span class="pre">twisted.web.template</span></code> will remove the <code class="docutils literal"><span class="pre">xmlns</span></code> attributes
+used to declare
+the <code class="docutils literal"><span class="pre">http://twistedmatrix.com/ns/twisted.web.template/0.1</span></code> namespace,
+but it will not modify other namespace declaration attributes.  Therefore if you
+wish to serialize in HTML format, you should not use other namespaces; if you
+wish to serialize to XML, feel free to insert any namespace declarations that
+are appropriate, and they will appear in your output.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This relaxed approach is correct in many cases.  However, in certain contexts -
+especially &lt;script&gt; and &lt;style&gt; tags - quoting rules differ in
+significant ways between HTML and XML, and between different browsers&#8217; parsers
+in HTML.  If you want to generate dynamic content inside a script or stylesheet,
+the best option is to load the resource externally so you don&#8217;t have to worry
+about quoting rules.  The second best option is to strictly configure your
+content-types and DOCTYPE declarations for XML, whose quoting rules are simple
+and compatible with the approach that <code class="docutils literal"><span class="pre">twisted.web.template</span></code>  takes.
+And, please remember: regardless of how you put it there, any user input placed
+inside a &lt;script&gt; or &lt;style&gt; tag is a potential security issue.</p>
+</div>
+</div>
+<div class="section" id="a-bit-of-history">
+<h2>A Bit of History<a class="headerlink" href="#a-bit-of-history" title="Permalink to this headline">¶</a></h2>
+<p>Those of you who used Divmod Nevow may notice some
+similarities.  <code class="docutils literal"><span class="pre">twisted.web.template</span></code> is in fact derived from the
+latest version of Nevow, but includes only the latest components from Nevow&#8217;s
+rendering pipeline, and does not have any of the legacy compatibility layers
+that Nevow grew over time.  This should make
+using <code class="docutils literal"><span class="pre">twisted.web.template</span></code> a similar experience for many long-time
+users of Twisted who have previously used Nevow for its twisted-friendly
+templating, but more straightforward for new users.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">HTML Templating with twisted.web.template</a><ul>
+<li><a class="reference internal" href="#a-very-quick-introduction-to-templating-in-python">A Very Quick Introduction To Templating In Python</a></li>
+<li><a class="reference internal" href="#twisted-web-template-why-and-how-you-might-want-to-use-it">twisted.web.template - Why And How you Might Want to Use It</a><ul>
+<li><a class="reference internal" href="#template-attributes">Template Attributes</a></li>
+<li><a class="reference internal" href="#slots">Slots</a></li>
+<li><a class="reference internal" href="#iteration">Iteration</a></li>
+<li><a class="reference internal" href="#sub-views">Sub-views</a></li>
+<li><a class="reference internal" href="#transparent">Transparent</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#quoting">Quoting</a></li>
+<li><a class="reference internal" href="#deferreds">Deferreds</a></li>
+<li><a class="reference internal" href="#a-brief-note-on-formats-and-doctypes">A Brief Note on Formats and DOCTYPEs</a></li>
+<li><a class="reference internal" href="#a-bit-of-history">A Bit of History</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="web-development.html"
+                                  title="previous chapter">Web Application Development</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="xmlrpc.html"
+                                  title="next chapter">Creating XML-RPC Servers and Clients with Twisted</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/web/howto/twisted-templates.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

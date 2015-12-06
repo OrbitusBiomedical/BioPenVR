@@ -1,0 +1,675 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Evolution of Finger: configuration and packaging of the finger service &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Developer Guides" href="../index.html" />
+    <link rel="next" title="Setting up the TwistedQuotes application" href="../quotes.html" />
+    <link rel="prev" title="The Evolution of Finger: making a finger library" href="library.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../quotes.html" title="Setting up the TwistedQuotes application"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="library.html" title="The Evolution of Finger: making a finger library"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="the-evolution-of-finger-configuration-and-packaging-of-the-finger-service">
+<h1>The Evolution of Finger: configuration and packaging of the finger service<a class="headerlink" href="#the-evolution-of-finger-configuration-and-packaging-of-the-finger-service" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This is the eleventh part of the Twisted tutorial <a class="reference internal" href="index.html"><span class="doc">Twisted from Scratch, or The Evolution of Finger</span></a> .</p>
+<p>In this part, we make it easier for non-programmers to configure a finger
+server and show how to package it in the .deb and RPM package formats. Plugins
+are discussed further in the <a class="reference internal" href="../plugin.html"><span class="doc">Twisted Plugin System</span></a>
+howto. Writing twistd plugins is covered in <a class="reference internal" href="../tap.html"><span class="doc">Writing a twistd Plugin</span></a> , and .tac applications are covered in <a class="reference internal" href="../application.html"><span class="doc">Using the Twisted Application Framework</span></a> .</p>
+</div>
+<div class="section" id="plugins">
+<h2>Plugins<a class="headerlink" href="#plugins" title="Permalink to this headline">¶</a></h2>
+<p>So far, the user had to be somewhat of a programmer to be able to configure
+stuff. Maybe we can eliminate even that? Move old code
+to <code class="docutils literal"><span class="pre">finger/__init__.py</span></code> and...</p>
+<p>Full source code for finger module here:</p>
+<p><a class="reference download internal" href="../../../_downloads/finger.py"><code class="xref download docutils literal"><span class="pre">finger.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># finger.py module</span>
+
+<span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">Interface</span><span class="p">,</span> <span class="n">implements</span>
+
+<span class="kn">from</span> <span class="nn">twisted.application</span> <span class="kn">import</span> <span class="n">internet</span><span class="p">,</span> <span class="n">service</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">defer</span>
+<span class="kn">from</span> <span class="nn">twisted.words.protocols</span> <span class="kn">import</span> <span class="n">irc</span>
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">components</span><span class="p">,</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">twisted.web</span> <span class="kn">import</span> <span class="n">resource</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">xmlrpc</span>
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+
+<span class="kn">from</span> <span class="nn">OpenSSL</span> <span class="kn">import</span> <span class="n">SSL</span>
+
+<span class="k">class</span> <span class="nc">IFingerService</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">getUser</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a deferred returning a string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">getUsers</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a deferred returning a list of strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">IFingerSetterService</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUser</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the user&#39;s status to something.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">catchError</span><span class="p">(</span><span class="n">err</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&quot;Internal error in server&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">FingerProtocol</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">catchError</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">writeValue</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">value</span><span class="o">+</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">writeValue</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">IFingerFactory</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">getUser</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a deferred returning a string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">buildProtocol</span><span class="p">(</span><span class="n">addr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a protocol returning a string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">FingerFactoryFromService</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ServerFactory</span><span class="p">):</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">IFingerFactory</span><span class="p">)</span>
+
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">FingerProtocol</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">service</span> <span class="o">=</span> <span class="n">service</span>
+
+    <span class="k">def</span> <span class="nf">getUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+<span class="n">components</span><span class="o">.</span><span class="n">registerAdapter</span><span class="p">(</span><span class="n">FingerFactoryFromService</span><span class="p">,</span>
+                           <span class="n">IFingerService</span><span class="p">,</span>
+                           <span class="n">IFingerFactory</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">FingerSetterProtocol</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">setUser</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">IFingerSetterFactory</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUser</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a deferred returning a string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">buildProtocol</span><span class="p">(</span><span class="n">addr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a protocol returning a string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">FingerSetterFactoryFromService</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ServerFactory</span><span class="p">):</span>
+
+    <span class="n">implements</span><span class="p">(</span><span class="n">IFingerSetterFactory</span><span class="p">)</span>
+
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">FingerSetterProtocol</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">service</span> <span class="o">=</span> <span class="n">service</span>
+
+    <span class="k">def</span> <span class="nf">setUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">setUser</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+
+
+<span class="n">components</span><span class="o">.</span><span class="n">registerAdapter</span><span class="p">(</span><span class="n">FingerSetterFactoryFromService</span><span class="p">,</span>
+                           <span class="n">IFingerSetterService</span><span class="p">,</span>
+                           <span class="n">IFingerSetterFactory</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">IRCReplyBot</span><span class="p">(</span><span class="n">irc</span><span class="o">.</span><span class="n">IRCClient</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nickname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">nickname</span>
+        <span class="n">irc</span><span class="o">.</span><span class="n">IRCClient</span><span class="o">.</span><span class="n">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">privmsg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;!&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nickname</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">channel</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">catchError</span><span class="p">)</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="s">&quot;Status of </span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">IIRCClientFactory</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    @ivar nickname</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">getUser</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a deferred returning a string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">buildProtocol</span><span class="p">(</span><span class="n">addr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a protocol.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">IRCClientFactoryFromService</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ClientFactory</span><span class="p">):</span>
+
+    <span class="n">implements</span><span class="p">(</span><span class="n">IIRCClientFactory</span><span class="p">)</span>
+
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">IRCReplyBot</span>
+    <span class="n">nickname</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">service</span> <span class="o">=</span> <span class="n">service</span>
+
+    <span class="k">def</span> <span class="nf">getUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+<span class="n">components</span><span class="o">.</span><span class="n">registerAdapter</span><span class="p">(</span><span class="n">IRCClientFactoryFromService</span><span class="p">,</span>
+                           <span class="n">IFingerService</span><span class="p">,</span>
+                           <span class="n">IIRCClientFactory</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">UserStatusTree</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
+
+    <span class="n">template</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Users&lt;/title&gt;&lt;/head&gt;&lt;body&gt;</span>
+<span class="s">    &lt;h1&gt;Users&lt;/h1&gt;</span>
+<span class="s">    &lt;ul&gt;</span>
+<span class="s">    </span><span class="si">%(users)s</span><span class="s"></span>
+<span class="s">    &lt;/ul&gt;</span>
+<span class="s">    &lt;/body&gt;</span>
+<span class="s">    &lt;/html&gt;&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service</span><span class="p">):</span>
+        <span class="n">resource</span><span class="o">.</span><span class="n">Resource</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">service</span> <span class="o">=</span> <span class="n">service</span>
+
+    <span class="k">def</span> <span class="nf">getChild</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">elif</span> <span class="n">path</span> <span class="o">==</span> <span class="s">&#39;RPC2&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">UserStatusXR</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">UserStatus</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">render_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">users</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">getUsers</span><span class="p">()</span>
+        <span class="k">def</span> <span class="nf">cbUsers</span><span class="p">(</span><span class="n">users</span><span class="p">):</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">%</span> <span class="p">{</span><span class="s">&#39;users&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+                    <span class="c"># Name should be quoted properly these uses.</span>
+                    <span class="s">&#39;&lt;li&gt;&lt;a href=&quot;</span><span class="si">%s</span><span class="s">&quot;&gt;</span><span class="si">%s</span><span class="s">&lt;/a&gt;&lt;/li&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">users</span><span class="p">])})</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+        <span class="n">users</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">cbUsers</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">ebUsers</span><span class="p">(</span><span class="n">err</span><span class="p">):</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">err</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="s">&quot;UserStatusTree failed&quot;</span><span class="p">)</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+        <span class="n">users</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">ebUsers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">server</span><span class="o">.</span><span class="n">NOT_DONE_YET</span>
+
+<span class="n">components</span><span class="o">.</span><span class="n">registerAdapter</span><span class="p">(</span><span class="n">UserStatusTree</span><span class="p">,</span> <span class="n">IFingerService</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">IResource</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">UserStatus</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
+
+    <span class="n">template</span><span class="o">=</span><span class="s">&#39;&#39;&#39;&lt;html&gt;&lt;head&gt;&lt;title&gt;</span><span class="si">%(title)s</span><span class="s">&lt;/title&gt;&lt;/head&gt;</span>
+<span class="s">    &lt;body&gt;&lt;h1&gt;</span><span class="si">%(name)s</span><span class="s">&lt;/h1&gt;&lt;p&gt;</span><span class="si">%(status)s</span><span class="s">&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">service</span><span class="p">):</span>
+        <span class="n">resource</span><span class="o">.</span><span class="n">Resource</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">service</span> <span class="o">=</span> <span class="n">service</span>
+
+    <span class="k">def</span> <span class="nf">render_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">getUser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">cbStatus</span><span class="p">(</span><span class="n">status</span><span class="p">):</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">%</span> <span class="p">{</span>
+                <span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                <span class="s">&#39;status&#39;</span><span class="p">:</span> <span class="n">status</span><span class="p">})</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+        <span class="n">status</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">cbStatus</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">ebStatus</span><span class="p">(</span><span class="n">err</span><span class="p">):</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">err</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="s">&quot;UserStatus failed&quot;</span><span class="p">)</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+        <span class="n">status</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">ebStatus</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">server</span><span class="o">.</span><span class="n">NOT_DONE_YET</span>
+
+
+<span class="k">class</span> <span class="nc">UserStatusXR</span><span class="p">(</span><span class="n">xmlrpc</span><span class="o">.</span><span class="n">XMLRPC</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service</span><span class="p">):</span>
+        <span class="n">xmlrpc</span><span class="o">.</span><span class="n">XMLRPC</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">service</span> <span class="o">=</span> <span class="n">service</span>
+
+    <span class="k">def</span> <span class="nf">xmlrpc_getUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">xmlrpc_getUsers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">getUsers</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">IPerspectiveFinger</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">remote_getUser</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a user&#39;s status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">remote_getUsers</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a user&#39;s status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">PerspectiveFingerFromService</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Root</span><span class="p">):</span>
+
+    <span class="n">implements</span><span class="p">(</span><span class="n">IPerspectiveFinger</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">service</span> <span class="o">=</span> <span class="n">service</span>
+
+    <span class="k">def</span> <span class="nf">remote_getUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">remote_getUsers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">getUsers</span><span class="p">()</span>
+
+<span class="n">components</span><span class="o">.</span><span class="n">registerAdapter</span><span class="p">(</span><span class="n">PerspectiveFingerFromService</span><span class="p">,</span>
+                           <span class="n">IFingerService</span><span class="p">,</span>
+                           <span class="n">IPerspectiveFinger</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">FingerService</span><span class="p">(</span><span class="n">service</span><span class="o">.</span><span class="n">Service</span><span class="p">):</span>
+
+    <span class="n">implements</span><span class="p">(</span><span class="n">IFingerService</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+
+    <span class="k">def</span> <span class="nf">_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">):</span>
+            <span class="n">user</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">=</span> <span class="n">status</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call</span> <span class="o">=</span> <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">getUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">defer</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="s">&quot;No such user&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">getUsers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">defer</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">startService</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_read</span><span class="p">()</span>
+        <span class="n">service</span><span class="o">.</span><span class="n">Service</span><span class="o">.</span><span class="n">startService</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">stopService</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">service</span><span class="o">.</span><span class="n">Service</span><span class="o">.</span><span class="n">stopService</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">ServerContextFactory</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">getContext</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an SSL context.</span>
+
+<span class="sd">        This is a sample implementation that loads a certificate from a file</span>
+<span class="sd">        called &#39;server.pem&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">SSL</span><span class="o">.</span><span class="n">Context</span><span class="p">(</span><span class="n">SSL</span><span class="o">.</span><span class="n">SSLv23_METHOD</span><span class="p">)</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">use_certificate_file</span><span class="p">(</span><span class="s">&#39;server.pem&#39;</span><span class="p">)</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">use_privatekey_file</span><span class="p">(</span><span class="s">&#39;server.pem&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ctx</span>
+
+
+
+<span class="c"># Easy configuration</span>
+
+<span class="k">def</span> <span class="nf">makeService</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="c"># finger on port 79</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">MultiService</span><span class="p">()</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">FingerService</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;file&#39;</span><span class="p">])</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="mi">1079</span><span class="p">,</span> <span class="n">IFingerFactory</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+    <span class="n">h</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+
+    <span class="c"># website on port 8000</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">IResource</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">templateDirectory</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;templates&#39;</span><span class="p">]</span>
+    <span class="n">site</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">Site</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="mi">8000</span><span class="p">,</span> <span class="n">site</span><span class="p">)</span>
+    <span class="n">j</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="c"># ssl on port 443</span>
+<span class="c">#    if config.get(&#39;ssl&#39;):</span>
+<span class="c">#        k = internet.SSLServer(443, site, ServerContextFactory())</span>
+<span class="c">#        k.setServiceParent(s)</span>
+
+    <span class="c"># irc fingerbot</span>
+    <span class="k">if</span> <span class="s">&#39;ircnick&#39;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">IIRCClientFactory</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">i</span><span class="o">.</span><span class="n">nickname</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;ircnick&#39;</span><span class="p">]</span>
+        <span class="n">ircserver</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;ircserver&#39;</span><span class="p">]</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">internet</span><span class="o">.</span><span class="n">TCPClient</span><span class="p">(</span><span class="n">ircserver</span><span class="p">,</span> <span class="mi">6667</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">b</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="c"># Pespective Broker on port 8889</span>
+    <span class="k">if</span> <span class="s">&#39;pbport&#39;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span>
+            <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;pbport&#39;</span><span class="p">]),</span>
+            <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">IPerspectiveFinger</span><span class="p">(</span><span class="n">f</span><span class="p">)))</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">s</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../../_downloads/tap.py"><code class="xref download docutils literal"><span class="pre">tap.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># finger/tap.py</span>
+<span class="kn">from</span> <span class="nn">twisted.application</span> <span class="kn">import</span> <span class="n">internet</span><span class="p">,</span> <span class="n">service</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">interfaces</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">usage</span>
+<span class="kn">import</span> <span class="nn">finger</span>
+
+<span class="k">class</span> <span class="nc">Options</span><span class="p">(</span><span class="n">usage</span><span class="o">.</span><span class="n">Options</span><span class="p">):</span>
+    
+    <span class="n">optParameters</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="s">&#39;file&#39;</span><span class="p">,</span> <span class="s">&#39;f&#39;</span><span class="p">,</span> <span class="s">&#39;/etc/users&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s">&#39;templates&#39;</span><span class="p">,</span> <span class="s">&#39;t&#39;</span><span class="p">,</span> <span class="s">&#39;/usr/share/finger/templates&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s">&#39;ircnick&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39;fingerbot&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s">&#39;ircserver&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="s">&#39;irc.freenode.net&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s">&#39;pbport&#39;</span><span class="p">,</span> <span class="s">&#39;p&#39;</span><span class="p">,</span> <span class="mi">8889</span><span class="p">],</span>
+        <span class="p">]</span>
+
+    <span class="n">optFlags</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;ssl&#39;</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">]]</span>
+
+<span class="k">def</span> <span class="nf">makeService</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">finger</span><span class="o">.</span><span class="n">makeService</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And register it all:</p>
+<p><a class="reference download internal" href="../../../_downloads/finger_tutorial.py"><code class="xref download docutils literal"><span class="pre">finger_tutorial.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">twisted.application.service</span> <span class="kn">import</span> <span class="n">ServiceMaker</span>
+
+<span class="n">finger</span> <span class="o">=</span> <span class="n">ServiceMaker</span><span class="p">(</span>
+    <span class="s">&#39;finger&#39;</span><span class="p">,</span> <span class="s">&#39;finger.tap&#39;</span><span class="p">,</span> <span class="s">&#39;Run a finger service&#39;</span><span class="p">,</span> <span class="s">&#39;finger&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that the second argument to <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.ServiceMaker.html">ServiceMaker</a> ,``finger.tap`` , is a reference to a module
+(<code class="docutils literal"><span class="pre">finger/tap.py</span></code> ), not to a filename.</p>
+<p>And now, the following works</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">%</span> sudo twistd -n finger --file<span class="o">=</span>/etc/users --ircnick<span class="o">=</span>fingerbot
+</pre></div>
+</div>
+<p>For more details about this, see the <a class="reference internal" href="../tap.html"><span class="doc">twistd plugin documentation</span></a> .</p>
+</div>
+<div class="section" id="os-integration">
+<h2>OS Integration<a class="headerlink" href="#os-integration" title="Permalink to this headline">¶</a></h2>
+<p>If we already have the &#8220;finger&#8221; package installed in
+<code class="docutils literal"><span class="pre">PYTHONPATH</span></code> (e.g.  we added it to <code class="docutils literal"><span class="pre">site-packages</span></code> ), we
+can achieve easy integration:</p>
+<div class="section" id="debian">
+<h3>Debian<a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">%</span> tap2deb --unsigned -m <span class="s2">&quot;Foo &lt;foo@example.com&gt;&quot;</span> --type<span class="o">=</span>python finger.tac
+<span class="gp">%</span> sudo dpkg -i .build/*.deb
+</pre></div>
+</div>
+</div>
+<div class="section" id="red-hat-mandrake">
+<h3>Red Hat / Mandrake<a class="headerlink" href="#red-hat-mandrake" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">%</span> tap2rpm --type<span class="o">=</span>python finger.tac
+<span class="gp">%</span> sudo rpm -i *.rpm
+</pre></div>
+</div>
+<p>These packages will properly install and register <code class="docutils literal"><span class="pre">init.d</span></code>
+scripts, etc. for the given file.</p>
+<p>If it doesn&#8217;t work on your favorite OS: patches accepted!</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">The Evolution of Finger: configuration and packaging of the finger service</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#plugins">Plugins</a></li>
+<li><a class="reference internal" href="#os-integration">OS Integration</a><ul>
+<li><a class="reference internal" href="#debian">Debian</a></li>
+<li><a class="reference internal" href="#red-hat-mandrake">Red Hat / Mandrake</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="library.html"
+                                  title="previous chapter">The Evolution of Finger: making a finger library</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../quotes.html"
+                                  title="next chapter">Setting up the TwistedQuotes application</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../../_sources/core/howto/tutorial/configuration.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

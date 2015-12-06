@@ -1,0 +1,717 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Evolution of Finger: building a simple finger service &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Developer Guides" href="../index.html" />
+    <link rel="next" title="The Evolution of Finger: adding features to the finger service" href="protocol.html" />
+    <link rel="prev" title="The Evolution of Finger: configuration and packaging of the finger service" href="configuration.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="protocol.html" title="The Evolution of Finger: adding features to the finger service"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="configuration.html" title="The Evolution of Finger: configuration and packaging of the finger service"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="the-evolution-of-finger-building-a-simple-finger-service">
+<h1>The Evolution of Finger: building a simple finger service<a class="headerlink" href="#the-evolution-of-finger-building-a-simple-finger-service" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This is the first part of the Twisted tutorial <a class="reference internal" href="index.html"><span class="doc">Twisted from Scratch, or The Evolution of Finger</span></a> .</p>
+<p>If you&#8217;re not familiar with &#8216;finger&#8217; it&#8217;s probably because it&#8217;s not used as
+much nowadays as it used to be. Basically, if you run <code class="docutils literal"><span class="pre">finger</span> <span class="pre">nail</span></code>
+or <code class="docutils literal"><span class="pre">finger</span> <span class="pre">nail&#64;example.com</span></code> the target computer spits out some
+information about the user named <code class="docutils literal"><span class="pre">nail</span></code> . For instance:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Login: nail                           Name: Nail Sharp</span>
+<span class="go">Directory: /home/nail                 Shell: /usr/bin/sh</span>
+<span class="go">Last login Wed Mar 31 18:32 2004 (PST)</span>
+<span class="go">New mail received Thu Apr  1 10:50 2004 (PST)</span>
+<span class="go">     Unread since Thu Apr  1 10:50 2004 (PST)</span>
+<span class="go">No Plan.</span>
+</pre></div>
+</div>
+<p>If the target computer does not have
+the <code class="docutils literal"><span class="pre">fingerd</span></code> <a class="reference internal" href="../glossary.html#core-howto-glossary-daemon"><span class="std std-ref">daemon</span></a>
+running you&#8217;ll get a &#8220;Connection Refused&#8221; error. Paranoid sysadmins
+keep <code class="docutils literal"><span class="pre">fingerd</span></code> off or limit the output to hinder crackers
+and harassers. The above format is the standard <code class="docutils literal"><span class="pre">fingerd</span></code>
+default, but an alternate implementation can output anything it wants,
+such as automated responsibility status for everyone in an
+organization. You can also define pseudo &#8220;users&#8221;, which are
+essentially keywords.</p>
+<p>This portion of the tutorial makes use of factories and protocols as
+introduced in the <a class="reference internal" href="../servers.html"><span class="doc">Writing a TCP Server howto</span></a> and
+deferreds as introduced in <a class="reference internal" href="../defer.html"><span class="doc">Using Deferreds</span></a>
+and <a class="reference internal" href="../gendefer.html"><span class="doc">Generating Deferreds</span></a> . Services and
+applications are discussed in <a class="reference internal" href="../application.html"><span class="doc">Using the Twisted Application Framework</span></a> .</p>
+<p>By the end of this section of the tutorial, our finger server will answer
+TCP finger requests on port 1079, and will read data from the web.</p>
+</div>
+<div class="section" id="refuse-connections">
+<h2>Refuse Connections<a class="headerlink" href="#refuse-connections" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="../../../_downloads/finger01.py"><code class="xref download docutils literal"><span class="pre">finger01.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example only runs the reactor. It will consume almost no CPU
+resources. As it is not listening on any port, it can&#8217;t respond to network
+requests — nothing at all will happen until we interrupt the program.  At
+this point if you run <code class="docutils literal"><span class="pre">finger</span> <span class="pre">nail</span></code> or <code class="docutils literal"><span class="pre">telnet</span> <span class="pre">localhost</span> <span class="pre">1079</span></code> , you&#8217;ll get a &#8220;Connection refused&#8221; error since there&#8217;s no daemon
+running to respond.  Not very useful, perhaps — but this is the skeleton
+inside which the Twisted program will grow.</p>
+<p>As implied above, at various points in this tutorial you&#8217;ll want to
+observe the behavior of the server being developed.  Unless you have a
+finger program which can use an alternate port, the easiest way to do this
+is with a telnet client.  <code class="docutils literal"><span class="pre">telnet</span> <span class="pre">localhost</span> <span class="pre">1079</span></code> will connect to
+the local host on port 1079, where a finger server will eventually be
+listening.</p>
+<div class="section" id="the-reactor">
+<h3>The Reactor<a class="headerlink" href="#the-reactor" title="Permalink to this headline">¶</a></h3>
+<p>You don&#8217;t call Twisted, Twisted calls you. The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.reactor.html">reactor</a> is Twisted&#8217;s main event loop, similar to
+the main loop in other toolkits available in Python (Qt, wx, and Gtk). There is
+exactly one reactor in any running Twisted application. Once started it loops
+over and over again, responding to network events and making scheduled calls to
+code.</p>
+<p>Note that there are actually several different reactors to choose
+from; <code class="docutils literal"><span class="pre">from</span> <span class="pre">twisted.internet</span> <span class="pre">import</span> <span class="pre">reactor</span></code> returns the
+current reactor.  If you haven&#8217;t chosen a reactor class yet, it
+automatically chooses the default.  See
+the <a class="reference internal" href="../reactor-basics.html"><span class="doc">Reactor Basics HOWTO</span></a> for
+more information.</p>
+</div>
+</div>
+<div class="section" id="do-nothing">
+<h2>Do Nothing<a class="headerlink" href="#do-nothing" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="../../../_downloads/finger02.py"><code class="xref download docutils literal"><span class="pre">finger02.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">FingerProtocol</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">FingerFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ServerFactory</span><span class="p">):</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">FingerProtocol</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">1079</span><span class="p">,</span> <span class="n">FingerFactory</span><span class="p">())</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here, <code class="docutils literal"><span class="pre">reactor.listenTCP</span></code> opens port 1079. (The number 1079 is a
+reminder that eventually we want to run on port 79, the standard port for
+finger servers.)  The specified factory, <code class="docutils literal"><span class="pre">FingerFactory</span></code> , is used to
+handle incoming requests on that port.  Specifically, for each request, the
+reactor calls the factory&#8217;s <code class="docutils literal"><span class="pre">buildProtocol</span></code> method, which in this
+case causes <code class="docutils literal"><span class="pre">FingerProtocol</span></code> to be instantiated. Since the protocol
+defined here does not actually respond to any events, connections to 1079 will
+be accepted, but the input ignored.</p>
+<p>A Factory is the proper place for data that you want to make available to
+the protocol instances, since the protocol instances are garbage collected when
+the connection is closed.</p>
+</div>
+<div class="section" id="drop-connections">
+<h2>Drop Connections<a class="headerlink" href="#drop-connections" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="../../../_downloads/finger03.py"><code class="xref download docutils literal"><span class="pre">finger03.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">FingerProtocol</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">FingerFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ServerFactory</span><span class="p">):</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">FingerProtocol</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">1079</span><span class="p">,</span> <span class="n">FingerFactory</span><span class="p">())</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here we add to the protocol the ability to respond to the event of beginning
+a connection — by terminating it.  Perhaps not an interesting behavior,
+but it is already close to behaving according to the letter of the standard
+finger protocol. After all, there is no requirement to send any data to the
+remote connection in the standard.  The only problem, as far as the standard is
+concerned, is that we terminate the connection too soon. A client which is slow
+enough will see his <code class="docutils literal"><span class="pre">send()</span></code> of the username result in an error.</p>
+</div>
+<div class="section" id="read-username-drop-connections">
+<h2>Read Username, Drop Connections<a class="headerlink" href="#read-username-drop-connections" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="../../../_downloads/finger04.py"><code class="xref download docutils literal"><span class="pre">finger04.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
+
+<span class="k">class</span> <span class="nc">FingerProtocol</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">FingerFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ServerFactory</span><span class="p">):</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">FingerProtocol</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">1079</span><span class="p">,</span> <span class="n">FingerFactory</span><span class="p">())</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here we make <code class="docutils literal"><span class="pre">FingerProtocol</span></code> inherit from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.protocols.basic.LineReceiver.html">LineReceiver</a> , so that we get data-based
+events on a line-by-line basis. We respond to the event of receiving the line
+with shutting down the connection.</p>
+<p>If you use a telnet client to interact with this server, the result will
+look something like this:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> telnet localhost 1079
+<span class="go">Trying 127.0.0.1...</span>
+<span class="go">Connected to localhost.localdomain.</span>
+<span class="go">alice</span>
+<span class="go">Connection closed by foreign host.</span>
+</pre></div>
+</div>
+<p>Congratulations, this is the first standard-compliant version of the code.
+However, usually people actually expect some data about users to be
+transmitted.</p>
+</div>
+<div class="section" id="read-username-output-error-drop-connections">
+<h2>Read Username, Output Error, Drop Connections<a class="headerlink" href="#read-username-output-error-drop-connections" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="../../../_downloads/finger05.py"><code class="xref download docutils literal"><span class="pre">finger05.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
+
+<span class="k">class</span> <span class="nc">FingerProtocol</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;No such user</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">FingerFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ServerFactory</span><span class="p">):</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">FingerProtocol</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">1079</span><span class="p">,</span> <span class="n">FingerFactory</span><span class="p">())</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Finally, a useful version. Granted, the usefulness is somewhat limited by
+the fact that this version only prints out a &#8220;No such user&#8221; message. It
+could be used for devastating effect in honey-pots (decoy servers), of
+course.</p>
+</div>
+<div class="section" id="output-from-empty-factory">
+<h2>Output From Empty Factory<a class="headerlink" href="#output-from-empty-factory" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="../../../_downloads/finger06.py"><code class="xref download docutils literal"><span class="pre">finger06.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Read username, output from empty factory, drop connections</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
+
+<span class="k">class</span> <span class="nc">FingerProtocol</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">user</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">FingerFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ServerFactory</span><span class="p">):</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">FingerProtocol</span>
+
+    <span class="k">def</span> <span class="nf">getUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;No such user&quot;</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">1079</span><span class="p">,</span> <span class="n">FingerFactory</span><span class="p">())</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The same behavior, but finally we see what usefulness the
+factory has: as something that does not get constructed for
+every connection, it can be in charge of the user database.
+In particular, we won&#8217;t have to change the protocol if
+the user database back-end changes.</p>
+</div>
+<div class="section" id="output-from-non-empty-factory">
+<h2>Output from Non-empty Factory<a class="headerlink" href="#output-from-non-empty-factory" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="../../../_downloads/finger07.py"><code class="xref download docutils literal"><span class="pre">finger07.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Read username, output from non-empty factory, drop connections</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
+
+<span class="k">class</span> <span class="nc">FingerProtocol</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">user</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">FingerFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ServerFactory</span><span class="p">):</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">FingerProtocol</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+    <span class="k">def</span> <span class="nf">getUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="s">&quot;No such user&quot;</span><span class="p">)</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">1079</span><span class="p">,</span> <span class="n">FingerFactory</span><span class="p">(</span><span class="n">moshez</span><span class="o">=</span><span class="s">&#39;Happy and well&#39;</span><span class="p">))</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Finally, a really useful finger database. While it does not
+supply information about logged in users, it could be used to
+distribute things like office locations and internal office
+numbers. As hinted above, the factory is in charge of keeping
+the user database: note that the protocol instance has not
+changed. This is starting to look good: we really won&#8217;t have
+to keep tweaking our protocol.</p>
+</div>
+<div class="section" id="use-deferreds">
+<h2>Use Deferreds<a class="headerlink" href="#use-deferreds" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="../../../_downloads/finger08.py"><code class="xref download docutils literal"><span class="pre">finger08.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Read username, output from non-empty factory, drop connections</span>
+<span class="c"># Use deferreds, to minimize synchronicity assumptions</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">defer</span>
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
+
+<span class="k">class</span> <span class="nc">FingerProtocol</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">onError</span><span class="p">(</span><span class="n">err</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s">&#39;Internal error in server&#39;</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">onError</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">writeResponse</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">writeResponse</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">FingerFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ServerFactory</span><span class="p">):</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">FingerProtocol</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+    <span class="k">def</span> <span class="nf">getUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">defer</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="s">&quot;No such user&quot;</span><span class="p">))</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">1079</span><span class="p">,</span> <span class="n">FingerFactory</span><span class="p">(</span><span class="n">moshez</span><span class="o">=</span><span class="s">&#39;Happy and well&#39;</span><span class="p">))</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>But, here we tweak it just for the hell of it. Yes, while the
+previous version worked, it did assume the result of getUser is
+always immediately available. But what if instead of an in-memory
+database, we would have to fetch the result from a remote Oracle server?  By
+allowing getUser to return a Deferred, we make it easier for the data to be
+retrieved asynchronously so that the CPU can be used for other tasks in the
+meanwhile.</p>
+<p>As described in the <a class="reference internal" href="../defer.html"><span class="doc">Deferred HOWTO</span></a> , Deferreds
+allow a program to be driven by events.  For instance, if one task in a program
+is waiting on data, rather than have the CPU (and the program!) idly waiting
+for that data (a process normally called &#8216;blocking&#8217;), the program can perform
+other operations in the meantime, and waits for some signal that data is ready
+to be processed before returning to that process.</p>
+<p>In brief, the code in <code class="docutils literal"><span class="pre">FingerFactory</span></code> above creates a
+Deferred, to which we start to attach <em>callbacks</em> .  The
+deferred action in <code class="docutils literal"><span class="pre">FingerFactory</span></code> is actually a
+fast-running expression consisting of one dictionary
+method, <code class="docutils literal"><span class="pre">get</span></code> . Since this action can execute without
+delay, <code class="docutils literal"><span class="pre">FingerFactory.getUser</span></code>
+uses <code class="docutils literal"><span class="pre">defer.succeed</span></code> to create a Deferred which already has
+a result, meaning its return value will be passed immediately to the
+first callback function, which turns out to
+be <code class="docutils literal"><span class="pre">FingerProtocol.writeResponse</span></code> .  We&#8217;ve also defined
+an <em>errback</em> (appropriately
+named <code class="docutils literal"><span class="pre">FingerProtocol.onError</span></code> ) that will be called instead
+of <code class="docutils literal"><span class="pre">writeResponse</span></code> if something goes wrong.</p>
+</div>
+<div class="section" id="run-finger-locally">
+<h2>Run &#8216;finger&#8217; Locally<a class="headerlink" href="#run-finger-locally" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="../../../_downloads/finger09.py"><code class="xref download docutils literal"><span class="pre">finger09.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Read username, output from factory interfacing to OS, drop connections</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">defer</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
+
+<span class="k">class</span> <span class="nc">FingerProtocol</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">onError</span><span class="p">(</span><span class="n">err</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s">&#39;Internal error in server&#39;</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">onError</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">writeResponse</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">writeResponse</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">FingerFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ServerFactory</span><span class="p">):</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">FingerProtocol</span>
+
+    <span class="k">def</span> <span class="nf">getUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">getProcessOutput</span><span class="p">(</span><span class="s">&quot;finger&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">user</span><span class="p">])</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">1079</span><span class="p">,</span> <span class="n">FingerFactory</span><span class="p">())</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example also makes use of a
+Deferred. <code class="docutils literal"><span class="pre">twisted.internet.utils.getProcessOutput</span></code> is a
+non-blocking version of Python&#8217;s <code class="docutils literal"><span class="pre">commands.getoutput</span></code> : it
+runs a shell command (<code class="docutils literal"><span class="pre">finger</span></code> , in this case) and captures
+its standard output.  However, <code class="docutils literal"><span class="pre">getProcessOutput</span></code> returns a
+Deferred instead of the output itself.
+Since <code class="docutils literal"><span class="pre">FingerProtocol.lineReceived</span></code> is already expecting a
+Deferred to be returned by <code class="docutils literal"><span class="pre">getUser</span></code> , it doesn&#8217;t need to be
+changed, and it returns the standard output as the finger result.</p>
+<p>Note that in this case the shell&#8217;s built-in <code class="docutils literal"><span class="pre">finger</span></code> command is
+simply run with whatever arguments it is given. This is probably insecure, so
+you probably don&#8217;t want a real server to do this without a lot more validation
+of the user input. This will do exactly what the standard version of the finger
+server does.</p>
+</div>
+<div class="section" id="read-status-from-the-web">
+<h2>Read Status from the Web<a class="headerlink" href="#read-status-from-the-web" title="Permalink to this headline">¶</a></h2>
+<p>The web. That invention which has infiltrated homes around the
+world finally gets through to our invention. In this case we use the
+built-in Twisted web client
+via <code class="docutils literal"><span class="pre">twisted.web.client.getPage</span></code> , a non-blocking version of
+Python&#8217;s <a class="reference external" href="http://docs.python.org/2.7/library/urllib2.html#urllib2.urlopen" title="(in Python v2.7)"><code class="xref py py-func docutils literal"><span class="pre">urllib2.urlopen(URL).read</span></code></a> .
+Like <code class="docutils literal"><span class="pre">getProcessOutput</span></code> it returns a Deferred which will be
+called back with a string, and can thus be used as a drop-in
+replacement.</p>
+<p>Thus, we have examples of three different database back-ends, none of which
+change the protocol class. In fact, we will not have to change the protocol
+again until the end of this tutorial: we have achieved, here, one truly usable
+class.</p>
+<p><a class="reference download internal" href="../../../_downloads/finger10.py"><code class="xref download docutils literal"><span class="pre">finger10.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Read username, output from factory interfacing to web, drop connections</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">defer</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
+<span class="kn">from</span> <span class="nn">twisted.web</span> <span class="kn">import</span> <span class="n">client</span>
+
+<span class="k">class</span> <span class="nc">FingerProtocol</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">onError</span><span class="p">(</span><span class="n">err</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s">&#39;Internal error in server&#39;</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">onError</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">writeResponse</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">writeResponse</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">FingerFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ServerFactory</span><span class="p">):</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">FingerProtocol</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span>
+    
+    <span class="k">def</span> <span class="nf">getUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="o">+</span><span class="n">user</span><span class="p">)</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">1079</span><span class="p">,</span> <span class="n">FingerFactory</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s">&#39;http://livejournal.com/~&#39;</span><span class="p">))</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-application">
+<h2>Use Application<a class="headerlink" href="#use-application" title="Permalink to this headline">¶</a></h2>
+<p>Up until now, we faked. We kept using port 1079, because really, who wants to
+run a finger server with root privileges? Well, the common solution
+is &#8220;privilege shedding&#8221; : after binding to the network, become a different,
+less privileged user. We could have done it ourselves, but Twisted has a
+built-in way to do it. We will create a snippet as above, but now we will define
+an application object. That object will have <code class="docutils literal"><span class="pre">uid</span></code>
+and <code class="docutils literal"><span class="pre">gid</span></code> attributes. When running it (later we will see how) it will
+bind to ports, shed privileges and then run.</p>
+<p>Read on to find out how to run this code using the twistd utility.</p>
+</div>
+<div class="section" id="twistd">
+<h2>twistd<a class="headerlink" href="#twistd" title="Permalink to this headline">¶</a></h2>
+<p>This is how to run &#8220;Twisted Applications&#8221; — files which define an
+&#8216;application&#8217;. A daemon is expected to adhere to certain behavioral standards
+so that standard tools can stop/start/query them.  If a Twisted application is
+run via twistd, the TWISTed Daemonizer, all this behavioral stuff will be
+handled for you. twistd does everything a daemon can be expected to —
+shuts down stdin/stdout/stderr, disconnects from the terminal and can even
+change runtime directory, or even the root filesystems. In short, it does
+everything so the Twisted application developer can concentrate on writing his
+networking code.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">root% twistd -ny finger11.tac # just like before</span>
+<span class="go">root% twistd -y finger11.tac # daemonize, keep pid in twistd.pid</span>
+<span class="go">root% twistd -y finger11.tac --pidfile=finger.pid</span>
+<span class="go">root% twistd -y finger11.tac --rundir=/</span>
+<span class="go">root% twistd -y finger11.tac --chroot=/var</span>
+<span class="go">root% twistd -y finger11.tac -l /var/log/finger.log</span>
+<span class="go">root% twistd -y finger11.tac --syslog # just log to syslog</span>
+<span class="go">root% twistd -y finger11.tac --syslog --prefix=twistedfinger # use given prefix</span>
+</pre></div>
+</div>
+<p>There are several ways to tell twistd where your application is; here we
+show how it is done using the <code class="docutils literal"><span class="pre">application</span></code> global variable in a
+Python source file (a <a class="reference internal" href="../glossary.html#core-howto-glossary-tac"><span class="std std-ref">Twisted Application
+Configuration</span></a> file).</p>
+<p><a class="reference download internal" href="../../../_downloads/finger11.tac"><code class="xref download docutils literal"><span class="pre">finger11.tac</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Read username, output from non-empty factory, drop connections</span>
+<span class="c"># Use deferreds, to minimize synchronicity assumptions</span>
+<span class="c"># Write application. Save in &#39;finger.tpy&#39;</span>
+
+<span class="kn">from</span> <span class="nn">twisted.application</span> <span class="kn">import</span> <span class="n">internet</span><span class="p">,</span> <span class="n">service</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">defer</span>
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
+
+<span class="k">class</span> <span class="nc">FingerProtocol</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">getUser</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">onError</span><span class="p">(</span><span class="n">err</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s">&#39;Internal error in server&#39;</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">onError</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">writeResponse</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">writeResponse</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">FingerFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ServerFactory</span><span class="p">):</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">FingerProtocol</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+    <span class="k">def</span> <span class="nf">getUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">defer</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="s">&quot;No such user&quot;</span><span class="p">))</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">Application</span><span class="p">(</span><span class="s">&#39;finger&#39;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">gid</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">FingerFactory</span><span class="p">(</span><span class="n">moshez</span><span class="o">=</span><span class="s">&#39;Happy and well&#39;</span><span class="p">)</span>
+<span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="mi">79</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span>
+    <span class="n">service</span><span class="o">.</span><span class="n">IServiceCollection</span><span class="p">(</span><span class="n">application</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Instead of using <code class="docutils literal"><span class="pre">reactor.listenTCP</span></code> as in the above
+examples, here we are using its application-aware
+counterpart, <code class="docutils literal"><span class="pre">internet.TCPServer</span></code> .  Notice that when it is
+instantiated, the application object itself does not reference either
+the protocol or the factory.  Any services (such as TCPServer) which
+have the application as their parent will be started when the
+application is started by twistd.  The application object is more
+useful for returning an object that supports the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.IService.html">IService</a> , <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.IServiceCollection.html">IServiceCollection</a> , <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.IProcess.html">IProcess</a> ,
+and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.persisted.sob.IPersistable.html">sob.IPersistable</a>
+interfaces with the given parameters; we&#8217;ll be seeing these in the
+next part of the tutorial. As the parent of the TCPServer we opened,
+the application lets us manage the TCPServer.</p>
+<p>With the daemon running on the standard finger port, you can test it with
+the standard finger command: <code class="docutils literal"><span class="pre">finger</span> <span class="pre">moshez</span></code> .</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">The Evolution of Finger: building a simple finger service</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#refuse-connections">Refuse Connections</a><ul>
+<li><a class="reference internal" href="#the-reactor">The Reactor</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#do-nothing">Do Nothing</a></li>
+<li><a class="reference internal" href="#drop-connections">Drop Connections</a></li>
+<li><a class="reference internal" href="#read-username-drop-connections">Read Username, Drop Connections</a></li>
+<li><a class="reference internal" href="#read-username-output-error-drop-connections">Read Username, Output Error, Drop Connections</a></li>
+<li><a class="reference internal" href="#output-from-empty-factory">Output From Empty Factory</a></li>
+<li><a class="reference internal" href="#output-from-non-empty-factory">Output from Non-empty Factory</a></li>
+<li><a class="reference internal" href="#use-deferreds">Use Deferreds</a></li>
+<li><a class="reference internal" href="#run-finger-locally">Run &#8216;finger&#8217; Locally</a></li>
+<li><a class="reference internal" href="#read-status-from-the-web">Read Status from the Web</a></li>
+<li><a class="reference internal" href="#use-application">Use Application</a></li>
+<li><a class="reference internal" href="#twistd">twistd</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="configuration.html"
+                                  title="previous chapter">The Evolution of Finger: configuration and packaging of the finger service</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="protocol.html"
+                                  title="next chapter">The Evolution of Finger: adding features to the finger service</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../../_sources/core/howto/tutorial/intro.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

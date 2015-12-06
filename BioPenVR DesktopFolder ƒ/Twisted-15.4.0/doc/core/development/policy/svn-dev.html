@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Working from Twisted’s Subversion repository &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Twisted Development Policy" href="index.html" />
+    <link rel="next" title="Twisted Conch" href="../../../conch/index.html" />
+    <link rel="prev" title="Unit Tests in Twisted" href="test-standard.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../conch/index.html" title="Twisted Conch"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="test-standard.html" title="Unit Tests in Twisted"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="../index.html" >Development of Twisted</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Twisted Development Policy</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="working-from-twisted-s-subversion-repository">
+<h1>Working from Twisted&#8217;s Subversion repository<a class="headerlink" href="#working-from-twisted-s-subversion-repository" title="Permalink to this headline">¶</a></h1>
+<p>If you&#8217;re going to be doing development on Twisted itself, or if you want
+to take advantage of bleeding-edge features (or bug fixes) that are not yet
+available in a numbered release, you&#8217;ll probably want to check out a tree from
+the Twisted Subversion repository. The Trunk is where all current development
+takes place.</p>
+<p>This document lists some useful tips for working on this cutting
+edge.</p>
+<div class="section" id="checkout">
+<h2>Checkout<a class="headerlink" href="#checkout" title="Permalink to this headline">¶</a></h2>
+<p>Subversion tutorials can be found elsewhere, see in particular <a class="reference external" href="http://subversion.apache.org/">the Subversion homepage</a> . The
+relevant data you need to check out a copy of the Twisted tree is available on
+the <a class="reference external" href="http://twistedmatrix.com/trac/wiki/TwistedDevelopment">development page</a> , and is as follows:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> svn co svn://svn.twistedmatrix.com/svn/Twisted/trunk Twisted
+</pre></div>
+</div>
+</div>
+<div class="section" id="alternate-tree-names">
+<h2>Alternate tree names<a class="headerlink" href="#alternate-tree-names" title="Permalink to this headline">¶</a></h2>
+<p>By using <code class="docutils literal"><span class="pre">svn</span> <span class="pre">co</span> <span class="pre">svn://svn.twistedmatrix.com/svn/Twisted/trunk</span> <span class="pre">otherdir</span></code> , you can put the workspace tree in a directory other than &#8220;Twisted&#8221; . I do this (with a name like &#8220;Twisted-Subversion&#8221; ) to
+remind myself that this tree comes from Subversion and not from a released
+version (like &#8220;Twisted-1.0.5&#8221; ). This practice can cause a few problems,
+because there are a few places in the Twisted tree that need to know where
+the tree starts, so they can add it to <code class="docutils literal"><span class="pre">sys.path</span></code> without
+requiring the user manually set their PYTHONPATH. These functions walk the
+current directory up to the root, looking for a directory named &#8220;Twisted&#8221; (sometimes exactly that, sometimes with a <code class="docutils literal"><span class="pre">.startswith</span></code> test). Generally these are test scripts or other
+administrative tools which expect to be launched from somewhere inside the
+tree (but not necessarily from the top).</p>
+<p>If you rename the tree to something other than <code class="docutils literal"><span class="pre">Twisted</span></code> , these
+tools may wind up trying to use Twisted source files from /usr/lib/python2.5
+or elsewhere on the default <code class="docutils literal"><span class="pre">sys.path</span></code> .  Normally this won&#8217;t
+matter, but it is good to be aware of the issue in case you run into
+problems.</p>
+<p><code class="docutils literal"><span class="pre">twisted/test/process_twisted.py</span></code> is one of these programs.</p>
+</div>
+<div class="section" id="combinator">
+<h2>Combinator<a class="headerlink" href="#combinator" title="Permalink to this headline">¶</a></h2>
+<p>In order to simplify the use of Subversion, we typically use <a class="reference external" href="http://twistedmatrix.com/trac/wiki/Combinator">Divmod Combinator</a> .
+You may find it to be useful, too.  In particular, because Twisted uses
+branches for almost all feature development, if you plan to contribute to
+Twisted you will probably find Combinator very useful.  For more details,
+see the Combinator website, as well as the <a class="reference external" href="http://twistedmatrix.com/trac/wiki/UltimateQualityDevelopmentSystem">UQDS</a> page.</p>
+</div>
+<div class="section" id="compiling-c-extensions">
+<h2>Compiling C extensions<a class="headerlink" href="#compiling-c-extensions" title="Permalink to this headline">¶</a></h2>
+<p>There are currently several C extension modules in Twisted: <code class="docutils literal"><span class="pre">twisted.internet.cfsupport</span></code> , <code class="docutils literal"><span class="pre">twisted.internet.iocpreactor._iocp</span></code> ,
+and <code class="docutils literal"><span class="pre">twisted.python._epoll</span></code> .  These modules
+are optional, but you&#8217;ll have to compile them if you want to experience their
+features, performance improvements, or bugs. There are two approaches.</p>
+<p>The first is to do a regular distutils <code class="docutils literal"><span class="pre">./setup.py</span> <span class="pre">build</span></code> , which
+will create a directory under <code class="docutils literal"><span class="pre">build/</span></code> to hold both the generated <code class="docutils literal"><span class="pre">.so</span></code> files as well as a copy of the 600-odd <code class="docutils literal"><span class="pre">.py</span></code> files
+that make up Twisted. If you do this, you will need to set your PYTHONPATH to
+something like <code class="docutils literal"><span class="pre">MyDir/Twisted/build/lib.linux-i686-2.5</span></code> in order to
+run code against the Subversion twisted (as opposed to whatever&#8217;s installed in <code class="docutils literal"><span class="pre">/usr/lib/python2.5</span></code> or wherever python usually looks). In
+addition, you will need to re-run the <code class="docutils literal"><span class="pre">build</span></code> command <em>every time</em> you change a <code class="docutils literal"><span class="pre">.py</span></code> file. The <code class="docutils literal"><span class="pre">build/lib.foo</span></code>
+directory is a copy of the main tree, and that copy is only updated when you
+re-run <code class="docutils literal"><span class="pre">setup.py</span> <span class="pre">build</span></code> . It is easy to forget this and then wonder
+why your code changes aren&#8217;t being expressed.</p>
+<p>The second technique is to build the C modules in place, and point your
+PYTHONPATH at the top of the tree, like <code class="docutils literal"><span class="pre">MyDir/Twisted</span></code> . This way
+you&#8217;re using the .py files in place too, removing the confusion a forgotten
+rebuild could cause with the separate build/ directory above. To build the C
+modules in place, do <code class="docutils literal"><span class="pre">./setup.py</span> <span class="pre">build_ext</span> <span class="pre">-i</span></code> . You only need to
+re-run this command when you change the C files. Note that <code class="docutils literal"><span class="pre">setup.py</span></code> is not Make, it does not always get the dependencies
+right (<code class="docutils literal"><span class="pre">.h</span></code> files in particular), so if you are hacking on the
+cReactor you may need to manually delete the <code class="docutils literal"><span class="pre">.o</span></code> files before
+doing a rebuild. Also note that doing a <code class="docutils literal"><span class="pre">setup.py</span> <span class="pre">clean</span></code> will
+remove the <code class="docutils literal"><span class="pre">.o</span></code> files but not the final <code class="docutils literal"><span class="pre">.so</span></code> files,
+they must be deleted by hand.</p>
+</div>
+<div class="section" id="running-tests">
+<h2>Running tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h2>
+<p>To run the full unit-test suite, do:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">./bin/trial twisted</span>
+</pre></div>
+</div>
+<p>To run a single test file (like <code class="docutils literal"><span class="pre">twisted/test/test_defer.py</span></code> ),
+do one of:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">./bin/trial twisted.test.test_defer</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">./bin/trial twisted/test/test_defer.py</span>
+</pre></div>
+</div>
+<p>To run any tests that are related to a code file, like <code class="docutils literal"><span class="pre">twisted/protocols/imap4.py</span></code> , do:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">./bin/trial --testmodule twisted/mail/imap4.py</span>
+</pre></div>
+</div>
+<p>This depends upon the <code class="docutils literal"><span class="pre">.py</span></code> file having an appropriate &#8220;test-case-name&#8221; tag that indicates which test cases provide coverage.
+See the <a class="reference internal" href="test-standard.html"><span class="doc">Test Standards</span></a> document for
+details about using &#8220;test-case-name&#8221; . In this example, the <code class="docutils literal"><span class="pre">twisted.mail.test.test_imap</span></code> test will be run.</p>
+<p>Many tests create temporary files in /tmp or ./_trial_temp, but
+everything in /tmp should be deleted when the test finishes. Sometimes these
+cleanup calls are commented out by mistake, so if you see a stray <code class="docutils literal"><span class="pre">/tmp/&#64;12345.1</span></code> directory, it is probably from <code class="docutils literal"><span class="pre">test_dirdbm</span></code> or <code class="docutils literal"><span class="pre">test_popsicle</span></code> .
+Look for an <code class="docutils literal"><span class="pre">rmtree</span></code> that has been commented out and complain to
+the last developer who touched that file.</p>
+</div>
+<div class="section" id="building-docs">
+<h2>Building docs<a class="headerlink" href="#building-docs" title="Permalink to this headline">¶</a></h2>
+<p>Twisted documentation (not including the automatically-generated API docs) is generated by <a class="reference external" href="http://sphinx-doc.org/">Sphinx</a> .
+The docs are written in Restructured Text (<code class="docutils literal"><span class="pre">.rst</span></code>) and translated into <code class="docutils literal"><span class="pre">.html</span></code> files by the <code class="docutils literal"><span class="pre">bin/admin/build-docs</span></code> script.</p>
+<p>To build the HTML form of the docs into the <code class="docutils literal"><span class="pre">doc/</span></code> directory, do the following:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">./bin/admin/build-docs .</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="committing-and-post-commit-hooks">
+<h2>Committing and Post-commit Hooks<a class="headerlink" href="#committing-and-post-commit-hooks" title="Permalink to this headline">¶</a></h2>
+<p>Twisted uses a customized <a class="reference external" href="http://bazaar.launchpad.net/~exarkun/twisted-trac-integration/trunk/annotate/head%3A/trac-hooks/trac-post-commit-hook">trac-post-commit-hook</a> to enable ticket updates based on svn commit
+logs. When making a branch for a ticket, the branch name should end
+in <code class="docutils literal"><span class="pre">-&lt;ticket</span> <span class="pre">number&gt;</span></code> , for
+example <code class="docutils literal"><span class="pre">my-branch-9999</span></code> . This will add a ticket comment containing a
+changeset link and branch name. To make your commit message show up as a comment
+on a Trac ticket, add a <code class="docutils literal"><span class="pre">refs</span> <span class="pre">#&lt;ticket</span> <span class="pre">number&gt;</span></code> line at the
+bottom of your commit message. To automatically close a ticket on Trac
+as <code class="docutils literal"><span class="pre">Fixed</span></code> and add a comment with the closing commit message, add
+a <code class="docutils literal"><span class="pre">Fixes:</span> <span class="pre">#&lt;ticket</span> <span class="pre">number&gt;</span></code> line to your commit message. In
+general, a commit message closing a ticket looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>Merge my-branch-9999: A single-line summary.
+
+Author: jesstess
+Reviewers: exarkun, glyph
+Fixes: #9999
+
+My longer description of the changes made.
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="coding-standard.html"><span class="doc">Twisted Coding Standard</span></a>
+elaborates on commit messages and source control.</p>
+</div>
+<div class="section" id="emacs">
+<h2>Emacs<a class="headerlink" href="#emacs" title="Permalink to this headline">¶</a></h2>
+<p>A minor mode for development with Twisted using Emacs is available.  See <code class="docutils literal"><span class="pre">twisted-dev.el</span></code> , provided by <a class="reference external" href="http://launchpad.net/twisted-emacs">twisted-emacs</a> ,
+for several utility functions which make it easier to grep for methods, run test cases, etc.</p>
+</div>
+<div class="section" id="building-debian-packages">
+<h2>Building Debian packages<a class="headerlink" href="#building-debian-packages" title="Permalink to this headline">¶</a></h2>
+<p>Our support for building Debian packages has fallen into disrepair.  We
+would very much like to restore this functionality, but until we do so, if
+you are interested in this, you are on your own.  See <a class="reference external" href="http://github.com/astraw/stdeb">stdeb</a> for one possible approach to
+this.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Working from Twisted&#8217;s Subversion repository</a><ul>
+<li><a class="reference internal" href="#checkout">Checkout</a></li>
+<li><a class="reference internal" href="#alternate-tree-names">Alternate tree names</a></li>
+<li><a class="reference internal" href="#combinator">Combinator</a></li>
+<li><a class="reference internal" href="#compiling-c-extensions">Compiling C extensions</a></li>
+<li><a class="reference internal" href="#running-tests">Running tests</a></li>
+<li><a class="reference internal" href="#building-docs">Building docs</a></li>
+<li><a class="reference internal" href="#committing-and-post-commit-hooks">Committing and Post-commit Hooks</a></li>
+<li><a class="reference internal" href="#emacs">Emacs</a></li>
+<li><a class="reference internal" href="#building-debian-packages">Building Debian packages</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="test-standard.html"
+                                  title="previous chapter">Unit Tests in Twisted</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../../../conch/index.html"
+                                  title="next chapter">Twisted Conch</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../../_sources/core/development/policy/svn-dev.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Designing Twisted Applications &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Overview of Twisted Internet" href="internet-overview.html" />
+    <link rel="prev" title="Setting up the TwistedQuotes application" href="quotes.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="internet-overview.html" title="Overview of Twisted Internet"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="quotes.html" title="Setting up the TwistedQuotes application"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="designing-twisted-applications">
+<h1>Designing Twisted Applications<a class="headerlink" href="#designing-twisted-applications" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="goals">
+<h2>Goals<a class="headerlink" href="#goals" title="Permalink to this headline">¶</a></h2>
+<p>This document describes how a good Twisted application is structured. It
+should be useful for beginning Twisted developers who want to structure their
+code in a clean, maintainable way that reflects current best practices.</p>
+<p>Readers will want to be familiar with writing <a class="reference internal" href="servers.html"><span class="doc">servers</span></a> and <a class="reference internal" href="clients.html"><span class="doc">clients</span></a> using Twisted.</p>
+</div>
+<div class="section" id="example-of-a-modular-design-twistedquotes">
+<h2>Example of a modular design: TwistedQuotes<a class="headerlink" href="#example-of-a-modular-design-twistedquotes" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">TwistedQuotes</span></code> is a very simple plugin which is a great
+demonstration of
+Twisted&#8217;s power.  It will export a small kernel of functionality &#8211; Quote of
+the Day &#8211; which can be accessed through every interface that Twisted supports:
+web pages, e-mail, instant messaging, a specific Quote of the Day protocol, and
+more.</p>
+<div class="section" id="set-up-the-project-directory">
+<h3>Set up the project directory<a class="headerlink" href="#set-up-the-project-directory" title="Permalink to this headline">¶</a></h3>
+<p>See the description of <a class="reference internal" href="quotes.html"><span class="doc">setting up the TwistedQuotes example</span></a> .</p>
+</div>
+<div class="section" id="a-look-at-the-heart-of-the-application">
+<h3>A Look at the Heart of the Application<a class="headerlink" href="#a-look-at-the-heart-of-the-application" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/quoters.py"><code class="xref download docutils literal"><span class="pre">quoters.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span>
+
+<span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implements</span>
+
+<span class="kn">from</span> <span class="nn">TwistedQuotes</span> <span class="kn">import</span> <span class="n">quoteproto</span>
+
+
+
+<span class="k">class</span> <span class="nc">StaticQuoter</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a static quote.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">implements</span><span class="p">(</span><span class="n">quoteproto</span><span class="o">.</span><span class="n">IQuoter</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">quote</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quote</span> <span class="o">=</span> <span class="n">quote</span>
+
+
+    <span class="k">def</span> <span class="nf">getQuote</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">quote</span>
+
+
+
+<span class="k">class</span> <span class="nc">FortuneQuoter</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load quotes from a fortune-format file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">quoteproto</span><span class="o">.</span><span class="n">IQuoter</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filenames</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filenames</span> <span class="o">=</span> <span class="n">filenames</span>
+
+
+    <span class="k">def</span> <span class="nf">getQuote</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">quoteFile</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filenames</span><span class="p">))</span>
+        <span class="n">quotes</span> <span class="o">=</span> <span class="n">quoteFile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">%</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">quoteFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">choice</span><span class="p">(</span><span class="n">quotes</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This code listing shows us what the Twisted Quotes system is all about.  The
+code doesn&#8217;t have any way of talking to the outside world, but it provides a
+library which is a clear and uncluttered abstraction: &#8220;give me the quote of the day&#8221; .</p>
+<p>Note that this module does not import any Twisted functionality at all!  The
+reason for doing things this way is integration.  If your &#8220;business objects&#8221; are not stuck to your user interface, you can make a module that
+can integrate those objects with different protocols, GUIs, and file formats.
+Having such classes provides a way to decouple your components from each other,
+by allowing each to be used independently.</p>
+<p>In this manner, Twisted itself has minimal impact on the logic of your
+program.  Although the Twisted &#8220;dot products&#8221; are highly interoperable,
+they
+also follow this approach.  You can use them independently because they are not
+stuck to each other.  They communicate in well-defined ways, and only when that
+communication provides some additional feature.  Thus, you can use <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.html">twisted.web</a> with <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.enterprise.html">twisted.enterprise</a> , but neither requires the other, because
+they are integrated around the concept of <a class="reference internal" href="defer.html"><span class="doc">Deferreds</span></a> .</p>
+<p>Your Twisted applications should follow this style as much as possible.
+Have (at least) one module which implements your specific functionality,
+independent of any user-interface code.</p>
+<p>Next, we&#8217;re going to need to associate this abstract logic with some way of
+displaying it to the user.  We&#8217;ll do this by writing a Twisted server protocol,
+which will respond to the clients that connect to it by sending a quote to the
+client and then closing the connection.  Note: don&#8217;t get too focused on the
+details of this &#8211; different ways to interface with the user are 90% of what
+Twisted does, and there are lots of documents describing the different ways to
+do it.</p>
+<p><a class="reference download internal" href="../../_downloads/quoteproto.py"><code class="xref download docutils literal"><span class="pre">quoteproto.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">Interface</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">Factory</span><span class="p">,</span> <span class="n">Protocol</span>
+
+
+
+<span class="k">class</span> <span class="nc">IQuoter</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An object that returns quotes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">getQuote</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a quote.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+
+<span class="k">class</span> <span class="nc">QOTD</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">quoter</span><span class="o">.</span><span class="n">getQuote</span><span class="p">()</span><span class="o">+</span><span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+
+
+
+<span class="k">class</span> <span class="nc">QOTDFactory</span><span class="p">(</span><span class="n">Factory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A factory for the Quote of the Day protocol.</span>
+
+<span class="sd">    @type quoter: L{IQuoter} provider</span>
+<span class="sd">    @ivar quoter: An object which provides L{IQuoter} which will be used by</span>
+<span class="sd">        the L{QOTD} protocol to get quotes to emit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">QOTD</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">quoter</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quoter</span> <span class="o">=</span> <span class="n">quoter</span>
+</pre></div>
+</div>
+<p>This is a very straightforward <code class="docutils literal"><span class="pre">Protocol</span></code> implementation, and the
+pattern described above is repeated here.  The Protocol contains essentially no
+logic of its own, just enough to tie together an object which can generate
+quotes (a <code class="docutils literal"><span class="pre">Quoter</span></code> ) and an object which can relay
+bytes to a TCP connection (a <code class="docutils literal"><span class="pre">Transport</span></code> ).  When a
+client connects to this server, a <code class="docutils literal"><span class="pre">QOTD</span></code> instance is
+created, and its <code class="docutils literal"><span class="pre">connectionMade</span></code> method is called.</p>
+<p>The <code class="docutils literal"><span class="pre">QOTDFactory</span></code> &#8216;s role is to specify to the
+Twisted framework how to create a <code class="docutils literal"><span class="pre">Protocol</span></code> instance
+that will handle the connection.  Twisted will not instantiate a <code class="docutils literal"><span class="pre">QOTDFactory</span></code> ; you will do that yourself later, in a <code class="docutils literal"><span class="pre">twistd</span></code> plug-in.</p>
+<p>Note: you can read more specifics of <code class="docutils literal"><span class="pre">Protocol</span></code> and <code class="docutils literal"><span class="pre">Factory</span></code> in the <a class="reference internal" href="servers.html"><span class="doc">Writing Servers</span></a> HOWTO.</p>
+<p>Once we have an abstraction &#8211; a <code class="docutils literal"><span class="pre">Quoter</span></code> &#8211; and we have a
+mechanism to connect it to the network &#8211; the <code class="docutils literal"><span class="pre">QOTD</span></code> protocol &#8211; the
+next thing to do is to put the last link in the chain of functionality between
+abstraction and user.  This last link will allow a user to choose a <code class="docutils literal"><span class="pre">Quoter</span></code> and configure the protocol. Writing this configuration is
+covered in the <a class="reference internal" href="application.html"><span class="doc">Application HOWTO</span></a> .</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Designing Twisted Applications</a><ul>
+<li><a class="reference internal" href="#goals">Goals</a></li>
+<li><a class="reference internal" href="#example-of-a-modular-design-twistedquotes">Example of a modular design: TwistedQuotes</a><ul>
+<li><a class="reference internal" href="#set-up-the-project-directory">Set up the project directory</a></li>
+<li><a class="reference internal" href="#a-look-at-the-heart-of-the-application">A Look at the Heart of the Application</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="quotes.html"
+                                  title="previous chapter">Setting up the TwistedQuotes application</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="internet-overview.html"
+                                  title="next chapter">Overview of Twisted Internet</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/design.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1016 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using Perspective Broker &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Managing Clients of Perspectives" href="pb-clients.html" />
+    <link rel="prev" title="Introduction to Perspective Broker" href="pb-intro.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pb-clients.html" title="Managing Clients of Perspectives"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pb-intro.html" title="Introduction to Perspective Broker"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="using-perspective-broker">
+<h1>Using Perspective Broker<a class="headerlink" href="#using-perspective-broker" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basic-example">
+<h2>Basic Example<a class="headerlink" href="#basic-example" title="Permalink to this headline">¶</a></h2>
+<p>The first example to look at is a complete (although somewhat trivial)
+application. It uses <code class="docutils literal"><span class="pre">PBServerFactory()</span></code> on the server side, and
+<code class="docutils literal"><span class="pre">PBClientFactory()</span></code> on the client side.</p>
+<p><a class="reference download internal" href="../../_downloads/pbsimple.py"><code class="xref download docutils literal"><span class="pre">pbsimple.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">Echoer</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Root</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">remote_echo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">st</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;echoing:&#39;</span><span class="p">,</span> <span class="n">st</span>
+        <span class="k">return</span> <span class="n">st</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8789</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">Echoer</span><span class="p">()))</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/pbsimpleclient.py"><code class="xref download docutils literal"><span class="pre">pbsimpleclient.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">util</span>
+
+<span class="n">factory</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBClientFactory</span><span class="p">()</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8789</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getRootObject</span><span class="p">()</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="k">lambda</span> <span class="nb">object</span><span class="p">:</span> <span class="nb">object</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;echo&quot;</span><span class="p">,</span> <span class="s">&quot;hello network&quot;</span><span class="p">))</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="k">lambda</span> <span class="n">echo</span><span class="p">:</span> <span class="s">&#39;server echoed: &#39;</span><span class="o">+</span><span class="n">echo</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="k">lambda</span> <span class="n">reason</span><span class="p">:</span> <span class="s">&#39;error: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">reason</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">println</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>First we look at the server. This defines an Echoer class (derived from
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Root.html">pb.Root</a> ), with a method called
+<code class="docutils literal"><span class="pre">remote_echo()</span></code> .
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Root.html">pb.Root</a> objects (because of
+their inheritance of
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Referenceable.html">pb.Referenceable</a> , described
+later) can define methods with names of the form <code class="docutils literal"><span class="pre">remote_*</span></code> ; a
+client which obtains a remote reference to that
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Root.html">pb.Root</a> object will be able to
+invoke those methods.</p>
+<p>The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Root.html">pb.Root</a> -ish object is
+given to a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.PBServerFactory.html">pb.PBServerFactory</a> <code class="docutils literal"><span class="pre">()</span></code> . This is a
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.Factory.html">Factory</a> object like
+any other: the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.Protocol.html">Protocol</a> objects it creates for new
+connections know how to speak the PB protocol. The object you give to
+<code class="docutils literal"><span class="pre">pb.PBServerFactory()</span></code> becomes the &#8220;root object&#8221; , which
+simply makes it available for the client to retrieve. The client may only
+request references to the objects you want to provide it: this helps you
+implement your security model. Because it is so common to export just a
+single object (and because a <code class="docutils literal"><span class="pre">remote_*</span></code> method on that one can
+return a reference to any other object you might want to give out), the
+simplest example is one where the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.PBServerFactory.html">PBServerFactory</a> is given the root object, and
+the client retrieves it.</p>
+<p>The client side uses
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.PBClientFactory.html">pb.PBClientFactory</a> to make a
+connection to a given port. This is a two-step process involving opening
+a TCP connection to a given host and port and requesting the root object
+using <code class="docutils literal"><span class="pre">.getRootObject()</span></code> .</p>
+<p>Because <code class="docutils literal"><span class="pre">.getRootObject()</span></code> has to wait until a network
+connection has been made and exchange some data, it may take a while,
+so it returns a Deferred, to which the gotObject() callback is
+attached. (See the documentation on <a class="reference internal" href="defer.html"><span class="doc">Deferring Execution</span></a> for a complete explanation of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> s). If and when the
+connection succeeds and a reference to the remote root object is
+obtained, this callback is run. The first argument passed to the
+callback is a remote reference to the distant root object.  (you can
+give other arguments to the callback too, see the other parameters for
+<code class="docutils literal"><span class="pre">.addCallback()</span></code> and <code class="docutils literal"><span class="pre">.addCallbacks()</span></code> ).</p>
+<p>The callback does:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">object</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;echo&quot;</span><span class="p">,</span> <span class="s">&quot;hello network&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>which causes the server&#8217;s <code class="docutils literal"><span class="pre">.remote_echo()</span></code> method to be invoked.
+(running <code class="docutils literal"><span class="pre">.callRemote(&quot;boom&quot;)</span></code> would cause
+<code class="docutils literal"><span class="pre">.remote_boom()</span></code> to be run, etc). Again because of the delay
+involved, <code class="docutils literal"><span class="pre">callRemote()</span></code> returns a
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> . Assuming the
+remote method was run without causing an exception (including an attempt to
+invoke an unknown method), the callback attached to that
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> will be
+invoked with any objects that were returned by the remote method call.</p>
+<p>In this example, the server&#8217;s <code class="docutils literal"><span class="pre">Echoer</span></code> object has a method
+invoked, <em>exactly</em> as if some code on the server side had done:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">echoer_object</span><span class="o">.</span><span class="n">remote_echo</span><span class="p">(</span><span class="s">&quot;hello network&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and from the definition of <code class="docutils literal"><span class="pre">remote_echo()</span></code> we see that this just
+returns the same string it was given: &#8220;hello network&#8221; .</p>
+<p>From the client&#8217;s point of view, the remote call gets another <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> object instead of
+that string. <code class="docutils literal"><span class="pre">callRemote()</span></code> <em>always</em> returns a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> . This is why PB is
+described as a system for &#8220;translucent&#8221; remote method calls instead of &#8220;transparent&#8221; ones: you cannot pretend that the remote object is really
+local. Trying to do so (as some other RPC mechanisms do, coughCORBAcough)
+breaks down when faced with the asynchronous nature of the network. Using
+Deferreds turns out to be a very clean way to deal with the whole thing.</p>
+<p>The remote reference object (the one given to
+<code class="docutils literal"><span class="pre">getRootObject()</span></code> &#8216;s success callback) is an instance the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteReference.html">RemoteReference</a> class. This means
+you can use it to invoke methods on the remote object that it refers to. Only
+instances of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteReference.html">RemoteReference</a> are eligible for
+<code class="docutils literal"><span class="pre">.callRemote()</span></code> . The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteReference.html">RemoteReference</a> object is the one that lives
+on the remote side (the client, in this case), not the local side (where the
+actual object is defined).</p>
+<p>In our example, the local object is that <code class="docutils literal"><span class="pre">Echoer()</span></code> instance,
+which inherits from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Root.html">pb.Root</a> ,
+which inherits from
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Referenceable.html">pb.Referenceable</a> . It is that
+<code class="docutils literal"><span class="pre">Referenceable</span></code> class that makes the object eligible to be available
+for remote method calls <a class="footnote-reference" href="#id6" id="id1">[1]</a> . If you have
+an object that is Referenceable, then any client that manages to get a
+reference to it can invoke any <code class="docutils literal"><span class="pre">remote_*</span></code> methods they please.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The <em>only</em> thing they can do is invoke those
+methods.  In particular, they cannot access attributes. From a security point
+of view, you control what they can do by limiting what the <code class="docutils literal"><span class="pre">remote_*</span></code> methods can do.</p>
+<p>Also note: the other classes like
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Referenceable.html">Referenceable</a> allow access to
+other methods, in particular <code class="docutils literal"><span class="pre">perspective_*</span></code> and <code class="docutils literal"><span class="pre">view_*</span></code>
+may be accessed.  Don&#8217;t write local-only methods with these names, because then
+remote callers will be able to do more than you intended.</p>
+<p class="last">Also also note: the other classes like
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Copyable.html">pb.Copyable</a> <em>do</em> allow
+access to attributes, but you control which ones they can see.</p>
+</div>
+<p>You don&#8217;t have to be a
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Root.html">pb.Root</a> to be remotely callable,
+but you do have to be
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Referenceable.html">pb.Referenceable</a> .  (Objects that
+inherit from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Referenceable.html">pb.Referenceable</a>
+but not from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Root.html">pb.Root</a> can be
+remotely called, but only
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Root.html">pb.Root</a> -ish objects can be given
+to the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.PBServerFactory.html">PBServerFactory</a> .)</p>
+</div>
+<div class="section" id="complete-example">
+<h2>Complete Example<a class="headerlink" href="#complete-example" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example client and server which uses <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Referenceable.html">pb.Referenceable</a> as a root object and as the
+result of a remotely exposed method.  In each context, methods can be invoked
+on the exposed <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Referenceable.html">Referenceable</a>
+instance.  In this example, the initial root object has a method that returns a
+reference to the second object.</p>
+<p><a class="reference download internal" href="../../_downloads/pb1server.py"><code class="xref download docutils literal"><span class="pre">pb1server.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+
+<span class="k">class</span> <span class="nc">Two</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Referenceable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">remote_three</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;Two.three was given&quot;</span><span class="p">,</span> <span class="n">arg</span>
+        
+<span class="k">class</span> <span class="nc">One</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Root</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">remote_getTwo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">two</span> <span class="o">=</span> <span class="n">Two</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&quot;returning a Two called&quot;</span><span class="p">,</span> <span class="n">two</span>
+        <span class="k">return</span> <span class="n">two</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8800</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">One</span><span class="p">()))</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/pb1client.py"><code class="xref download docutils literal"><span class="pre">pb1client.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBClientFactory</span><span class="p">()</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8800</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+    <span class="n">def1</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getRootObject</span><span class="p">()</span>
+    <span class="n">def1</span><span class="o">.</span><span class="n">addCallbacks</span><span class="p">(</span><span class="n">got_obj1</span><span class="p">,</span> <span class="n">err_obj1</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">err_obj1</span><span class="p">(</span><span class="n">reason</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;error getting first object&quot;</span><span class="p">,</span> <span class="n">reason</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">got_obj1</span><span class="p">(</span><span class="n">obj1</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;got first object:&quot;</span><span class="p">,</span> <span class="n">obj1</span>
+    <span class="k">print</span> <span class="s">&quot;asking it to getTwo&quot;</span>
+    <span class="n">def2</span> <span class="o">=</span> <span class="n">obj1</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;getTwo&quot;</span><span class="p">)</span>
+    <span class="n">def2</span><span class="o">.</span><span class="n">addCallbacks</span><span class="p">(</span><span class="n">got_obj2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">got_obj2</span><span class="p">(</span><span class="n">obj2</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;got second object:&quot;</span><span class="p">,</span> <span class="n">obj2</span>
+    <span class="k">print</span> <span class="s">&quot;telling it to do three(12)&quot;</span>
+    <span class="n">obj2</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;three&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.PBClientFactory.getRootObject.html">pb.PBClientFactory.getRootObject</a> will
+handle all the details of waiting for the creation of a connection.
+It returns a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> , which will have its
+callback called when the reactor connects to the remote server and
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.PBClientFactory.html">pb.PBClientFactory</a> gets the
+root, and have its <code class="docutils literal"><span class="pre">errback</span></code> called when the
+object-connection fails for any reason, whether it was host lookup
+failure, connection refusal, or some server-side error.</p>
+<p>The root object has a method called <code class="docutils literal"><span class="pre">remote_getTwo</span></code> , which
+returns the <code class="docutils literal"><span class="pre">Two()</span></code> instance. On the client end, the callback gets
+a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteReference.html">RemoteReference</a> to that
+instance. The client can then invoke two&#8217;s <code class="docutils literal"><span class="pre">.remote_three()</span></code>
+method.</p>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteReference.html">RemoteReference</a>
+objects have one method which is their purpose for being: <code class="docutils literal"><span class="pre">callRemote</span></code> .  This method allows you to call a
+remote method on the object being referred to by the Reference.  <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteReference.callRemote.html">RemoteReference.callRemote</a> , like <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.PBClientFactory.getRootObject.html">pb.PBClientFactory.getRootObject</a> , returns
+a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> .
+When a response to the method-call being sent arrives, the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> &#8216;s <code class="docutils literal"><span class="pre">callback</span></code> or <code class="docutils literal"><span class="pre">errback</span></code>
+will be made, depending on whether an error occurred in processing the
+method call.</p>
+<p>You can use this technique to provide access to arbitrary sets of objects.
+Just remember that any object that might get passed &#8220;over the wire&#8221; must
+inherit from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Referenceable.html">Referenceable</a>
+(or one of the other flavors). If you try to pass a non-Referenceable object
+(say, by returning one from a <code class="docutils literal"><span class="pre">remote_*</span></code> method), you&#8217;ll get an
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.jelly.InsecureJelly.html">InsecureJelly</a>
+exception <a class="footnote-reference" href="#id7" id="id2">[2]</a> .</p>
+</div>
+<div class="section" id="references-can-come-back-to-you">
+<h2>References can come back to you<a class="headerlink" href="#references-can-come-back-to-you" title="Permalink to this headline">¶</a></h2>
+<p>If your server gives a reference to a client, and then that client gives
+the reference back to the server, the server will wind up with the same
+object it gave out originally. The serialization layer watches for returning
+reference identifiers and turns them into actual objects. You need to stay
+aware of where the object lives: if it is on your side, you do actual method
+calls. If it is on the other side, you do
+<code class="docutils literal"><span class="pre">.callRemote()</span></code>  <a class="footnote-reference" href="#id8" id="id3">[3]</a> .</p>
+<p><a class="reference download internal" href="../../_downloads/pb2server.py"><code class="xref download docutils literal"><span class="pre">pb2server.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">Two</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Referenceable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">remote_print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;two.print was given&quot;</span><span class="p">,</span> <span class="n">arg</span>
+        
+<span class="k">class</span> <span class="nc">One</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Root</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">two</span><span class="p">):</span>
+        <span class="c">#pb.Root.__init__(self)   # pb.Root doesn&#39;t implement __init__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">two</span> <span class="o">=</span> <span class="n">two</span>
+    <span class="k">def</span> <span class="nf">remote_getTwo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;One.getTwo(), returning my two called&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">two</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">two</span>
+    <span class="k">def</span> <span class="nf">remote_checkTwo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newtwo</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;One.checkTwo(): comparing my two&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">two</span>
+        <span class="k">print</span> <span class="s">&quot;One.checkTwo(): against your two&quot;</span><span class="p">,</span> <span class="n">newtwo</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">two</span> <span class="o">==</span> <span class="n">newtwo</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;One.checkTwo(): our twos are the same&quot;</span>
+        
+
+<span class="n">two</span> <span class="o">=</span> <span class="n">Two</span><span class="p">()</span>
+<span class="n">root_obj</span> <span class="o">=</span> <span class="n">One</span><span class="p">(</span><span class="n">two</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8800</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">root_obj</span><span class="p">))</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/pb2client.py"><code class="xref download docutils literal"><span class="pre">pb2client.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBClientFactory</span><span class="p">()</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8800</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+    <span class="n">factory</span><span class="o">.</span><span class="n">getRootObject</span><span class="p">()</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="n">step1</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="c"># keeping globals around is starting to get ugly, so we use a simple class</span>
+<span class="c"># instead. Instead of hooking one function to the next, we hook one method</span>
+<span class="c"># to the next.</span>
+
+<span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oneRef</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">step1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;got one object:&quot;</span><span class="p">,</span> <span class="n">obj</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oneRef</span> <span class="o">=</span> <span class="n">obj</span>
+        <span class="k">print</span> <span class="s">&quot;asking it to getTwo&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oneRef</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;getTwo&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">step2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">two</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;got two object:&quot;</span><span class="p">,</span> <span class="n">two</span>
+        <span class="k">print</span> <span class="s">&quot;giving it back to one&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;one is&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">oneRef</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oneRef</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;checkTwo&quot;</span><span class="p">,</span> <span class="n">two</span><span class="p">)</span>
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The server gives a <code class="docutils literal"><span class="pre">Two()</span></code> instance to the client, who then
+returns the reference back to the server. The server compares the &#8220;two&#8221;
+given with the &#8220;two&#8221; received and shows that they are the same, and that
+both are real objects instead of remote references.</p>
+<p>A few other techniques are demonstrated in <code class="docutils literal"><span class="pre">pb2client.py</span></code> . One
+is that the callbacks are added with <code class="docutils literal"><span class="pre">.addCallback</span></code> instead
+of <code class="docutils literal"><span class="pre">.addCallbacks</span></code> . As you can tell from the <a class="reference internal" href="defer.html"><span class="doc">Deferred</span></a> documentation, <code class="docutils literal"><span class="pre">.addCallback</span></code> is a
+simplified form which only adds a success callback. The other is that to
+keep track of state from one callback to the next (the remote reference to
+the main One() object), we create a simple class, store the reference in an
+instance thereof, and point the callbacks at a sequence of bound methods.
+This is a convenient way to encapsulate a state machine. Each response kicks
+off the next method, and any data that needs to be carried from one state to
+the next can simply be saved as an attribute of the object.</p>
+<p>Remember that the client can give you back any remote reference you&#8217;ve
+given them. Don&#8217;t base your zillion-dollar stock-trading clearinghouse
+server on the idea that you trust the client to give you back the right
+reference. The security model inherent in PB means that they can <em>only</em>
+give you back a reference that you&#8217;ve given them for the current connection
+(not one you&#8217;ve given to someone else instead, nor one you gave them last
+time before the TCP session went down, nor one you haven&#8217;t yet given to the
+client), but just like with URLs and HTTP cookies, the particular reference
+they give you is entirely under their control.</p>
+</div>
+<div class="section" id="references-to-client-side-objects">
+<h2>References to client-side objects<a class="headerlink" href="#references-to-client-side-objects" title="Permalink to this headline">¶</a></h2>
+<p>Anything that&#8217;s Referenceable can get passed across the wire, <em>in either direction</em> . The &#8220;client&#8221; can give a reference to the
+&#8220;server&#8221; , and then the server can use .callRemote() to invoke methods on
+the client end. This fuzzes the distinction between &#8220;client&#8221; and
+&#8220;server&#8221; : the only real difference is who initiates the original TCP
+connection; after that it&#8217;s all symmetric.</p>
+<p><a class="reference download internal" href="../../_downloads/pb3server.py"><code class="xref download docutils literal"><span class="pre">pb3server.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+        
+<span class="k">class</span> <span class="nc">One</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Root</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">remote_takeTwo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">two</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;received a Two called&quot;</span><span class="p">,</span> <span class="n">two</span>
+        <span class="k">print</span> <span class="s">&quot;telling it to print(12)&quot;</span>
+        <span class="n">two</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;print&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8800</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">One</span><span class="p">()))</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/pb3client.py"><code class="xref download docutils literal"><span class="pre">pb3client.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">Two</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Referenceable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">remote_print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;Two.print() called with&quot;</span><span class="p">,</span> <span class="n">arg</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">two</span> <span class="o">=</span> <span class="n">Two</span><span class="p">()</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBClientFactory</span><span class="p">()</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8800</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+    <span class="n">def1</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getRootObject</span><span class="p">()</span>
+    <span class="n">def1</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">got_obj</span><span class="p">,</span> <span class="n">two</span><span class="p">)</span> <span class="c"># hands our &#39;two&#39; to the callback</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">got_obj</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">two</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;got One:&quot;</span><span class="p">,</span> <span class="n">obj</span>
+    <span class="k">print</span> <span class="s">&quot;giving it our two&quot;</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;takeTwo&quot;</span><span class="p">,</span> <span class="n">two</span><span class="p">)</span>
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In this example, the client gives a reference to its own object to the
+server. The server then invokes a remote method on the client-side
+object.</p>
+</div>
+<div class="section" id="raising-remote-exceptions">
+<h2>Raising Remote Exceptions<a class="headerlink" href="#raising-remote-exceptions" title="Permalink to this headline">¶</a></h2>
+<p>Everything so far has covered what happens when things go right. What
+about when they go wrong? The Python Way is to raise an exception of some
+sort. The Twisted Way is the same.</p>
+<p>The only special thing you do is to define your <code class="docutils literal"><span class="pre">Exception</span></code>
+subclass by deriving it from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Error.html">pb.Error</a> . When any remotely-invokable method
+(like <code class="docutils literal"><span class="pre">remote_*</span></code> or <code class="docutils literal"><span class="pre">perspective_*</span></code> ) raises a
+<code class="docutils literal"><span class="pre">pb.Error</span></code> -derived exception, a serialized form of that Exception
+object will be sent back over the wire <a class="footnote-reference" href="#id9" id="id4">[4]</a> . The other side (which
+did <code class="docutils literal"><span class="pre">callRemote</span></code> ) will have the &#8220;<code class="docutils literal"><span class="pre">errback</span></code>&#8221;
+callback run with a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.failure.Failure.html">Failure</a> object that contains a copy of
+the exception object. This <code class="docutils literal"><span class="pre">Failure</span></code> object can be queried to
+retrieve the error message and a stack traceback.</p>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.failure.Failure.html">Failure</a> is a
+special class, defined in <code class="docutils literal"><span class="pre">twisted/python/failure.py</span></code> , created to
+make it easier to handle asynchronous exceptions. Just as exception handlers
+can be nested, <code class="docutils literal"><span class="pre">errback</span></code> functions can be chained. If one errback
+can&#8217;t handle the particular type of failure, it can be &#8220;passed along&#8221; to a
+errback handler further down the chain.</p>
+<p>For simple purposes, think of the <code class="docutils literal"><span class="pre">Failure</span></code> as just a container
+for remotely-thrown <code class="docutils literal"><span class="pre">Exception</span></code> objects. To extract the string that
+was put into the exception, use its <code class="docutils literal"><span class="pre">.getErrorMessage()</span></code> method.
+To get the type of the exception (as a string), look at its
+<code class="docutils literal"><span class="pre">.type</span></code> attribute. The stack traceback is available too. The
+intent is to let the errback function get just as much information about the
+exception as Python&#8217;s normal <code class="docutils literal"><span class="pre">try:</span></code> clauses do, even though the
+exception occurred in somebody else&#8217;s memory space at some unknown time in
+the past.</p>
+<p><a class="reference download internal" href="../../_downloads/exc_server.py"><code class="xref download docutils literal"><span class="pre">exc_server.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">MyError</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is an Expected Exception. Something bad happened.&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">MyError2</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is an Unexpected Exception. Something really bad happened.&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">One</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Root</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">remote_broken</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;fall down go boom&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;raising a MyError exception with data &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="n">msg</span>
+        <span class="k">raise</span> <span class="n">MyError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">remote_broken2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;hadda owie&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;raising a MyError2 exception with data &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="n">msg</span>
+        <span class="k">raise</span> <span class="n">MyError2</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8800</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">One</span><span class="p">()))</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/exc_client.py"><code class="xref download docutils literal"><span class="pre">exc_client.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBClientFactory</span><span class="p">()</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8800</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getRootObject</span><span class="p">()</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallbacks</span><span class="p">(</span><span class="n">got_obj</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">got_obj</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="c"># change &quot;broken&quot; into &quot;broken2&quot; to demonstrate an unhandled exception</span>
+    <span class="n">d2</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;broken&quot;</span><span class="p">)</span>
+    <span class="n">d2</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">working</span><span class="p">)</span>
+    <span class="n">d2</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">broken</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">working</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;erm, it wasn&#39;t *supposed* to work..&quot;</span>
+    
+<span class="k">def</span> <span class="nf">broken</span><span class="p">(</span><span class="n">reason</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;got remote Exception&quot;</span>
+    <span class="c"># reason should be a Failure (or subclass) holding the MyError exception</span>
+    <span class="k">print</span> <span class="s">&quot; .__class__ =&quot;</span><span class="p">,</span> <span class="n">reason</span><span class="o">.</span><span class="n">__class__</span>
+    <span class="k">print</span> <span class="s">&quot; .getErrorMessage() =&quot;</span><span class="p">,</span> <span class="n">reason</span><span class="o">.</span><span class="n">getErrorMessage</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&quot; .type =&quot;</span><span class="p">,</span> <span class="n">reason</span><span class="o">.</span><span class="n">type</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> ./exc_client.py
+<span class="go">got remote Exception</span>
+<span class="go"> .__class__ = twisted.spread.pb.CopiedFailure</span>
+<span class="go"> .getErrorMessage() = fall down go boom</span>
+<span class="go"> .type = __main__.MyError</span>
+<span class="go">Main loop terminated.</span>
+</pre></div>
+</div>
+<p>Oh, and what happens if you raise some other kind of exception? Something
+that <em>isn&#8217;t</em> subclassed from <code class="docutils literal"><span class="pre">pb.Error</span></code> ? Well, those are
+called &#8220;unexpected exceptions&#8221; , which make Twisted think that something
+has <em>really</em> gone wrong. These will raise an exception on the
+<em>server</em> side. This won&#8217;t break the connection (the exception is
+trapped, just like most exceptions that occur in response to network
+traffic), but it will print out an unsightly stack trace on the server&#8217;s
+stderr with a message that says &#8220;Peer Will Receive PB Traceback&#8221; , just
+as if the exception had happened outside a remotely-invokable method. (This
+message will go the current log target, if <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.log.startLogging.html">log.startLogging</a> was used to redirect it). The
+client will get the same <code class="docutils literal"><span class="pre">Failure</span></code> object in either case, but
+subclassing your exception from <code class="docutils literal"><span class="pre">pb.Error</span></code> is the way to tell
+Twisted that you expect this sort of exception, and that it is ok to just
+let the client handle it instead of also asking the server to complain. Look
+at <code class="docutils literal"><span class="pre">exc_client.py</span></code> and change it to invoke <code class="docutils literal"><span class="pre">broken2()</span></code>
+instead of <code class="docutils literal"><span class="pre">broken()</span></code> to see the change in the server&#8217;s
+behavior.</p>
+<p>If you don&#8217;t add an <code class="docutils literal"><span class="pre">errback</span></code> function to the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> , then a remote
+exception will still send a <code class="docutils literal"><span class="pre">Failure</span></code> object back over, but it
+will get lodged in the <code class="docutils literal"><span class="pre">Deferred</span></code> with nowhere to go. When that
+<code class="docutils literal"><span class="pre">Deferred</span></code> finally goes out of scope, the side that did
+<code class="docutils literal"><span class="pre">callRemote</span></code> will emit a message about an &#8220;Unhandled error in Deferred&#8221; , along with an ugly stack trace. It can&#8217;t raise an exception at
+that point (after all, the <code class="docutils literal"><span class="pre">callRemote</span></code> that triggered the
+problem is long gone), but it will emit a traceback. So be a good programmer
+and <em>always</em> add <code class="docutils literal"><span class="pre">errback</span></code> handlers, even if they are just
+calls to <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.log.err.html">log.err</a> .</p>
+</div>
+<div class="section" id="try-except-blocks-and-failure-trap">
+<h2>Try/Except blocks and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.failure.Failure.trap.html">Failure.trap</a><a class="headerlink" href="#try-except-blocks-and-failure-trap" title="Permalink to this headline">¶</a></h2>
+<p>To implement the equivalent of the Python try/except blocks (which can
+trap particular kinds of exceptions and pass others &#8220;up&#8221; to
+higher-level <code class="docutils literal"><span class="pre">try/except</span></code> blocks), you can use the
+<code class="docutils literal"><span class="pre">.trap()</span></code> method in conjunction with multiple
+<code class="docutils literal"><span class="pre">errback</span></code> handlers on the <code class="docutils literal"><span class="pre">Deferred</span></code> . Re-raising an
+exception in an <code class="docutils literal"><span class="pre">errback</span></code> handler serves to pass that new
+exception to the next handler in the chain. The <code class="docutils literal"><span class="pre">trap</span></code> method is
+given a list of exceptions to look for, and will re-raise anything that
+isn&#8217;t on the list. Instead of passing unhandled exceptions &#8220;up&#8221; to an
+enclosing <code class="docutils literal"><span class="pre">try</span></code> block, this has the effect of passing the
+exception &#8220;off&#8221; to later <code class="docutils literal"><span class="pre">errback</span></code> handlers on the same <code class="docutils literal"><span class="pre">Deferred</span></code> . The <code class="docutils literal"><span class="pre">trap</span></code> calls are used in chained
+errbacks to test for each kind of exception in sequence.</p>
+<p><a class="reference download internal" href="../../_downloads/trap_server.py"><code class="xref download docutils literal"><span class="pre">trap_server.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+
+<span class="k">class</span> <span class="nc">MyException</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">One</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Root</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">remote_fooMethod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="s">&quot;panic!&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MyException</span>
+        <span class="k">return</span> <span class="s">&quot;response&quot;</span>
+    <span class="k">def</span> <span class="nf">remote_shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8800</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">One</span><span class="p">()))</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/trap_client.py"><code class="xref download docutils literal"><span class="pre">trap_client.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span><span class="p">,</span> <span class="n">jelly</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">MyException</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span> <span class="k">pass</span>
+<span class="k">class</span> <span class="nc">MyOtherException</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span> <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">ScaryObject</span><span class="p">:</span>
+    <span class="c"># not safe for serialization</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">worksLike</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="c"># the callback/errback sequence in class One works just like an</span>
+    <span class="c"># asynchronous version of the following:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">callMethod</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">pb</span><span class="o">.</span><span class="n">DeadReferenceError</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot; stale reference: the client disconnected or crashed&quot;</span>
+    <span class="k">except</span> <span class="n">jelly</span><span class="o">.</span><span class="n">InsecureJelly</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot; InsecureJelly: you tried to send something unsafe to them&quot;</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">MyException</span><span class="p">,</span> <span class="n">MyOtherException</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot; remote raised a MyException&quot;</span> <span class="c"># or MyOtherException</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot; something else happened&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot; method successful, response:&quot;</span><span class="p">,</span> <span class="n">response</span>
+
+<span class="k">class</span> <span class="nc">One</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">worked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot; method successful, response:&quot;</span><span class="p">,</span> <span class="n">response</span>
+    <span class="k">def</span> <span class="nf">check_InsecureJelly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">failure</span><span class="p">):</span>
+        <span class="n">failure</span><span class="o">.</span><span class="n">trap</span><span class="p">(</span><span class="n">jelly</span><span class="o">.</span><span class="n">InsecureJelly</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot; InsecureJelly: you tried to send something unsafe to them&quot;</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">check_MyException</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">failure</span><span class="p">):</span>
+        <span class="n">which</span> <span class="o">=</span> <span class="n">failure</span><span class="o">.</span><span class="n">trap</span><span class="p">(</span><span class="n">MyException</span><span class="p">,</span> <span class="n">MyOtherException</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">which</span> <span class="o">==</span> <span class="n">MyException</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot; remote raised a MyException&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot; remote raised a MyOtherException&quot;</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">catch_everythingElse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">failure</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot; something else happened&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">err</span><span class="p">(</span><span class="n">failure</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">doCall</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">explanation</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="k">print</span> <span class="n">explanation</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">deferred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;fooMethod&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
+            <span class="n">deferred</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">worked</span><span class="p">)</span>
+            <span class="n">deferred</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_InsecureJelly</span><span class="p">)</span>
+            <span class="n">deferred</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_MyException</span><span class="p">)</span>
+            <span class="n">deferred</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catch_everythingElse</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">pb</span><span class="o">.</span><span class="n">DeadReferenceError</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot; stale reference: the client disconnected or crashed&quot;</span>
+
+    <span class="k">def</span> <span class="nf">callOne</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doCall</span><span class="p">(</span><span class="s">&quot;callOne: call with safe object&quot;</span><span class="p">,</span> <span class="s">&quot;safe string&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">callTwo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doCall</span><span class="p">(</span><span class="s">&quot;callTwo: call with dangerous object&quot;</span><span class="p">,</span> <span class="n">ScaryObject</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">callThree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doCall</span><span class="p">(</span><span class="s">&quot;callThree: call that raises remote exception&quot;</span><span class="p">,</span> <span class="s">&quot;panic!&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">callShutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;telling them to shut down&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;shutdown&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">callFour</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doCall</span><span class="p">(</span><span class="s">&quot;callFour: call on stale reference&quot;</span><span class="p">,</span> <span class="s">&quot;dummy&quot;</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">got_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote</span> <span class="o">=</span> <span class="n">obj</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">callOne</span><span class="p">)</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">callTwo</span><span class="p">)</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">callThree</span><span class="p">)</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">callShutdown</span><span class="p">)</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">callFour</span><span class="p">)</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+
+<span class="n">factory</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBClientFactory</span><span class="p">()</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8800</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+<span class="n">deferred</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getRootObject</span><span class="p">()</span>
+<span class="n">deferred</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">One</span><span class="p">()</span><span class="o">.</span><span class="n">got_obj</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> ./trap_client.py
+<span class="go">callOne: call with safe object</span>
+<span class="go"> method successful, response: response</span>
+<span class="go">callTwo: call with dangerous object</span>
+<span class="go"> InsecureJelly: you tried to send something unsafe to them</span>
+<span class="go">callThree: call that raises remote exception</span>
+<span class="go"> remote raised a MyException</span>
+<span class="go">telling them to shut down</span>
+<span class="go">callFour: call on stale reference</span>
+<span class="go"> stale reference: the client disconnected or crashed</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal"><span class="pre">callTwo</span></code> tries to send an instance of a
+locally-defined class through <code class="docutils literal"><span class="pre">callRemote</span></code> . The default security
+model implemented by <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.jelly.html">jelly</a>
+on the remote end will not allow unknown classes to be unserialized (i.e.
+taken off the wire as a stream of bytes and turned back into an object: a
+living, breathing instance of some class): one reason is that it does not
+know which local class ought to be used to create an instance that
+corresponds to the remote object <a class="footnote-reference" href="#id10" id="id5">[5]</a> .</p>
+<p>The receiving end of the connection gets to decide what to accept and what
+to reject. It indicates its disapproval by raising a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.jelly.InsecureJelly.html">jelly.InsecureJelly</a> exception. Because it occurs
+at the remote end, the exception is returned to the caller asynchronously,
+so an <code class="docutils literal"><span class="pre">errback</span></code> handler for the associated <code class="docutils literal"><span class="pre">Deferred</span></code>
+is run. That errback receives a <code class="docutils literal"><span class="pre">Failure</span></code> which wraps the
+<code class="docutils literal"><span class="pre">InsecureJelly</span></code> .</p>
+<p>Remember that <code class="docutils literal"><span class="pre">trap</span></code> re-raises exceptions that it wasn&#8217;t asked
+to look for. You can only check for one set of exceptions per errback
+handler: all others must be checked in a subsequent handler.
+<code class="docutils literal"><span class="pre">check_MyException</span></code> shows how multiple kinds of exceptions can be
+checked in a single errback: give a list of exception types to
+<code class="docutils literal"><span class="pre">trap</span></code> , and it will return the matching member. In this case, the
+kinds of exceptions we are checking for (<code class="docutils literal"><span class="pre">MyException</span></code> and
+<code class="docutils literal"><span class="pre">MyOtherException</span></code> ) may be raised by the remote end: they inherit
+from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Error.html">pb.Error</a> .</p>
+<p>The handler can return <code class="docutils literal"><span class="pre">None</span></code> to terminate processing of the
+errback chain (to be precise, it switches to the callback that follows the
+errback; if there is no callback then processing terminates). It is a good
+idea to put an errback that will catch everything (no <code class="docutils literal"><span class="pre">trap</span></code>
+tests, no possible chance of raising more exceptions, always returns
+<code class="docutils literal"><span class="pre">None</span></code> ) at the end of the chain. Just as with regular <code class="docutils literal"><span class="pre">try:</span> <span class="pre">except:</span></code> handlers, you need to think carefully about ways in which
+your errback handlers could themselves raise exceptions. The extra
+importance in an asynchronous environment is that an exception that falls
+off the end of the <code class="docutils literal"><span class="pre">Deferred</span></code> will not be signalled until that
+<code class="docutils literal"><span class="pre">Deferred</span></code> goes out of scope, and at that point may only cause a
+log message (which could even be thrown away if <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.log.startLogging.html">log.startLogging</a> is not used to point it at
+stdout or a log file). In contrast, a synchronous exception that is not
+handled by any other <code class="docutils literal"><span class="pre">except:</span></code> block will very visibly terminate
+the program immediately with a noisy stack trace.</p>
+<p><code class="docutils literal"><span class="pre">callFour</span></code> shows another kind of exception that can occur
+while using <code class="docutils literal"><span class="pre">callRemote</span></code> : <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.DeadReferenceError.html">pb.DeadReferenceError</a> . This one occurs when the
+remote end has disconnected or crashed, leaving the local side with a stale
+reference. This kind of exception happens to be reported right away (XXX: is
+this guaranteed? probably not), so must be caught in a traditional
+synchronous <code class="docutils literal"><span class="pre">try:</span> <span class="pre">except</span> <span class="pre">pb.DeadReferenceError</span></code> block.</p>
+<p>Yet another kind that can occur is a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.PBConnectionLost.html">pb.PBConnectionLost</a> exception. This occurs
+(asynchronously) if the connection was lost while you were waiting for a <code class="docutils literal"><span class="pre">callRemote</span></code> call to complete. When the line goes dead, all
+pending requests are terminated with this exception. Note that you have no
+way of knowing whether the request made it to the other end or not, nor how
+far along in processing it they had managed before the connection was
+lost. XXX: explain transaction semantics, find a decent reference.</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>There are a few other classes
+that can bestow this ability, but pb.Referenceable is the easiest to
+understand; see &#8216;flavors&#8217; below for details on the others.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>This can be overridden, by subclassing one of
+the Serializable flavors and defining custom serialization code for your
+class. See <a class="reference internal" href="pb-copyable.html"><span class="doc">Passing Complex Types</span></a>  for
+details.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>The binary nature of this
+local vs. remote scheme works because you cannot give RemoteReferences to a
+third party. If you could, then your object A could go to B, B could give it to
+C, C might give it back to you, and you would be hard pressed to tell if the
+object lived in C&#8217;s memory space, in B&#8217;s, or if it was really your own object,
+tarnished and sullied after being handed down like a really ugly picture that
+your great aunt owned and which nobody wants but which nobody can bear to throw
+out. Ok, not really like that, but you get the idea.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>To be precise,
+the Failure will be sent if <em>any</em>  exception is raised, not just
+pb.Error-derived ones. But the server will print ugly error messages if you
+raise ones that aren&#8217;t derived from pb.Error.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><p class="first">The naive approach
+of simply doing <code class="docutils literal"><span class="pre">import</span> <span class="pre">SomeClass</span></code> to match a remote caller who
+claims to have an object of type &#8220;SomeClass&#8221; could have nasty consequences
+for some modules that do significant operations in their <code class="docutils literal"><span class="pre">__init__</span></code>
+methods (think <code class="docutils literal"><span class="pre">telnetlib.Telnet(host='localhost',</span> <span class="pre">port='chargen')</span></code> ,
+or even more powerful classes that you have available in your server program).
+Allowing a remote entity to create arbitrary classes in your namespace is
+nearly equivalent to allowing them to run arbitrary code.</p>
+<p class="last">The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.jelly.InsecureJelly.html">InsecureJelly</a>
+exception arises because the class being sent over the wire has not been
+registered with the serialization layer (known as <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.jelly.html">jelly</a> ). The easiest way to make it possible to
+copy entire class instances over the wire is to have them inherit from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Copyable.html">pb.Copyable</a> , and then to use
+<code class="docutils literal"><span class="pre">setUnjellyableForClass(remoteClass,</span> <span class="pre">localClass)</span></code> on the
+receiving side. See <a class="reference internal" href="pb-copyable.html"><span class="doc">Passing Complex Types</span></a>
+for an example.</p>
+</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Using Perspective Broker</a><ul>
+<li><a class="reference internal" href="#basic-example">Basic Example</a></li>
+<li><a class="reference internal" href="#complete-example">Complete Example</a></li>
+<li><a class="reference internal" href="#references-can-come-back-to-you">References can come back to you</a></li>
+<li><a class="reference internal" href="#references-to-client-side-objects">References to client-side objects</a></li>
+<li><a class="reference internal" href="#raising-remote-exceptions">Raising Remote Exceptions</a></li>
+<li><a class="reference internal" href="#try-except-blocks-and-failure-trap">Try/Except blocks and Failure.trap</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="pb-intro.html"
+                                  title="previous chapter">Introduction to Perspective Broker</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="pb-clients.html"
+                                  title="next chapter">Managing Clients of Perspectives</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/pb-usage.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

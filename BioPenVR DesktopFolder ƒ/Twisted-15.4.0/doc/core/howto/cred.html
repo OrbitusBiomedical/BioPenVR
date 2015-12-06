@@ -1,0 +1,642 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cred: Pluggable Authentication &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="The Twisted Plugin System" href="plugin.html" />
+    <link rel="prev" title="Components: Interfaces and Adapters" href="components.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="plugin.html" title="The Twisted Plugin System"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="components.html" title="Components: Interfaces and Adapters"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="cred-pluggable-authentication">
+<h1>Cred: Pluggable Authentication<a class="headerlink" href="#cred-pluggable-authentication" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="goals">
+<h2>Goals<a class="headerlink" href="#goals" title="Permalink to this headline">¶</a></h2>
+<p>Cred is a pluggable authentication system for servers.  It allows any
+number of network protocols to connect and authenticate to a system, and
+communicate to those aspects of the system which are meaningful to the specific
+protocol.  For example, Twisted&#8217;s POP3 support passes a &#8220;username and password&#8221; set of credentials to get back a mailbox for the specified email
+account.  IMAP does the same, but retrieves a slightly different view of the
+same mailbox, enabling those features specific to IMAP which are not available
+in other mail protocols.</p>
+<p>Cred is designed to allow both the backend implementation of the business
+logic - called the <em>avatar</em> - and the authentication database - called
+the <em>credential checker</em> - to be decided during deployment. For example,
+the same POP3 server should be able to authenticate against the local UNIX
+password database or an LDAP server without having to know anything about how
+or where mail is stored.</p>
+<p>To sketch out how this works - a &#8220;Realm&#8221; corresponds to an application
+domain and is in charge of avatars, which are network-accessible business logic
+objects.  To connect this to an authentication database, a top-level object
+called a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.portal.Portal.html">Portal</a> stores a
+realm, and a number of credential checkers.  Something that wishes to log in,
+such as a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.Protocol.html">Protocol</a> ,
+stores a reference to the portal. Login consists of passing credentials and a
+request interface (e.g. POP3&#8217;s <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.mail.pop3.IMailbox.html">IMailbox</a> ) to the portal. The portal passes
+the credentials to the appropriate credential checker, which returns an avatar
+ID. The ID is passed to the realm, which returns the appropriate avatar.  For a
+Portal that has a realm that creates mailbox objects and a credential checker
+that checks /etc/passwd, login consists of passing in a username/password and
+the IMailbox interface to the portal. The portal passes this to the /etc/passwd
+credential checker, gets back a avatar ID corresponding to an email account,
+passes that to the realm and gets back a mailbox object for that email
+account.</p>
+<p>Putting all this together, here&#8217;s how a login request will typically be
+processed:</p>
+<img alt="../../_images/cred-login.png" src="../../_images/cred-login.png" />
+</div>
+<div class="section" id="cred-objects">
+<h2>Cred objects<a class="headerlink" href="#cred-objects" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-portal">
+<h3>The Portal<a class="headerlink" href="#the-portal" title="Permalink to this headline">¶</a></h3>
+<p>This is the core of login, the point of integration between all the objects
+in the cred system.  There is one
+concrete implementation of Portal, and no interface - it does a very
+simple task.  A <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.portal.Portal.html">Portal</a>
+associates one (1) Realm with a collection of
+CredentialChecker instances.  (More on those later.)</p>
+<p>If you are writing a protocol that needs to authenticate against
+something, you will need a reference to a Portal, and to nothing else.
+This has only 2 methods -</p>
+<ul>
+<li><p class="first"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.portal.Portal.login.html">login</a> <code class="docutils literal"><span class="pre">(credentials,</span> <span class="pre">mind,</span> <span class="pre">*interfaces)</span></code></p>
+<p>The docstring is quite expansive (see <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.portal.html">twisted.cred.portal</a> ), but in
+brief, this is what you call when you need to call in order to connect
+a user to the system.  Typically you only pass in one interface, and the mind
+is <code class="docutils literal"><span class="pre">None</span></code> . The interfaces are the possible interfaces the returned
+avatar is expected to implement, in order of preference.
+The result is a deferred which fires a tuple of:</p>
+<ul class="simple">
+<li>interface the avatar implements (which was one of the interfaces passed in the <code class="docutils literal"><span class="pre">*interfaces</span></code>
+tuple)</li>
+<li>an object that implements that interface (an avatar)</li>
+<li>logout, a 0-argument callable which disconnects the connection that was
+established by this call to login</li>
+</ul>
+<p>The logout method has to be called when the avatar is logged out. For POP3 this means
+when the protocol is disconnected or logged out, etc..</p>
+</li>
+<li><p class="first"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.portal.Portal.registerChecker.html">registerChecker</a> <code class="docutils literal"><span class="pre">(checker,</span> <span class="pre">*credentialInterfaces)</span></code></p>
+<p>which adds a CredentialChecker to the portal. The optional list of interfaces are interfaces of credentials
+that the checker is able to check.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="the-credentialchecker">
+<h3>The CredentialChecker<a class="headerlink" href="#the-credentialchecker" title="Permalink to this headline">¶</a></h3>
+<p>This is an object implementing <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.checkers.ICredentialsChecker.html">ICredentialsChecker</a> which resolves some
+credentials to an avatar ID.</p>
+<p>Whether the credentials are stored in an in-memory data structure, an
+Apache-style htaccess file, a UNIX password database, an SSH key database,
+or any other form, an implementation of <code class="docutils literal"><span class="pre">ICredentialsChecker</span></code> is
+how this data is connected to cred.</p>
+<p>A credential checker
+stipulates some requirements of the credentials it can check by
+specifying a credentialInterfaces attribute, which is a list of
+interfaces.  Credentials passed to its requestAvatarId method must
+implement one of those interfaces.</p>
+<p>For the most part, these things will just check usernames and passwords
+and produce the username as the result, but hopefully we will be seeing
+some public-key, challenge-response, and certificate based credential
+checker mechanisms soon.</p>
+<p>A credential checker should raise an error if it cannot authenticate
+the user, and return <code class="docutils literal"><span class="pre">twisted.cred.checkers.ANONYMOUS</span></code>
+for anonymous access.</p>
+</div>
+<div class="section" id="the-credentials">
+<h3>The Credentials<a class="headerlink" href="#the-credentials" title="Permalink to this headline">¶</a></h3>
+<p>Oddly enough, this represents some credentials that the user presents.
+Usually this will just be a small static blob of data, but in some
+cases it will actually be an object connected to a network protocol.
+For example, a username/password pair is static, but a
+challenge/response server is an active state-machine that will require
+several method calls in order to determine a result.</p>
+<p>Twisted comes with a number of credentials interfaces and implementations
+in the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.credentials.html">twisted.cred.credentials</a> module,
+such as <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.credentials.IUsernamePassword.html">IUsernamePassword</a>
+and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.credentials.IUsernameHashedPassword.html">IUsernameHashedPassword</a> .</p>
+</div>
+<div class="section" id="the-realm">
+<h3>The Realm<a class="headerlink" href="#the-realm" title="Permalink to this headline">¶</a></h3>
+<p>A realm is an interface which connects your universe of &#8220;business objects&#8221; to the authentication system.</p>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.portal.IRealm.html">IRealm</a> is another one-method interface:</p>
+<ul>
+<li><p class="first"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.portal.IRealm.requestAvatar.html">requestAvatar</a> <code class="docutils literal"><span class="pre">(avatarId,</span> <span class="pre">mind,</span> <span class="pre">*interfaces)</span></code></p>
+<p>This method will typically be called from &#8216;Portal.login&#8217;.  The avatarId
+is the one returned by a CredentialChecker.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that <code class="docutils literal"><span class="pre">avatarId</span></code>  must always be a string. In
+particular, do not use unicode strings. If internationalized support is needed,
+it is recommended to use UTF-8, and take care of decoding in the realm.</p>
+</div>
+<p>The important thing to realize about this method is that if it is being
+called, <em>the user has already authenticated</em> .  Therefore, if possible,
+the Realm should create a new user if one does not already exist
+whenever possible.  Of course, sometimes this will be impossible
+without more information, and that is the case that the interfaces
+argument is for.</p>
+</li>
+</ul>
+<p>Since requestAvatar should be called from a Deferred callback, it may
+return a Deferred or a synchronous result.</p>
+</div>
+<div class="section" id="the-avatar">
+<h3>The Avatar<a class="headerlink" href="#the-avatar" title="Permalink to this headline">¶</a></h3>
+<p>An avatar is a business logic object for a specific user. For POP3, it&#8217;s
+a mailbox, for a first-person-shooter it&#8217;s the object that interacts with
+the game, the actor as it were. Avatars are specific to an application,
+and each avatar represents a single &#8220;user&#8221; .</p>
+</div>
+<div class="section" id="the-mind">
+<h3>The Mind<a class="headerlink" href="#the-mind" title="Permalink to this headline">¶</a></h3>
+<p>As mentioned before, the mind is usually <code class="docutils literal"><span class="pre">None</span></code> , so you can skip this
+bit if you want.</p>
+<p>Masters of Perspective Broker already know this object as the ill-named &#8220;client object&#8221; .  There is no &#8220;mind&#8221; class, or even interface, but it
+is an object which serves an important role - any notifications which are to be
+relayed to an authenticated client are passed through a &#8216;mind&#8217;. In addition, it
+allows passing more information to the realm during login in addition to the
+avatar ID.</p>
+<p>The name may seem rather unusual, but considering that a Mind is
+representative of the entity on the &#8220;other end&#8221; of a network connection
+that is both receiving updates and issuing commands, I believe it is
+appropriate.</p>
+<p>Although many protocols will not use this, it serves an important role.
+It is provided as an argument both to the Portal and to the Realm,
+although a CredentialChecker should interact with a client program
+exclusively through a Credentials instance.</p>
+<p>Unlike the original Perspective Broker &#8220;client object&#8221; , a Mind&#8217;s
+implementation is most often dictated by the protocol that is
+connecting rather than the Realm.  A Realm which requires a particular
+interface to issue notifications will need to wrap the Protocol&#8217;s mind
+implementation with an adapter in order to get one that conforms to its
+expected interface - however, Perspective Broker will likely continue
+to use the model where the client object has a pre-specified remote
+interface.</p>
+<p>(If you don&#8217;t quite understand this, it&#8217;s fine.  It&#8217;s hard to explain,
+and it&#8217;s not used in simple usages of cred, so feel free to pass None
+until you find yourself requiring something like this.)</p>
+</div>
+</div>
+<div class="section" id="responsibilities">
+<h2>Responsibilities<a class="headerlink" href="#responsibilities" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="server-protocol-implementation">
+<h3>Server protocol implementation<a class="headerlink" href="#server-protocol-implementation" title="Permalink to this headline">¶</a></h3>
+<p>The protocol implementor should define the interface the avatar should implement,
+and design the protocol to have a portal attached. When a user logs in using the
+protocol, a credential object is created, passed to the portal, and an avatar
+with the appropriate interface is requested. When the user logs out or the protocol
+is disconnected, the avatar should be logged out.</p>
+<p>The protocol designer should not hardcode how users are authenticated or the
+realm implemented. For example, a POP3 protocol implementation would require a portal whose
+realm returns avatars implementing IMailbox and whose credential checker accepts
+username/password credentials, but that is all. Here&#8217;s a sketch of how the code
+might look - note that USER and PASS are the protocol commands used to login, and
+the DELE command can only be used after you are logged in:</p>
+<p><a class="reference download internal" href="../../_downloads/pop3_server.py"><code class="xref download docutils literal"><span class="pre">pop3_server.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">Interface</span>
+
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">twisted.cred</span> <span class="kn">import</span> <span class="n">credentials</span><span class="p">,</span> <span class="n">error</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span>
+
+<span class="k">class</span> <span class="nc">IMailbox</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Interface specification for mailbox.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">deleteMessage</span><span class="p">(</span><span class="n">index</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">POP3</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+    <span class="c"># ...</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">portal</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">portal</span> <span class="o">=</span> <span class="n">portal</span>
+
+    <span class="k">def</span> <span class="nf">do_DELE</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="c"># uses self.mbox, which is set after login</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mbox</span><span class="o">.</span><span class="n">deleteMessage</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">successResponse</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">do_USER</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_userIs</span> <span class="o">=</span> <span class="n">user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">successResponse</span><span class="p">(</span><span class="s">&#39;USER accepted, send PASS&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">do_PASS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_userIs</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">failResponse</span><span class="p">(</span><span class="s">&quot;USER required before PASS&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_userIs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_userIs</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">maybeDeferred</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">authenticateUserPASS</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cbMailbox</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">authenticateUserPASS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">portal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">portal</span><span class="o">.</span><span class="n">login</span><span class="p">(</span>
+                <span class="n">credentials</span><span class="o">.</span><span class="n">UsernamePassword</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">),</span>
+                <span class="bp">None</span><span class="p">,</span>
+                <span class="n">IMailbox</span>
+            <span class="p">)</span>
+        <span class="k">raise</span> <span class="n">error</span><span class="o">.</span><span class="n">UnauthorizedLogin</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_cbMailbox</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ial</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="n">interface</span><span class="p">,</span> <span class="n">avatar</span><span class="p">,</span> <span class="n">logout</span> <span class="o">=</span> <span class="n">ial</span>
+
+        <span class="k">if</span> <span class="n">interface</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">IMailbox</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">failResponse</span><span class="p">(</span><span class="s">&#39;Authentication failed&#39;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">err</span><span class="p">(</span><span class="s">&quot;_cbMailbox() called with an interface other than IMailbox&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mbox</span> <span class="o">=</span> <span class="n">avatar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_onLogout</span> <span class="o">=</span> <span class="n">logout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">successResponse</span><span class="p">(</span><span class="s">&#39;Authentication succeeded&#39;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s">&quot;Authenticated login for &quot;</span> <span class="o">+</span> <span class="n">user</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="application-implementation">
+<h3>Application implementation<a class="headerlink" href="#application-implementation" title="Permalink to this headline">¶</a></h3>
+<p>The application developer can implement realms and credential checkers. For example,
+they might implement a realm that returns IMailbox implementing avatars, using MySQL
+for storage, or perhaps a credential checker that uses LDAP for authentication.
+In the following example, the Realm for a simple remote object service (using
+Twisted&#8217;s Perspective Broker protocol) is implemented:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.cred.portal</span> <span class="kn">import</span> <span class="n">IRealm</span>
+
+<span class="k">class</span> <span class="nc">SimplePerspective</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Avatar</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">perspective_echo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;echoing&#39;</span><span class="p">,</span><span class="n">text</span>
+        <span class="k">return</span> <span class="n">text</span>
+
+    <span class="k">def</span> <span class="nf">logout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="bp">self</span><span class="p">,</span> <span class="s">&quot;logged out&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">SimpleRealm</span><span class="p">:</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">IRealm</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarId</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">in</span> <span class="n">interfaces</span><span class="p">:</span>
+            <span class="n">avatar</span> <span class="o">=</span> <span class="n">SimplePerspective</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="n">avatar</span><span class="p">,</span> <span class="n">avatar</span><span class="o">.</span><span class="n">logout</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;no interface&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deployment">
+<h3>Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h3>
+<p>Deployment involves tying together a protocol, an appropriate realm and a credential
+checker. For example, a POP3 server can be constructed by attaching to it a portal
+that wraps the MySQL-based realm and an /etc/passwd credential checker, or perhaps
+the LDAP credential checker if that is more useful. The following example shows
+how the SimpleRealm in the previous example is deployed using an in-memory credential checker:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.cred.portal</span> <span class="kn">import</span> <span class="n">Portal</span>
+<span class="kn">from</span> <span class="nn">twisted.cred.checkers</span> <span class="kn">import</span> <span class="n">InMemoryUsernamePasswordDatabaseDontUse</span>
+
+<span class="n">portal</span> <span class="o">=</span> <span class="n">Portal</span><span class="p">(</span><span class="n">SimpleRealm</span><span class="p">())</span>
+<span class="n">checker</span> <span class="o">=</span> <span class="n">InMemoryUsernamePasswordDatabaseDontUse</span><span class="p">()</span>
+<span class="n">checker</span><span class="o">.</span><span class="n">addUser</span><span class="p">(</span><span class="s">&quot;guest&quot;</span><span class="p">,</span> <span class="s">&quot;password&quot;</span><span class="p">)</span>
+<span class="n">portal</span><span class="o">.</span><span class="n">registerChecker</span><span class="p">(</span><span class="n">checker</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">9986</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">portal</span><span class="p">))</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="cred-plugins">
+<h2>Cred plugins<a class="headerlink" href="#cred-plugins" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="authentication-with-cred-plugins">
+<h3>Authentication with cred plugins<a class="headerlink" href="#authentication-with-cred-plugins" title="Permalink to this headline">¶</a></h3>
+<p>Cred offers a plugin architecture for authentication methods. The
+primary API for this architecture is the command-line; the plugins are
+meant to be specified by the end-user when deploying a TAP (twistd
+plugin).</p>
+<p>For more information on writing a twistd plugin and using cred
+plugins for your application, please refer to the <a class="reference internal" href="tap.html"><span class="doc">Writing a twistd plugin</span></a> document.</p>
+</div>
+<div class="section" id="building-a-cred-plugin">
+<h3>Building a cred plugin<a class="headerlink" href="#building-a-cred-plugin" title="Permalink to this headline">¶</a></h3>
+<p>To build a plugin for cred, you should first define an <code class="docutils literal"><span class="pre">authType</span></code> , a short one-word string that defines
+your plugin to the command-line. Once you have this, the convention is
+to create a file named <code class="docutils literal"><span class="pre">myapp_plugins.py</span></code> in the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.plugins.html">twisted.plugins</a> module path.</p>
+<p>Below is an example file structure for an application that defines
+such a plugin:</p>
+<ul class="simple">
+<li>MyApplication/<ul>
+<li>setup.py</li>
+<li>myapp/<ul>
+<li>__init__.py</li>
+<li>cred.py</li>
+<li>server.py</li>
+</ul>
+</li>
+<li>twisted/<ul>
+<li>plugins/<ul>
+<li>myapp_plugins.py</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Once you have created this structure within your application, you can
+create the code for your cred plugin by building a factory class which
+implements <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.strcred.ICheckerFactory.html">ICheckerFactory</a> .
+These factory classes should not consist of a tremendous amount of
+code. Most of the real application logic should reside in the cred
+checker itself. (For help on building those, scroll up.)</p>
+<p>The core purpose of the CheckerFactory is to translate an <code class="docutils literal"><span class="pre">argstring</span></code> , which is passed on the command line,
+into a suitable set of initialization parameters for a Checker
+class. In most cases this should be little more than constructing a
+dictionary or a tuple of arguments, then passing them along to a new
+checker instance.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implements</span>
+
+<span class="kn">from</span> <span class="nn">twisted</span> <span class="kn">import</span> <span class="n">plugin</span>
+<span class="kn">from</span> <span class="nn">twisted.cred.strcred</span> <span class="kn">import</span> <span class="n">ICheckerFactory</span>
+<span class="kn">from</span> <span class="nn">myapp.cred</span> <span class="kn">import</span> <span class="n">SpecialChecker</span>
+
+<span class="k">class</span> <span class="nc">SpecialCheckerFactory</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A checker factory for a specialized (fictional) API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># The class needs to implement both of these interfaces</span>
+    <span class="c"># for the plugin system to find our factory.</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">ICheckerFactory</span><span class="p">,</span> <span class="n">plugin</span><span class="o">.</span><span class="n">IPlugin</span><span class="p">)</span>
+
+    <span class="c"># This tells AuthOptionsMixin how to find this factory.</span>
+    <span class="n">authType</span> <span class="o">=</span> <span class="s">&quot;special&quot;</span>
+
+    <span class="c"># This is a one-line explanation of what arguments, if any,</span>
+    <span class="c"># your particular cred plugin requires at the command-line.</span>
+    <span class="n">argStringFormat</span> <span class="o">=</span> <span class="s">&quot;A colon-separated key=value list.&quot;</span>
+
+    <span class="c"># This help text can be multiple lines. It will be displayed</span>
+    <span class="c"># when someone uses the &quot;--help-auth-type special&quot; command.</span>
+    <span class="n">authHelp</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;Some help text goes here ...&quot;&quot;&quot;</span>
+
+    <span class="c"># This will be called once per command-line.</span>
+    <span class="k">def</span> <span class="nf">generateChecker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argstring</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+        <span class="n">argdict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">argstring</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">SpecialChecker</span><span class="p">(</span><span class="o">**</span><span class="n">argdict</span><span class="p">)</span>
+
+<span class="c"># We need to instantiate our class for the plugin to work.</span>
+<span class="n">theSpecialCheckerFactory</span> <span class="o">=</span> <span class="n">SpecialCheckerFactory</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For more information on how your plugin can be used in your
+application (and by other application developers), please see the <a class="reference internal" href="tap.html"><span class="doc">Writing a twistd plugin</span></a> document.</p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>After reading through this tutorial, you should be able to</p>
+<ul class="simple">
+<li>Understand how the cred architecture applies to your application</li>
+<li>Integrate your application with cred&#8217;s object model</li>
+<li>Deploy an application that uses cred for authentication</li>
+<li>Allow your users to use command-line authentication plugins</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Cred: Pluggable Authentication</a><ul>
+<li><a class="reference internal" href="#goals">Goals</a></li>
+<li><a class="reference internal" href="#cred-objects">Cred objects</a><ul>
+<li><a class="reference internal" href="#the-portal">The Portal</a></li>
+<li><a class="reference internal" href="#the-credentialchecker">The CredentialChecker</a></li>
+<li><a class="reference internal" href="#the-credentials">The Credentials</a></li>
+<li><a class="reference internal" href="#the-realm">The Realm</a></li>
+<li><a class="reference internal" href="#the-avatar">The Avatar</a></li>
+<li><a class="reference internal" href="#the-mind">The Mind</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#responsibilities">Responsibilities</a><ul>
+<li><a class="reference internal" href="#server-protocol-implementation">Server protocol implementation</a></li>
+<li><a class="reference internal" href="#application-implementation">Application implementation</a></li>
+<li><a class="reference internal" href="#deployment">Deployment</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cred-plugins">Cred plugins</a><ul>
+<li><a class="reference internal" href="#authentication-with-cred-plugins">Authentication with cred plugins</a></li>
+<li><a class="reference internal" href="#building-a-cred-plugin">Building a cred plugin</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="components.html"
+                                  title="previous chapter">Components: Interfaces and Adapters</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="plugin.html"
+                                  title="next chapter">The Twisted Plugin System</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/cred.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

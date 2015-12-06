@@ -1,0 +1,693 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Writing Clients &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Test-driven development with Twisted" href="trial.html" />
+    <link rel="prev" title="Writing Servers" href="servers.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="trial.html" title="Test-driven development with Twisted"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="servers.html" title="Writing Servers"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="writing-clients">
+<h1>Writing Clients<a class="headerlink" href="#writing-clients" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Twisted is a framework designed to be very flexible, and let you write
+powerful clients. The cost of this flexibility is a few layers in the way
+to writing your client. This document covers creating clients that can be
+used for TCP, SSL and Unix sockets. UDP is covered <a class="reference internal" href="udp.html"><span class="doc">in a different document</span></a> .</p>
+<p>At the base, the place where you actually implement the protocol parsing
+and handling, is the <code class="docutils literal"><span class="pre">Protocol</span></code> class. This class will usually be
+descended
+from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.Protocol.html">twisted.internet.protocol.Protocol</a> . Most
+protocol handlers inherit either from this class or from one of its
+convenience children. An instance of the protocol class will be instantiated
+when you connect to the server and will go away when the connection is
+finished.  This means that persistent configuration is not saved in the
+<code class="docutils literal"><span class="pre">Protocol</span></code> .</p>
+<p>The persistent configuration is kept in a <code class="docutils literal"><span class="pre">Factory</span></code> class,
+which usually inherits from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.Factory.html">twisted.internet.protocol.Factory</a>
+(or <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.ClientFactory.html">twisted.internet.protocol.ClientFactory</a> : see below).
+The default factory class just instantiates the <code class="docutils literal"><span class="pre">Protocol</span></code> and then sets the protocol&#8217;s <code class="docutils literal"><span class="pre">factory</span></code> attribute to point to itself (the factory).
+This lets the <code class="docutils literal"><span class="pre">Protocol</span></code> access, and possibly modify, the persistent configuration.</p>
+</div>
+<div class="section" id="protocol">
+<h2>Protocol<a class="headerlink" href="#protocol" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned above, this and auxiliary classes and functions are where
+most of the code is. A Twisted protocol handles data in an asynchronous
+manner. This means that the protocol never waits for an event, but rather
+responds to events as they arrive from the network.</p>
+<p>Here is a simple example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">Protocol</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span>
+
+<span class="k">class</span> <span class="nc">Echo</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is one of the simplest protocols.  It just writes whatever it reads
+from the connection to standard output. There are many events it does not
+respond to. Here is an example of a <code class="docutils literal"><span class="pre">Protocol</span></code> responding to
+another event:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">Protocol</span>
+
+<span class="k">class</span> <span class="nc">WelcomeMessage</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Hello server, I am the client!</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This protocol connects to the server, sends it a welcome message, and
+then terminates the connection.</p>
+<p>The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.BaseProtocol.connectionMade.html">connectionMade</a> event is
+usually where set up of the <code class="docutils literal"><span class="pre">Protocol</span></code> object happens, as well as
+any initial greetings (as in the
+<code class="docutils literal"><span class="pre">WelcomeMessage</span></code> protocol above). Any tearing down of
+<code class="docutils literal"><span class="pre">Protocol</span></code> -specific objects is done in <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.Protocol.connectionLost.html">connectionLost</a> .</p>
+</div>
+<div class="section" id="simple-single-use-clients">
+<h2>Simple, single-use clients<a class="headerlink" href="#simple-single-use-clients" title="Permalink to this headline">¶</a></h2>
+<p>In many cases, the protocol only needs to connect to the server once,
+and the code just wants to get a connected instance of the protocol. In
+those cases <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.endpoints.html">twisted.internet.endpoints</a> provides
+the appropriate API, and in particular <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.endpoints.connectProtocol.html">connectProtocol</a> which takes a
+protocol instance rather than a factory.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">Protocol</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.endpoints</span> <span class="kn">import</span> <span class="n">TCP4ClientEndpoint</span><span class="p">,</span> <span class="n">connectProtocol</span>
+
+<span class="k">class</span> <span class="nc">Greeter</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">sendMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;MESSAGE </span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">gotProtocol</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">,</span> <span class="s">&quot;This is sent in a second&quot;</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">)</span>
+
+<span class="n">point</span> <span class="o">=</span> <span class="n">TCP4ClientEndpoint</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">1234</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">connectProtocol</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">Greeter</span><span class="p">())</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">gotProtocol</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Regardless of the type of client endpoint, the way to set up a new
+connection is simply pass it to <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.endpoints.connectProtocol.html">connectProtocol</a> along with a
+protocol instance.  This means it&#8217;s easy to change the mechanism you&#8217;re
+using to connect, without changing the rest of your program.  For example,
+to run the greeter example over SSL, the only change required is to
+instantiate an
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.endpoints.SSL4ClientEndpoint.html">SSL4ClientEndpoint</a> instead of a
+<code class="docutils literal"><span class="pre">TCP4ClientEndpoint</span></code> .  To take advantage of this, functions and
+methods which initiates a new connection should generally accept an
+endpoint as an argument and let the caller construct it, rather than taking
+arguments like &#8216;host&#8217; and &#8216;port&#8217; and constructing its own.</p>
+<p>For more information on different ways you can make outgoing connections
+to different types of endpoints, as well as parsing strings into endpoints,
+see <a class="reference internal" href="endpoints.html"><span class="doc">the documentation for the endpoints API</span></a> .</p>
+<p>You may come across code using <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.ClientCreator.html">ClientCreator</a> , an older API which is not as flexible as
+the endpoint API.  Rather than calling <code class="docutils literal"><span class="pre">connect</span></code> on an endpoint,
+such code will look like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">ClientCreator</span>
+
+<span class="o">...</span>
+
+<span class="n">creator</span> <span class="o">=</span> <span class="n">ClientCreator</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="n">Greeter</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">creator</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">1234</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">gotProtocol</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In general, the endpoint API should be preferred in new code, as it lets
+the caller select the method of connecting.</p>
+</div>
+<div class="section" id="clientfactory">
+<h2>ClientFactory<a class="headerlink" href="#clientfactory" title="Permalink to this headline">¶</a></h2>
+<p>Still, there&#8217;s plenty of code out there that uses lower-level APIs, and
+a few features (such as automatic reconnection) have not been
+re-implemented with endpoints yet, so in some cases they may be more
+convenient to use.</p>
+<p>To use the lower-level connection APIs, you will need to call one of the <em>reactor.connect*</em> methods directly.
+For these cases, you need a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.ClientFactory.html">ClientFactory</a> .
+The <code class="docutils literal"><span class="pre">ClientFactory</span></code> is in charge of creating the <code class="docutils literal"><span class="pre">Protocol</span></code> and also receives events relating to the connection state.
+This allows it to do things like reconnect in the event of a connection error.
+Here is an example of a simple <code class="docutils literal"><span class="pre">ClientFactory</span></code> that uses the <code class="docutils literal"><span class="pre">Echo</span></code> protocol (above) and also prints what state the connection is in.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">ClientFactory</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span>
+
+<span class="k">class</span> <span class="nc">Echo</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">EchoClientFactory</span><span class="p">(</span><span class="n">ClientFactory</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">startedConnecting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Started to connect.&#39;</span>
+
+    <span class="k">def</span> <span class="nf">buildProtocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Connected.&#39;</span>
+        <span class="k">return</span> <span class="n">Echo</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">clientConnectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Lost connection.  Reason:&#39;</span><span class="p">,</span> <span class="n">reason</span>
+
+    <span class="k">def</span> <span class="nf">clientConnectionFailed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Connection failed. Reason:&#39;</span><span class="p">,</span> <span class="n">reason</span>
+</pre></div>
+</div>
+<p>To connect this <code class="docutils literal"><span class="pre">EchoClientFactory</span></code> to a server, you could use
+this code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">EchoClientFactory</span><span class="p">())</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note that <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.ClientFactory.clientConnectionFailed.html">clientConnectionFailed</a> is called when a connection could not be established,
+and that <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.ClientFactory.clientConnectionLost.html">clientConnectionLost</a> is called when a connection was made and then disconnected.</p>
+<div class="section" id="reactor-client-apis">
+<h3>Reactor Client APIs<a class="headerlink" href="#reactor-client-apis" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="connecttcp">
+<h4>connectTCP<a class="headerlink" href="#connecttcp" title="Permalink to this headline">¶</a></h4>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorTCP.connectTCP.html">IReactorTCP.connectTCP</a> provides support for IPv4 and IPv6 TCP clients.
+The <code class="docutils literal"><span class="pre">host</span></code> argument it accepts can be either a hostname or an IP address literal.
+In the case of a hostname, the reactor will automatically resolve the name to an IP address before attempting the connection.
+This means that for a hostname with multiple address records, reconnection attempts may not always go to the same server (see below).
+It also means that there is name resolution overhead for each connection attempt.
+If you are creating many short-lived connections (typically around hundreds or thousands per second) then you may want to resolve the hostname to an address first and then pass the address to <code class="docutils literal"><span class="pre">connectTCP</span></code> instead.</p>
+</div>
+</div>
+<div class="section" id="reconnection">
+<h3>Reconnection<a class="headerlink" href="#reconnection" title="Permalink to this headline">¶</a></h3>
+<p>Often, the connection of a client will be lost unintentionally due to
+network problems. One way to reconnect after a disconnection would be to
+call <code class="docutils literal"><span class="pre">connector.connect()</span></code> when the connection is lost:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">ClientFactory</span>
+
+<span class="k">class</span> <span class="nc">EchoClientFactory</span><span class="p">(</span><span class="n">ClientFactory</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">clientConnectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="n">connector</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The connector passed as the first argument is the interface between a
+connection and a protocol. When the connection fails and the factory
+receives the <code class="docutils literal"><span class="pre">clientConnectionLost</span></code> event, the factory can
+call <code class="docutils literal"><span class="pre">connector.connect()</span></code> to start the connection over again
+from scratch.</p>
+<p>However, most programs that want this functionality should
+implement <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.ReconnectingClientFactory.html">ReconnectingClientFactory</a> instead,
+which tries to reconnect if a connection is lost or fails and which
+exponentially delays repeated reconnect attempts.</p>
+<p>Here is the <code class="docutils literal"><span class="pre">Echo</span></code> protocol implemented with
+a <code class="docutils literal"><span class="pre">ReconnectingClientFactory</span></code> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">ReconnectingClientFactory</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span>
+
+<span class="k">class</span> <span class="nc">Echo</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">EchoClientFactory</span><span class="p">(</span><span class="n">ReconnectingClientFactory</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">startedConnecting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Started to connect.&#39;</span>
+
+    <span class="k">def</span> <span class="nf">buildProtocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Connected.&#39;</span>
+        <span class="k">print</span> <span class="s">&#39;Resetting reconnection delay&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetDelay</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Echo</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">clientConnectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Lost connection.  Reason:&#39;</span><span class="p">,</span> <span class="n">reason</span>
+        <span class="n">ReconnectingClientFactory</span><span class="o">.</span><span class="n">clientConnectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clientConnectionFailed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Connection failed. Reason:&#39;</span><span class="p">,</span> <span class="n">reason</span>
+        <span class="n">ReconnectingClientFactory</span><span class="o">.</span><span class="n">clientConnectionFailed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span>
+                                                         <span class="n">reason</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="a-higher-level-example-irclogbot">
+<h2>A Higher-Level Example: ircLogBot<a class="headerlink" href="#a-higher-level-example-irclogbot" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview-of-irclogbot">
+<h3>Overview of ircLogBot<a class="headerlink" href="#overview-of-irclogbot" title="Permalink to this headline">¶</a></h3>
+<p>The clients so far have been fairly simple.
+A more complicated example comes with Twisted Words in the <code class="docutils literal"><span class="pre">doc/words/examples</span></code> directory.</p>
+<p><a class="reference download internal" href="../../_downloads/ircLogBot.py"><code class="xref download docutils literal"><span class="pre">ircLogBot.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">An example IRC log bot - logs a channel&#39;s events to a file.</span>
+
+<span class="sd">If someone says the bot&#39;s name in the channel followed by a &#39;:&#39;,</span>
+<span class="sd">e.g.</span>
+
+<span class="sd">    &lt;foo&gt; logbot: hello!</span>
+
+<span class="sd">the bot will reply:</span>
+
+<span class="sd">    &lt;logbot&gt; foo: I am a log bot</span>
+
+<span class="sd">Run this script with two arguments, the channel name the bot should</span>
+<span class="sd">connect to, and file to log to, e.g.:</span>
+
+<span class="sd">    $ python ircLogBot.py test test.log</span>
+
+<span class="sd">will log channel #test to the file &#39;test.log&#39;.</span>
+
+<span class="sd">To run the script:</span>
+
+<span class="sd">    $ python ircLogBot.py &lt;channel&gt; &lt;file&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c"># twisted imports</span>
+<span class="kn">from</span> <span class="nn">twisted.words.protocols</span> <span class="kn">import</span> <span class="n">irc</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">protocol</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+
+<span class="c"># system imports</span>
+<span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">sys</span>
+
+
+<span class="k">class</span> <span class="nc">MessageLogger</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An independent logger class (because separation of application</span>
+<span class="sd">    and protocol logic is a good thing).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">file</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="nb">file</span>
+
+    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write a message to the file.&quot;&quot;&quot;</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;[%H:%M:%S]&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">LogBot</span><span class="p">(</span><span class="n">irc</span><span class="o">.</span><span class="n">IRCClient</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A logging IRC bot.&quot;&quot;&quot;</span>
+    
+    <span class="n">nickname</span> <span class="o">=</span> <span class="s">&quot;twistedbot&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">irc</span><span class="o">.</span><span class="n">IRCClient</span><span class="o">.</span><span class="n">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">MessageLogger</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;[connected at </span><span class="si">%s</span><span class="s">]&quot;</span> <span class="o">%</span> 
+                        <span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())))</span>
+
+    <span class="k">def</span> <span class="nf">connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="n">irc</span><span class="o">.</span><span class="n">IRCClient</span><span class="o">.</span><span class="n">connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;[disconnected at </span><span class="si">%s</span><span class="s">]&quot;</span> <span class="o">%</span> 
+                        <span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+    <span class="c"># callbacks for events</span>
+
+    <span class="k">def</span> <span class="nf">signedOn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called when bot has succesfully signed on to server.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">joined</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This will get called when the bot joins the channel.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;[I have joined </span><span class="si">%s</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="n">channel</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">privmsg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This will get called when the bot receives a message.&quot;&quot;&quot;</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;!&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;&lt;</span><span class="si">%s</span><span class="s">&gt; </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span>
+        
+        <span class="c"># Check to see if they&#39;re sending me a private message</span>
+        <span class="k">if</span> <span class="n">channel</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">nickname</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;It isn&#39;t nice to whisper!  Play nice with the group.&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c"># Otherwise check to see if it is a message directed at me</span>
+        <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nickname</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">: I am a log bot&quot;</span> <span class="o">%</span> <span class="n">user</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;&lt;</span><span class="si">%s</span><span class="s">&gt; </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nickname</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This will get called when the bot sees someone do an action.&quot;&quot;&quot;</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;!&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;* </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span>
+
+    <span class="c"># irc callbacks</span>
+
+    <span class="k">def</span> <span class="nf">irc_NICK</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called when an IRC user changes their nickname.&quot;&quot;&quot;</span>
+        <span class="n">old_nick</span> <span class="o">=</span> <span class="n">prefix</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;!&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">new_nick</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> is now known as </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">old_nick</span><span class="p">,</span> <span class="n">new_nick</span><span class="p">))</span>
+
+
+    <span class="c"># For fun, override the method that determines how a nickname is changed on</span>
+    <span class="c"># collisions. The default method appends an underscore.</span>
+    <span class="k">def</span> <span class="nf">alterCollidedNick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nickname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate an altered version of a nickname that caused a collision in an</span>
+<span class="sd">        effort to create an unused related name for subsequent registration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">nickname</span> <span class="o">+</span> <span class="s">&#39;^&#39;</span>
+
+
+
+<span class="k">class</span> <span class="nc">LogBotFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ClientFactory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A factory for LogBots.</span>
+
+<span class="sd">    A new protocol instance will be created each time we connect to the server.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+
+    <span class="k">def</span> <span class="nf">buildProtocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">LogBot</span><span class="p">()</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">factory</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="n">p</span>
+
+    <span class="k">def</span> <span class="nf">clientConnectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If we get disconnected, reconnect to server.&quot;&quot;&quot;</span>
+        <span class="n">connector</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">clientConnectionFailed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;connection failed:&quot;</span><span class="p">,</span> <span class="n">reason</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c"># initialize logging</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">startLogging</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    
+    <span class="c"># create factory protocol and application</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">LogBotFactory</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+    <span class="c"># connect factory to this host and port</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;irc.freenode.net&quot;</span><span class="p">,</span> <span class="mi">6667</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+    <span class="c"># run bot</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">ircLogBot.py</span></code> connects to an IRC server, joins a channel, and
+logs all traffic on it to a file. It demonstrates some of the
+connection-level logic of reconnecting on a lost connection, as well as
+storing persistent data in the <code class="docutils literal"><span class="pre">Factory</span></code> .</p>
+</div>
+<div class="section" id="persistent-data-in-the-factory">
+<h3>Persistent Data in the Factory<a class="headerlink" href="#persistent-data-in-the-factory" title="Permalink to this headline">¶</a></h3>
+<p>Since the <code class="docutils literal"><span class="pre">Protocol</span></code> instance is recreated each time the
+connection is made, the client needs some way to keep track of data that
+should be persisted. In the case of the logging bot, it needs to know which
+channel it is logging, and where to log it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.words.protocols</span> <span class="kn">import</span> <span class="n">irc</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span>
+
+<span class="k">class</span> <span class="nc">LogBot</span><span class="p">(</span><span class="n">irc</span><span class="o">.</span><span class="n">IRCClient</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">irc</span><span class="o">.</span><span class="n">IRCClient</span><span class="o">.</span><span class="n">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">MessageLogger</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;[connected at </span><span class="si">%s</span><span class="s">]&quot;</span> <span class="o">%</span>
+                        <span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())))</span>
+
+    <span class="k">def</span> <span class="nf">signedOn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">LogBotFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ClientFactory</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+
+    <span class="k">def</span> <span class="nf">buildProtocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">LogBot</span><span class="p">()</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">factory</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="n">p</span>
+</pre></div>
+</div>
+<p>When the protocol is created, it gets a reference to the factory as
+<code class="docutils literal"><span class="pre">self.factory</span></code> . It can then access attributes of the factory in
+its logic. In the case of <code class="docutils literal"><span class="pre">LogBot</span></code> , it opens the file and
+connects to the channel stored in the factory.</p>
+<p>Factories have a default implementation of <code class="docutils literal"><span class="pre">buildProtocol</span></code>.
+It does the same thing the example above does using the <code class="docutils literal"><span class="pre">protocol</span></code> attribute of the factory to create the protocol instance.
+In the example above, the factory could be rewritten to look like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">LogBotFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ClientFactory</span><span class="p">):</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">LogBot</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.Protocol.html">Protocol</a> class used throughout this document is a base implementation of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IProtocol.html">IProtocol</a> used in most Twisted applications for convenience.
+To learn about the complete <code class="docutils literal"><span class="pre">IProtocol</span></code> interface, see the API documentation for <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IProtocol.html">IProtocol</a> .</p>
+<p>The <code class="docutils literal"><span class="pre">transport</span></code> attribute used in some examples in this
+document provides the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.ITCPTransport.html">ITCPTransport</a> interface. To learn
+about the complete interface, see the API documentation
+for <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.ITCPTransport.html">ITCPTransport</a> .</p>
+<p>Interface classes are a way of specifying what methods and attributes an
+object has and how they behave. See the <a class="reference internal" href="components.html"><span class="doc">Components: Interfaces and Adapters</span></a> document for more information on
+using interfaces in Twisted.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Writing Clients</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#protocol">Protocol</a></li>
+<li><a class="reference internal" href="#simple-single-use-clients">Simple, single-use clients</a></li>
+<li><a class="reference internal" href="#clientfactory">ClientFactory</a><ul>
+<li><a class="reference internal" href="#reactor-client-apis">Reactor Client APIs</a><ul>
+<li><a class="reference internal" href="#connecttcp">connectTCP</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#reconnection">Reconnection</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#a-higher-level-example-irclogbot">A Higher-Level Example: ircLogBot</a><ul>
+<li><a class="reference internal" href="#overview-of-irclogbot">Overview of ircLogBot</a></li>
+<li><a class="reference internal" href="#persistent-data-in-the-factory">Persistent Data in the Factory</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="servers.html"
+                                  title="previous chapter">Writing Servers</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="trial.html"
+                                  title="next chapter">Test-driven development with Twisted</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/clients.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

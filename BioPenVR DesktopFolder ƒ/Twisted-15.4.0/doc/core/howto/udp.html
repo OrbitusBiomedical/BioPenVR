@@ -1,0 +1,453 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>UDP Networking &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Using Processes" href="process.html" />
+    <link rel="prev" title="Using TLS in Twisted" href="ssl.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="process.html" title="Using Processes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ssl.html" title="Using TLS in Twisted"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="udp-networking">
+<h1>UDP Networking<a class="headerlink" href="#udp-networking" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Unlike TCP, UDP has no notion of connections.
+A UDP socket can receive datagrams from any server on the network and send datagrams to any host on the network.
+In addition, datagrams may arrive in any order, never arrive at all, or be duplicated in transit.</p>
+<p>Since there are no connections, we only use a single object, a protocol, for each UDP socket.
+We then use the reactor to connect this protocol to a UDP transport, using the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorUDP.html">twisted.internet.interfaces.IReactorUDP</a> reactor API.</p>
+</div>
+<div class="section" id="datagramprotocol">
+<h2>DatagramProtocol<a class="headerlink" href="#datagramprotocol" title="Permalink to this headline">¶</a></h2>
+<p>The class where you actually implement the protocol parsing and handling will usually be descended from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.DatagramProtocol.html">twisted.internet.protocol.DatagramProtocol</a> or from one of its convenience children.
+The <code class="docutils literal"><span class="pre">DatagramProtocol</span></code> class receives datagrams and can send them out over the network.
+Received datagrams include the address they were sent from.
+When sending datagrams the destination address must be specified.</p>
+<p>Here is a simple example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">DatagramProtocol</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">Echo</span><span class="p">(</span><span class="n">DatagramProtocol</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">datagramReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)):</span>
+        <span class="k">print</span> <span class="s">&quot;received </span><span class="si">%r</span><span class="s"> from </span><span class="si">%s</span><span class="s">:</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenUDP</span><span class="p">(</span><span class="mi">9999</span><span class="p">,</span> <span class="n">Echo</span><span class="p">())</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>As you can see, the protocol is registered with the reactor.
+This means it may be persisted if it&#8217;s added to an application, and thus it has <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.AbstractDatagramProtocol.startProtocol.html">startProtocol</a> and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.AbstractDatagramProtocol.stopProtocol.html">stopProtocol</a> methods that will get called when the protocol is connected and disconnected from a UDP socket.</p>
+<p>The protocol&#8217;s <code class="docutils literal"><span class="pre">transport</span></code> attribute will implement the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IUDPTransport.html">twisted.internet.interfaces.IUDPTransport</a> interface.
+Notice that the <code class="docutils literal"><span class="pre">host</span></code> argument should be an IP address, not a hostname.
+If you only have the hostname use <code class="docutils literal"><span class="pre">reactor.resolve()</span></code> to resolve the address (see <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorCore.resolve.html">twisted.internet.interfaces.IReactorCore.resolve</a>).</p>
+</div>
+<div class="section" id="adopted-datagram-ports">
+<h2>Adopted Datagram Ports<a class="headerlink" href="#adopted-datagram-ports" title="Permalink to this headline">¶</a></h2>
+<p>It is also possible to add an existing <code class="docutils literal"><span class="pre">SOCK_DGRAM</span></code> file descriptor to the reactor using the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorSocket.adoptDatagramPort.html">adoptDatagramPort</a> API.</p>
+<p>Here is a simple example:</p>
+<p><a class="reference download internal" href="../../_downloads/adopt_datagram_port.py"><code class="xref download docutils literal"><span class="pre">adopt_datagram_port.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">DatagramProtocol</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+
+
+<span class="k">class</span> <span class="nc">Echo</span><span class="p">(</span><span class="n">DatagramProtocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">datagramReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)):</span>
+        <span class="k">print</span> <span class="s">&quot;received </span><span class="si">%r</span><span class="s"> from </span><span class="si">%s</span><span class="s">:</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+
+
+
+<span class="n">portSocket</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+<span class="c"># Make the port non-blocking and start it listening.</span>
+<span class="n">portSocket</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">portSocket</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="s">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">9999</span><span class="p">))</span>
+
+<span class="c"># Now pass the port file descriptor to the reactor</span>
+<span class="n">port</span> <span class="o">=</span> <span class="n">reactor</span><span class="o">.</span><span class="n">adoptDatagramPort</span><span class="p">(</span>
+    <span class="n">portSocket</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span> <span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">Echo</span><span class="p">())</span>
+
+<span class="c"># The portSocket should be cleaned up by the process that creates it.</span>
+<span class="n">portSocket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>You must ensure that the socket is non-blocking before passing its file descriptor to <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorSocket. adoptDatagramPort.html">adoptDatagramPort</a>.</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorSocket. adoptDatagramPort.html">adoptDatagramPort</a> cannot (<a class="reference external" href="https://twistedmatrix.com/trac/ticket/5599">currently</a>) detect the family of the adopted socket so you must ensure that you pass the correct socket family argument.</li>
+<li>The reactor will not shutdown the socket.
+It is the responsibility of the process that created the socket to shutdown and clean up the socket when it is no longer needed.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="connected-udp">
+<h2>Connected UDP<a class="headerlink" href="#connected-udp" title="Permalink to this headline">¶</a></h2>
+<p>A connected UDP socket is slightly different from a standard one as it can only send and receive datagrams to/from a single address.
+However this does not in any way imply a connection as datagrams may still arrive in any order and the port on the other side may have no one listening.
+The benefit of the connected UDP socket is that it <strong>may</strong> provide notification of undelivered packages.
+This depends on many factors (almost all of which are out of the control of the application) but still presents certain benefits which occasionally make it useful.</p>
+<p>Unlike a regular UDP protocol, we do not need to specify where to send datagrams and are not told where they came from since they can only come from the address to which the socket is &#8216;connected&#8217;.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">DatagramProtocol</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">Helloer</span><span class="p">(</span><span class="n">DatagramProtocol</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">startProtocol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">host</span> <span class="o">=</span> <span class="s">&quot;192.168.1.1&quot;</span>
+        <span class="n">port</span> <span class="o">=</span> <span class="mi">1234</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;now we can only send to host </span><span class="si">%s</span><span class="s"> port </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span> <span class="c"># no need for address</span>
+
+    <span class="k">def</span> <span class="nf">datagramReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)):</span>
+        <span class="k">print</span> <span class="s">&quot;received </span><span class="si">%r</span><span class="s"> from </span><span class="si">%s</span><span class="s">:</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+
+    <span class="c"># Possibly invoked if there is no server listening on the</span>
+    <span class="c"># address to which we are sending.</span>
+    <span class="k">def</span> <span class="nf">connectionRefused</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;No one listening&quot;</span>
+
+<span class="c"># 0 means any port, we don&#39;t care in this case</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenUDP</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Helloer</span><span class="p">())</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal"><span class="pre">connect()</span></code>, like <code class="docutils literal"><span class="pre">write()</span></code> will only accept IP addresses, not unresolved hostnames.
+To obtain the IP of a hostname use <code class="docutils literal"><span class="pre">reactor.resolve()</span></code> , e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">def</span> <span class="nf">gotIP</span><span class="p">(</span><span class="n">ip</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;IP of &#39;example.com&#39; is&quot;</span><span class="p">,</span> <span class="n">ip</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s">&#39;example.com&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">gotIP</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Connecting to a new address after a previous connection or making a connected port unconnected are not currently supported, but likely will be in the future.</p>
+</div>
+<div class="section" id="multicast-udp">
+<h2>Multicast UDP<a class="headerlink" href="#multicast-udp" title="Permalink to this headline">¶</a></h2>
+<p>Multicast allows a process to contact multiple hosts with a single packet, without knowing the specific IP address of any of the hosts.
+This is in contrast to normal, or unicast, UDP, where each datagram has a single IP as its destination.
+Multicast datagrams are sent to special multicast group addresses (in the IPv4 range 224.0.0.0 to 239.255.255.255), along with a corresponding port.
+In order to receive multicast datagrams, you must join that specific group address.
+However, any UDP socket can send to multicast addresses.</p>
+<p><a class="reference download internal" href="../../_downloads/MulticastServer.py"><code class="xref download docutils literal"><span class="pre">MulticastServer.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">DatagramProtocol</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+
+<span class="k">class</span> <span class="nc">MulticastPingPong</span><span class="p">(</span><span class="n">DatagramProtocol</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">startProtocol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called after protocol has started listening.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># Set the TTL&gt;1 so multicast will cross router hops:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">setTTL</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="c"># Join a specific multicast group:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">joinGroup</span><span class="p">(</span><span class="s">&quot;228.0.0.5&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">datagramReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datagram</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;Datagram </span><span class="si">%s</span><span class="s"> received from </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">datagram</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">address</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">datagram</span> <span class="o">==</span> <span class="s">&quot;Client: Ping&quot;</span><span class="p">:</span>
+            <span class="c"># Rather than replying to the group multicast address, we send the</span>
+            <span class="c"># reply directly (unicast) to the originating port:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Server: Pong&quot;</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
+
+
+<span class="c"># We use listenMultiple=True so that we can run MulticastServer.py and</span>
+<span class="c"># MulticastClient.py on same machine:</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenMulticast</span><span class="p">(</span><span class="mi">8005</span><span class="p">,</span> <span class="n">MulticastPingPong</span><span class="p">(),</span>
+                        <span class="n">listenMultiple</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>As with UDP, with multicast there is no server/client differentiation at the protocol level.
+Our server example is very simple and closely resembles a normal <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorUDP.listenUDP.html">listenUDP</a> protocol implementation.
+The main difference is that instead of <code class="docutils literal"><span class="pre">listenUDP</span></code>, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorMulticast.listenMulticast.html">listenMulticast</a> is called with the port number.
+The server calls <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IMulticastTransport.joinGroup.html">joinGroup</a> to join a multicast group.
+A <code class="docutils literal"><span class="pre">DatagramProtocol</span></code> that is listening with multicast and has joined a group can receive multicast datagrams, but also unicast datagrams sent directly to its address.
+The server in the example above sends such a unicast message in reply to the multicast message it receives from the client.</p>
+<p><a class="reference download internal" href="../../_downloads/MulticastClient.py"><code class="xref download docutils literal"><span class="pre">MulticastClient.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">DatagramProtocol</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+
+<span class="k">class</span> <span class="nc">MulticastPingClient</span><span class="p">(</span><span class="n">DatagramProtocol</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">startProtocol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Join the multicast address, so we can receive replies:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">joinGroup</span><span class="p">(</span><span class="s">&quot;228.0.0.5&quot;</span><span class="p">)</span>
+        <span class="c"># Send to 228.0.0.5:8005 - all listeners on the multicast address</span>
+        <span class="c"># (including us) will receive this message.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Client: Ping&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;228.0.0.5&quot;</span><span class="p">,</span> <span class="mi">8005</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">datagramReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datagram</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;Datagram </span><span class="si">%s</span><span class="s"> received from </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">datagram</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">address</span><span class="p">))</span>
+
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenMulticast</span><span class="p">(</span><span class="mi">8005</span><span class="p">,</span> <span class="n">MulticastPingClient</span><span class="p">(),</span> <span class="n">listenMultiple</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note that a multicast socket will have a default TTL (time to live) of 1.
+That is, datagrams won&#8217;t traverse more than one router hop, unless a higher TTL is set with <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IMulticastTransport.setTTL.html">setTTL</a>.
+Other functionality provided by the multicast transport includes <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IMulticastTransport.setOutgoingInterface.html">setOutgoingInterface</a> and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IMulticastTransport.setLoopbackMode.html">setLoopbackMode</a> &#8211; see <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IMulticastTransport.html">IMulticastTransport</a> for more information.</p>
+</div>
+<div class="section" id="broadcast-udp">
+<h2>Broadcast UDP<a class="headerlink" href="#broadcast-udp" title="Permalink to this headline">¶</a></h2>
+<p>Broadcast allows a different way of contacting several unknown hosts.
+Broadcasting via UDP sends a packet out to all hosts on the local network by sending to a magic broadcast address (<code class="docutils literal"><span class="pre">&quot;&lt;broadcast&gt;&quot;</span></code>).
+This broadcast is filtered by routers by default, and there are no &#8220;groups&#8221; like multicast, only different ports.</p>
+<p>Broadcast is enabled by passing <code class="docutils literal"><span class="pre">True</span></code> to <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IUDPTransport.setBroadcastAllowed.html">setBroadcastAllowed</a> on the port.
+Checking the broadcast status can be done with <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IUDPTransport.getBroadcastAllowed.html">getBroadcastAllowed</a> on the port.</p>
+<p>For a complete example of this feature, see <a class="reference download internal" href="../../_downloads/udpbroadcast.py"><code class="xref download docutils literal"><span class="pre">udpbroadcast.py</span></code></a>.</p>
+</div>
+<div class="section" id="ipv6">
+<h2>IPv6<a class="headerlink" href="#ipv6" title="Permalink to this headline">¶</a></h2>
+<p>UDP sockets can also bind to IPv6 addresses to support sending and receiving datagrams over IPv6.
+By passing an IPv6 address to <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorUDP.listenUDP.html">listenUDP</a>&#8216;s <code class="docutils literal"><span class="pre">interface</span></code> argument, the reactor will start an IPv6 socket that can be used to send and receive UDP datagrams.</p>
+<p><a class="reference download internal" href="../../_downloads/ipv6_listen.py"><code class="xref download docutils literal"><span class="pre">ipv6_listen.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">DatagramProtocol</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+
+
+<span class="k">class</span> <span class="nc">Echo</span><span class="p">(</span><span class="n">DatagramProtocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">datagramReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;received </span><span class="si">%r</span><span class="s"> from </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span>
+
+
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenUDP</span><span class="p">(</span><span class="mi">8006</span><span class="p">,</span> <span class="n">Echo</span><span class="p">(),</span> <span class="n">interface</span><span class="o">=</span><span class="s">&#39;::&#39;</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">UDP Networking</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#datagramprotocol">DatagramProtocol</a></li>
+<li><a class="reference internal" href="#adopted-datagram-ports">Adopted Datagram Ports</a></li>
+<li><a class="reference internal" href="#connected-udp">Connected UDP</a></li>
+<li><a class="reference internal" href="#multicast-udp">Multicast UDP</a></li>
+<li><a class="reference internal" href="#broadcast-udp">Broadcast UDP</a></li>
+<li><a class="reference internal" href="#ipv6">IPv6</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="ssl.html"
+                                  title="previous chapter">Using TLS in Twisted</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="process.html"
+                                  title="next chapter">Using Processes</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/udp.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

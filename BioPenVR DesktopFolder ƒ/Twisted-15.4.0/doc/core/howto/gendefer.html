@@ -1,0 +1,489 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Generating Deferreds &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Scheduling tasks for the future" href="time.html" />
+    <link rel="prev" title="Deferred Reference" href="defer.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="time.html" title="Scheduling tasks for the future"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="defer.html" title="Deferred Reference"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="generating-deferreds">
+<h1>Generating Deferreds<a class="headerlink" href="#generating-deferreds" title="Permalink to this headline">¶</a></h1>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> objects are
+signals that a function you have called does not yet have the data you want
+available. When a function returns a Deferred object, your calling function
+attaches callbacks to it to handle the data when available.</p>
+<p>This document addresses the other half of the question: writing functions
+that return Deferreds, that is, constructing Deferred objects, arranging for
+them to be returned immediately without blocking until data is available, and
+firing their callbacks when the data is available.</p>
+<p>This document assumes that you are familiar with the asynchronous model used
+by Twisted, and with <a class="reference internal" href="defer.html"><span class="doc">using deferreds returned by functions</span></a>
+.</p>
+<div class="section" id="class-overview">
+<span id="core-howto-gendefer-class"></span><h2>Class overview<a class="headerlink" href="#class-overview" title="Permalink to this headline">¶</a></h2>
+<p>This is an overview API reference for Deferred from the point of creating a
+Deferred and firing its callbacks and errbacks.  It is not meant to be a
+substitute for the docstrings in the Deferred class, but can provide
+guidelines for its use.</p>
+<p>There is a parallel overview of functions used by calling function which
+the Deferred is returned to at <a class="reference internal" href="defer.html#core-howto-defer-class"><span class="std std-ref">Using Deferreds</span></a> .</p>
+<div class="section" id="basic-callback-functions">
+<h3>Basic Callback Functions<a class="headerlink" href="#basic-callback-functions" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">callback(result)</span></code></p>
+<p>Run success callbacks with the given result. <em>This can only be run once.</em> Later calls to this or
+<code class="docutils literal"><span class="pre">errback</span></code> will raise <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.AlreadyCalledError.html">twisted.internet.defer.AlreadyCalledError</a> .
+If further callbacks or errbacks are added after this
+point, addCallbacks will run the callbacks immediately.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">errback(failure)</span></code></p>
+<p>Run error callbacks with the given failure. <em>This can only be run once.</em> Later calls to this or
+<code class="docutils literal"><span class="pre">callback</span></code> will raise <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.AlreadyCalledError.html">twisted.internet.defer.AlreadyCalledError</a> .
+If further callbacks or errbacks are added after this
+point, addCallbacks will run the callbacks immediately.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="what-deferreds-don-t-do-make-your-code-asynchronous">
+<h2>What Deferreds don&#8217;t do: make your code asynchronous<a class="headerlink" href="#what-deferreds-don-t-do-make-your-code-asynchronous" title="Permalink to this headline">¶</a></h2>
+<p><em>Deferreds do not make the code magically not block.</em></p>
+<p>Let&#8217;s take this function as an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span>
+
+<span class="n">TARGET</span> <span class="o">=</span> <span class="mi">10000</span>
+
+<span class="k">def</span> <span class="nf">largeFibonnaciNumber</span><span class="p">():</span>
+    <span class="c"># create a Deferred object to return:</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+
+    <span class="c"># calculate the ten thousandth Fibonnaci number</span>
+
+    <span class="n">first</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">second</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">TARGET</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="n">second</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="n">second</span>
+        <span class="n">second</span> <span class="o">=</span> <span class="n">new</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Progress: calculating the </span><span class="si">%d</span><span class="s">th Fibonnaci number&quot;</span> <span class="o">%</span> <span class="n">i</span>
+
+    <span class="c"># give the Deferred the answer to pass to the callbacks:</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">second</span><span class="p">)</span>
+
+    <span class="c"># return the Deferred with the answer:</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">timeBefore</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="c"># call the function and get our Deferred</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">largeFibonnaciNumber</span><span class="p">()</span>
+
+<span class="n">timeAfter</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&quot;Total time taken for largeFibonnaciNumber call: </span><span class="si">%0.3f</span><span class="s"> seconds&quot;</span> <span class="o">%</span> \
+      <span class="p">(</span><span class="n">timeAfter</span> <span class="o">-</span> <span class="n">timeBefore</span><span class="p">)</span>
+
+<span class="c"># add a callback to it to print the number</span>
+
+<span class="k">def</span> <span class="nf">printNumber</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;The </span><span class="si">%d</span><span class="s">th Fibonacci number is </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">TARGET</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&quot;Adding the callback now.&quot;</span>
+
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printNumber</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You will notice that despite creating a Deferred in the  <code class="docutils literal"><span class="pre">largeFibonnaciNumber</span></code> function, these things happened:</p>
+<ul class="simple">
+<li>the &#8220;Total time taken for largeFibonnaciNumber call&#8221; output
+shows that the function did not return immediately as asynchronous functions
+are expected to do; and</li>
+<li>rather than the callback being added before the result was available and
+called after the result is available, it isn&#8217;t even added until after the
+calculation has been completed.</li>
+</ul>
+<p>The function completed its calculation before returning, blocking the
+process until it had finished, which is exactly what asynchronous functions
+are not meant to do.  Deferreds are not a non-blocking talisman: they are a
+signal for asynchronous functions to <em>use</em> to pass results onto
+callbacks, but using them does not guarantee that you have an asynchronous
+function.</p>
+</div>
+<div class="section" id="advanced-processing-chain-control">
+<h2>Advanced Processing Chain Control<a class="headerlink" href="#advanced-processing-chain-control" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">pause()</span></code></p>
+<p>Cease calling any methods as they are added, and do not
+respond to <code class="docutils literal"><span class="pre">callback</span></code> , until
+<code class="docutils literal"><span class="pre">self.unpause()</span></code> is called.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">unpause()</span></code></p>
+<p>If <code class="docutils literal"><span class="pre">callback</span></code> has been called on this
+Deferred already, call all the callbacks that have been
+added to this Deferred since <code class="docutils literal"><span class="pre">pause</span></code> was
+called.</p>
+<p>Whether it was called or not, this will put this
+Deferred in a state where further calls to
+<code class="docutils literal"><span class="pre">addCallbacks</span></code> or <code class="docutils literal"><span class="pre">callback</span></code> will
+work as normal.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="returning-deferreds-from-synchronous-functions">
+<h2>Returning Deferreds from synchronous functions<a class="headerlink" href="#returning-deferreds-from-synchronous-functions" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes you might wish to return a Deferred from a synchronous function.
+There are several reasons why, the major two are maintaining API compatibility
+with another version of your function which returns a Deferred, or allowing
+for the possibility that in the future your function might need to be
+asynchronous.</p>
+<p>In the <a class="reference internal" href="defer.html"><span class="doc">Using Deferreds</span></a> reference, we gave the
+following example of a synchronous function:</p>
+<p><a class="reference download internal" href="../../_downloads/synch-validation.py"><code class="xref download docutils literal"><span class="pre">synch-validation.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">synchronousIsValidUser</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Return true if user is a valid user, false otherwise</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">user</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;Alice&quot;</span><span class="p">,</span> <span class="s">&quot;Angus&quot;</span><span class="p">,</span> <span class="s">&quot;Agnes&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>While we can require that callers of our function wrap our synchronous
+result in a Deferred using <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.maybeDeferred.html">maybeDeferred</a> , for the sake of API
+compatibility it is better to return a Deferred ourselves using  <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.succeed.html">defer.succeed</a> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span>
+
+<span class="k">def</span> <span class="nf">immediateIsValidUser</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Returns a Deferred resulting in true if user is a valid user, false</span>
+<span class="sd">    otherwise</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">user</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;Alice&quot;</span><span class="p">,</span> <span class="s">&quot;Angus&quot;</span><span class="p">,</span> <span class="s">&quot;Agnes&quot;</span><span class="p">]</span>
+
+    <span class="c"># return a Deferred object already called back with the value of result</span>
+    <span class="k">return</span> <span class="n">defer</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There is an equivalent <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.fail.html">defer.fail</a> method to return a Deferred with the
+errback chain already fired.</p>
+</div>
+<div class="section" id="integrating-blocking-code-with-twisted">
+<h2>Integrating blocking code with Twisted<a class="headerlink" href="#integrating-blocking-code-with-twisted" title="Permalink to this headline">¶</a></h2>
+<p>At some point, you are likely to need to call a blocking function: many
+functions in third party libraries will have long running blocking functions.
+There is no way to &#8216;force&#8217; a function to be asynchronous: it must be written
+that way specifically. When using Twisted, your own code should be
+asynchronous, but there is no way to make third party functions asynchronous
+other than rewriting them.</p>
+<p>In this case, Twisted provides the ability to run the blocking code in a
+separate thread rather than letting it block your application. The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.threads.deferToThread.html">twisted.internet.threads.deferToThread</a> function will set up
+a thread to run your blocking function, return a Deferred and later fire that
+Deferred when the thread completes.</p>
+<p>Let&#8217;s assume our <code class="docutils literal"><span class="pre">largeFibonnaciNumber</span></code> function
+from above is in a third party library (returning the result of the
+calculation, not a Deferred) and is not easily modifiable to be finished in
+discrete blocks. This example shows it being called in a thread, unlike in the
+earlier section we&#8217;ll see that the operation does not block our entire
+program:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">largeFibonnaciNumber</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represent a long running blocking function by calculating</span>
+<span class="sd">    the TARGETth Fibonnaci number</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">TARGET</span> <span class="o">=</span> <span class="mi">10000</span>
+
+    <span class="n">first</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">second</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">TARGET</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="n">second</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="n">second</span>
+        <span class="n">second</span> <span class="o">=</span> <span class="n">new</span>
+
+    <span class="k">return</span> <span class="n">second</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">threads</span><span class="p">,</span> <span class="n">reactor</span>
+
+<span class="k">def</span> <span class="nf">fibonacciCallback</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Callback which manages the largeFibonnaciNumber result by</span>
+<span class="sd">    printing it out</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s">&quot;largeFibonnaciNumber result =&quot;</span><span class="p">,</span> <span class="n">result</span>
+    <span class="c"># make sure the reactor stops after the callback chain finishes,</span>
+    <span class="c"># just so that this example terminates</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Run a series of operations, deferring the largeFibonnaciNumber</span>
+<span class="sd">    operation to a thread and performing some other operations after</span>
+<span class="sd">    adding the callback</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># get our Deferred which will be called with the largeFibonnaciNumber result</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">threads</span><span class="o">.</span><span class="n">deferToThread</span><span class="p">(</span><span class="n">largeFibonnaciNumber</span><span class="p">)</span>
+    <span class="c"># add our callback to print it out</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">fibonacciCallback</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;1st line after the addition of the callback&quot;</span>
+    <span class="k">print</span> <span class="s">&quot;2nd line after the addition of the callback&quot;</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">run</span><span class="p">()</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="possible-sources-of-error">
+<h2>Possible sources of error<a class="headerlink" href="#possible-sources-of-error" title="Permalink to this headline">¶</a></h2>
+<p>Deferreds greatly simplify the process of writing asynchronous code by
+providing a standard for registering callbacks, but there are some subtle and
+sometimes confusing rules that you need to follow if you are going to use
+them. This mostly applies to people who are writing new systems that use
+Deferreds internally, and not writers of applications that just add callbacks
+to Deferreds produced and processed by other systems. Nevertheless, it is good
+to know.</p>
+<div class="section" id="firing-deferreds-more-than-once-is-impossible">
+<h3>Firing Deferreds more than once is impossible<a class="headerlink" href="#firing-deferreds-more-than-once-is-impossible" title="Permalink to this headline">¶</a></h3>
+<p>Deferreds are one-shot. You can only call <code class="docutils literal"><span class="pre">Deferred.callback</span></code> or <code class="docutils literal"><span class="pre">Deferred.errback</span></code> once. The processing chain continues each time
+you add new callbacks to an already-called-back-to Deferred.</p>
+</div>
+<div class="section" id="synchronous-callback-execution">
+<h3>Synchronous callback execution<a class="headerlink" href="#synchronous-callback-execution" title="Permalink to this headline">¶</a></h3>
+<p>If a Deferred already has a result available, <code class="docutils literal"><span class="pre">addCallback</span></code> <strong>may</strong> call the callback synchronously: that is, immediately
+after it&#8217;s been added.  In situations where callbacks modify state, it is
+might be desirable for the chain of processing to halt until all callbacks are
+added. For this, it is possible to <code class="docutils literal"><span class="pre">pause</span></code> and <code class="docutils literal"><span class="pre">unpause</span></code>
+a Deferred&#8217;s processing chain while you are adding lots of callbacks.</p>
+<p>Be careful when you use these methods! If you <code class="docutils literal"><span class="pre">pause</span></code> a
+Deferred, it is <em>your</em> responsibility to make sure that you unpause it.
+The function adding the callbacks must unpause a paused Deferred, it should <em>never</em> be the responsibility of the code that actually fires the
+callback chain by calling <code class="docutils literal"><span class="pre">callback</span></code> or <code class="docutils literal"><span class="pre">errback</span></code> as
+this would negate its usefulness!</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Generating Deferreds</a><ul>
+<li><a class="reference internal" href="#class-overview">Class overview</a><ul>
+<li><a class="reference internal" href="#basic-callback-functions">Basic Callback Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#what-deferreds-don-t-do-make-your-code-asynchronous">What Deferreds don&#8217;t do: make your code asynchronous</a></li>
+<li><a class="reference internal" href="#advanced-processing-chain-control">Advanced Processing Chain Control</a></li>
+<li><a class="reference internal" href="#returning-deferreds-from-synchronous-functions">Returning Deferreds from synchronous functions</a></li>
+<li><a class="reference internal" href="#integrating-blocking-code-with-twisted">Integrating blocking code with Twisted</a></li>
+<li><a class="reference internal" href="#possible-sources-of-error">Possible sources of error</a><ul>
+<li><a class="reference internal" href="#firing-deferreds-more-than-once-is-impossible">Firing Deferreds more than once is impossible</a></li>
+<li><a class="reference internal" href="#synchronous-callback-execution">Synchronous callback execution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="defer.html"
+                                  title="previous chapter">Deferred Reference</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="time.html"
+                                  title="next chapter">Scheduling tasks for the future</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/gendefer.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

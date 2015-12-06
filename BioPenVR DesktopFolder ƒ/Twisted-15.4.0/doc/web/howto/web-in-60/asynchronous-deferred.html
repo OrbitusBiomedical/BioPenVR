@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Asynchronous Responses (via Deferred) &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Twisted Web In 60 Seconds" href="index.html" />
+    <link rel="next" title="Interrupted Responses" href="interrupted.html" />
+    <link rel="prev" title="Asynchronous Responses" href="asynchronous.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="interrupted.html" title="Interrupted Responses"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="asynchronous.html" title="Asynchronous Responses"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Twisted Web</a> &raquo;</li>
+          <li><a href="../index.html" >Developer Guides</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Twisted Web In 60 Seconds</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="asynchronous-responses-via-deferred">
+<h1>Asynchronous Responses (via Deferred)<a class="headerlink" href="#asynchronous-responses-via-deferred" title="Permalink to this headline">¶</a></h1>
+<p>The previous example had a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.resource.Resource.html">Resource</a> that generates its response
+asynchronously rather than immediately upon the call to its render
+method. Though it was a useful demonstration of the <code class="docutils literal"><span class="pre">NOT_DONE_YET</span></code>
+feature of Twisted Web, the example didn&#8217;t reflect what a realistic application
+might want to do. This example introduces <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> , the Twisted class which is used
+to provide a uniform interface to many asynchronous events, and shows you an
+example of using a <code class="docutils literal"><span class="pre">Deferred</span></code> -returning API to generate an
+asynchronous response to a request in Twisted Web.</p>
+<p><code class="docutils literal"><span class="pre">Deferred</span></code> is the result of two consequences of the
+asynchronous programming approach. First, asynchronous code is
+frequently (if not always) concerned with some data (in Python, an
+object) which is not yet available but which probably will be
+soon. Asynchronous code needs a way to define what will be done to the
+object once it does exist. It also needs a way to define how to handle
+errors in the creation or acquisition of that object. These two needs
+are satisfied by the <em>callbacks</em> and <em>errbacks</em> of
+a <code class="docutils literal"><span class="pre">Deferred</span></code> . Callbacks are added to
+a <code class="docutils literal"><span class="pre">Deferred</span></code> with <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.addCallback.html">Deferred.addCallback</a> ; errbacks
+are added with <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.addErrback.html">Deferred.addErrback</a> . When the
+object finally does exist, it is passed to <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.callback.html">Deferred.callback</a> which passes it
+on to the callback added with <code class="docutils literal"><span class="pre">addCallback</span></code> . Similarly, if
+an error occurs, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.errback.html">Deferred.errback</a> is called and
+the error is passed along to the errback added
+with <code class="docutils literal"><span class="pre">addErrback</span></code> . Second, the events that make
+asynchronous code actually work often take many different,
+incompatible forms. <code class="docutils literal"><span class="pre">Deferred</span></code> acts as the uniform
+interface which lets different parts of an asynchronous application
+interact and isolates them from implementation details they shouldn&#8217;t
+be concerned with.</p>
+<p>That&#8217;s almost all there is to <code class="docutils literal"><span class="pre">Deferred</span></code> . To solidify your new
+understanding, now consider this rewritten version
+of <code class="docutils literal"><span class="pre">DelayedResource</span></code> which uses a <code class="docutils literal"><span class="pre">Deferred</span></code> -based delay
+API. It does exactly the same thing as the <a class="reference internal" href="asynchronous.html"><span class="doc">previous example</span></a> . Only the implementation is different.</p>
+<p>First, the example must import that new API that was just mentioned, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.task.deferLater.html">deferLater</a> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.task</span> <span class="kn">import</span> <span class="n">deferLater</span>
+</pre></div>
+</div>
+<p>Next, all the other imports (these are the same as last time):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.resource</span> <span class="kn">import</span> <span class="n">Resource</span>
+<span class="kn">from</span> <span class="nn">twisted.web.server</span> <span class="kn">import</span> <span class="n">NOT_DONE_YET</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</pre></div>
+</div>
+<p>With the imports done, here&#8217;s the first part of
+the <code class="docutils literal"><span class="pre">DelayedResource</span></code> implementation. Again, this part of
+the code is identical to the previous version:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">DelayedResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_delayedRender</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;&lt;html&gt;&lt;body&gt;Sorry to keep you waiting.&lt;/body&gt;&lt;/html&gt;&quot;</span><span class="p">)</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Next we need to define the render method. Here&#8217;s where things
+change a bit. Instead of using <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorTime.callLater.html">callLater</a> ,
+We&#8217;re going to use <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.task.deferLater.html">deferLater</a> this
+time. <code class="docutils literal"><span class="pre">deferLater</span></code> accepts a reactor, delay (in seconds, as
+with <code class="docutils literal"><span class="pre">callLater</span></code> ), and a function to call after the delay
+to produce that elusive object discussed in the description
+of <code class="docutils literal"><span class="pre">Deferred</span></code> s. We&#8217;re also going to
+use <code class="docutils literal"><span class="pre">_delayedRender</span></code> as the callback to add to
+the <code class="docutils literal"><span class="pre">Deferred</span></code> returned by <code class="docutils literal"><span class="pre">deferLater</span></code> . Since
+it expects the request object as an argument, we&#8217;re going to set up
+the <code class="docutils literal"><span class="pre">deferLater</span></code> call to return a <code class="docutils literal"><span class="pre">Deferred</span></code>
+which has the request object as its result.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+    <span class="k">def</span> <span class="nf">render_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">deferLater</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">request</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">Deferred</span></code> referenced by <code class="docutils literal"><span class="pre">d</span></code> now needs to
+have the <code class="docutils literal"><span class="pre">_delayedRender</span></code> callback added to it. Once this
+is done, <code class="docutils literal"><span class="pre">_delayedRender</span></code> will be called with the result
+of <code class="docutils literal"><span class="pre">d</span></code> (which will be <code class="docutils literal"><span class="pre">request</span></code> , of course — the
+result of <code class="docutils literal"><span class="pre">(lambda:</span> <span class="pre">request)()</span></code> ).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delayedRender</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, the render method still needs to return <code class="docutils literal"><span class="pre">NOT_DONE_YET</span></code> ,
+for exactly the same reasons as it did in the previous version of the
+example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+        <span class="k">return</span> <span class="n">NOT_DONE_YET</span>
+</pre></div>
+</div>
+<p>And with that, <code class="docutils literal"><span class="pre">DelayedResource</span></code> is now implemented
+based on a <code class="docutils literal"><span class="pre">Deferred</span></code> . The example still isn&#8217;t very
+realistic, but remember that since <code class="docutils literal"><span class="pre">Deferred</span></code> s offer a
+uniform interface to many different asynchronous event sources, this
+code now resembles a real application even more closely; you could
+easily replace <code class="docutils literal"><span class="pre">deferLater</span></code> with
+another <code class="docutils literal"><span class="pre">Deferred</span></code> -returning API and suddenly you might
+have a resource that does something useful.</p>
+<p>Finally, here&#8217;s the complete, uninterrupted example source, as an rpy script:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.task</span> <span class="kn">import</span> <span class="n">deferLater</span>
+<span class="kn">from</span> <span class="nn">twisted.web.resource</span> <span class="kn">import</span> <span class="n">Resource</span>
+<span class="kn">from</span> <span class="nn">twisted.web.server</span> <span class="kn">import</span> <span class="n">NOT_DONE_YET</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">DelayedResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_delayedRender</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;&lt;html&gt;&lt;body&gt;Sorry to keep you waiting.&lt;/body&gt;&lt;/html&gt;&quot;</span><span class="p">)</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">render_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">deferLater</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">request</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delayedRender</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">NOT_DONE_YET</span>
+
+<span class="n">resource</span> <span class="o">=</span> <span class="n">DelayedResource</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="asynchronous.html"
+                                  title="previous chapter">Asynchronous Responses</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="interrupted.html"
+                                  title="next chapter">Interrupted Responses</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../../_sources/web/howto/web-in-60/asynchronous-deferred.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

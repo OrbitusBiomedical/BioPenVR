@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction to Perspective Broker &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Using Perspective Broker" href="pb-usage.html" />
+    <link rel="prev" title="Overview of Twisted Spread" href="pb.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pb-usage.html" title="Using Perspective Broker"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pb.html" title="Overview of Twisted Spread"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="introduction-to-perspective-broker">
+<h1>Introduction to Perspective Broker<a class="headerlink" href="#introduction-to-perspective-broker" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Suppose you find yourself in control of both ends of the wire: you
+have two programs that need to talk to each other, and you get to use any
+protocol you want. If you can think of your problem in terms of objects that
+need to make method calls on each other, then chances are good that you can
+use Twisted&#8217;s Perspective Broker protocol rather than trying to shoehorn
+your needs into something like HTTP, or implementing yet another RPC
+mechanism <a class="footnote-reference" href="#id2" id="id1">[1]</a> .</p>
+<p>The Perspective Broker system (abbreviated &#8220;PB&#8221; , spawning numerous
+sandwich-related puns) is based upon a few central concepts:</p>
+<ul class="simple">
+<li><em>serialization</em> : taking fairly arbitrary objects and types,
+turning them into a chunk of bytes, sending them over a wire, then
+reconstituting them on the other end. By keeping careful track of object
+ids, the serialized objects can contain references to other objects and
+the remote copy will still be useful.</li>
+<li><em>remote method calls</em> : doing something to a local object and
+causing a method to get run on a distant one. The local object is called a
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteReference.html">RemoteReference</a> , and you
+&#8220;do something&#8221; by running its <code class="docutils literal"><span class="pre">.callRemote</span></code> method.</li>
+</ul>
+<p>This document will contain several examples that will (hopefully) appear
+redundant and verbose once you&#8217;ve figured out what&#8217;s going on. To begin
+with, much of the code will just be labelled &#8220;magic&#8221; : don&#8217;t worry about how
+these parts work yet. It will be explained more fully later.</p>
+</div>
+<div class="section" id="object-roadmap">
+<h2>Object Roadmap<a class="headerlink" href="#object-roadmap" title="Permalink to this headline">¶</a></h2>
+<p>To start with, here are the major classes, interfaces, and
+functions involved in PB, with links to the file where they are
+defined (all of which are under twisted/, of course). Don&#8217;t worry
+about understanding what they all do yet: it&#8217;s easier to figure them
+out through their interaction than explaining them one at a time.</p>
+<ul class="simple">
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.Factory.html">Factory</a>
+: <code class="docutils literal"><span class="pre">internet/protocol.py</span></code></li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.PBServerFactory.html">PBServerFactory</a>
+: <code class="docutils literal"><span class="pre">spread/pb.py</span></code></li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Broker.html">Broker</a>
+: <code class="docutils literal"><span class="pre">spread/pb.py</span></code></li>
+</ul>
+<p>Other classes that are involved at some point:</p>
+<ul class="simple">
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteReference.html">RemoteReference</a>
+: <code class="docutils literal"><span class="pre">spread/pb.py</span></code></li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Root.html">pb.Root</a>
+: <code class="docutils literal"><span class="pre">spread/pb.py</span></code> , actually defined as
+<code class="docutils literal"><span class="pre">twisted.spread.flavors.Root</span></code>
+in <code class="docutils literal"><span class="pre">spread/flavors.py</span></code></li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Referenceable.html">pb.Referenceable</a>
+: <code class="docutils literal"><span class="pre">spread/pb.py</span></code> , actually defined as
+<code class="docutils literal"><span class="pre">twisted.spread.flavors.Referenceable</span></code>
+in <code class="docutils literal"><span class="pre">spread/flavors.py</span></code></li>
+</ul>
+<p>Classes and interfaces that get involved when you start to care
+about authorization and security:</p>
+<ul class="simple">
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.portal.Portal.html">Portal</a>
+: <code class="docutils literal"><span class="pre">cred/portal.py</span></code></li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.portal.IRealm.html">IRealm</a>
+: <code class="docutils literal"><span class="pre">cred/portal.py</span></code></li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.IPerspective.html">IPerspective</a>
+: <code class="docutils literal"><span class="pre">spread/pb.py</span></code> , which you will usually be interacting
+with via <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Avatar.html">pb.Avatar</a> (a basic implementor of the interface).</li>
+</ul>
+<div class="section" id="subclassing-and-implementing">
+<h3>Subclassing and Implementing<a class="headerlink" href="#subclassing-and-implementing" title="Permalink to this headline">¶</a></h3>
+<p>Technically you can subclass anything you want, but technically you
+could also write a whole new framework, which would just waste a lot
+of time. Knowing which classes are useful to subclass or which
+interfaces to implement is one of the bits of knowledge that&#8217;s crucial
+to using PB (and all of Twisted) successfully. Here are some hints to
+get started:</p>
+<ul class="simple">
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Root.html">pb.Root</a> , <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Referenceable.html">pb.Referenceable</a> : you&#8217;ll
+subclass these to make remotely-referenceable objects (i.e., objects
+which you can call methods on remotely) using PB. You don&#8217;t need to
+change any of the existing behavior, just inherit all of it and add
+the remotely-accessible methods that you want to export.</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Avatar.html">pb.Avatar</a> : You&#8217;ll
+be subclassing this when you get into PB programming with
+authorization. This is an implementor of IPerspective.</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.checkers.ICredentialsChecker.html">ICredentialsChecker</a> : Implement this if
+you want to authenticate your users against some sort of data store:
+i.e., an LDAP database, an RDBMS, etc. There are already a few
+implementations of this for various back-ends in
+twisted.cred.checkers.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="things-you-can-call-remotely">
+<h2>Things you can Call Remotely<a class="headerlink" href="#things-you-can-call-remotely" title="Permalink to this headline">¶</a></h2>
+<p>At this writing, there are three &#8220;flavors&#8221; of objects that can
+be accessed remotely through <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteReference.html">RemoteReference</a> objects. Each of these
+flavors has a rule for how the <code class="docutils literal"><span class="pre">callRemote</span></code>
+message is transformed into a local method call on the server.  In
+order to use one of these &#8220;flavors&#8221; , subclass them and name your
+published methods with the appropriate prefix.</p>
+<ul>
+<li><p class="first"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.IPerspective.html">twisted.spread.pb.IPerspective</a> implementors</p>
+<p>This is the first interface we deal with. It is a &#8220;perspective&#8221;
+onto your PB application.  Perspectives are slightly special because
+they are usually the first object that a given user can access in
+your application (after they log on).  A user should only receive a
+reference to their <em>own</em> perspective. PB works hard to
+verify, as best it can, that any method that can be called on a
+perspective directly is being called on behalf of the user who is
+represented by that perspective.  (Services with unusual
+requirements for &#8220;on behalf of&#8221; , such as simulations with the
+ability to posses another player&#8217;s avatar, are accomplished by
+providing indirected access to another user&#8217;s perspective.)</p>
+<p>Perspectives are not usually serialized as remote references, so
+do not return an IPerspective-implementor directly.</p>
+<p>The way most people will want to implement IPerspective is by
+subclassing pb.Avatar. Remotely accessible methods on pb.Avatar
+instances are named with the <code class="docutils literal"><span class="pre">perspective_</span></code> prefix.</p>
+</li>
+<li><p class="first"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Referenceable.html">twisted.spread.pb.Referenceable</a></p>
+<p>Referenceable objects are the simplest kind of PB object.  You can call
+methods on them and return them from methods to provide access to other
+objects&#8217; methods.</p>
+<p>However, when a method is called on a Referenceable, it&#8217;s not possible to
+tell who called it.</p>
+<p>Remotely accessible methods on Referenceables are named with the
+<code class="docutils literal"><span class="pre">remote_</span></code> prefix.</p>
+</li>
+<li><p class="first"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Viewable.html">twisted.spread.pb.Viewable</a></p>
+<p>Viewable objects are remotely referenceable objects which have the
+additional requirement that it must be possible to tell who is calling them.
+The argument list to a Viewable&#8217;s remote methods is modified in order to
+include the Perspective representing the calling user.</p>
+<p>Remotely accessible methods on Viewables are named with the
+<code class="docutils literal"><span class="pre">view_</span></code> prefix.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="things-you-can-copy-remotely">
+<h2>Things you can Copy Remotely<a class="headerlink" href="#things-you-can-copy-remotely" title="Permalink to this headline">¶</a></h2>
+<p>In addition to returning objects that you can call remote methods on, you
+can return structured copies of local objects.</p>
+<p>There are 2 basic flavors that allow for copying objects remotely.  Again,
+you can use these by subclassing them.  In order to specify what state you want
+to have copied when these are serialized, you can either use the Python default
+<code class="docutils literal"><span class="pre">__getstate__</span></code> or specialized method calls for that
+flavor.</p>
+<ul>
+<li><p class="first"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Copyable.html">twisted.spread.pb.Copyable</a></p>
+<p>This is the simpler kind of object that can be copied.  Every time this
+object is returned from a method or passed as an argument, it is serialized
+and unserialized.</p>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Copyable.html">Copyable</a>
+provides a method you can override, <code class="docutils literal"><span class="pre">getStateToCopyFor(perspective)</span></code> , which
+allows you to decide what an object will look like for the
+perspective who is requesting it. The <code class="docutils literal"><span class="pre">perspective</span></code> argument will be the perspective
+which is either passing an argument or returning a result an
+instance of your Copyable class.</p>
+<p>For security reasons, in order to allow a particular Copyable class to
+actually be copied, you must declare a <code class="docutils literal"><span class="pre">RemoteCopy</span></code>
+handler for
+that Copyable subclass.  The easiest way to do this is to declare both in the
+same module, like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">flavors</span>
+<span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="n">flavors</span><span class="o">.</span><span class="n">Copyable</span><span class="p">):</span>
+    <span class="k">pass</span>
+<span class="k">class</span> <span class="nc">RemoteFoo</span><span class="p">(</span><span class="n">flavors</span><span class="o">.</span><span class="n">RemoteCopy</span><span class="p">):</span>
+    <span class="k">pass</span>
+<span class="n">flavors</span><span class="o">.</span><span class="n">setUnjellyableForClass</span><span class="p">(</span><span class="n">Foo</span><span class="p">,</span> <span class="n">RemoteFoo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this case, each time a Foo is copied between peers, a RemoteFoo will be
+instantiated and populated with the Foo&#8217;s state.  If you do not do this, PB
+will complain that there have been security violations, and it may close the
+connection.</p>
+</li>
+<li><p class="first"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Cacheable.html">twisted.spread.pb.Cacheable</a></p>
+<p>Let me preface this with a warning: Cacheable may be hard to understand.
+The motivation for it may be unclear if you don&#8217;t have some experience with
+real-world applications that use remote method calling of some kind.  Once
+you understand why you need it, what it does will likely seem simple and
+obvious, but if you get confused by this, forget about it and come back
+later.  It&#8217;s possible to use PB without understanding Cacheable at all.</p>
+<p>Cacheable is a flavor which is designed to be copied only when necessary,
+and updated on the fly as changes are made to it.  When passed as an argument
+or a return value, if a Cacheable exists on the side of the connection it is
+being copied to, it will be referred to by ID and not copied.</p>
+<p>Cacheable is designed to minimize errors involved in replicating an object
+between multiple servers, especially those related to having stale
+information.  In order to do this, Cacheable automatically registers
+observers and queries state atomically, together.  You can override the
+method <code class="docutils literal"><span class="pre">getStateToCacheAndObserveFor(self,</span> <span class="pre">perspective,</span> <span class="pre">observer)</span></code> in order to specify how your observers will be
+stored and updated.</p>
+<p>Similar to
+<code class="docutils literal"><span class="pre">getStateToCopyFor</span></code> ,
+<code class="docutils literal"><span class="pre">getStateToCacheAndObserveFor</span></code> gets passed a
+perspective.  It also gets passed an
+<code class="docutils literal"><span class="pre">observer</span></code> , which is a remote reference to a
+&#8220;secret&#8221; fourth referenceable flavor:
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteCache.html">RemoteCache</a> .</p>
+<p>A <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteCache.html">RemoteCache</a> is simply
+the object that represents your
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Cacheable.html">Cacheable</a> on the other side
+of the connection.  It is registered using the same method as
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteCopy.html">RemoteCopy</a> , above.
+RemoteCache is different, however, in that it will be referenced by its peer.
+It acts as a Referenceable, where all methods prefixed with
+<code class="docutils literal"><span class="pre">observe_</span></code> will be callable remotely.  It is
+recommended that your object maintain a list (note: library support for this
+is forthcoming!) of observers, and update them using
+<code class="docutils literal"><span class="pre">callRemote</span></code> when the Cacheable changes in a way
+that should be noticeable to its clients.</p>
+<p>Finally, when all references to a
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Cacheable.html">Cacheable</a> from a given
+perspective are lost,
+<code class="docutils literal"><span class="pre">stoppedObserving(perspective,</span> <span class="pre">observer)</span></code>
+will be called on the
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Cacheable.html">Cacheable</a> , with the same
+perspective/observer pair that <code class="docutils literal"><span class="pre">getStateToCacheAndObserveFor</span></code> was
+originally called with.  Any cleanup remote calls can be made there, as well
+as removing the observer object from any lists which it was previously in.
+Any further calls to this observer object will be invalid.</p>
+</li>
+</ul>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Most of Twisted is like this.  Hell, most of
+Unix is like this: if <em>you</em>  think it would be useful, someone else has
+probably thought that way in the past, and acted on it, and you can take
+advantage of the tool they created to solve the same problem you&#8217;re facing
+now.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Introduction to Perspective Broker</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#object-roadmap">Object Roadmap</a><ul>
+<li><a class="reference internal" href="#subclassing-and-implementing">Subclassing and Implementing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#things-you-can-call-remotely">Things you can Call Remotely</a></li>
+<li><a class="reference internal" href="#things-you-can-copy-remotely">Things you can Copy Remotely</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="pb.html"
+                                  title="previous chapter">Overview of Twisted Spread</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="pb-usage.html"
+                                  title="next chapter">Using Perspective Broker</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/pb-intro.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

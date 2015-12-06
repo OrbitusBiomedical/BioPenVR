@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Twisted Positioning &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Twisted Glossary" href="glossary.html" />
+    <link rel="prev" title="Porting to Python 3" href="python3.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="glossary.html" title="Twisted Glossary"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="python3.html" title="Porting to Python 3"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="twisted-positioning">
+<h1>Twisted Positioning<a class="headerlink" href="#twisted-positioning" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal"><span class="pre">twisted.positioning</span></code>: geolocation in Twisted</p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">twisted.positioning</span></code> is a package for doing geospatial positioning (trying to find where you are on Earth) using Twisted.</p>
+</div>
+<div class="section" id="high-level-overview">
+<h2>High-level overview<a class="headerlink" href="#high-level-overview" title="Permalink to this headline">¶</a></h2>
+<p>In <code class="docutils literal"><span class="pre">twisted.positioning</span></code>, you write an <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.positioning.ipositioning.IPositioningReceiver.html">IPositioningReceiver</a> implementation that will get called whenever some information about your position is known (such as position, altitude, heading...).
+The package provides a base class, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.positioning.base.BasePositioningReceiver.html">BasePositioningReceiver</a> you might want to use that implements all of the receiver methods as stubs.</p>
+<p>Secondly, you will want a positioning source, which will call your <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.positioning.ipositioning.IPositioningReceiver.html">IPositioningReceiver</a>.
+Currently, <code class="docutils literal"><span class="pre">twisted.positioning</span></code> provides an NMEA implementation, which is a standard protocol spoken by many positioning devices, usually over a serial port.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="../../_downloads/nmealogger.py"><code class="xref download docutils literal"><span class="pre">nmealogger.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Connects to an NMEA device, logs beacon information and position.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">serialport</span>
+<span class="kn">from</span> <span class="nn">twisted.positioning</span> <span class="kn">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">nmea</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">usage</span>
+
+
+<span class="k">class</span> <span class="nc">PositioningReceiver</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">BasePositioningReceiver</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">positionReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s">&quot;I&#39;m at {} lat, {} lon&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">))</span>
+
+
+    <span class="k">def</span> <span class="nf">beaconInformationReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beaconInformation</span><span class="p">):</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="s">&quot;{0.seen} beacons seen, {0.used} beacons used&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">beaconInformation</span><span class="p">))</span>
+
+
+
+<span class="k">class</span> <span class="nc">Options</span><span class="p">(</span><span class="n">usage</span><span class="o">.</span><span class="n">Options</span><span class="p">):</span>
+    <span class="n">optParameters</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="s">&#39;baud-rate&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="mi">4800</span><span class="p">,</span> <span class="s">&quot;Baud rate (default: 4800)&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s">&#39;serial-port&#39;</span><span class="p">,</span> <span class="s">&#39;p&#39;</span><span class="p">,</span> <span class="s">&#39;/dev/ttyS0&#39;</span><span class="p">,</span> <span class="s">&#39;Serial Port device&#39;</span><span class="p">],</span>
+    <span class="p">]</span>
+
+
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">startLogging</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+
+    <span class="n">opts</span> <span class="o">=</span> <span class="n">Options</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">parseOptions</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">usage</span><span class="o">.</span><span class="n">UsageError</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;{}: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">message</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">positioningReceiver</span> <span class="o">=</span> <span class="n">PositioningReceiver</span><span class="p">()</span>
+    <span class="n">nmeaReceiver</span> <span class="o">=</span> <span class="n">nmea</span><span class="o">.</span><span class="n">NMEAAdapter</span><span class="p">(</span><span class="n">positioningReceiver</span><span class="p">)</span>
+    <span class="n">proto</span> <span class="o">=</span> <span class="n">nmea</span><span class="o">.</span><span class="n">NMEAProtocol</span><span class="p">(</span><span class="n">nmeaReceiver</span><span class="p">)</span>
+
+    <span class="n">port</span><span class="p">,</span> <span class="n">baudrate</span> <span class="o">=</span> <span class="n">opts</span><span class="p">[</span><span class="s">&quot;serial-port&quot;</span><span class="p">],</span> <span class="n">opts</span><span class="p">[</span><span class="s">&quot;baud-rate&quot;</span><span class="p">]</span>
+    <span class="n">serialport</span><span class="o">.</span><span class="n">SerialPort</span><span class="p">(</span><span class="n">proto</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="n">baudrate</span><span class="p">)</span>
+
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Connects to an NMEA device on a serial port, and reports whenever it receives a position.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Twisted Positioning</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#high-level-overview">High-level overview</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="python3.html"
+                                  title="previous chapter">Porting to Python 3</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="glossary.html"
+                                  title="next chapter">Twisted Glossary</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/positioning.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

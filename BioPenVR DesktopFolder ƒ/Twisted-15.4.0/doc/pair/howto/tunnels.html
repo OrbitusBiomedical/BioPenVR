@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Twisted Pair: Tunnels And Network Taps &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Twisted Pair: Device Configuration" href="configuration.html" />
+    <link rel="prev" title="Developer Guides" href="index.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="configuration.html" title="Twisted Pair: Device Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Developer Guides"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Pair</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="twisted-pair-tunnels-and-network-taps">
+<h1>Twisted Pair: Tunnels And Network Taps<a class="headerlink" href="#twisted-pair-tunnels-and-network-taps" title="Permalink to this headline">¶</a></h1>
+<p>On Linux, Twisted Pair supports the special <em>tun</em> and <em>tap</em> network interface types.
+This functionality allows you to interact with raw sockets (for example, to send or receive ICMP or ARP traffic).
+It also allows the creation of simulated networks.
+This document will not cover the details of these platform-provided features, but it will explain how to use the Twisted Pair APIs which interact with them.
+Before reading this document, you may want to familiarize yourself with Linux tuntap if you have not already done so
+(good online resources, are a little scarce, but you may find the <a class="reference external" href="https://www.google.com/search?q=linux+tuntap+tutorial">linux tuntap tutorial</a> google results helpful).</p>
+<div class="section" id="tuntap-ports">
+<h2>Tuntap Ports<a class="headerlink" href="#tuntap-ports" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.pair.tuntap.TuntapPort.html">twisted.pair.tuntap.TuntapPort</a> class is the entry point into the tun/tap functionality.
+This class is initialized with an application-supplied protocol object and associates that object with a tun or tap device on the system.
+If the protocol provides <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.pair.ethernet.IEthernetProtocol.html">twisted.pair.ethernet.IEthernetProtocol</a> then it is associated with a tap device.
+Otherwise the protocol must provide <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.pair.raw.IRawPacketProtocol.html">twisted.pair.raw.IRawPacketProtocol</a> and it will be associated with a tun device.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implementer</span>
+<span class="kn">from</span> <span class="nn">twisted.pair.tuntap</span> <span class="kn">import</span> <span class="n">TuntapPort</span>
+<span class="kn">from</span> <span class="nn">twisted.pair.ethernet</span> <span class="kn">import</span> <span class="n">EthernetProtocol</span>
+<span class="kn">from</span> <span class="nn">twisted.pair.rawudp</span> <span class="kn">import</span> <span class="n">RawUDPProtocol</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="c"># Note that you must run this example as a user with permission to open this</span>
+<span class="c"># device.  That means run it as root or pre-configure tap0 and assign ownership</span>
+<span class="c"># of it to a non-root user.  The same goes for tun0 below.</span>
+
+<span class="n">tap</span> <span class="o">=</span> <span class="n">TuntapPort</span><span class="p">(</span><span class="n">b</span><span class="s">&quot;tap0&quot;</span><span class="p">,</span> <span class="n">EthernetProtocol</span><span class="p">(),</span> <span class="n">reactor</span><span class="o">=</span><span class="n">reactor</span><span class="p">)</span>
+<span class="n">tap</span><span class="o">.</span><span class="n">startListening</span><span class="p">()</span>
+
+<span class="n">tun</span> <span class="o">=</span> <span class="n">TuntapPort</span><span class="p">(</span><span class="n">b</span><span class="s">&quot;tun0&quot;</span><span class="p">,</span> <span class="n">RawUDPProtocol</span><span class="p">(),</span> <span class="n">reactor</span><span class="o">=</span><span class="n">reactor</span><span class="p">)</span>
+<span class="n">tun</span><span class="o">.</span><span class="n">startListening</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In the above example two protocols are attached to the network: one to a tap device and the other to a tun device.
+The <code class="docutils literal"><span class="pre">EthernetProtocol</span></code> used in this example is a very simple implementation of <code class="docutils literal"><span class="pre">IEthernetProtocol</span></code> which does nothing more than dispatch to some other protocol based on the protocol found in the header of each ethernet frame it receives. <code class="docutils literal"><span class="pre">RawUDPProtocol</span></code> is similar - it dispatches to other protocols based on the UDP port of IP datagrams it received.
+This example won&#8217;t do anything since no application protocols have been added to either the <code class="docutils literal"><span class="pre">EthernetProtocol</span></code> or <code class="docutils literal"><span class="pre">RawUDPProtocol</span></code> instances
+(not to mention the reactor isn&#8217;t being started).
+However, it should give you some idea of how tun/tap functionality fits into a Twisted application.</p>
+<p>By the behaviors of these two protocols you can see the primary difference between tap and tun devices.
+The lower level of the two, tap devices, is hooked in to the network stack at the ethernet layer.
+When a <code class="docutils literal"><span class="pre">TuntapPort</span></code> is associated with a tap device, it delivers whole ethernet frames to its protocol.
+The higher level version, tun devices, strips off the ethernet layer before delivering data to the application.
+This means that a <code class="docutils literal"><span class="pre">TuntapPort</span></code> associated with a tun device most commonly delivers IP datagrams to its protocol (though if your network is being used to convey non-IP datagrams then it may deliver those instead).</p>
+<p>Both <code class="docutils literal"><span class="pre">IEthernetProtocol</span></code> and <code class="docutils literal"><span class="pre">IRawSocketProtocol</span></code> are similar to <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.DatagramProtocol.html">twisted.internet.protocol.DatagramProtocol</a> .
+Datagrams, either ethernet or otherwise, are delivered to the protocol&#8217;s <code class="docutils literal"><span class="pre">datagramReceived</span></code> method.
+Conversely the protocol is associated with a transport with a <code class="docutils literal"><span class="pre">write</span></code> method that accepts datagrams for injection into the network.</p>
+<p>You can see an example of some of this functionality in the <a class="reference download internal" href="../../_downloads/pairudp.py"><code class="xref download docutils literal"><span class="pre">../examples/pairudp.py</span></code></a> example.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Twisted Pair: Tunnels And Network Taps</a><ul>
+<li><a class="reference internal" href="#tuntap-ports">Tuntap Ports</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter">Developer Guides</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="configuration.html"
+                                  title="next chapter">Twisted Pair: Device Configuration</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/pair/howto/tunnels.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using the Twisted Application Framework &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Writing a twistd Plugin" href="tap.html" />
+    <link rel="prev" title="The Basics" href="basics.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tap.html" title="Writing a twistd Plugin"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="basics.html" title="The Basics"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="using-the-twisted-application-framework">
+<h1>Using the Twisted Application Framework<a class="headerlink" href="#using-the-twisted-application-framework" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="audience">
+<h3>Audience<a class="headerlink" href="#audience" title="Permalink to this headline">¶</a></h3>
+<p>The target audience of this document is a Twisted user who wants to deploy a significant amount of Twisted code in a re-usable, standard and easily configurable fashion.
+A Twisted user who wishes to use the Application framework needs to be familiar with developing Twisted <a class="reference internal" href="servers.html"><span class="doc">servers</span></a> and/or <a class="reference internal" href="clients.html"><span class="doc">clients</span></a>.</p>
+</div>
+<div class="section" id="goals">
+<h3>Goals<a class="headerlink" href="#goals" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>To introduce the Twisted Application infrastructure.</li>
+<li>To explain how to deploy your Twisted application using <code class="docutils literal"><span class="pre">.tac</span></code> files and <code class="docutils literal"><span class="pre">twistd</span></code>.</li>
+<li>To outline the existing Twisted services.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Twisted Application infrastructure takes care of running and stopping your application.
+Using this infrastructure frees you from from having to write a large amount of boilerplate code by hooking your application into existing tools that manage daemonization, logging, <a class="reference internal" href="choosing-reactor.html"><span class="doc">choosing a reactor</span></a> and more.</p>
+<p>The major tool that manages Twisted applications is a command-line utility called <code class="docutils literal"><span class="pre">twistd</span></code>.
+<code class="docutils literal"><span class="pre">twistd</span></code> is cross platform, and is the recommended tool for running Twisted applications.</p>
+<p>The core component of the Twisted Application infrastructure is the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.Application.html">twisted.application.service.Application</a> object &#8211;  an object which represents your application.
+However, Application doesn&#8217;t provide anything that you&#8217;d want to manipulate directly.
+Instead, Application acts as a container of any &#8220;Services&#8221; (objects implementing <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.IService.html">IService</a>) that your application provides.
+Most of your interaction with the Application infrastructure will be done through Services.</p>
+<p>By &#8220;Service&#8221;, we mean anything in your application that can be started and stopped.
+Typical services include web servers, FTP servers and SSH clients.
+Your Application object can contain many services, and can even contain structured hierarchies of Services using <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.MultiService.html">MultiService</a> or your own custom <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.IServiceCollection.html">IServiceCollection</a> implementations.
+You will most likely want to use these to manage Services which are dependent on other Services.
+For example, a proxying Twisted application might want its server Service to only start up after the associated Client service.</p>
+<p>An <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.IService.html">IService</a> has two basic methods, <code class="docutils literal"><span class="pre">startService()</span></code> which is used to start the service, and <code class="docutils literal"><span class="pre">stopService()</span></code> which is used to stop the service.
+The latter can return a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a>, indicating service shutdown is not over until the result fires.
+For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.application</span> <span class="kn">import</span> <span class="n">service</span>
+<span class="kn">from</span> <span class="nn">somemodule</span> <span class="kn">import</span> <span class="n">EchoFactory</span>
+
+<span class="k">class</span> <span class="nc">EchoService</span><span class="p">(</span><span class="n">service</span><span class="o">.</span><span class="n">Service</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">portNum</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">portNum</span> <span class="o">=</span> <span class="n">portNum</span>
+
+    <span class="k">def</span> <span class="nf">startService</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">portNum</span><span class="p">,</span> <span class="n">EchoFactory</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">stopService</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port</span><span class="o">.</span><span class="n">stopListening</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="servers.html"><span class="doc">Writing Servers</span></a> for an explanation of <code class="docutils literal"><span class="pre">EchoFactory</span></code> and <code class="docutils literal"><span class="pre">listenTCP</span></code>.</p>
+</div>
+<div class="section" id="using-services-and-application">
+<h2>Using Services and Application<a class="headerlink" href="#using-services-and-application" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="twistd-and-tac">
+<h3>twistd and tac<a class="headerlink" href="#twistd-and-tac" title="Permalink to this headline">¶</a></h3>
+<p id="core-howto-application-twistd">To handle start-up and configuration of your Twisted application, the Twisted Application infrastructure uses <code class="docutils literal"><span class="pre">.tac</span></code> files.
+<code class="docutils literal"><span class="pre">.tac</span></code> are Python files which configure an <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.Application.html">Application</a> object and assign this object to the top-level variable &#8220;<code class="docutils literal"><span class="pre">application</span></code>&#8221; .</p>
+<p>The following is a simple example of a <code class="docutils literal"><span class="pre">.tac</span></code> file:</p>
+<p><a class="reference download internal" href="../../_downloads/service.tac"><code class="xref download docutils literal"><span class="pre">service.tac</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># You can run this .tac file directly with:</span>
+<span class="c">#    twistd -ny service.tac</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This is an example .tac file which starts a webserver on port 8080 and</span>
+<span class="sd">serves files from the current working directory.</span>
+
+<span class="sd">The important part of this, the part that makes it a .tac file, is</span>
+<span class="sd">the final root-level section, which sets up the object called &#39;application&#39;</span>
+<span class="sd">which twistd will look for</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">twisted.application</span> <span class="kn">import</span> <span class="n">service</span><span class="p">,</span> <span class="n">internet</span>
+<span class="kn">from</span> <span class="nn">twisted.web</span> <span class="kn">import</span> <span class="n">static</span><span class="p">,</span> <span class="n">server</span>
+
+<span class="k">def</span> <span class="nf">getWebService</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a service suitable for creating an application object.</span>
+
+<span class="sd">    This service is a simple web server that serves files on port 8080 from</span>
+<span class="sd">    underneath the current working directory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># create a resource to serve static files</span>
+    <span class="n">fileServer</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">Site</span><span class="p">(</span><span class="n">static</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()))</span>
+    <span class="k">return</span> <span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="mi">8080</span><span class="p">,</span> <span class="n">fileServer</span><span class="p">)</span>
+
+<span class="c"># this is the core part of any tac file, the creation of the root-level</span>
+<span class="c"># application object</span>
+<span class="n">application</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">Application</span><span class="p">(</span><span class="s">&quot;Demo application&quot;</span><span class="p">)</span>
+
+<span class="c"># attach the service to its parent application</span>
+<span class="n">service</span> <span class="o">=</span> <span class="n">getWebService</span><span class="p">()</span>
+<span class="n">service</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">twistd</span></code> is a program that runs Twisted applications using a <code class="docutils literal"><span class="pre">.tac</span></code> file. In its most simple form, it takes a single argument <code class="docutils literal"><span class="pre">-y</span></code> and a tac file name.
+For example, you can run the above server with the command <code class="docutils literal"><span class="pre">twistd</span> <span class="pre">-y</span> <span class="pre">service.tac</span></code>.</p>
+<p>By default, <code class="docutils literal"><span class="pre">twistd</span></code> daemonizes and logs to a file called <code class="docutils literal"><span class="pre">twistd.log</span></code>.
+More usually, when debugging, you will want your application to run in the foreground and log to the command line.
+To run the above file like this, use the command <code class="docutils literal"><span class="pre">twistd</span> <span class="pre">-noy</span> <span class="pre">service.tac</span></code>.</p>
+<p>For more information, see the <code class="docutils literal"><span class="pre">twistd</span></code> man page.</p>
+</div>
+<div class="section" id="customizing-twistd-logging">
+<h3>Customizing <code class="docutils literal"><span class="pre">twistd</span></code>  logging<a class="headerlink" href="#customizing-twistd-logging" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">twistd</span></code> logging can be customized using the command line.
+This requires that a <em>log observer factory</em> be importable.
+Given a file named <code class="docutils literal"><span class="pre">my.py</span></code> with the code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.python.log</span> <span class="kn">import</span> <span class="n">FileLogObserver</span>
+
+<span class="k">def</span> <span class="nf">logger</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">FileLogObserver</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;/tmp/my.log&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">emit</span>
+</pre></div>
+</div>
+<p>Invoking <code class="docutils literal"><span class="pre">twistd</span> <span class="pre">--logger</span> <span class="pre">my.logger</span> <span class="pre">...</span></code> will log to a file named <code class="docutils literal"><span class="pre">/tmp/my.log</span></code> (this simple example could easily be replaced with use of the <code class="docutils literal"><span class="pre">--logfile</span></code> parameter to twistd).</p>
+<p>Alternatively, the logging behavior can be customized through an API accessible from <code class="docutils literal"><span class="pre">.tac</span></code> files.
+The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.log.ILogObserver.html">ILogObserver</a> component can be set on an Application in order to customize the default log observer that <code class="docutils literal"><span class="pre">twistd</span></code> will use.</p>
+<p>Here is an example of how to use <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.logfile.DailyLogFile.html">DailyLogFile</a>, which rotates the log once per day.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.application.service</span> <span class="kn">import</span> <span class="n">Application</span>
+<span class="kn">from</span> <span class="nn">twisted.python.log</span> <span class="kn">import</span> <span class="n">ILogObserver</span><span class="p">,</span> <span class="n">FileLogObserver</span>
+<span class="kn">from</span> <span class="nn">twisted.python.logfile</span> <span class="kn">import</span> <span class="n">DailyLogFile</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="n">Application</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">)</span>
+<span class="n">logfile</span> <span class="o">=</span> <span class="n">DailyLogFile</span><span class="p">(</span><span class="s">&quot;my.log&quot;</span><span class="p">,</span> <span class="s">&quot;/tmp&quot;</span><span class="p">)</span>
+<span class="n">application</span><span class="o">.</span><span class="n">setComponent</span><span class="p">(</span><span class="n">ILogObserver</span><span class="p">,</span> <span class="n">FileLogObserver</span><span class="p">(</span><span class="n">logfile</span><span class="p">)</span><span class="o">.</span><span class="n">emit</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Invoking <code class="docutils literal"><span class="pre">twistd</span> <span class="pre">-y</span> <span class="pre">my.tac</span></code> will create a log file at <code class="docutils literal"><span class="pre">/tmp/my.log</span></code>.</p>
+</div>
+<div class="section" id="services-provided-by-twisted">
+<h3>Services provided by Twisted<a class="headerlink" href="#services-provided-by-twisted" title="Permalink to this headline">¶</a></h3>
+<p>Twisted also provides pre-written <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.IService.html">IService</a> implementations for common cases like listening on a TCP port, in the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.internet.html">twisted.application.internet</a> module.
+Here&#8217;s a simple example of constructing a service that runs an echo server on TCP port 7001:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.application</span> <span class="kn">import</span> <span class="n">internet</span><span class="p">,</span> <span class="n">service</span>
+<span class="kn">from</span> <span class="nn">somemodule</span> <span class="kn">import</span> <span class="n">EchoFactory</span>
+
+<span class="n">port</span> <span class="o">=</span> <span class="mi">7001</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">EchoFactory</span><span class="p">()</span>
+
+<span class="n">echoService</span> <span class="o">=</span> <span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span> <span class="c"># create the service</span>
+</pre></div>
+</div>
+<p>Each of these services (except TimerService) has a corresponding &#8220;connect&#8221; or &#8220;listen&#8221; method on the reactor, and the constructors for the services take the same arguments as the reactor methods.
+The &#8220;connect&#8221; methods are for clients and the &#8220;listen&#8221; methods are for servers.
+For example, <code class="docutils literal"><span class="pre">TCPServer</span></code> corresponds to <code class="docutils literal"><span class="pre">reactor.listenTCP</span></code> and <code class="docutils literal"><span class="pre">TCPClient</span></code> corresponds to <code class="docutils literal"><span class="pre">reactor.connectTCP</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">TCPServer</span></code></p>
+<p><code class="docutils literal"><span class="pre">TCPClient</span></code></p>
+<blockquote>
+<div><p>Services which allow you to make connections and listen for connections
+on TCP ports.</p>
+<ul class="simple">
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorTCP.listenTCP.html">listenTCP</a></li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorTCP.connectTCP.html">connectTCP</a></li>
+</ul>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">UNIXServer</span></code></p>
+<p><code class="docutils literal"><span class="pre">UNIXClient</span></code></p>
+<blockquote>
+<div><p>Services which listen and make connections over UNIX sockets.</p>
+<ul class="simple">
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorUNIX.listenUNIX.html">listenUNIX</a></li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorUNIX.connectUNIX.html">connectUNIX</a></li>
+</ul>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">SSLServer</span></code></p>
+<p><code class="docutils literal"><span class="pre">SSLClient</span></code></p>
+<blockquote>
+<div><p>Services which allow you to make SSL connections and run SSL servers.</p>
+<ul class="simple">
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorSSL.listenSSL.html">listenSSL</a></li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorSSL.connectSSL.html">connectSSL</a></li>
+</ul>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">UDPServer</span></code></p>
+<blockquote>
+<div><p>A service which allows you to send and receive data over UDP.</p>
+<ul class="simple">
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorUDP.listenUDP.html">listenUDP</a></li>
+</ul>
+<p>See also the <a class="reference internal" href="udp.html"><span class="doc">UDP documentation</span></a>.</p>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">UNIXDatagramServer</span></code></p>
+<p><code class="docutils literal"><span class="pre">UNIXDatagramClient</span></code></p>
+<blockquote>
+<div><p>Services which send and receive data over UNIX datagram sockets.</p>
+<ul class="simple">
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorUNIXDatagram.listenUNIXDatagram.html">listenUNIXDatagram</a></li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorUNIXDatagram.connectUNIXDatagram.html">connectUNIXDatagram</a></li>
+</ul>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">MulticastServer</span></code></p>
+<blockquote>
+<div><p>A server for UDP socket methods that support multicast.</p>
+<ul class="simple">
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorMulticast.listenMulticast.html">listenMulticast</a></li>
+</ul>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">TimerService</span></code></p>
+<blockquote>
+<div><p>A service to periodically call a function.</p>
+<ul class="simple">
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.internet.TimerService.html">TimerService</a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="service-collection">
+<h3>Service Collection<a class="headerlink" href="#service-collection" title="Permalink to this headline">¶</a></h3>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.IServiceCollection.html">IServiceCollection</a> objects contain <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.IService.html">IService</a> objects.
+IService objects can be added to IServiceCollection by calling <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.IService.setServiceParent.html">setServiceParent</a> and detached by using <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.IService.disownServiceParent.html">disownServiceParent</a>.</p>
+<p>The standard implementation of IServiceCollection is <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.MultiService.html">MultiService</a>, which also implements IService.
+MultiService is useful for creating a new Service which combines two or more existing Services.
+For example, you could create a DNS Service as a MultiService which has a TCP and a UDP Service as children.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.application</span> <span class="kn">import</span> <span class="n">internet</span><span class="p">,</span> <span class="n">service</span>
+<span class="kn">from</span> <span class="nn">twisted.names</span> <span class="kn">import</span> <span class="n">server</span><span class="p">,</span> <span class="n">dns</span><span class="p">,</span> <span class="n">hosts</span>
+
+<span class="n">port</span> <span class="o">=</span> <span class="mi">53</span>
+
+<span class="c"># Create a MultiService, and hook up a TCPServer and a UDPServer to it as</span>
+<span class="c"># children.</span>
+<span class="n">dnsService</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">MultiService</span><span class="p">()</span>
+<span class="n">hostsResolver</span> <span class="o">=</span> <span class="n">hosts</span><span class="o">.</span><span class="n">Resolver</span><span class="p">(</span><span class="s">&#39;/etc/hosts&#39;</span><span class="p">)</span>
+<span class="n">tcpFactory</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">DNSServerFactory</span><span class="p">([</span><span class="n">hostsResolver</span><span class="p">])</span>
+<span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">tcpFactory</span><span class="p">)</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">dnsService</span><span class="p">)</span>
+<span class="n">udpFactory</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">DNSDatagramProtocol</span><span class="p">(</span><span class="n">tcpFactory</span><span class="p">)</span>
+<span class="n">internet</span><span class="o">.</span><span class="n">UDPServer</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">udpFactory</span><span class="p">)</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">dnsService</span><span class="p">)</span>
+
+<span class="c"># Create an application as normal</span>
+<span class="n">application</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">Application</span><span class="p">(</span><span class="s">&quot;DNSExample&quot;</span><span class="p">)</span>
+
+<span class="c"># Connect our MultiService to the application, just like a normal service.</span>
+<span class="n">dnsService</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Using the Twisted Application Framework</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li><a class="reference internal" href="#audience">Audience</a></li>
+<li><a class="reference internal" href="#goals">Goals</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#using-services-and-application">Using Services and Application</a><ul>
+<li><a class="reference internal" href="#twistd-and-tac">twistd and tac</a></li>
+<li><a class="reference internal" href="#customizing-twistd-logging">Customizing <code class="docutils literal"><span class="pre">twistd</span></code>  logging</a></li>
+<li><a class="reference internal" href="#services-provided-by-twisted">Services provided by Twisted</a></li>
+<li><a class="reference internal" href="#service-collection">Service Collection</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="basics.html"
+                                  title="previous chapter">The Basics</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="tap.html"
+                                  title="next chapter">Writing a twistd Plugin</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/application.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

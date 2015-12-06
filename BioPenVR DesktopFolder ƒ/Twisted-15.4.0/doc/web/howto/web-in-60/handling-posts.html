@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Handling POSTs &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Twisted Web In 60 Seconds" href="index.html" />
+    <link rel="next" title="Other Request Bodies" href="other-request-bodies.html" />
+    <link rel="prev" title="Custom Response Codes" href="custom-codes.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="other-request-bodies.html" title="Other Request Bodies"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="custom-codes.html" title="Custom Response Codes"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Twisted Web</a> &raquo;</li>
+          <li><a href="../index.html" >Developer Guides</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Twisted Web In 60 Seconds</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="handling-posts">
+<h1>Handling POSTs<a class="headerlink" href="#handling-posts" title="Permalink to this headline">¶</a></h1>
+<p>All of the previous examples have focused on <code class="docutils literal"><span class="pre">GET</span></code>
+requests. Unlike <code class="docutils literal"><span class="pre">GET</span></code> requests, <code class="docutils literal"><span class="pre">POST</span></code> requests can have
+a request body - extra data after the request headers; for example, data
+representing the contents of an HTML form. Twisted Web makes this data available
+to applications via the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.server.Request.html">Request</a> object.</p>
+<p>Here&#8217;s an example web server which renders a static HTML form and then
+generates a dynamic page when that form is posted back to it. Disclaimer: While
+it&#8217;s convenient for this example, it&#8217;s often not a good idea to make a resource
+that <code class="docutils literal"><span class="pre">POST</span></code> s to itself; this isn&#8217;t about Twisted Web, but the nature
+of HTTP in general; if you do this in a real application, make sure you
+understand the possible negative consequences.</p>
+<p>As usual, we start with some imports. In addition to the Twisted imports,
+this example uses the <code class="docutils literal"><span class="pre">cgi</span></code> module to <a class="reference external" href="http://en.wikipedia.org/wiki/Cross-site_scripting">escape user-enteredcontent</a> for inclusion in the output.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.server</span> <span class="kn">import</span> <span class="n">Site</span>
+<span class="kn">from</span> <span class="nn">twisted.web.resource</span> <span class="kn">import</span> <span class="n">Resource</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="kn">import</span> <span class="nn">cgi</span>
+</pre></div>
+</div>
+<p>Next, we&#8217;ll define a resource which is going to do two things. First, it will
+respond to <code class="docutils literal"><span class="pre">GET</span></code> requests with a static HTML form:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">FormPage</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">render_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;&lt;html&gt;&lt;body&gt;&lt;form method=&quot;POST&quot;&gt;&lt;input name=&quot;the-field&quot; type=&quot;text&quot; /&gt;&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;&#39;</span>
+</pre></div>
+</div>
+<p>This is similar to the resource used in a <a class="reference internal" href="dynamic-content.html"><span class="doc">previous installment</span></a> . However, we&#8217;ll now add
+one more method to give it a second behavior; this <code class="docutils literal"><span class="pre">render_POST</span></code>
+method will allow it to accept <code class="docutils literal"><span class="pre">POST</span></code> requests:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+    <span class="k">def</span> <span class="nf">render_POST</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;&lt;html&gt;&lt;body&gt;You submitted: </span><span class="si">%s</span><span class="s">&lt;/body&gt;&lt;/html&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cgi</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s">&quot;the-field&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),)</span>
+</pre></div>
+</div>
+<p>The main thing to note here is the use
+of <code class="docutils literal"><span class="pre">request.args</span></code> . This is a dictionary-like object that
+provides access to the contents of the form. The keys in this
+dictionary are the names of inputs in the form. Each value is a list
+containing strings (since there can be multiple inputs with the same
+name), which is why we had to extract the first element to pass
+to <code class="docutils literal"><span class="pre">cgi.escape</span></code> . <code class="docutils literal"><span class="pre">request.args</span></code> will be
+populated from form contents whenever a <code class="docutils literal"><span class="pre">POST</span></code> request is
+made with a content type
+of <code class="docutils literal"><span class="pre">application/x-www-form-urlencoded</span></code>
+or <code class="docutils literal"><span class="pre">multipart/form-data</span></code> (it&#8217;s also populated by query
+arguments for any type of request).</p>
+<p>Finally, the example just needs the usual site creation and port setup:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">root</span> <span class="o">=</span> <span class="n">Resource</span><span class="p">()</span>
+<span class="n">root</span><span class="o">.</span><span class="n">putChild</span><span class="p">(</span><span class="s">&quot;form&quot;</span><span class="p">,</span> <span class="n">FormPage</span><span class="p">())</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">Site</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8880</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Run the server and
+visit <a class="reference external" href="http://localhost:8880/form">http://localhost:8880/form</a> ,
+submit the form, and watch it generate a page including the value you entered
+into the single field.</p>
+<p>Here&#8217;s the complete source for the example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.server</span> <span class="kn">import</span> <span class="n">Site</span>
+<span class="kn">from</span> <span class="nn">twisted.web.resource</span> <span class="kn">import</span> <span class="n">Resource</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="kn">import</span> <span class="nn">cgi</span>
+
+<span class="k">class</span> <span class="nc">FormPage</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">render_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;&lt;html&gt;&lt;body&gt;&lt;form method=&quot;POST&quot;&gt;&lt;input name=&quot;the-field&quot; type=&quot;text&quot; /&gt;&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">render_POST</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;&lt;html&gt;&lt;body&gt;You submitted: </span><span class="si">%s</span><span class="s">&lt;/body&gt;&lt;/html&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cgi</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s">&quot;the-field&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),)</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">Resource</span><span class="p">()</span>
+<span class="n">root</span><span class="o">.</span><span class="n">putChild</span><span class="p">(</span><span class="s">&quot;form&quot;</span><span class="p">,</span> <span class="n">FormPage</span><span class="p">())</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">Site</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8880</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="custom-codes.html"
+                                  title="previous chapter">Custom Response Codes</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="other-request-bodies.html"
+                                  title="next chapter">Other Request Bodies</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../../_sources/web/howto/web-in-60/handling-posts.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

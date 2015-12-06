@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Twisted Plugin System &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="The Basics" href="basics.html" />
+    <link rel="prev" title="Cred: Pluggable Authentication" href="cred.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="basics.html" title="The Basics"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cred.html" title="Cred: Pluggable Authentication"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="the-twisted-plugin-system">
+<h1>The Twisted Plugin System<a class="headerlink" href="#the-twisted-plugin-system" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of this guide is to describe the preferred way to
+write extensible Twisted applications (and consequently, also to
+describe how to extend applications written in such a way).  This
+extensibility is achieved through the definition of one or more
+APIs and a mechanism for collecting code plugins which
+implement this API to provide some additional functionality.
+At the base of this system is the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.plugin.html">twisted.plugin</a> module.</p>
+<p>Making an application extensible using the plugin system has
+several strong advantages over other techniques:</p>
+<ul class="simple">
+<li>It allows third-party developers to easily enhance your
+software in a way that is loosely coupled: only the plugin API
+is required to remain stable.</li>
+<li>It allows new plugins to be discovered flexibly.  For
+example, plugins can be loaded and saved when a program is first
+run, or re-discovered each time the program starts up, or they
+can be polled for repeatedly at runtime (allowing the discovery
+of new plugins installed after the program has started).</li>
+</ul>
+<div class="section" id="writing-extensible-programs">
+<h2>Writing Extensible Programs<a class="headerlink" href="#writing-extensible-programs" title="Permalink to this headline">¶</a></h2>
+<p>Taking advantage of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.plugin.html">twisted.plugin</a> is
+a two step process:</p>
+<ol class="arabic">
+<li><p class="first">Define an interface which plugins will be required to implement.
+This is done using the zope.interface package in the same way one
+would define an interface for any other purpose.</p>
+<p>A convention for defining interfaces is do so in a file named like
+<em>ProjectName/projectname/iprojectname.py</em> .  The rest of this
+document will follow that convention: consider the following
+interface definition be in <code class="docutils literal"><span class="pre">Matsim/matsim/imatsim.py</span></code> , an
+interface definition module for a hypothetical material simulation
+package.</p>
+</li>
+<li><p class="first">At one or more places in your program, invoke <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.plugin.getPlugins.html">twisted.plugin.getPlugins</a> and iterate over its
+result.</p>
+</li>
+</ol>
+<p>As an example of the first step, consider the following interface
+definition for a physical modelling system.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">Interface</span><span class="p">,</span> <span class="n">Attribute</span>
+
+<span class="k">class</span> <span class="nc">IMaterial</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An object with specific physical properties</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">yieldStress</span><span class="p">(</span><span class="n">temperature</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the pressure this material can support without</span>
+<span class="sd">        fracturing at the given temperature.</span>
+
+<span class="sd">        @type temperature: C{float}</span>
+<span class="sd">        @param temperature: Kelvins</span>
+
+<span class="sd">        @rtype: C{float}</span>
+<span class="sd">        @return: Pascals</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="n">dielectricConstant</span> <span class="o">=</span> <span class="n">Attribute</span><span class="p">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        @type dielectricConstant: C{complex}</span>
+<span class="s">        @ivar dielectricConstant: The relative permittivity, with the</span>
+<span class="s">        real part giving reflective surface properties and the</span>
+<span class="s">        imaginary part giving the radio absorption coefficient.</span>
+<span class="s">        &quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In another module, we might have a function that operates on
+objects providing the <code class="docutils literal"><span class="pre">IMaterial</span></code> interface:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">displayMaterial</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;A material with yield stress </span><span class="si">%s</span><span class="s"> at 500 K&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">yieldStress</span><span class="p">(</span><span class="mi">500</span><span class="p">),)</span>
+    <span class="k">print</span> <span class="s">&#39;Also a dielectric constant of </span><span class="si">%s</span><span class="s">.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">dielectricConstant</span><span class="p">,)</span>
+</pre></div>
+</div>
+<p>The last piece of required code is that which collects
+<code class="docutils literal"><span class="pre">IMaterial</span></code> providers and passes them to the
+<code class="docutils literal"><span class="pre">displayMaterial</span></code> function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.plugin</span> <span class="kn">import</span> <span class="n">getPlugins</span>
+<span class="kn">from</span> <span class="nn">matsim</span> <span class="kn">import</span> <span class="n">imatsim</span>
+
+<span class="k">def</span> <span class="nf">displayAllKnownMaterials</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">material</span> <span class="ow">in</span> <span class="n">getPlugins</span><span class="p">(</span><span class="n">imatsim</span><span class="o">.</span><span class="n">IMaterial</span><span class="p">):</span>
+        <span class="n">displayMaterial</span><span class="p">(</span><span class="n">material</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Third party developers may now contribute different materials
+to be used by this modelling system by implementing one or more
+plugins for the <code class="docutils literal"><span class="pre">IMaterial</span></code> interface.</p>
+</div>
+<div class="section" id="extending-an-existing-program">
+<h2>Extending an Existing Program<a class="headerlink" href="#extending-an-existing-program" title="Permalink to this headline">¶</a></h2>
+<p>The above code demonstrates how an extensible program might be
+written using Twisted&#8217;s plugin system.  How do we write plugins
+for it, though?  Essentially, we create objects which provide the
+required interface and then make them available at a particular
+location.  Consider the following example.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implements</span>
+<span class="kn">from</span> <span class="nn">twisted.plugin</span> <span class="kn">import</span> <span class="n">IPlugin</span>
+<span class="kn">from</span> <span class="nn">matsim</span> <span class="kn">import</span> <span class="n">imatsim</span>
+
+<span class="k">class</span> <span class="nc">SimpleMaterial</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">IPlugin</span><span class="p">,</span> <span class="n">imatsim</span><span class="o">.</span><span class="n">IMaterial</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yieldStressFactor</span><span class="p">,</span> <span class="n">dielectricConstant</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_yieldStressFactor</span> <span class="o">=</span> <span class="n">yieldStressFactor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dielectricConstant</span> <span class="o">=</span> <span class="n">dielectricConstant</span>
+
+    <span class="k">def</span> <span class="nf">yieldStress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_yieldStressFactor</span> <span class="o">*</span> <span class="n">temperature</span>
+
+<span class="n">steelPlate</span> <span class="o">=</span> <span class="n">SimpleMaterial</span><span class="p">(</span><span class="mf">2.06842719e11</span><span class="p">,</span> <span class="mf">2.7</span> <span class="o">+</span> <span class="mf">0.2j</span><span class="p">)</span>
+<span class="n">brassPlate</span> <span class="o">=</span> <span class="n">SimpleMaterial</span><span class="p">(</span><span class="mf">1.03421359e11</span><span class="p">,</span> <span class="mf">1.4</span> <span class="o">+</span> <span class="mf">0.5j</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">steelPlate</span></code> and <code class="docutils literal"><span class="pre">brassPlate</span></code> now provide both
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.plugin.IPlugin.html">IPlugin</a> and <code class="docutils literal"><span class="pre">IMaterial</span></code> .
+All that remains is to make this module available at an appropriate
+location. For this, there are two options. The first of these is
+primarily useful during development: if a directory which
+has been added to <code class="docutils literal"><span class="pre">sys.path</span></code> (typically by adding it to the
+<code class="docutils literal"><span class="pre">PYTHONPATH</span></code> environment variable) contains a
+<em>directory</em> named <code class="docutils literal"><span class="pre">twisted/plugins/</span></code> ,
+each <code class="docutils literal"><span class="pre">.py</span></code> file in that directory will be loaded
+as a source of plugins.  This directory <em>must not</em> be a Python
+package: including <code class="docutils literal"><span class="pre">__init__.py</span></code> will cause the
+directory to be skipped and no plugins loaded from it.  Second, each
+module in the installed version of Twisted&#8217;s <code class="docutils literal"><span class="pre">twisted.plugins</span></code> package will also be loaded as a source of
+plugins.</p>
+<p>Once this plugin is installed in one of these two ways,
+<code class="docutils literal"><span class="pre">displayAllKnownMaterials</span></code> can be run and we will see
+two pairs of output: one for a steel plate and one for a brass
+plate.</p>
+</div>
+<div class="section" id="alternate-plugin-packages">
+<h2>Alternate Plugin Packages<a class="headerlink" href="#alternate-plugin-packages" title="Permalink to this headline">¶</a></h2>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.plugin.getPlugins.html">getPlugins</a> takes one
+additional argument not mentioned above.  If passed in, the 2nd argument
+should be a module or package to be used instead of
+<code class="docutils literal"><span class="pre">twisted.plugins</span></code> as the plugin meta-package.  If you
+are writing a plugin for a Twisted interface, you should never
+need to pass this argument.  However, if you have developed an
+interface of your own, you may want to mandate that plugins for it
+are installed in your own plugins package, rather than in
+Twisted&#8217;s.</p>
+<p>You may want to support <code class="docutils literal"><span class="pre">yourproject/plugins/</span></code>
+directories for ease of development.  To do so, you should make <code class="docutils literal"><span class="pre">yourproject/plugins/__init__.py</span></code> contain at least
+the following lines.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.plugin</span> <span class="kn">import</span> <span class="n">pluginPackagePaths</span>
+<span class="n">__path__</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">pluginPackagePaths</span><span class="p">(</span><span class="n">__name__</span><span class="p">))</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<p>The key behavior here is that interfaces are essentially paired
+with a particular plugin package.  If plugins are installed in a
+different package than the one the code which relies on the
+interface they provide, they will not be found when the
+application goes to load them.</p>
+</div>
+<div class="section" id="plugin-caching">
+<h2>Plugin Caching<a class="headerlink" href="#plugin-caching" title="Permalink to this headline">¶</a></h2>
+<p>In the course of using the Twisted plugin system, you may
+notice <code class="docutils literal"><span class="pre">dropin.cache</span></code> files appearing at
+various locations.  These files are used to cache information
+about what plugins are present in the directory which contains
+them.  At times, this cached information may become out of date.
+Twisted uses the mtimes of various files involved in the plugin
+system to determine when this cache may have become invalid.
+Twisted will try to re-write the cache each time it tries to use
+it but finds it out of date.</p>
+<p>For a site-wide install, it may not (indeed, should not) be
+possible for applications running as normal users to rewrite the
+cache file.  While these applications will still run and find
+correct plugin information, they may run more slowly than they
+would if the cache was up to date, and they may also report
+exceptions if certain plugins have been removed but which the
+cache still references.  For these reasons, when installing or
+removing software which provides Twisted plugins, the site
+administrator should be sure the cache is regenerated.
+Well-behaved package managers for such software should take this
+task upon themselves, since it is trivially automatable.  The
+canonical way to regenerate the cache is to run the following
+Python code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.plugin</span> <span class="kn">import</span> <span class="n">IPlugin</span><span class="p">,</span> <span class="n">getPlugins</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">getPlugins</span><span class="p">(</span><span class="n">IPlugin</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>As mentioned, it is normal for exceptions to be raised
+<strong>once</strong> here if plugins have been removed.</p>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="components.html"><span class="doc">Components: Interfaces and Adapters</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">The Twisted Plugin System</a><ul>
+<li><a class="reference internal" href="#writing-extensible-programs">Writing Extensible Programs</a></li>
+<li><a class="reference internal" href="#extending-an-existing-program">Extending an Existing Program</a></li>
+<li><a class="reference internal" href="#alternate-plugin-packages">Alternate Plugin Packages</a></li>
+<li><a class="reference internal" href="#plugin-caching">Plugin Caching</a></li>
+<li><a class="reference internal" href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="cred.html"
+                                  title="previous chapter">Cred: Pluggable Authentication</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="basics.html"
+                                  title="next chapter">The Basics</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/plugin.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,930 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Twisted Coding Standard &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Twisted Development Policy" href="index.html" />
+    <link rel="next" title="Twisted Writing Standard" href="writing-standard.html" />
+    <link rel="prev" title="Twisted Development Policy" href="index.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="writing-standard.html" title="Twisted Writing Standard"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Twisted Development Policy"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="../index.html" >Development of Twisted</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Twisted Development Policy</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="twisted-coding-standard">
+<h1>Twisted Coding Standard<a class="headerlink" href="#twisted-coding-standard" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="naming">
+<h2>Naming<a class="headerlink" href="#naming" title="Permalink to this headline">¶</a></h2>
+<p>Try to choose names which are both easy to remember and
+meaningful. Some silliness is OK at the module naming level
+(see <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.html">twisted.spread</a> ...) but when
+choosing class names, be as precise as possible.</p>
+<p>Try to avoid overloaded terms. This rule is often broken,
+since it is incredibly difficult, as most normal words have
+already been taken by some other software. More importantly,
+try to avoid meaningless words. In particular, words like
+&#8220;handler&#8221; , &#8220;processor&#8221; , &#8220;engine&#8221; , &#8220;manager&#8221;
+and &#8220;component&#8221; don&#8217;t really indicate what something does,
+only that it does <em>something</em> .</p>
+<p>Use American spelling in both names and docstrings.  For compound
+technical terms such as &#8216;filesystem&#8217;, use a non-hyphenated spelling in
+both docstrings and code in order to avoid unnecessary
+capitalization.</p>
+</div>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<p>Twisted development should always be
+<a class="reference external" href="http://en.wikipedia.org/wiki/Test-driven_development">test-driven</a> .  The complete test suite in the head of the SVN trunk is required to
+be passing on <a class="reference external" href="http://buildbot.twistedmatrix.com/supported">supported platforms</a> at all times.  Regressions in the test suite
+are addressed by reverting whatever revisions introduced them.  For
+complete documentation about testing Twisted itself, refer to the
+<a class="reference internal" href="test-standard.html"><span class="doc">Test Standard</span></a> .  What follows is
+intended to be a synopsis of the most important points.</p>
+</div>
+<div class="section" id="test-suite">
+<h3>Test Suite<a class="headerlink" href="#test-suite" title="Permalink to this headline">¶</a></h3>
+<p>The Twisted test suite is spread across many subpackages of the
+<code class="docutils literal"><span class="pre">twisted</span></code> package.  Many older tests are in
+<code class="docutils literal"><span class="pre">twisted.test</span></code> .  Others can be found at places such as
+<code class="docutils literal"><span class="pre">twisted.web.test</span></code> (for <code class="docutils literal"><span class="pre">twisted.web</span></code> tests)
+or <code class="docutils literal"><span class="pre">twisted.internet.test</span></code> (for <code class="docutils literal"><span class="pre">twisted.internet</span></code>
+tests). The latter arrangement, <code class="docutils literal"><span class="pre">twisted.somepackage.test</span></code> ,
+is preferred for new tests except when a test module already exists in
+<code class="docutils literal"><span class="pre">twisted.test</span></code> .</p>
+<p>Parts of the Twisted test suite may serve as good examples of how to
+write tests for Twisted or for Twisted-based libraries (newer parts of
+the test suite are generally better examples than older parts - check
+when the code you are looking at was written before you use it as an
+example of what you should write).  The names of test modules should
+begin with <code class="docutils literal"><span class="pre">test_</span></code> so that they are automatically discoverable by
+test runners such as Trial.  Twisted&#8217;s unit tests are written using
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.trial.html">twisted.trial</a> , an xUnit library which has been
+extensively customized for use in testing Twisted and Twisted-based
+libraries.</p>
+<p>Implementation (ie, non-test) source files should begin with a
+<code class="docutils literal"><span class="pre">test-case-name</span></code> tag which gives the name of any test
+modules or packages which exercise them.  This lets tools discover a
+subset of the entire test suite which they can run first to find tests
+which might be broken by a particular change.</p>
+<p>It is strongly suggested that developers learn to use Emacs, and use
+the <code class="docutils literal"><span class="pre">twisted-dev.el</span></code> file included in
+<a class="reference external" href="http://launchpad.net/twisted-emacs">twisted-emacs</a>
+to bind the F9 key to &#8220;run unit tests&#8221; and bang on it
+frequently.  Support for other editors is unavailable at this time but
+we would love to provide it.</p>
+<p>To run the whole Twisted test without using emacs, use trial:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> bin/trial twisted
+</pre></div>
+</div>
+<p>To run an individual test module, such as
+<code class="docutils literal"><span class="pre">twisted/mail/test/test_pop3.py</span></code> , specify the module
+name:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> bin/trial twisted.mail.test.test_pop3
+</pre></div>
+</div>
+<p>To run the tests associated with a particular implementation file,
+such as <code class="docutils literal"><span class="pre">twisted/mail/pop3.py</span></code> , use the
+<code class="docutils literal"><span class="pre">testmodule</span></code> option:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> bin/trial twisted/mail/pop3.py
+</pre></div>
+</div>
+<p>All unit test methods should have docstrings specifying at a high
+level the intent of the test. That is, a description that users of the
+method would understand.</p>
+<p>If you modify, or write a new, HOWTO, please read the <a class="reference external" href="http://twistedmatrix.com/trac/wiki/TwistedLore">Lore</a>
+documentation to learn how to format the docs.</p>
+</div>
+</div>
+<div class="section" id="copyright-header">
+<h2>Copyright Header<a class="headerlink" href="#copyright-header" title="Permalink to this headline">¶</a></h2>
+<p>Whenever a new file is added to the repository, add the following
+license header at the top of the file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+</pre></div>
+</div>
+<p>When you update existing files, if there is no copyright header, add
+one.</p>
+</div>
+<div class="section" id="whitespace">
+<h2>Whitespace<a class="headerlink" href="#whitespace" title="Permalink to this headline">¶</a></h2>
+<p>Indentation is 4 spaces per indent.
+Tabs are not allowed.
+It is preferred that every block appears on a new line, so that control structure indentation is always visible.</p>
+<p>Lines are flowed at 79 columns. They must not have trailing
+whitespace. Long lines must be wrapped using implied line continuation
+inside parentheses; backslashes aren&#8217;t allowed. To handle long import
+lines, please repeat the import like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">very.long.package</span> <span class="kn">import</span> <span class="n">foo</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="n">baz</span>
+<span class="kn">from</span> <span class="nn">very.long.package</span> <span class="kn">import</span> <span class="n">qux</span><span class="p">,</span> <span class="n">quux</span><span class="p">,</span> <span class="n">quuux</span>
+</pre></div>
+</div>
+<p>Top-level classes and functions must be separated with 3 blank lines,
+and class-level functions with 2 blank lines. The control-L (i.e. ^L) form
+feed character must not be used.</p>
+</div>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<p>Modules must be named in all lower-case, preferably short,
+single words. If a module name contains multiple words, they
+may be separated by underscores or not separated at all.</p>
+<p>Modules must have a copyright message, a docstring and a
+reference to a test module that contains the bulk of its tests.
+Use this template:</p>
+<p><a class="reference download internal" href="../../../_downloads/new_module_template.py"><code class="xref download docutils literal"><span class="pre">new_module_template.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- test-case-name: &lt;test module&gt; -*-</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Docstring goes here.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<p>In most cases, modules should contain more than one class,
+function, or method; if a module contains only one object,
+consider refactoring to include more related functionality in
+that module.</p>
+<p>Depending on the situation, it is acceptable to have imports that
+look like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.defer</span> <span class="kn">import</span> <span class="n">Deferred</span>
+</pre></div>
+</div>
+<p>or like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span>
+</pre></div>
+</div>
+<p>That is, modules should import <em>modules</em> or <em>classes and functions</em> , but not <em>packages</em> .</p>
+<p>Wildcard import syntax may not be used by code in Twisted.  These
+imports lead to code which is difficult to read and maintain by
+introducing complexity which strains human readers and automated tools
+alike.  If you find yourself with many imports to make from a single
+module and wish to save typing, consider importing the module itself,
+rather than its attributes.</p>
+<p><em>Relative imports</em> (or <em>sibling imports</em> ) may not be
+used by code in Twisted.  Relative imports allow certain circularities
+to be introduced which can ultimately lead to unimportable modules or
+duplicate instances of a single module.  Relative imports also make the
+task of refactoring more difficult.</p>
+<p>In case of local names conflicts due to import, use the <code class="docutils literal"><span class="pre">as</span></code>
+syntax, for example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.trial</span> <span class="kn">import</span> <span class="n">util</span> <span class="k">as</span> <span class="n">trial_util</span>
+</pre></div>
+</div>
+<p>The encoding must always be ASCII, so no coding cookie is necessary.</p>
+</div>
+<div class="section" id="packages">
+<h2>Packages<a class="headerlink" href="#packages" title="Permalink to this headline">¶</a></h2>
+<p>Package names should follow the same conventions as module
+names. All modules must be encapsulated in some package. Nested
+packages may be used to further organize related modules.</p>
+<p><code class="docutils literal"><span class="pre">__init__.py</span></code> must never contain anything other than a
+docstring and (optionally) an <code class="docutils literal"><span class="pre">__all__</span></code> attribute. Packages are
+not modules and should be treated differently. This rule may be
+broken to preserve backwards compatibility if a module is made
+into a nested package as part of a refactoring.</p>
+<p>If you wish to promote code from a module to a package, for
+example, to break a large module out into several smaller
+files, the accepted way to do this is to promote from within
+the module. For example,</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># parent/</span>
+<span class="c"># --- __init__.py ---</span>
+<span class="kn">import</span> <span class="nn">child</span>
+
+<span class="c"># --- child.py ---</span>
+<span class="kn">import</span> <span class="nn">parent</span>
+<span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="n">parent</span><span class="o">.</span><span class="n">Foo</span> <span class="o">=</span> <span class="n">Foo</span>
+</pre></div>
+</div>
+<p>Every package should be added to the list in
+<code class="docutils literal"><span class="pre">setup.py</span></code> .</p>
+<p>Packages must not depend circularly upon each other.  To simplify
+maintaining this state, packages must also not import each other
+circularly.  While this applies to all packages within Twisted, one
+<code class="docutils literal"><span class="pre">twisted.python</span></code> deserves particular attention, as it may
+not depend on any other Twisted package.</p>
+</div>
+<div class="section" id="string-formatting-operations">
+<h2>String Formatting Operations<a class="headerlink" href="#string-formatting-operations" title="Permalink to this headline">¶</a></h2>
+<p>When using <a class="reference external" href="http://docs.python.org/lib/typesseq-strings.html">string formatting    operations</a> like <code class="docutils literal"><span class="pre">formatString</span> <span class="pre">%</span> <span class="pre">values</span></code> you should always
+use a tuple if you&#8217;re using non-mapping <code class="docutils literal"><span class="pre">values</span></code> . This is to
+avoid unexpected behavior when you think you&#8217;re passing in a single value,
+but the value is unexpectedly a tuple, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&quot;Hi </span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>The example shows you can pass in <code class="docutils literal"><span class="pre">foo(&quot;foo&quot;)</span></code> or
+<code class="docutils literal"><span class="pre">foo(3)</span></code> fine, but if you pass in <code class="docutils literal"><span class="pre">foo((1,2))</span></code> ,
+it raises a <code class="docutils literal"><span class="pre">TypeError</span></code> . You should use this instead:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&quot;Hi </span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="p">,)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="docstrings">
+<h2>Docstrings<a class="headerlink" href="#docstrings" title="Permalink to this headline">¶</a></h2>
+<p>Docstrings should always be used to describe the purpose of methods,
+functions, classes, and modules.  Moreover, all methods, functions, classes,
+and modules must have docstrings.  In addition to documenting the purpose of
+the object, the docstring must document all of parameters or attributes of
+the object.</p>
+<p>When documenting a class with one or more attributes which are
+initialized directly from the value of a <code class="docutils literal"><span class="pre">__init__</span></code> argument by
+the same name (or differing only in that the attribute is private), it is
+sufficient to document the <code class="docutils literal"><span class="pre">__init__</span></code> parameter (in
+the <code class="docutils literal"><span class="pre">__init__</span></code> docstring).  For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Ninja</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    @ivar speed: See L{__init__}</span>
+<span class="sd">    @ivar _stealth: See C{stealth} parameter of L{__init__}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">stealth</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @param speed: The maximum rate at which this ninja can travel (m/s)</span>
+<span class="sd">        @type speed: C{int} or C{float}</span>
+
+<span class="sd">        @param stealth: This ninja&#39;s ability to avoid being noticed in its</span>
+<span class="sd">            activities, as a percentage modifier.</span>
+<span class="sd">        @type: C{int}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">speed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stealth</span> <span class="o">=</span> <span class="n">stealth</span>
+</pre></div>
+</div>
+<p>It is not necessary to have a second copy of the documentation for the
+attribute in the class docstring, only a reference to the method
+(typically <code class="docutils literal"><span class="pre">__init__</span></code> which does document the
+attribute&#8217;s meaning.  Of course, if there is any interesting additional
+behavior about the attribute that does not apply to
+the <code class="docutils literal"><span class="pre">__init__</span></code> argument, that behavior should be
+documented in the class docstring.</p>
+<p>Docstrings are <em>never</em> to be used to provide semantic
+information about an object; this rule may be violated if the
+code in question is to be used in a system where this is a
+requirement (such as Zope).</p>
+<p>Docstrings should be indented to the level of the code they
+are documenting.</p>
+<p>Docstrings should be triple-quoted. The opening and the closing of the
+docstrings should be on a line by themselves. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Ninja</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A L{Ninja} is a warrior specializing in various unorthodox arts of war.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">attack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">someone</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Attack C{someone} with this L{Ninja}&#39;s shuriken.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Docstrings should be written in epytext format; more
+documentation is available in the
+<a class="reference external" href="http://epydoc.sourceforge.net/manual-epytext.html">Epytext Markup Language documentation</a> .</p>
+<p>Additionally, to accommodate emacs users, single quotes of the type of
+the docstring&#8217;s triple-quote should be escaped. This will prevent font-lock from
+accidentally fontifying large portions of the file as a string.</p>
+<p>For example,</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">foo2bar</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert L{foo}s to L{bar}s.</span>
+
+<span class="sd">    A function that should be used when you have a C{foo} but you want a</span>
+<span class="sd">    C{bar}; note that this is a non-destructive operation.  If this method</span>
+<span class="sd">    can&#39;t convert the C{foo} to a C{bar} it will raise a L{FooException}.</span>
+
+<span class="sd">    @param f: C{foo}</span>
+<span class="sd">    @type f: str</span>
+
+<span class="sd">    For example::</span>
+
+<span class="sd">        import wombat</span>
+<span class="sd">        def sample(something):</span>
+<span class="sd">            f = something.getFoo()</span>
+<span class="sd">            f.doFooThing()</span>
+<span class="sd">            b = wombat.foo2bar(f)</span>
+<span class="sd">            b.doBarThing()</span>
+<span class="sd">            return b</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Optionally, actual code can go here.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comments">
+<h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>Start by reading the <a class="reference external" href="http://www.python.org/dev/peps/pep-0008/#comments">PEP8 Comments section</a>.
+Ignore <cite>Documentation Strings</cite> section from PEP8 as Twisted uses a different docstring standard.</p>
+<p><cite>FIXME/TODO</cite> comments must have an associated ticket and contain a reference to it in the form of a full URL to the ticket.
+A brief amount of text should provide info about why the FIXME was added.
+It does not have to be the full ticket description, just enough to help readers decide if their next step should be reading the ticket or continue reading the code.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># FIXME: https://twistedmatrix.com/trac/ticket/1235</span>
+<span class="c"># Threads that have died before calling stop() are not joined.</span>
+<span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="versioning">
+<h2>Versioning<a class="headerlink" href="#versioning" title="Permalink to this headline">¶</a></h2>
+<p>The API documentation should be marked up with version information.
+When a new API is added the class should be marked with the epytext <code class="docutils literal"><span class="pre">&#64;since:</span></code> field including the version number when the change was introduced.
+This version number should be in the form <code class="docutils literal"><span class="pre">x.y</span></code> (for example, <code class="docutils literal"><span class="pre">&#64;since:</span> <span class="pre">15.1</span></code>).</p>
+</div>
+<div class="section" id="scripts">
+<h2>Scripts<a class="headerlink" href="#scripts" title="Permalink to this headline">¶</a></h2>
+<p>For each &#8220;script&#8221; , that is, a program you expect a Twisted user
+to run from the command-line, the following things must be done:</p>
+<ol class="arabic">
+<li><p class="first">Write a module in <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.scripts.html">twisted.scripts</a>
+which contains a callable global named <code class="docutils literal"><span class="pre">run</span></code> . This
+will be called by the command line part with no arguments (it
+will usually read <code class="docutils literal"><span class="pre">sys.argv</span></code> ). Feel free to write more
+functions or classes in this module, if you feel they are useful
+to others.</p>
+</li>
+<li><p class="first">Create a file which contains a shebang line for Python. For Twisted
+Core, this file should be placed in the <code class="docutils literal"><span class="pre">bin/</span></code> directory; for
+example, <code class="docutils literal"><span class="pre">bin/twistd</span></code> . For sub-projects, it should be placed
+in <code class="docutils literal"><span class="pre">bin/&lt;subproject&gt;</span></code> ; for example, the key-generation tool
+for the Conch sub-project is in <code class="docutils literal"><span class="pre">bin/conch/ckeygen</span></code> .</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>To make sure that the script is portable across different UNIX like
+operating systems we use the <code class="docutils literal"><span class="pre">/usr/bin/env</span></code> command. The env
+command allows you to run a program in a modified environment. That way
+you don&#8217;t have to search for a program via the <code class="docutils literal"><span class="pre">PATH</span></code> environment
+variable. This makes the script more portable but note that it is not a
+foolproof method. Always make sure that <code class="docutils literal"><span class="pre">/usr/bin/env</span></code> exists or
+use a softlink/symbolic link to point it to the correct path. Python&#8217;s
+distutils will rewrite the shebang line upon installation so this policy
+only covers the source files in version control.</p>
+<ol class="arabic">
+<li><p class="first">For core scripts, add this Twisted running-from-SVN header:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">_preamble</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">clear_exc</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Or for sub-project scripts, add a modified version which also adjusts <code class="docutils literal"><span class="pre">sys.path</span></code> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+<span class="n">extra</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">extra</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">_preamble</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">clear_exc</span><span class="p">()</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">And end with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.scripts.yourmodule</span> <span class="kn">import</span> <span class="n">run</span>
+<span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Write a manpage and add it to the <code class="docutils literal"><span class="pre">man</span></code> folder
+of a subproject&#8217;s <code class="docutils literal"><span class="pre">doc</span></code> folder. On Debian systems
+you can find a skeleton example of a manpage in
+<code class="docutils literal"><span class="pre">/usr/share/doc/man-db/examples/manpage.example</span></code> .</p>
+</li>
+</ol>
+<p>This will insure your program will work correctly for users of SVN,
+Windows releases and Debian packages.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>For example scripts you expect a Twisted user
+to run from the command-line, add this Python shebang line at the top
+of the file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="standard-library-extension-modules">
+<h2>Standard Library Extension Modules<a class="headerlink" href="#standard-library-extension-modules" title="Permalink to this headline">¶</a></h2>
+<p>When using the extension version of a module for which there is also
+a Python version, place the import statement inside a try/except block,
+and import the Python version if the import fails.  This allows code to
+work on platforms where the extension version is not available.  For
+example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">cPickle</span> <span class="kn">as</span> <span class="nn">pickle</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pickle</span>
+</pre></div>
+</div>
+<p>Use the &#8220;as&#8221; syntax of the import statement as well, to set
+the name of the extension module to the name of the Python module.</p>
+<p>Some modules don&#8217;t exist across all supported Python versions. For
+example, Python 2.3&#8217;s <code class="docutils literal"><span class="pre">sets</span></code> module was deprecated in Python 2.6
+in favor of the <code class="docutils literal"><span class="pre">set</span></code> and <code class="docutils literal"><span class="pre">frozenset</span></code> builtins.
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.compat.html">twisted.python.compat</a> would be the place to add
+<code class="docutils literal"><span class="pre">set</span></code> and <code class="docutils literal"><span class="pre">frozenset</span></code> implementations that work across
+Python versions.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<p>Classes are to be named in mixed case, with the first letter
+capitalized; each word separated by having its first letter
+capitalized. Acronyms should be capitalized in their entirety.
+Class names should not be prefixed with the name of the module they are
+in. Examples of classes meeting this criteria:</p>
+<ul class="simple">
+<li>twisted.spread.pb.ViewPoint</li>
+<li>twisted.parser.patterns.Pattern</li>
+</ul>
+<p>Examples of classes <strong>not</strong> meeting this criteria:</p>
+<ul class="simple">
+<li>event.EventHandler</li>
+<li>main.MainGadget</li>
+</ul>
+<p>An effort should be made to prevent class names from clashing
+with each other between modules, to reduce the need for
+qualification when importing. For example, a Service subclass
+for Forums might be named twisted.forum.service.ForumService,
+and a Service subclass for Words might be
+twisted.words.service.WordsService. Since neither of these
+modules are volatile <em>(see above)</em> the classes may be
+imported directly into the user&#8217;s namespace and not cause
+confusion.</p>
+<div class="section" id="new-style-classes">
+<h3>New-style Classes<a class="headerlink" href="#new-style-classes" title="Permalink to this headline">¶</a></h3>
+<p>Classes and instances in Python come in two flavors: old-style or
+classic, and new-style. Up to Python 2.1, old-style classes were the
+only flavour available to the user, new-style classes were introduced
+in Python 2.2 to unify classes and types. All classes added to Twisted
+should be written as new-style classes. If <code class="docutils literal"><span class="pre">x</span></code>
+is an instance of a new-style class, then <code class="docutils literal"><span class="pre">type(x)</span></code>
+is the same as <code class="docutils literal"><span class="pre">x.__class__</span></code> .</p>
+</div>
+</div>
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<p>Methods should be in mixed case, with the first letter lower
+case, each word separated by having its first letter
+capitalized. For example, <code class="docutils literal"><span class="pre">someMethodName</span></code> ,
+<code class="docutils literal"><span class="pre">method</span></code> .</p>
+<p>Sometimes, a class will dispatch to a specialized sort of
+method using its name; for example, twisted.reflect.Accessor.
+In those cases, the type of method should be a prefix in all
+lower-case with a trailing underscore, so method names will
+have an underscore in them. For example, <code class="docutils literal"><span class="pre">get_someAttribute</span></code> .
+Underscores in method names in twisted code are therefore
+expected to have some semantic associated with them.</p>
+<p>Some methods, in particular <code class="docutils literal"><span class="pre">addCallback</span></code> and its
+cousins return self to allow for chaining calls.  In this case,
+wrap the chain in parenthesis, and start each chained call on
+a separate line, for example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">return</span> <span class="p">(</span><span class="n">foo</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">bar</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">thud</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">wozers</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="callback-arguments">
+<h2>Callback Arguments<a class="headerlink" href="#callback-arguments" title="Permalink to this headline">¶</a></h2>
+<p>There are several methods whose purpose is to help the user set up
+callback functions, for example <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.addCallback.html">Deferred.addCallback</a> or the
+reactor&#8217;s <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.base.ReactorBase.callLater.html">callLater</a> method. To make
+access to the callback as transparent as possible, most of these methods
+use <code class="docutils literal"><span class="pre">**kwargs</span></code> to capture arbitrary arguments
+that are destined for the user&#8217;s callback. This allows the call to the
+setup function to look very much like the eventual call to the target
+callback function.</p>
+<p>In these methods, take care to not have other argument names that will
+&#8220;steal&#8221; the user&#8217;s callback&#8217;s arguments. When sensible, prefix these
+&#8220;internal&#8221; argument names with an underscore. For example, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteReference.callRemote.html">RemoteReference.callRemote</a> is
+meant to be called like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">myref</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;addUser&quot;</span><span class="p">,</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span> <span class="s">&quot;555-1212&quot;</span><span class="p">)</span>
+
+<span class="c"># on the remote end, the following method is invoked:</span>
+<span class="k">def</span> <span class="nf">addUser</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">phone</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>where &#8220;addUser&#8221; is the remote method name. The user might also
+choose to call it with named parameters like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">myref</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;addUser&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;bob&quot;</span><span class="p">,</span> <span class="n">phone</span><span class="o">=</span><span class="s">&quot;555-1212&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this case, <code class="docutils literal"><span class="pre">callRemote</span></code> (and any code that uses the
+<code class="docutils literal"><span class="pre">**kwargs</span></code> syntax) must be careful to not use
+&#8220;name&#8221; , &#8220;phone&#8221; , or any other name that might overlap with
+a user-provided named parameter.  Therefore, <code class="docutils literal"><span class="pre">callRemote</span></code> is
+implemented with the following signature:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SomeClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">callRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>Do whatever you can to reduce user confusion. It may also be
+appropriate to <code class="docutils literal"><span class="pre">assert</span></code> that the kwargs
+dictionary does not contain parameters with names that will eventually
+cause problems.</p>
+</div>
+<div class="section" id="special-methods">
+<h2>Special Methods<a class="headerlink" href="#special-methods" title="Permalink to this headline">¶</a></h2>
+<p>The augmented assignment protocol, defined by <code class="docutils literal"><span class="pre">__iadd__</span></code> and other
+similarly named methods, can be used to allow objects to be modified in
+place or to rebind names if an object is immutable &#8211; both through use
+of the same operator.  This can lead to confusing code, which in turn
+leads to buggy code.  For this reason, methods of the augmented
+assignment protocol should not be used in Twisted.</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>Functions should be named similarly to methods.</p>
+<p>Functions or methods which are responding to events to
+complete a callback or errback should be named <code class="docutils literal"><span class="pre">_cbMethodName</span></code> or
+<code class="docutils literal"><span class="pre">_ebMethodName</span></code> , in order to distinguish them from normal
+methods.</p>
+</div>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<p>Attributes should be named similarly to functions and
+methods. Attributes should be named descriptively; attribute
+names like <code class="docutils literal"><span class="pre">mode</span></code> , <code class="docutils literal"><span class="pre">type</span></code> , and
+<code class="docutils literal"><span class="pre">buf</span></code> are generally discouraged. Instead, use
+<code class="docutils literal"><span class="pre">displayMode</span></code> , <code class="docutils literal"><span class="pre">playerType</span></code> , or
+<code class="docutils literal"><span class="pre">inputBuffer</span></code> .</p>
+<p>Do not use Python&#8217;s &#8220;private&#8221; attribute syntax; prefix
+non-public attributes with a single leading underscore. Since
+several classes have the same name in Twisted, and they are
+distinguished by which package they come from, Python&#8217;s
+double-underscore name mangling will not work reliably in some
+cases. Also, name-mangled private variables are more difficult
+to address when unit testing or persisting a class.</p>
+<p>An attribute (or function, method or class) should be
+considered private when one or more of the following conditions
+are true:</p>
+<ul class="simple">
+<li>The attribute represents intermediate state which is not
+always kept up-to-date.</li>
+<li>Referring to the contents of the attribute or otherwise
+maintaining a reference to it may cause resources to
+leak.</li>
+<li>Assigning to the attribute will break internal
+assumptions.</li>
+<li>The attribute is part of a known-to-be-sub-optimal
+interface and will certainly be removed in a future
+release.</li>
+</ul>
+</div>
+<div class="section" id="python-3">
+<h2>Python 3<a class="headerlink" href="#python-3" title="Permalink to this headline">¶</a></h2>
+<p>Twisted is being ported to Python 3.  Be sure to
+follow <a class="reference external" href="http://twistedmatrix.com/trac/wiki/Plan/Python3#Reviewerchecklist">the    guidelines for Python 3 compatibility.</a> Check on them often as they may
+change as lessons are learned during the porting effort.</p>
+</div>
+<div class="section" id="database">
+<h2>Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h2>
+<p>Database tables will be named with plural nouns.</p>
+<p>Database columns will be named with underscores between
+words, all lower case, since most databases do not distinguish
+between case.</p>
+<p>Any attribute, method argument, or method name that
+corresponds <em>directly</em> to a column in the database will
+be named exactly the same as that column, regardless of other
+coding conventions surrounding that circumstance.</p>
+<p>All SQL keywords should be in upper case.</p>
+</div>
+<div class="section" id="c-code">
+<h2>C Code<a class="headerlink" href="#c-code" title="Permalink to this headline">¶</a></h2>
+<p>Wherever possible, C code should be optional, and the
+default python implementation should be maintained in tandem
+with it. C code should be strict ANSI C, and
+<strong>must</strong> build using GCC as well as Visual Studio
+for Windows, and really shouldn&#8217;t have any problems with other
+compilers either. Don&#8217;t do anything tricky.</p>
+<p>C code should only be used for efficiency, not for binding
+to external libraries. If your particular code is not
+frequently run, write it in Python. If you require the use of
+an external library, develop a separate, external bindings
+package and make your twisted code depend on it.</p>
+</div>
+<div class="section" id="commit-messages">
+<h2>Commit Messages<a class="headerlink" href="#commit-messages" title="Permalink to this headline">¶</a></h2>
+<p>The commit messages are being distributed in a myriad of ways. Because
+of that, you need to observe a few simple rules when writing a commit
+message.</p>
+<p>The first line of the message is being used as both the subject of
+the commit email and the announcement on #twisted. Therefore, it should
+be short (aim for &lt; 80 characters) and descriptive &#8211; and must be
+able to stand alone (it is best if it is a complete sentence). The rest
+of the e-mail should be separated with <em>hard line breaks</em> into
+short lines (&lt; 70 characters). This is free-format, so you can do
+whatever you like here.</p>
+<p>Commit messages should be about <em>what</em> , not <em>how</em> : we can
+get how from SVN diff. Explain reasons for commits, and what they
+affect.</p>
+<p>Each commit should be a single logical change, which is internally
+consistent. If you can&#8217;t summarize your changes in one short line, this
+is probably a sign that they should be broken into multiple checkins.</p>
+</div>
+<div class="section" id="source-control">
+<h2>Source Control<a class="headerlink" href="#source-control" title="Permalink to this headline">¶</a></h2>
+<p>Twisted currently uses Subversion for source control.  All
+development <strong>should</strong> occur using branches; when a task is
+considered complete another Twisted developer may review it and if no
+problems are found, it may be merged into trunk. The Twisted wiki has <a class="reference external" href="http://twistedmatrix.com/trac/wiki/TwistedDevelopment">a start</a> .
+Branches <strong>must</strong> be used for major development.  Branches
+should be managed using <a class="reference external" href="http://divmod.org/trac/wiki/DivmodCombinator">Combinator</a> (but
+if you can manage them in some other way without anyone noticing, knock
+yourself out).</p>
+<p>Certain features of Subversion should be avoided.</p>
+<ul>
+<li><p class="first">Do not set the <code class="docutils literal"><span class="pre">svn:ignore</span></code> property on any
+file or directory.  What you wish to ignore, others may wish to examine.
+What others may wish you ignore, <em>you</em> may wish you examine.
+<code class="docutils literal"><span class="pre">svn:ignore</span></code> will affect everyone who uses
+the repository, and so it is not the right mechanism to express personal
+preferences.</p>
+<p>If you wish to ignore certain files use the <code class="docutils literal"><span class="pre">global-ignores</span></code> feature of <code class="docutils literal"><span class="pre">~/.subversion/config</span></code> , for example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">[miscellany]</span>
+<span class="go">global-ignores = dropin.cache *.pyc *.pyo *.o *.lo *.la #*# .*.rej *.rej .*~</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="fallback">
+<h2>Fallback<a class="headerlink" href="#fallback" title="Permalink to this headline">¶</a></h2>
+<p>In case of conventions not enforced in this document, the reference
+documents to use in fallback is
+<a class="reference external" href="http://www.python.org/dev/peps/pep-0008/">PEP 8</a> for Python
+code and <a class="reference external" href="http://www.python.org/dev/peps/pep-0007/">PEP 7</a> for
+C code. For example, the paragraph <strong>Whitespace in Expressions and Statements</strong> in PEP 8 describes what should be done in Twisted
+code.</p>
+</div>
+<div class="section" id="recommendations">
+<h2>Recommendations<a class="headerlink" href="#recommendations" title="Permalink to this headline">¶</a></h2>
+<p>These things aren&#8217;t necessarily standardizeable (in that
+code can&#8217;t be easily checked for compliance) but are a good
+idea to keep in mind while working on Twisted.</p>
+<p>If you&#8217;re going to work on a fragment of the Twisted
+codebase, please consider finding a way that you would <em>use</em>
+such a fragment in daily life. Using a Twisted Web server on your
+website  encourages you to actively maintain and improve your code,
+as the little everyday issues with using it become apparent.</p>
+<p>Twisted is a <strong>big</strong> codebase! If you&#8217;re
+refactoring something, please make sure to recursively grep for
+the names of functions you&#8217;re changing. You may be surprised to
+learn where something is called. Especially if you are moving
+or renaming a function, class, method, or module, make sure
+that it won&#8217;t instantly break other code.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Twisted Coding Standard</a><ul>
+<li><a class="reference internal" href="#naming">Naming</a></li>
+<li><a class="reference internal" href="#testing">Testing</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#test-suite">Test Suite</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#copyright-header">Copyright Header</a></li>
+<li><a class="reference internal" href="#whitespace">Whitespace</a></li>
+<li><a class="reference internal" href="#modules">Modules</a></li>
+<li><a class="reference internal" href="#packages">Packages</a></li>
+<li><a class="reference internal" href="#string-formatting-operations">String Formatting Operations</a></li>
+<li><a class="reference internal" href="#docstrings">Docstrings</a></li>
+<li><a class="reference internal" href="#comments">Comments</a></li>
+<li><a class="reference internal" href="#versioning">Versioning</a></li>
+<li><a class="reference internal" href="#scripts">Scripts</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+<li><a class="reference internal" href="#standard-library-extension-modules">Standard Library Extension Modules</a></li>
+<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#new-style-classes">New-style Classes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#methods">Methods</a></li>
+<li><a class="reference internal" href="#callback-arguments">Callback Arguments</a></li>
+<li><a class="reference internal" href="#special-methods">Special Methods</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#python-3">Python 3</a></li>
+<li><a class="reference internal" href="#database">Database</a></li>
+<li><a class="reference internal" href="#c-code">C Code</a></li>
+<li><a class="reference internal" href="#commit-messages">Commit Messages</a></li>
+<li><a class="reference internal" href="#source-control">Source Control</a></li>
+<li><a class="reference internal" href="#fallback">Fallback</a></li>
+<li><a class="reference internal" href="#recommendations">Recommendations</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter">Twisted Development Policy</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="writing-standard.html"
+                                  title="next chapter">Twisted Writing Standard</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../../_sources/core/development/policy/coding-standard.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

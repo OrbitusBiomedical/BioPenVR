@@ -1,0 +1,743 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Logging with twisted.logger &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Twisted’s Legacy Logging System: twisted.python.log" href="logging.html" />
+    <link rel="prev" title="Deploying Twisted with systemd" href="systemd.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="logging.html" title="Twisted’s Legacy Logging System: twisted.python.log"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="systemd.html" title="Deploying Twisted with systemd"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="logging-with-twisted-logger">
+<h1>Logging with twisted.logger<a class="headerlink" href="#logging-with-twisted-logger" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-basics">
+<h2>The Basics<a class="headerlink" href="#the-basics" title="Permalink to this headline">¶</a></h2>
+<p>Logging consists of two main endpoints: applications that emit events, and observers that receive and handle those events.
+An event is simply a <code class="docutils literal"><span class="pre">dict</span></code> object containing the relevant data that describes something interesting that has occurred in the application.
+For example: a web server might emit an event after handling each request that includes the URI of requested resource, the response&#8217;s status code, a count of bytes transferred, and so on.
+All of that information might be contained in a pair of objects representing the request and response, so logging this event could be as simple as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above API would seem confusing to users of many logging systems, which are built around the idea of emitting strings to a file.
+There is, after all, no string in the above call.
+In such systems, one might expect the API to look like this instead:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+    <span class="s">&quot;{uri}: status={status}, bytes={size}, etc...&quot;</span>
+    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Here, a string is rendered by formatting data from our request and response objects.
+The string can be easily appended to a log file, to be later read by an administrator, or perhaps teased out via some scripts or log gathering tools.</p>
+<p>One disadvantage to this is that a strings meant to be human-readable are not necessarily easy (or even possible) for software to handle reliably.
+While text files are a common medium for storing logs, one might want to write code that notices certain types of events and does something other than store the event.</p>
+<p>In the web server example, if many requests from a given IP address are resulting in failed authentication, someone might be trying to break in to the server.
+Perhaps blocking requests from that IP address would be useful.
+An observer receiving the above event as a string would have to resort to parsing the string to extract the relevant information, which may perform poorly and, depending on how well events are formatted, it may also be difficult to avoid bugs.
+Additionally, any information not encoded into the string is simply unavailable; if the IP address isn&#8217;t in the string, it cannot be obtained from the event.</p>
+<p>However, if the <code class="docutils literal"><span class="pre">request</span></code> and <code class="docutils literal"><span class="pre">response</span></code> objects are available to the observer, as in the first example, it would be possible to write an observer that accessed any attributes of those objects.
+It would also be a lot easier to write an observer that emitted structured information by serializing these objects into a format such as JSON, rows in a database, etc.</p>
+<p>Events-as-strings do have the advantage that it&#8217;s obvious what an observer that writes strings, for example to a file, would emit.
+We can solve this more flexibly by providing an optional format string in events that can be used for this purpose:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+    <span class="s">&quot;{request.uri}: status={response.status}, bytes={response.size}, etc...&quot;</span><span class="p">,</span>
+    <span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="n">response</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that this looks very much like the events-as-strings version of the API, except that the string is not rendered by the caller; we leave that to the observer, <em>if and when it is needed</em> .
+The observer also has direct access to the request and response objects, as well as their attributes.
+Now a text-based observer can format the text in a prescribed way, and an observer that wants to handle these events in some other manner can do so as well.</p>
+</div>
+<div class="section" id="usage-for-emitting-applications">
+<h2>Usage for emitting applications<a class="headerlink" href="#usage-for-emitting-applications" title="Permalink to this headline">¶</a></h2>
+<p>The first thing that an application that emits logging events needs to do is to instantiate a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.html">Logger</a> object, which provides the API to emit events.
+A <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.html">Logger</a> may be created globally for a module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">handleData</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Got data: {data!r}.&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.html">Logger</a> can also be associated with a class:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
+
+<span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">oops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s">&quot;Oops! Invalid data from server: {data!r}&quot;</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>When associated with a class in this manner, the <code class="docutils literal"><span class="pre">&quot;log_source&quot;</span></code> key is set in the event.
+For example:</p>
+<p><a class="reference download internal" href="../../_downloads/logsource.py"><code class="xref download docutils literal"><span class="pre">logsource.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
+
+<span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">doSomething</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">something</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s">&quot;Object with value {log_source.value!r} doing {something}.&quot;</span><span class="p">,</span>
+            <span class="n">something</span><span class="o">=</span><span class="n">something</span>
+        <span class="p">)</span>
+
+<span class="n">MyObject</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">doSomething</span><span class="p">(</span><span class="s">&quot;a task&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This example will show the string &#8220;object with value 7 doing a task&#8221; because the <code class="docutils literal"><span class="pre">log_source</span></code> key is automatically set to the <code class="docutils literal"><span class="pre">MyObject</span></code> instance that the <code class="docutils literal"><span class="pre">Logger</span></code> is retrieved from.</p>
+<div class="section" id="capturing-failures">
+<h3>Capturing Failures<a class="headerlink" href="#capturing-failures" title="Permalink to this headline">¶</a></h3>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.html">Logger</a> provides a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.failure.html">failure</a> method, which allows one to capture a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.failure.Failure.html">Failure</a> object conveniently:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">failure</span><span class="p">(</span><span class="s">&quot;Math is hard!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The emitted event will have the <code class="docutils literal"><span class="pre">&quot;log_failure&quot;</span></code> key set, which is a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.failure.Failure.html">Failure</a> than captures the exception.
+This can be used my observers to obtain a traceback.
+For example, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.FileLogObserver.html">FileLogObserver</a> will append the traceback to it&#8217;s output:</p>
+<div class="highlight-python"><div class="highlight"><pre>Math is hard!
+
+Traceback (most recent call last):
+--- &lt;exception caught here&gt; ---
+  File &quot;/tmp/test.py&quot;, line 8, in &lt;module&gt;
+    1/0
+exceptions.ZeroDivisionError: integer division or modulo by zero
+</pre></div>
+</div>
+<p>Note that this API is meant to capture unexpected and unhandled errors (that is: bugs, which is why tracebacks are preserved).
+As such, it defaults to logging at the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogLevel.critical.html">critical</a> level.
+It is generally more appropriate to instead use <cite>log.error()</cite> when logging an expected error condition that was appropriately handled by the software.</p>
+</div>
+<div class="section" id="namespaces">
+<h3>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h3>
+<p>All <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.html">Logger</a> s have a namespace, which can be used to categorize events.
+Namespaces may be specified by passing in a <code class="docutils literal"><span class="pre">namespace</span></code> argument to <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.html">Logger</a> &#8216;s initializer, but if none is given, the logger will derive its namespace from the module name of the callable that instantiated it, or, in the case of a class, from the fully qualified name of the class.
+A <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.html">Logger</a> will add a <code class="docutils literal"><span class="pre">log_namespace</span></code> key to the events it emits.</p>
+<p>In the first example above, the namespace would be <code class="docutils literal"><span class="pre">some.module</span></code> , and in the second example, it would be <code class="docutils literal"><span class="pre">some.module.Foo</span></code> .</p>
+</div>
+<div class="section" id="log-levels">
+<h3>Log levels<a class="headerlink" href="#log-levels" title="Permalink to this headline">¶</a></h3>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.html">Logger</a> s provide a number of methods for emitting events.
+These methods all have the same signature, but each will attach a specific <code class="docutils literal"><span class="pre">log_level</span></code> key to events.
+Log levels are defined by the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogLevel.html">LogLevel</a> constants container.
+These are:</p>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogLevel.debug.html">debug</a></p>
+<blockquote>
+<div>Debugging events: Information of use to a developer of the software, not generally of interest to someone running the software unless they are attempting to diagnose a software issue.</div></blockquote>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogLevel.info.html">info</a></p>
+<blockquote>
+<div>Informational events: Routine information about the status of an application, such as incoming connections, startup of a subsystem, etc.</div></blockquote>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogLevel.warn.html">warn</a></p>
+<blockquote>
+<div>Warning events: Events that may require greater attention than informational events but are not a systemic failure condition, such as authorization failures, bad data from a network client, etc.
+Such events are of potential interest to system administrators, and should ideally be phrased in such a way, or documented, so as to indicate an action that an administrator might take to mitigate the warning.</div></blockquote>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogLevel.error.html">error</a></p>
+<blockquote>
+<div>Error conditions: Events indicating a systemic failure.
+For example, resource exhaustion, or the loss of connectivity to an external system, such as a database or API endpoint, without which no useful work can proceed.
+Similar to warnings, errors related to operational parameters may be actionable to system administrators and should provide references to resources which an administrator might use to resolve them.</div></blockquote>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogLevel.critical.html">critical</a></p>
+<blockquote>
+<div>Critical failures: Errors indicating systemic failure (ie. service outage), data corruption, imminent data loss, etc. which must be handled immediately.
+This includes errors unanticipated by the software, such as unhandled exceptions, wherein the cause and consequences are unknown.</div></blockquote>
+<p>In the first example above, the call to <code class="docutils literal"><span class="pre">log.debug</span></code> will add a <code class="docutils literal"><span class="pre">log_level</span></code> key to the emitted event with a value of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogLevel.debug.html">LogLevel.debug</a> .
+In the second example, calling <code class="docutils literal"><span class="pre">self.log.error</span></code> would use a value of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogLevel.error.html">LogLevel.error</a> .</p>
+<p>The above descriptions are simply guidance, but it is worth noting that log levels have a reduced value if they are used inconsistantly.
+If one module in an application considers a message informational, and another module considers a similar message an error, then filtering based on log levels becomes harder.
+This is increasingly likely if the modules in question are developed by different parties, as will often be the case with externally source libraries and frameworks.
+(If a module tends to use higher levels than another, namespaces may be used to calibrate the relative use of log levels, but that is obviously suboptimal.)
+Sticking to the above guidelines will hopefully help here.</p>
+</div>
+<div class="section" id="emitter-method-signatures">
+<h3>Emitter method signatures<a class="headerlink" href="#emitter-method-signatures" title="Permalink to this headline">¶</a></h3>
+<p>The emitter methods (<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.debug.html">debug</a> , <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.info.html">info</a> , <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.warn.html">warn</a> , etc.) all take an optional format string as a first argument, followed by keyword arguments that will be included in the emitted event.</p>
+<p>Note that all three examples in the opening section of this HOWTO fit this signature.
+The first omits the format, which doesn&#8217;t lend itself well to text logging.
+The second omits the keyword arguments, which hostile to anything other than text logging, and is therefore ill-advised.
+Finally, the third provides both, which is the recommended usage.</p>
+<p>These methods are all convenience wrappers around the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.emit.html">emit</a> method, which takes a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogLevel.html">LogLevel</a> as its first argument.</p>
+</div>
+<div class="section" id="format-strings">
+<h3>Format strings<a class="headerlink" href="#format-strings" title="Permalink to this headline">¶</a></h3>
+<p>Format strings provide observers with a standard way to format an event as text suitable for a human being to read, via the function <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.formatEvent.html">formatEvent</a> .
+When writing a format string, take care to present it in a manner which would make as much sense as possible to a human reader.
+Particularly, format strings need not be written with an eye towards parseability or machine-readability.
+If you want to save your log events along with their structure and then analyze them later, see the next section, on <span class="xref std std-ref">&#8220;saving events for later&#8221;</span> .</p>
+<p>Format strings should be</p>
+<p><code class="docutils literal"><span class="pre">unicode</span></code> , and use <a class="reference external" href="http://www.python.org/dev/peps/pep-3101/">PEP 3101</a> syntax to describe how the event should be rendered as human-readable text.
+For legacy support and convenience in python 2, UTF-8-encoded <code class="docutils literal"><span class="pre">bytes</span></code> are also accepted for format strings, but unicode is preferred.
+There are two variations from PEP 3101 in the format strings used by this module:</p>
+<ol class="arabic">
+<li><p class="first">Positional (numerical) field names (eg. <code class="docutils literal"><span class="pre">{0}</span></code> ) are not permitted.
+Event keys are not ordered, which means positional field names do not make sense in this context.
+However, this is not an accidental limitation, but an intentional design decision.
+As software evolves, log messages often grow to include additional information, while still logging the same conceptual event.
+By using meaningful names rather than opaque indexes for event keys, these identifiers are more robust against future changes in the format of messages and the information provided.</p>
+</li>
+<li><p class="first">Field names ending in parentheses (eg. <code class="docutils literal"><span class="pre">{foo()}</span></code> ) will call the referenced object with no arguments, then call <code class="docutils literal"><span class="pre">str</span></code> on the result, rather than calling <code class="docutils literal"><span class="pre">str</span></code> on the referenced object directly.
+This extension to PEP 3101 format syntax is provided to make it as easy as possible to defer potentially expensive work until a log message must be emitted.
+For example, let&#8217;s say that we wanted to log a message with some useful, but potentially expensive information from the &#8216;request&#8217; object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;{request.uri} useful, but expensive: {request.usefulButExpensive()}&quot;</span><span class="p">,</span>
+         <span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the case where this log message is filtered out as uninteresting and not saved, no formatting work is done <em>at all</em> ; and since we can use PEP3101 attribute-access syntax in conjunction with this parenthesis extension, the caller does not even need to build a function or bound method object to pass as a separate key.
+There is no support for specifying arguments in the format string; the goal is to make it idiomatic to express that work be done later, not to implement a full Python expression evaluator.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="event-keys-added-by-the-system">
+<h3>Event keys added by the system<a class="headerlink" href="#event-keys-added-by-the-system" title="Permalink to this headline">¶</a></h3>
+<p>The logging system will add keys to emitted events.
+All event keys that are inserted by the logging system with have a <code class="docutils literal"><span class="pre">log_</span></code> prefix, to avoid namespace collisions with application-provided event keys.
+Applications should therefore not insert event keys using the <code class="docutils literal"><span class="pre">log_</span></code> prefix, as that prefix is reserved for the logging system.
+System-provided event keys include:</p>
+<p><code class="docutils literal"><span class="pre">log_logger</span></code></p>
+<blockquote>
+<div><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.html">Logger</a> object that the event was emitted to.</div></blockquote>
+<p><code class="docutils literal"><span class="pre">log_source</span></code></p>
+<blockquote>
+<div>The source object that emitted the event.
+When a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.html">Logger</a> is accessed as an attribute of a class, the class is the source.
+When accessed as an attribute of an instance, the instance is the source.
+In other cases, the source is <code class="docutils literal"><span class="pre">None</span></code> .</div></blockquote>
+<p><code class="docutils literal"><span class="pre">log_level</span></code></p>
+<blockquote>
+<div>The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogLevel.html">LogLevel</a> associated with the event.</div></blockquote>
+<p><code class="docutils literal"><span class="pre">log_namespace</span></code></p>
+<blockquote>
+<div>The namespace associated with the event.</div></blockquote>
+<p><code class="docutils literal"><span class="pre">log_format</span></code></p>
+<blockquote>
+<div>The format string provided for use by observers that wish to render the event as text.
+This may be <code class="docutils literal"><span class="pre">None</span></code> , if no format string was provided.</div></blockquote>
+<p><code class="docutils literal"><span class="pre">log_time</span></code></p>
+<blockquote>
+<div>The time that the event was emitted, as returned by <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/time.time.html">time</a> .</div></blockquote>
+<p><code class="docutils literal"><span class="pre">log_failure</span></code></p>
+<blockquote>
+<div>A <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.failure.Failure.html">Failure</a> object captured when the event was emitted.</div></blockquote>
+</div>
+<div class="section" id="avoid-mutable-event-keys">
+<h3>Avoid mutable event keys<a class="headerlink" href="#avoid-mutable-event-keys" title="Permalink to this headline">¶</a></h3>
+<p>Emitting applications should be cautious about inserting objects into event which may be mutated later.
+While observers are called synchronously, it is possible that an observer will do something like queue up the event for later serialization, in which case the serialized object may be different than intended.</p>
+<hr class="docutils" />
+<p>For compatibility reasons, <code class="docutils literal"><span class="pre">twistd</span></code> will log to a text-based format by default.
+However, it&#8217;s much better to use a structured log file format which preserves information about the events being logged.
+<code class="docutils literal"><span class="pre">twisted.logger</span></code> provides two APIs: <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.jsonFileLogObserver.html">jsonFileLogObserver</a> and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.eventsFromJSONLogFile.html">eventsFromJSONLogFile</a>, which allow you to save and retrieve structured log events with a basic level of fidelity.
+Log events are serialized as JSON dictionaries, with serialization rules that are as lenient as possible; any unknown values are replaced with simple placeholder values.</p>
+<p><code class="docutils literal"><span class="pre">jsonFileLogObserver</span></code> will create a log observer that will save events as structured data, like so:</p>
+<p><a class="reference download internal" href="../../_downloads/saver.py"><code class="xref download docutils literal"><span class="pre">saver.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">jsonFileLogObserver</span><span class="p">,</span> <span class="n">Logger</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="n">observer</span><span class="o">=</span><span class="n">jsonFileLogObserver</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;log.json&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)),</span>
+             <span class="n">namespace</span><span class="o">=</span><span class="s">&quot;saver&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">loggit</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Some values: {values!r}&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">values</span><span class="p">)</span>
+
+<span class="n">loggit</span><span class="p">([</span><span class="mi">1234</span><span class="p">,</span> <span class="mi">5678</span><span class="p">])</span>
+<span class="n">loggit</span><span class="p">([</span><span class="mi">9876</span><span class="p">,</span> <span class="mi">5432</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>And <code class="docutils literal"><span class="pre">eventsFromJSONLogFile</span></code> can load those events again; here, you can see that the event has preserved enough information to be formatted as human-readable again:</p>
+<p><a class="reference download internal" href="../../_downloads/loader.py"><code class="xref download docutils literal"><span class="pre">loader.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">eventsFromJSONLogFile</span><span class="p">,</span> <span class="n">textFileLogObserver</span>
+<span class="p">)</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">textFileLogObserver</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">eventsFromJSONLogFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;log.json&quot;</span><span class="p">)):</span>
+    <span class="n">output</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also, of course, feel free to access any of the keys in the <code class="docutils literal"><span class="pre">event</span></code> object as you load them, as well; basic structures such as lists, numbers, dictionaries and strings (anything serializable with JSON) will be preserved:</p>
+<p><a class="reference download internal" href="../../_downloads/loader-math.py"><code class="xref download docutils literal"><span class="pre">loader-math.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">eventsFromJSONLogFile</span>
+
+<span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">eventsFromJSONLogFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;log.json&quot;</span><span class="p">)):</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s">&quot;values&quot;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="implementing-an-observer">
+<h2>Implementing an observer<a class="headerlink" href="#implementing-an-observer" title="Permalink to this headline">¶</a></h2>
+<p>An observer must provide the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.ILogObserver.html">ILogObserver</a> interface.
+That interface simply describes a 1-argument callable that takes a <code class="docutils literal"><span class="pre">dict</span></code> , so a simple implementation may simply use the handy <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/zope.interface.provider.html">provider</a> decorator on a function that takes one argument:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">provider</span>
+<span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">ILogObserver</span><span class="p">,</span> <span class="n">formatEvent</span>
+
+<span class="nd">@provider</span><span class="p">(</span><span class="n">ILogObserver</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">simpleObserver</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">formatEvent</span><span class="p">(</span><span class="n">event</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.formatEvent.html">formatEvent</a> function returns a textual (<code class="docutils literal"><span class="pre">unicode</span></code> ) representation of the event.</p>
+<p>While it is recommended, in most cases it is not required that observers declare their compliance with <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.ILogObserver.html">ILogObserver</a> .
+This flexibility exists to allow for pre-existing callables and lambda expressions to be used as observers.
+As an example, if one would like to accumulate events in a <code class="docutils literal"><span class="pre">list</span></code> , then <code class="docutils literal"><span class="pre">list.append</span></code> may be used as an observer.</p>
+<p>When implementing your own log observer, however, you should always keep in mind that unlike most objects within Twisted, a log observer <em>must be thread safe</em> .</p>
+<p>Specifically, a log observer:</p>
+<ul class="simple">
+<li>must be prepared to be called from threads other than the main thread (or I/O thread, or reactor thread)</li>
+<li>must be prepared to be called from multiple threads concurrently</li>
+<li>must not interact with other Twisted APIs that are not explicitly thread-safe without first taking precautions like using <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorThreads.callFromThread.html">callFromThread</a></li>
+</ul>
+<p>Keep in mind that this is true even if you elect not to explicitly interact with any threads from your program.
+Twisted itself may log messages from threads, and Twisted may internally use APIs like <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorThreads.callInThread.html">callInThread</a> ; for example, Twisted uses threads to look up hostnames when making an outgoing connection.</p>
+<p>Given this extra wrinkle, it&#8217;s usually best to see if you can find an existing log observer implementation that does what you need before implementing your own; thread safety can be tricky to implement.
+Luckily, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.logging.html">twisted.python.logging</a> comes with several useful observers, which are documented below.</p>
+<div class="section" id="writing-an-observer-for-event-analysis">
+<h3>Writing an observer for event analysis<a class="headerlink" href="#writing-an-observer-for-event-analysis" title="Permalink to this headline">¶</a></h3>
+<p>Twisted includes log observers which take care of most of the &#8220;normal&#8221; uses of logging, like writing messages to a file, saving them as text, filtering them, and so on.
+There are two common reasons you might want to write a log observer of your own.
+The first is to ship log messages over to a different kind of external system which Twisted itself does not support.
+If you&#8217;ve read the above, you now know enough to do that; simply implement a function that converts the dictionary to something amenable to your external system or file format, and send it there or save it.
+The second task is to do some kind of analysis, either real-time within your process or after the fact offline.</p>
+<p>You&#8217;re probably going to have to aggregate information from your own code and from libraries you&#8217;re using, including Twisted itself, and you may not have much in the way of control over how those messages are organized.
+You&#8217;re also probably trying to aggregate information from ad-hoc messages into some kind of structure.</p>
+<p>One way to extract such semi-structured information is to feed your logs into an external system like <a class="reference external" href="http://logstash.net">logstash</a> , and process them there.
+Such systems are quite powerful and <code class="docutils literal"><span class="pre">twisted.logger</span></code> does not try to replace them.
+However, such systems are necessarily external, and therefore if you want to react to the log analysis <em>within</em> your application - for example, denying access in response to an abusive client - you would have to write some glue code to push messages from your log-analysis system back into your application.
+For such cases, it&#8217;s useful to be able to write log analysis code as a log observer.</p>
+<p>Assuming that the libraries whose log events you&#8217;re interested in analyzing are making use of <code class="docutils literal"><span class="pre">twisted.logger</span></code> , you can analyze log events either live as they&#8217;re being logged, or loaded from a saved log file.</p>
+<p>If you&#8217;re writing code to log events directly for potential analysis, then you should simply structure your messages to include all necessary information as serialization-friendly values in events, and then simply pull them out, like the <code class="docutils literal"><span class="pre">loader-math.py</span></code> example above.</p>
+<p>However, let&#8217;s say you&#8217;re trying to interact with a system that logs messages like so:</p>
+<p><a class="reference download internal" href="../../_downloads/ad_hoc.py"><code class="xref download docutils literal"><span class="pre">ad_hoc.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
+
+<span class="k">class</span> <span class="nc">AdHoc</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="n">namespace</span><span class="o">=</span><span class="s">&quot;ad_hoc&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
+
+    <span class="k">def</span> <span class="nf">logMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;message from {log_source} &quot;</span>
+                      <span class="s">&quot;where a is {log_source.a} and b is {log_source.b}&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, the <code class="docutils literal"><span class="pre">AdHoc</span></code> object is not itself serializable, but it has two relevant attributes, which the log message&#8217;s format string calls out as attributes of the <code class="docutils literal"><span class="pre">log_source</span></code> field, as described above: <code class="docutils literal"><span class="pre">a</span></code> and <code class="docutils literal"><span class="pre">b</span></code> .</p>
+<p>To analyze this event, we can&#8217;t pursue the same strategy shown above in <code class="docutils literal"><span class="pre">loader-math.py</span></code> .
+We don&#8217;t have any key/value pairs of the log event to examine directly; <code class="docutils literal"><span class="pre">a</span></code> and <code class="docutils literal"><span class="pre">b</span></code> are not present as keys themselves.
+We could look for the <code class="docutils literal"><span class="pre">log_source</span></code> key within the event and access its <code class="docutils literal"><span class="pre">a</span></code> and <code class="docutils literal"><span class="pre">b</span></code> attributes, but that wouldn&#8217;t work once the event had been serialized and loaded again, since an <code class="docutils literal"><span class="pre">AdHoc</span></code> instance isn&#8217;t a basic type that can be saved to JSON.</p>
+<p>Luckily, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.html">twisted.logger</a> provides an API for doing just this: <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.extractField.html">extractField</a> .
+You use it like so:</p>
+<p><a class="reference download internal" href="../../_downloads/analyze.py"><code class="xref download docutils literal"><span class="pre">analyze.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">extractField</span>
+
+<span class="n">fmt</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s">&quot;message from {log_source} &quot;</span>
+    <span class="s">&quot;where a is {log_source.a} and b is {log_source.b}&quot;</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;log_format&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">fmt</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">extractField</span><span class="p">(</span><span class="s">&quot;log_source.a&quot;</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">extractField</span><span class="p">(</span><span class="s">&quot;log_source.b&quot;</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;A + B = &quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This <code class="docutils literal"><span class="pre">analyze</span></code> function can then be used in two ways.
+First, you can analyze your application &#8220;live&#8221;, as it&#8217;s running.</p>
+<p><a class="reference download internal" href="../../_downloads/online_analyze.py"><code class="xref download docutils literal"><span class="pre">online_analyze.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">globalLogPublisher</span>
+<span class="kn">from</span> <span class="nn">analyze</span> <span class="kn">import</span> <span class="n">analyze</span>
+<span class="kn">from</span> <span class="nn">ad_hoc</span> <span class="kn">import</span> <span class="n">AdHoc</span>
+
+<span class="n">globalLogPublisher</span><span class="o">.</span><span class="n">addObserver</span><span class="p">(</span><span class="n">analyze</span><span class="p">)</span>
+
+<span class="n">AdHoc</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">logMessage</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you run this script, you will see that it extracts the values from the <code class="docutils literal"><span class="pre">AdHoc</span></code> object&#8217;s log message.</p>
+<p>However, you can also analyze output from a saved log file, using the exact same code.
+First, you&#8217;ll need to produce a log file with a message from an AdHoc object in it:</p>
+<p><a class="reference download internal" href="../../_downloads/ad_hoc_save.py"><code class="xref download docutils literal"><span class="pre">ad_hoc_save.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">jsonFileLogObserver</span><span class="p">,</span> <span class="n">globalLogPublisher</span>
+<span class="kn">from</span> <span class="nn">ad_hoc</span> <span class="kn">import</span> <span class="n">AdHoc</span>
+
+<span class="n">globalLogPublisher</span><span class="o">.</span><span class="n">addObserver</span><span class="p">(</span><span class="n">jsonFileLogObserver</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;log.json&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)))</span>
+
+<span class="n">AdHoc</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">logMessage</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you run that script, it will produce a <code class="docutils literal"><span class="pre">log.json</span></code> file which can be analyzed in the same manner as the <code class="docutils literal"><span class="pre">loader.py</span></code> example above:</p>
+<p><a class="reference download internal" href="../../_downloads/offline_analyze.py"><code class="xref download docutils literal"><span class="pre">offline_analyze.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">eventsFromJSONLogFile</span>
+<span class="kn">from</span> <span class="nn">analyze</span> <span class="kn">import</span> <span class="n">analyze</span>
+
+<span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">eventsFromJSONLogFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;log.json&quot;</span><span class="p">)):</span>
+    <span class="n">analyze</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When doing analysis, it always seems like you should have saved more structured data for later.
+However, log messages are often written early on in development, in an ad-hoc way, before a solid understanding has developed about what information will be useful and what will be redundant.
+Log messages are therefore a stream-of-consciousness commentary on what is going on as a system is being developed.</p>
+<p><code class="docutils literal"><span class="pre">extractField</span></code> lets you acknowledge the messy reality of how log messages are written, but still take advantage of structured analysis later on.
+Just always be sure to use event format fields, not string concatenation, to reference information about a particular event, and you&#8217;ll be able to easily pull apart hastily-written ad-hoc messages from multiple versions of a system, either as it&#8217;s running or once you&#8217;ve saved a log file.</p>
+</div>
+</div>
+<div class="section" id="registering-an-observer">
+<h2>Registering an observer<a class="headerlink" href="#registering-an-observer" title="Permalink to this headline">¶</a></h2>
+<p>One way to register an observer is to contruct a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.html">Logger</a> object with it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">myobservers</span> <span class="kn">import</span> <span class="n">PrintingObserver</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="n">observer</span><span class="o">=</span><span class="n">PrintingObserver</span><span class="p">())</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will cause all of a logger&#8217;s events to be sent to the given observer.
+In the above example, all events emitted by the logger (eg. <code class="docutils literal"><span class="pre">&quot;Hello&quot;</span></code> ) will be printed.
+While that is useful in some cases, it is common to register multiple observers, and to do so globally for all (or most) loggers in an application.</p>
+</div>
+<div class="section" id="the-global-log-publisher">
+<h2>The global log publisher<a class="headerlink" href="#the-global-log-publisher" title="Permalink to this headline">¶</a></h2>
+<p>The global log publisher is a log observer whose purpose is to capture log events not directed to a specific observer.
+In a typical application, the majority of log events will be emitted to the global log publisher.
+Observers can register themselves with the global log publisher in order to be forwarded these events.</p>
+<p>When a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.Logger.html">Logger</a> is created without specifying an observer to send events to, the logger will send its events to the global log publisher, which is accessible via the name <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.globalLogPublisher.html">globalLogPublisher</a> .</p>
+<p>The global log publisher is a singleton instance of a private subclass of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogPublisher.html">LogPublisher</a> , which is itself an <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.ILogObserver.html">ILogObserver</a> .
+What this means is that the global log publisher accepts events like any other observer, and that it forwards those events to other observers.
+Observers can be registered to be forwarded events by calling the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogPublisher.html">LogPublisher</a> method <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogPublisher.addObserver.html">addObserver</a> , and unregister by calling <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogPublisher.removeObserver.html">removeObserver</a> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">globalLogPublisher</span>
+<span class="kn">from</span> <span class="nn">myobservers</span> <span class="kn">import</span> <span class="n">PrintingObserver</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+
+<span class="n">globalLogPublisher</span><span class="o">.</span><span class="n">addObserver</span><span class="p">(</span><span class="n">PrintingObserver</span><span class="p">())</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The result here is the same as the previous example, except that addtional observers can be (and may already have been) registered.
+We know that <code class="docutils literal"><span class="pre">&quot;Hello&quot;</span></code> will be printed.
+We don&#8217;t know, but it&#8217;s very possible, that the same event will also be handled by other observers.</p>
+<p>There is no supported API to discover what other observers are registered with a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogPublisher.html">LogPublisher</a> ; in general, one doesn&#8217;t need to know.
+If an application is running in <code class="docutils literal"><span class="pre">twistd</span></code> , for example, it&#8217;s likely that an observer is streaming events to a file by the time the application code is in play.
+If it is running in a <code class="docutils literal"><span class="pre">twistd</span></code> web container, there will probably be another observer writing to the access log.</p>
+<p>A caveat here is that events are <code class="docutils literal"><span class="pre">dict</span></code> objects, which are mutable, so it is possible for an observer to modify an event that it sees.
+Because doing so will modify what other observers will see, modifying a received event can be problematic and should be strongly discouraged.
+It can be particularly harmful to edit or remove the content of an existing event key.
+Furthermore, no guarantees are made as to the order in which observers are called, so the effect of such modifications on other observers may be non-deterministic.</p>
+<div class="section" id="starting-the-global-log-publisher">
+<h3>Starting the global log publisher<a class="headerlink" href="#starting-the-global-log-publisher" title="Permalink to this headline">¶</a></h3>
+<p>When the global log publisher is created, it uses a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LimitedHistoryLogObserver.html">LimitedHistoryLogObserver</a> (see below) to store events that are logged by the application in memory until logging is started.
+Logging is started by registering the first set of observers with the global log publisher by calling <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogBeginner.beginLoggingTo.html">beginLoggingTo</a> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.logger</span> <span class="kn">import</span> <span class="n">globalLogBeginner</span>
+<span class="kn">from</span> <span class="nn">myobservers</span> <span class="kn">import</span> <span class="n">PrintingObserver</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">)</span>
+
+<span class="n">observers</span> <span class="o">=</span> <span class="p">[</span><span class="n">PrintingObserver</span><span class="p">()]</span>
+
+<span class="n">globalLogBeginner</span><span class="o">.</span><span class="n">beginLoggingTo</span><span class="p">(</span><span class="n">observers</span><span class="p">)</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Hello, again&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>What this does is add the given observers (in this example, the <code class="docutils literal"><span class="pre">PrintingObserver</span></code> ) with the global log observer, then forwards all of the events that were stored in memory prior to calling <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogBeginner.beginLoggingTo.html">beginLoggingTo</a> to these observers, and gets rid of the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LimitedHistoryLogObserver.html">LimitedHistoryLogObserver</a> , as it is no longer needed.
+It is an error to call <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogBeginner.beginLoggingTo.html">beginLoggingTo</a> more than once.</p>
+</div>
+</div>
+<div class="section" id="provided-log-observers">
+<h2>Provided log observers<a class="headerlink" href="#provided-log-observers" title="Permalink to this headline">¶</a></h2>
+<p>This module provides a number of pre-built observers for applications to use:</p>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogPublisher.html">LogPublisher</a></p>
+<blockquote>
+<div>Forwards events to other publishers.
+This allows one to create a graph of observers.</div></blockquote>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LimitedHistoryLogObserver.html">LimitedHistoryLogObserver</a></p>
+<blockquote>
+<div>Stores a limited number of received events, and can re-play those stored events to another observer later.
+This is useful for keeping recent logging history in memory for inspection when other log outputs are not available.</div></blockquote>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.FileLogObserver.html">FileLogObserver</a></p>
+<blockquote>
+<div>Formats events as text, prefixed with a time stamp and a &#8220;system identifier&#8221;, and writes them to a file.
+The system identifier defaults to a combination of the event&#8217;s namespace and level.</div></blockquote>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.FilteringLogObserver.html">FilteringLogObserver</a></p>
+<blockquote>
+<div>Forwards events to another observer after applying a set of filter predicates (providers of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.ILogFilterPredicate.html">ILogFilterPredicate</a> ).
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LogLevelFilterPredicate.html">LogLevelFilterPredicate</a> is a predicate that be configured to keep track of which log levels to filter for different namespaces, and will filter out events that are not at the appropriate level or higher.</div></blockquote>
+</div>
+<div class="section" id="compatibility-with-standard-library-logging">
+<h2>Compatibility with standard library logging<a class="headerlink" href="#compatibility-with-standard-library-logging" title="Permalink to this headline">¶</a></h2>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.STDLibLogObserver.html">STDLibLogObserver</a> is provided for compatibility with the standard library&#8217;s <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/logging.html">logging</a> module.
+Log levels are mapped between the two systems, and the various attributes of standard library log records are filled in properly.</p>
+<p>Note that standard library logging is a blocking API, and logging can be configured to block for long periods (eg. it may write to the network).
+No protection is provided to prevent blocking, so such configurations may cause Twisted applications to perform poorly.</p>
+</div>
+<div class="section" id="compatibility-with-twisted-python-log">
+<h2>Compatibility with twisted.python.log<a class="headerlink" href="#compatibility-with-twisted-python-log" title="Permalink to this headline">¶</a></h2>
+<p>This module provides some facilities to enable the existing <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.log.html">twisted.python.log</a> module to compatibly forward it&#8217;s messages to this module.
+As such, existing clients of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.log.html">twisted.python.log</a> will begin using this module indirectly, with no changes to the older module&#8217;s API.</p>
+<div class="section" id="incrementally-porting-observers">
+<h3>Incrementally porting observers<a class="headerlink" href="#incrementally-porting-observers" title="Permalink to this headline">¶</a></h3>
+<p>Observers have an incremental path for porting to the new module.
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.LegacyLogObserverWrapper.html">LegacyLogObserverWrapper</a> is an <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.ILogObserver.html">ILogObserver</a> that wraps a log observer written for the older module.
+This allows an old-style observer to be registered with a new-style logger or log publisher compatibly.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Logging with twisted.logger</a><ul>
+<li><a class="reference internal" href="#the-basics">The Basics</a></li>
+<li><a class="reference internal" href="#usage-for-emitting-applications">Usage for emitting applications</a><ul>
+<li><a class="reference internal" href="#capturing-failures">Capturing Failures</a></li>
+<li><a class="reference internal" href="#namespaces">Namespaces</a></li>
+<li><a class="reference internal" href="#log-levels">Log levels</a></li>
+<li><a class="reference internal" href="#emitter-method-signatures">Emitter method signatures</a></li>
+<li><a class="reference internal" href="#format-strings">Format strings</a></li>
+<li><a class="reference internal" href="#event-keys-added-by-the-system">Event keys added by the system</a></li>
+<li><a class="reference internal" href="#avoid-mutable-event-keys">Avoid mutable event keys</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#implementing-an-observer">Implementing an observer</a><ul>
+<li><a class="reference internal" href="#writing-an-observer-for-event-analysis">Writing an observer for event analysis</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#registering-an-observer">Registering an observer</a></li>
+<li><a class="reference internal" href="#the-global-log-publisher">The global log publisher</a><ul>
+<li><a class="reference internal" href="#starting-the-global-log-publisher">Starting the global log publisher</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#provided-log-observers">Provided log observers</a></li>
+<li><a class="reference internal" href="#compatibility-with-standard-library-logging">Compatibility with standard library logging</a></li>
+<li><a class="reference internal" href="#compatibility-with-twisted-python-log">Compatibility with twisted.python.log</a><ul>
+<li><a class="reference internal" href="#incrementally-porting-observers">Incrementally porting observers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="systemd.html"
+                                  title="previous chapter">Deploying Twisted with systemd</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="logging.html"
+                                  title="next chapter">Twisted&#8217;s Legacy Logging System: <code class="docutils literal"><span class="pre">twisted.python.log</span></code></a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/logger.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

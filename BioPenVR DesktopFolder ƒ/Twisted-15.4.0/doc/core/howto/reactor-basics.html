@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Reactor Overview &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Using TLS in Twisted" href="ssl.html" />
+    <link rel="prev" title="Overview of Twisted Internet" href="internet-overview.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ssl.html" title="Using TLS in Twisted"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="internet-overview.html" title="Overview of Twisted Internet"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="reactor-overview">
+<h1>Reactor Overview<a class="headerlink" href="#reactor-overview" title="Permalink to this headline">¶</a></h1>
+<p>This HOWTO introduces the Twisted reactor, describes the basics of the
+reactor and links to the various reactor interfaces.</p>
+<div class="section" id="reactor-basics">
+<h2>Reactor Basics<a class="headerlink" href="#reactor-basics" title="Permalink to this headline">¶</a></h2>
+<p>The reactor is the core of the event loop within Twisted &#8211; the loop
+which drives applications using Twisted. The event loop is a programming
+construct that waits for and dispatches events or messages in a program.
+It works by calling some internal or external &#8220;event provider&#8221;, which
+generally blocks until an event has arrived, and then calls the relevant
+event handler (&#8220;dispatches the event&#8221;). The reactor provides basic
+interfaces to a number of services, including network communications,
+threading, and event dispatching.</p>
+<p>For information about using the reactor and the Twisted event loop, see:</p>
+<ul class="simple">
+<li>the event dispatching howtos: <a class="reference internal" href="time.html"><span class="doc">Scheduling</span></a> and <a class="reference internal" href="defer.html"><span class="doc">Using Deferreds</span></a> ;</li>
+<li>the communication howtos: <a class="reference internal" href="servers.html"><span class="doc">TCP servers</span></a> , <a class="reference internal" href="clients.html"><span class="doc">TCP clients</span></a> , <a class="reference internal" href="udp.html"><span class="doc">UDP networking</span></a> and <a class="reference internal" href="process.html"><span class="doc">Using processes</span></a> ; and</li>
+<li><a class="reference internal" href="threading.html"><span class="doc">Using threads</span></a> .</li>
+</ul>
+<p>There are multiple implementations of the reactor, each
+modified to provide better support for specialized features
+over the default implementation.  More information about these
+and how to use a particular implementation is available via
+<a class="reference internal" href="choosing-reactor.html"><span class="doc">Choosing a Reactor</span></a> .</p>
+<p>Twisted applications can use the interfaces in <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.html">twisted.application.service</a> to configure and run the
+application instead of using
+boilerplate reactor code. See <a class="reference internal" href="application.html"><span class="doc">Using Application</span></a> for an introduction to
+Application.</p>
+</div>
+<div class="section" id="using-the-reactor-object">
+<h2>Using the reactor object<a class="headerlink" href="#using-the-reactor-object" title="Permalink to this headline">¶</a></h2>
+<p>You can get to the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.reactor.html">reactor</a> object using the following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</pre></div>
+</div>
+<p>The reactor usually implements a set of interfaces, but
+depending on the chosen reactor and the platform, some of
+the interfaces may not be implemented:</p>
+<ul class="simple">
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorCore.html">IReactorCore</a> : Core (required) functionality.</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorFDSet.html">IReactorFDSet</a> : Use FileDescriptor objects.</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorProcess.html">IReactorProcess</a> : Process management. Read the
+<a class="reference internal" href="process.html"><span class="doc">Using Processes</span></a> document for
+more information.</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorSSL.html">IReactorSSL</a> : SSL networking support.</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorTCP.html">IReactorTCP</a> : TCP networking support. More information
+can be found in the <a class="reference internal" href="servers.html"><span class="doc">Writing Servers</span></a>
+and <a class="reference internal" href="clients.html"><span class="doc">Writing Clients</span></a> documents.</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorThreads.html">IReactorThreads</a> : Threading use and management. More
+information can be found within <a class="reference internal" href="threading.html"><span class="doc">Threading In Twisted</span></a> .</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorTime.html">IReactorTime</a> : Scheduling interface.  More information
+can be found within <a class="reference internal" href="time.html"><span class="doc">Scheduling Tasks</span></a> .</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorUDP.html">IReactorUDP</a> : UDP networking support. More information
+can be found within <a class="reference internal" href="udp.html"><span class="doc">UDP Networking</span></a> .</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorUNIX.html">IReactorUNIX</a> : UNIX socket support.</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorSocket.html">IReactorSocket</a> : Third-party socket support.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Reactor Overview</a><ul>
+<li><a class="reference internal" href="#reactor-basics">Reactor Basics</a></li>
+<li><a class="reference internal" href="#using-the-reactor-object">Using the reactor object</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="internet-overview.html"
+                                  title="previous chapter">Overview of Twisted Internet</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="ssl.html"
+                                  title="next chapter">Using TLS in Twisted</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/reactor-basics.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

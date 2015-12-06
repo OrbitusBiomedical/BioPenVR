@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Creating and working with a names (DNS) server &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Creating a custom server" href="custom-server.html" />
+    <link rel="prev" title="A Guided Tour of twisted.names.client" href="client-tour.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="custom-server.html" title="Creating a custom server"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="client-tour.html" title="A Guided Tour of twisted.names.client"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Names</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="creating-and-working-with-a-names-dns-server">
+<h1>Creating and working with a names (DNS) server<a class="headerlink" href="#creating-and-working-with-a-names-dns-server" title="Permalink to this headline">¶</a></h1>
+<p>A Names server can be perform three basic operations:</p>
+<ul class="simple">
+<li>act as a recursive server, forwarding queries to other servers</li>
+<li>perform local caching of recursively discovered records</li>
+<li>act as the authoritative server for a domain</li>
+</ul>
+<div class="section" id="creating-a-non-authoritative-server">
+<h2>Creating a non-authoritative server<a class="headerlink" href="#creating-a-non-authoritative-server" title="Permalink to this headline">¶</a></h2>
+<p>The first two of these are easy, and you can create a server that performs them
+with the command <code class="docutils literal"><span class="pre">twistd</span> <span class="pre">-n</span> <span class="pre">dns</span> <span class="pre">--recursive</span> <span class="pre">--cache</span></code> .
+You may wish to run this as root since it will try to bind to UDP port 53.  Try
+performing a lookup with it, <code class="docutils literal"><span class="pre">dig</span> <span class="pre">twistedmatrix.com</span> <span class="pre">&#64;127.0.0.1</span></code> .</p>
+</div>
+<div class="section" id="creating-an-authoritative-server">
+<h2>Creating an authoritative server<a class="headerlink" href="#creating-an-authoritative-server" title="Permalink to this headline">¶</a></h2>
+<p>To act as the authority for a domain, two things are necessary: the address
+of the machine on which the domain name server will run must be registered
+as a nameserver for the domain; and the domain name server must be
+configured to act as the authority.  The first requirement is beyond the
+scope of this howto and will not be covered.</p>
+<p>To configure Names to act as the authority
+for <code class="docutils literal"><span class="pre">example-domain.com</span></code> , we first create a zone file for
+this domain.</p>
+<p><a class="reference download internal" href="../../_downloads/example-domain.com"><code class="xref download docutils literal"><span class="pre">example-domain.com</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre>
+<span class="n">zone</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">SOA</span><span class="p">(</span>
+        <span class="c"># For whom we are the authority</span>
+        <span class="s">&#39;example-domain.com&#39;</span><span class="p">,</span>
+
+        <span class="c"># This nameserver&#39;s name</span>
+        <span class="n">mname</span> <span class="o">=</span> <span class="s">&quot;ns1.example-domain.com&quot;</span><span class="p">,</span>
+        
+        <span class="c"># Mailbox of individual who handles this</span>
+        <span class="n">rname</span> <span class="o">=</span> <span class="s">&quot;root.example-domain.com&quot;</span><span class="p">,</span>
+
+        <span class="c"># Unique serial identifying this SOA data</span>
+        <span class="n">serial</span> <span class="o">=</span> <span class="mi">2003010601</span><span class="p">,</span>        
+
+        <span class="c"># Time interval before zone should be refreshed</span>
+        <span class="n">refresh</span> <span class="o">=</span> <span class="s">&quot;1H&quot;</span><span class="p">,</span>             
+
+        <span class="c"># Interval before failed refresh should be retried</span>
+        <span class="n">retry</span> <span class="o">=</span> <span class="s">&quot;1H&quot;</span><span class="p">,</span>               
+
+        <span class="c"># Upper limit on time interval before expiry</span>
+        <span class="n">expire</span> <span class="o">=</span> <span class="s">&quot;1H&quot;</span><span class="p">,</span>              
+
+        <span class="c"># Minimum TTL</span>
+        <span class="n">minimum</span> <span class="o">=</span> <span class="s">&quot;1H&quot;</span>              
+    <span class="p">),</span>
+
+    <span class="n">A</span><span class="p">(</span><span class="s">&#39;example-domain.com&#39;</span><span class="p">,</span> <span class="s">&#39;127.0.0.1&#39;</span><span class="p">),</span>
+    <span class="n">NS</span><span class="p">(</span><span class="s">&#39;example-domain.com&#39;</span><span class="p">,</span> <span class="s">&#39;ns1.example-domain.com&#39;</span><span class="p">),</span>
+
+    <span class="n">CNAME</span><span class="p">(</span><span class="s">&#39;www.example-domain.com&#39;</span><span class="p">,</span> <span class="s">&#39;example-domain.com&#39;</span><span class="p">),</span>
+    <span class="n">CNAME</span><span class="p">(</span><span class="s">&#39;ftp.example-domain.com&#39;</span><span class="p">,</span> <span class="s">&#39;example-domain.com&#39;</span><span class="p">),</span>
+
+    <span class="n">MX</span><span class="p">(</span><span class="s">&#39;example-domain.com&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;mail.example-domain.com&#39;</span><span class="p">),</span>
+    <span class="n">A</span><span class="p">(</span><span class="s">&#39;mail.example-domain.com&#39;</span><span class="p">,</span> <span class="s">&#39;123.0.16.43&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Next, run the command <code class="docutils literal"><span class="pre">twistd</span> <span class="pre">-n</span> <span class="pre">dns</span> <span class="pre">--pyzone</span> <span class="pre">example-domain.com</span></code> .  Now try querying the domain locally (again, with
+dig): <code class="docutils literal"><span class="pre">dig</span> <span class="pre">-t</span> <span class="pre">any</span> <span class="pre">example-domain.com</span> <span class="pre">&#64;127.0.0.1</span></code> .</p>
+<p>Names can also read a traditional, BIND-syntax zone file.  Specify these
+with the <code class="docutils literal"><span class="pre">--bindzone</span></code> parameter.  The $GENERATE and $INCLUDE
+directives are not yet supported.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Creating and working with a names (DNS) server</a><ul>
+<li><a class="reference internal" href="#creating-a-non-authoritative-server">Creating a non-authoritative server</a></li>
+<li><a class="reference internal" href="#creating-an-authoritative-server">Creating an authoritative server</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="client-tour.html"
+                                  title="previous chapter">A Guided Tour of twisted.names.client</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="custom-server.html"
+                                  title="next chapter">Creating a custom server</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/names/howto/names.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

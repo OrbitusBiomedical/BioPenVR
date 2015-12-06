@@ -1,0 +1,579 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Deploying Twisted with systemd &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Logging with twisted.logger" href="logger.html" />
+    <link rel="prev" title="Writing a twistd Plugin" href="tap.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="logger.html" title="Logging with twisted.logger"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tap.html" title="Writing a twistd Plugin"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="deploying-twisted-with-systemd">
+<h1>Deploying Twisted with systemd<a class="headerlink" href="#deploying-twisted-with-systemd" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial you will learn how to start a Twisted service using <code class="docutils literal"><span class="pre">systemd</span></code>.
+You will also learn how to start the service using <code class="docutils literal"><span class="pre">socket</span> <span class="pre">activation</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The examples in this tutorial demonstrate how to launch a Twisted web server, but the same techniques apply to any Twisted service.</p>
+</div>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>Twisted</p>
+<blockquote>
+<div><p>You will need a version of Twisted &gt;= 12.2 for the socket activation section of this tutorial.</p>
+<p>This tutorial was written on a Fedora 18 Linux operating system with a system wide installation of Twisted and Twisted Web.</p>
+<p>If you have installed Twisted locally eg in your home directory or in a virtualenv, you will need to modify the paths in some of the following examples.</p>
+<p>Test your Twisted installation by starting a <code class="docutils literal"><span class="pre">twistd</span> <span class="pre">web</span></code> server on TCP port 8080 with the following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> twistd --nodaemon web --port <span class="m">8080</span> --path /srv/www/www.example.com/static
+<span class="go">2013-01-28 13:21:35+0000 [-] Log opened.</span>
+<span class="go">2013-01-28 13:21:35+0000 [-] twistd 12.3.0 (/usr/bin/python 2.7.3) starting up.</span>
+<span class="go">2013-01-28 13:21:35+0000 [-] reactor class: twisted.internet.epollreactor.EPollReactor.</span>
+<span class="go">2013-01-28 13:21:35+0000 [-] Site starting on 8080</span>
+<span class="go">2013-01-28 13:21:35+0000 [-] Starting factory &lt;twisted.web.server.Site instance at 0x7f57eb66efc8&gt;</span>
+</pre></div>
+</div>
+<p>This assumes that you have the following static web page in the following directory structure:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">#</span> tree /srv/
+<span class="go">/srv/</span>
+<span class="go">└── www</span>
+<span class="go">    └── www.example.com</span>
+<span class="go">        └── static</span>
+<span class="go">            └── index.html</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;!doctype html&gt;
+&lt;html lang=en&gt;
+  &lt;head&gt;
+    &lt;meta charset=utf-8&gt;
+    &lt;title&gt;Example Site&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Example Site&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<p>Now try connecting to <a class="reference external" href="http://localhost:8080">http://localhost:8080</a> in your web browser.</p>
+<p>If you do not see your web page or if <code class="docutils literal"><span class="pre">twistd</span></code> didn&#8217;t start, you should investigate and fix the problem before continuing.</p>
+</div></blockquote>
+</div>
+<div class="section" id="basic-systemd-service-configuration">
+<h2>Basic Systemd Service Configuration<a class="headerlink" href="#basic-systemd-service-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The essential configuration file for a <code class="docutils literal"><span class="pre">systemd</span></code> service is the <a class="reference external" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">service</a> file.</p>
+<p>Later in this tutorial, you will learn about some other types of configuration file, which are used to control when and how your service is started.</p>
+<p>But we will begin by configuring <code class="docutils literal"><span class="pre">systemd</span></code> to start a Twisted web server immediately on system boot.</p>
+<div class="section" id="create-a-systemd-service-file">
+<h3>Create a systemd.service file<a class="headerlink" href="#create-a-systemd-service-file" title="Permalink to this headline">¶</a></h3>
+<p>Create the <a class="reference external" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">service</a> file at <code class="docutils literal"><span class="pre">/etc/systemd/system/www.example.com.service</span></code> with the following content:</p>
+<p><a class="reference download internal" href="../../_downloads/www.example.com.static.service"><code class="xref download docutils literal"><span class="pre">/etc/systemd/system/www.example.com.service</span></code></a></p>
+<div class="highlight-ini"><div class="highlight"><pre><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Example Web Server</span>
+
+<span class="k">[Service]</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/bin/twistd \</span>
+<span class="s">    --nodaemon \</span>
+<span class="s">    --pidfile= \</span>
+<span class="s">    web --port 8080 --path .</span>
+
+<span class="na">WorkingDirectory</span><span class="o">=</span><span class="s">/srv/www/www.example.com/static</span>
+
+<span class="na">User</span><span class="o">=</span><span class="s">nobody</span>
+<span class="na">Group</span><span class="o">=</span><span class="s">nobody</span>
+
+<span class="na">Restart</span><span class="o">=</span><span class="s">always</span>
+
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</pre></div>
+</div>
+<p>This configuration file contains the following note worthy directives:</p>
+<p>ExecStart</p>
+<blockquote>
+<div><p>Always include the full path to <code class="docutils literal"><span class="pre">twistd</span></code> in case you have multiple versions installed.</p>
+<p>The <code class="docutils literal"><span class="pre">--nodaemon</span></code> flag makes <code class="docutils literal"><span class="pre">twistd</span></code> run in the foreground.
+Systemd works best with child processes that remain in the foreground.</p>
+<p>The <code class="docutils literal"><span class="pre">--pidfile=</span></code> flag prevents <code class="docutils literal"><span class="pre">twistd</span></code> from writing a pidfile.
+A pidfile is not necessary when Twisted runs as a foreground process.</p>
+<p>The <code class="docutils literal"><span class="pre">--path</span></code> flag specifies the location of the website files.
+In this example we use &#8221;.&#8221; which makes <code class="docutils literal"><span class="pre">twistd</span></code> serve files from its current working directory (see below).</p>
+</div></blockquote>
+<p>WorkingDirectory</p>
+<blockquote>
+<div><p>Systemd can configure the working environment of its child processes.</p>
+<p>In this example the working directory of <code class="docutils literal"><span class="pre">twistd</span></code> is set to that of the static website.</p>
+</div></blockquote>
+<p>User / Group</p>
+<blockquote>
+<div><p>Systemd can also control the effective user and group of its child processes.</p>
+<p>This example uses an un-privileged user &#8220;nobody&#8221; and un-privileged group &#8220;nobody&#8221;.</p>
+<p>This is an important security measure which ensures that the Twisted sub-process can not access restricted areas of the file system.</p>
+</div></blockquote>
+<p>Restart</p>
+<blockquote>
+<div><p>Systemd can automatically restart a child process if it exits or crashes unexpectedly.</p>
+<p>In this example the <code class="docutils literal"><span class="pre">Restart</span></code> option is set to <code class="docutils literal"><span class="pre">always</span></code>, which ensures that <code class="docutils literal"><span class="pre">twistd</span></code> will be restarted under all circumstances.</p>
+</div></blockquote>
+<p>WantedBy</p>
+<blockquote>
+<div><p>Systemd service dependencies are controlled by <code class="docutils literal"><span class="pre">WantedBy</span></code> and <code class="docutils literal"><span class="pre">RequiredBy</span></code> directives in the <code class="docutils literal"><span class="pre">[Install]</span></code> section of configuration file.</p>
+<p>The special <a class="reference external" href="http://www.freedesktop.org/software/systemd/man/systemd.special.html#multi-user.target">multi-user.target</a> is used in this example so that <code class="docutils literal"><span class="pre">systemd</span></code> starts the <code class="docutils literal"><span class="pre">twistd</span> <span class="pre">web</span></code> service when it reaches the multi-user stage of the boot sequence.</p>
+</div></blockquote>
+<p>There are many more service directives which are documented in the <a class="reference external" href="http://www.freedesktop.org/software/systemd/man/systemd.directives.html">systemd.directives man page</a>.</p>
+</div>
+<div class="section" id="reload-systemd">
+<h3>Reload <code class="docutils literal"><span class="pre">systemd</span></code><a class="headerlink" href="#reload-systemd" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo systemctl daemon-reload
+</pre></div>
+</div>
+<p>This forces <code class="docutils literal"><span class="pre">systemd</span></code> to read the new configuration file.</p>
+<p>Always run <code class="docutils literal"><span class="pre">systemctl</span> <span class="pre">daemon-reload</span></code> after changing any of the <code class="docutils literal"><span class="pre">systemd</span></code> configuration files.</p>
+</div>
+<div class="section" id="start-the-service">
+<h3>Start the service<a class="headerlink" href="#start-the-service" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo systemctl start www.example.com
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">twistd</span></code> should now be running and listening on TCP port 8080. You can verify this using the <code class="docutils literal"><span class="pre">systemctl</span> <span class="pre">status</span></code> command. eg</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> systemctl status www.example.com.service
+<span class="go">www.example.com.service - Example Web Server</span>
+<span class="go">          Loaded: loaded (/etc/systemd/system/www.example.com.service; enabled)</span>
+<span class="go">          Active: active (running) since Mon 2013-01-28 16:16:26 GMT; 1s ago</span>
+<span class="go">        Main PID: 10695 (twistd)</span>
+<span class="go">          CGroup: name=systemd:/system/www.example.com.service</span>
+<span class="go">                  └─10695 /usr/bin/python /usr/bin/twistd --nodaemon --pidfile= web --port 8080 --path .</span>
+
+<span class="go">Jan 28 16:16:26 zorin.lan systemd[1]: Starting Example Web Server...</span>
+<span class="go">Jan 28 16:16:26 zorin.lan systemd[1]: Started Example Web Server.</span>
+<span class="go">Jan 28 16:16:26 zorin.lan twistd[10695]: 2013-01-28 16:16:26+0000 [-] Log opened.</span>
+<span class="go">Jan 28 16:16:26 zorin.lan twistd[10695]: 2013-01-28 16:16:26+0000 [-] twistd 12.1.0 (/usr/bin/python 2.7.3) starting up.</span>
+<span class="go">Jan 28 16:16:26 zorin.lan twistd[10695]: 2013-01-28 16:16:26+0000 [-] reactor class: twisted.internet.epollreactor.EPollReactor.</span>
+<span class="go">Jan 28 16:16:26 zorin.lan twistd[10695]: 2013-01-28 16:16:26+0000 [-] Site starting on 8080</span>
+<span class="go">Jan 28 16:16:26 zorin.lan twistd[10695]: 2013-01-28 16:16:26+0000 [-] Starting factory &lt;twisted.web.server.Site instance at 0x159b758&gt;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">systemctl</span> <span class="pre">status</span></code> command is convenient because it shows you both the current status of the service and a short log of the service output.</p>
+<p>This is especially useful for debugging and diagnosing service startup problems.</p>
+<p>The <code class="docutils literal"><span class="pre">twistd</span></code> subprocess will log messages to <code class="docutils literal"><span class="pre">stderr</span></code> and <code class="docutils literal"><span class="pre">systemd</span></code> will log these messages to syslog.
+You can verify this by monitoring the syslog messages or by using the new <code class="docutils literal"><span class="pre">journalctl</span></code> tool in Fedora.</p>
+<p>See the <a class="reference external" href="http://www.freedesktop.org/software/systemd/man/systemctl.html">systemctl man page</a> for details of other <code class="docutils literal"><span class="pre">systemctl</span></code> command line options.</p>
+</div>
+<div class="section" id="enable-the-service">
+<h3>Enable the service<a class="headerlink" href="#enable-the-service" title="Permalink to this headline">¶</a></h3>
+<p>We&#8217;ve seen how to start the service manually, but now we need to &#8220;enable&#8221; it so that it starts automatically at boot time.</p>
+<p>Enable the service with the following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo systemctl <span class="nb">enable </span>www.example.com.service
+<span class="go">ln -s &#39;/etc/systemd/system/www.example.com.service&#39; &#39;/etc/systemd/system/multi-user.target.wants/www.example.com.service&#39;</span>
+</pre></div>
+</div>
+<p>This creates a symlink to the service file in the <code class="docutils literal"><span class="pre">multi-user.target.wants</span></code> directory.</p>
+<p>The Twisted web server will now be started automatically at boot time.</p>
+<p>The <code class="docutils literal"><span class="pre">multi-user.target</span></code> is an example of a <a class="reference external" href="http://www.freedesktop.org/software/systemd/man/systemd.special.html">&#8220;special&#8221; systemd unit</a>.
+Later in this tutorial you will learn how to use another special unit - the <code class="docutils literal"><span class="pre">sockets.target</span></code>.</p>
+</div>
+<div class="section" id="test-that-the-service-is-automatically-restarted">
+<h3>Test that the service is automatically restarted<a class="headerlink" href="#test-that-the-service-is-automatically-restarted" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">Restart=always</span></code> option in the <code class="docutils literal"><span class="pre">systemd.service</span></code> file ensures that <code class="docutils literal"><span class="pre">systemd</span></code> will restart the <code class="docutils literal"><span class="pre">twistd</span></code> process if and when it exits unexpectedly.</p>
+<p>You can read about other <code class="docutils literal"><span class="pre">Restart</span></code> options in the <a class="reference external" href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">systemd.service man page</a>.</p>
+<p>Try killing the <code class="docutils literal"><span class="pre">twistd</span></code> process and then checking its status again:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo <span class="nb">kill </span>12543
+
+<span class="gp">$</span> systemctl status www.example.com.service
+<span class="go">www.example.com.service - Example Web Server</span>
+<span class="go">          Loaded: loaded (/etc/systemd/system/www.example.com.service; disabled)</span>
+<span class="go">          Active: active (running) since Mon 2013-01-28 17:47:37 GMT; 1s ago</span>
+<span class="go">        Main PID: 12611 (twistd)</span>
+</pre></div>
+</div>
+<p>The &#8220;Active&#8221; time stamp shows that the <code class="docutils literal"><span class="pre">twistd</span></code> process was restarted within 1 second.</p>
+<p>Now stop the service before you proceed to the next section.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo systemctl stop www.example.com.service
+
+<span class="gp">$</span> systemctl status www.example.com.service
+<span class="go">www.example.com.service - Example Web Server</span>
+<span class="go">          Loaded: loaded (/etc/systemd/system/www.example.com.service; enabled)</span>
+<span class="go">          Active: inactive (dead) since Mon 2013-01-28 16:51:12 GMT; 1s ago</span>
+<span class="go">         Process: 10695 ExecStart=/usr/bin/twistd --nodaemon --pidfile= web --port 8080 --path . (code=exited, status=0/SUCCESS)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="socket-activation">
+<h2>Socket Activation<a class="headerlink" href="#socket-activation" title="Permalink to this headline">¶</a></h2>
+<p>First you need to understand what &#8220;socket activation&#8221; is.
+This extract from the <a class="reference external" href="http://www.freedesktop.org/software/systemd/man/daemon.html">systemd daemon man page</a> explains it quite clearly.</p>
+<blockquote>
+<div><p>In a socket-based activation scheme the creation and binding of the listening socket as primary communication channel of daemons to local (and sometimes remote) clients is moved out of the daemon code and into the init system.</p>
+<p>Based on per-daemon configuration the init system installs the sockets and then hands them off to the spawned process as soon as the respective daemon is to be started.</p>
+<p>Optionally activation of the service can be delayed until the first inbound traffic arrives at the socket, to implement on-demand activation of daemons.</p>
+<p>However, the primary advantage of this scheme is that all providers and all consumers of the sockets can be started in parallel as soon as all sockets are established.</p>
+<p>In addition to that daemons can be restarted with losing only a minimal number of client transactions or even any client request at all (the latter is particularly true for state-less protocols, such as DNS or syslog), because the socket stays bound and accessible during the restart, and all requests are queued while the daemon cannot process them.</p>
+</div></blockquote>
+<p>Another benefit of socket activation is that <code class="docutils literal"><span class="pre">systemd</span></code> can listen on privileged ports and start Twisted with privileges already dropped. This allows a Twisted service to be configured and restarted by a non-root user.</p>
+<p>Twisted (since version 12.2) includes a <a class="reference external" href="endpoints">systemd endpoint API and a corresponding string ports syntax</a> which allows a Twisted service to inherit a listening socket from <code class="docutils literal"><span class="pre">systemd</span></code>.</p>
+<p>The following example builds on the previous example, demonstrating how to enable socket activation for a simple Twisted web server.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Before continuing, stop the previous example service with the following command:</p>
+<div class="last highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo systemctl stop www.example.com.service
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-systemd-socket-file">
+<h3>Create a systemd.socket file<a class="headerlink" href="#create-a-systemd-socket-file" title="Permalink to this headline">¶</a></h3>
+<p>Create the <a class="reference external" href="http://www.freedesktop.org/software/systemd/man/systemd.socket.html">systemd.socket</a> file at <code class="docutils literal"><span class="pre">/etc/systemd/system/www.example.com.socket</span></code> with the following content:</p>
+<p><a class="reference download internal" href="../../_downloads/www.example.com.socket"><code class="xref download docutils literal"><span class="pre">/etc/systemd/system/www.example.com.socket</span></code></a></p>
+<div class="highlight-ini"><div class="highlight"><pre><span class="k">[Socket]</span>
+<span class="na">ListenStream</span><span class="o">=</span><span class="s">0.0.0.0:80</span>
+
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">sockets.target</span>
+</pre></div>
+</div>
+<p>This configuration file contains the following important directives:</p>
+<p>ListenStream=0.0.0.0:80</p>
+<blockquote>
+<div>This option configures <code class="docutils literal"><span class="pre">systemd</span></code> to create a listening TCP socket bound to all local IPv4 addresses on port 80.</div></blockquote>
+<p>WantedBy=sockets.target</p>
+<blockquote>
+<div>This is
+a <a class="reference external" href="http://www.freedesktop.org/software/systemd/man/systemd.special.html#sockets.target">special target</a> used by all socket activated services. <code class="docutils literal"><span class="pre">systemd</span></code> will automatically bind to all such socket activation ports during boot up.</div></blockquote>
+<p>You also need to modify the <code class="docutils literal"><span class="pre">systemd.service</span></code> file as follows:</p>
+<p><a class="reference download internal" href="../../_downloads/www.example.com.socketactivated.service"><code class="xref download docutils literal"><span class="pre">/etc/systemd/system/www.example.com.service</span></code></a></p>
+<div class="highlight-ini"><div class="highlight"><pre><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Example Web Server</span>
+
+<span class="k">[Service]</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/bin/twistd \</span>
+<span class="s">    --nodaemon \</span>
+<span class="s">    --pidfile= \</span>
+<span class="s">    web --port systemd:domain=INET:index=0 --path .</span>
+
+<span class="na">NonBlocking</span><span class="o">=</span><span class="s">true</span>
+
+<span class="na">WorkingDirectory</span><span class="o">=</span><span class="s">/srv/www/www.example.com/static</span>
+
+<span class="na">User</span><span class="o">=</span><span class="s">nobody</span>
+<span class="na">Group</span><span class="o">=</span><span class="s">nobody</span>
+
+<span class="na">Restart</span><span class="o">=</span><span class="s">always</span>
+</pre></div>
+</div>
+<p>Note the following important directives and changes:</p>
+<p>ExecStart</p>
+<blockquote>
+<div><p>The <code class="docutils literal"><span class="pre">domain=INET</span></code> endpoint argument makes <code class="docutils literal"><span class="pre">twistd</span></code> treat the inherited file descriptor as an IPv4 socket.</p>
+<p>The <code class="docutils literal"><span class="pre">index=0</span></code> endpoint argument makes <code class="docutils literal"><span class="pre">twistd</span></code> adopt the first file descriptor inherited from <code class="docutils literal"><span class="pre">systemd</span></code>.</p>
+<p>Socket activation is also technically possible with other socket families and types, but Twisted currently only accepts IPv4 and IPv6 TCP sockets. See <a class="reference internal" href="#limitations"><span class="std std-ref">Limitations and Known Issues</span></a> below.</p>
+</div></blockquote>
+<p>NonBlocking</p>
+<blockquote>
+<div>This must be set to <code class="docutils literal"><span class="pre">true</span></code> to ensure that <code class="docutils literal"><span class="pre">systemd</span></code> passes non-blocking sockets to Twisted.</div></blockquote>
+<p>[Install]</p>
+<blockquote>
+<div>In this example, the <code class="docutils literal"><span class="pre">[Install]</span></code> section has been moved to the socket configuration file.</div></blockquote>
+<p>Reload <code class="docutils literal"><span class="pre">systemd</span></code> so that it reads the updated configuration files.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo systemctl daemon-reload
+</pre></div>
+</div>
+</div>
+<div class="section" id="start-and-enable-the-socket">
+<h3>Start and enable the socket<a class="headerlink" href="#start-and-enable-the-socket" title="Permalink to this headline">¶</a></h3>
+<p>You can now start <code class="docutils literal"><span class="pre">systemd</span></code> listening on the socket with the following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo systemctl start www.example.com.socket
+</pre></div>
+</div>
+<p>This command refers specifically to the socket configuration file, <strong>not</strong> the service file.</p>
+<p><code class="docutils literal"><span class="pre">systemd</span></code> should now be listening on port 80</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> systemctl status www.example.com.socket
+<span class="go">www.example.com.socket</span>
+<span class="go">          Loaded: loaded (/etc/systemd/system/www.example.com.socket; disabled)</span>
+<span class="go">          Active: active (listening) since Tue 2013-01-29 14:53:17 GMT; 7s ago</span>
+
+<span class="go">Jan 29 14:53:17 zorin.lan systemd[1]: Listening on www.example.com.socket.</span>
+</pre></div>
+</div>
+<p>But <code class="docutils literal"><span class="pre">twistd</span></code> should not yet have started.
+You can verify this using the <code class="docutils literal"><span class="pre">systemctl</span></code> command. eg</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> systemctl status www.example.com.service
+<span class="go">www.example.com.service - Example Web Server</span>
+<span class="go">          Loaded: loaded (/etc/systemd/system/www.example.com.service; static)</span>
+<span class="go">          Active: inactive (dead) since Tue 2013-01-29 14:48:42 GMT; 6min ago</span>
+</pre></div>
+</div>
+<p>Enable the socket, so that it will be started automatically with the other socket activated services during boot up.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sudo systemctl <span class="nb">enable </span>www.example.com.socket
+<span class="go">ln -s &#39;/etc/systemd/system/www.example.com.socket&#39; &#39;/etc/systemd/system/sockets.target.wants/www.example.com.socket&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="activate-the-port-to-start-the-service">
+<h3>Activate the port to start the service<a class="headerlink" href="#activate-the-port-to-start-the-service" title="Permalink to this headline">¶</a></h3>
+<p>Now try connecting to <a class="reference external" href="http://localhost:80">http://localhost:80</a> in your web browser.</p>
+<p><code class="docutils literal"><span class="pre">systemd</span></code> will accept the connection and start <code class="docutils literal"><span class="pre">twistd</span></code>, passing it the listening socket.
+You can verify this by using systemctl to report the status of the service. eg</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> systemctl status www.example.com.service
+<span class="go">www.example.com.service - Example Web Server</span>
+<span class="go">          Loaded: loaded (/etc/systemd/system/www.example.com.service; static)</span>
+<span class="go">          Active: active (running) since Tue 2013-01-29 15:02:20 GMT; 3s ago</span>
+<span class="go">        Main PID: 25605 (twistd)</span>
+<span class="go">          CGroup: name=systemd:/system/www.example.com.service</span>
+<span class="go">                  └─25605 /usr/bin/python /usr/bin/twistd --nodaemon --pidfile= web --port systemd:domain=INET:index=0 --path .</span>
+
+<span class="go">Jan 29 15:02:20 zorin.lan systemd[1]: Started Example Web Server.</span>
+<span class="go">Jan 29 15:02:20 zorin.lan twistd[25605]: 2013-01-29 15:02:20+0000 [-] Log opened.</span>
+<span class="go">Jan 29 15:02:20 zorin.lan twistd[25605]: 2013-01-29 15:02:20+0000 [-] twistd 12.1.0 (/usr/bin/python 2.7.3) starting up.</span>
+<span class="go">Jan 29 15:02:20 zorin.lan twistd[25605]: 2013-01-29 15:02:20+0000 [-] reactor class: twisted.internet.epollreactor.EPollReactor.</span>
+<span class="go">Jan 29 15:02:20 zorin.lan twistd[25605]: 2013-01-29 15:02:20+0000 [-] Site starting on 80</span>
+<span class="go">Jan 29 15:02:20 zorin.lan twistd[25605]: 2013-01-29 15:02:20+0000 [-] Starting factory &lt;twisted.web.server.Site instance at 0x24be758&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial you have learned how to deploy a Twisted service using <code class="docutils literal"><span class="pre">systemd</span></code>.
+You have also learned how the service can be started on demand, using socket activation.</p>
+</div>
+<div class="section" id="limitations-and-known-issues">
+<span id="limitations"></span><h2>Limitations and Known Issues<a class="headerlink" href="#limitations-and-known-issues" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Twisted can not accept UNIX or datagram sockets from <code class="docutils literal"><span class="pre">systemd</span></code>.</li>
+<li>Twisted does not support listening for SSL connections on sockets inherited from <code class="docutils literal"><span class="pre">systemd</span></code>.</li>
+</ol>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="http://www.freedesktop.org/wiki/Software/systemd/">systemd Documentation</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Deploying Twisted with systemd</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#basic-systemd-service-configuration">Basic Systemd Service Configuration</a><ul>
+<li><a class="reference internal" href="#create-a-systemd-service-file">Create a systemd.service file</a></li>
+<li><a class="reference internal" href="#reload-systemd">Reload <code class="docutils literal"><span class="pre">systemd</span></code></a></li>
+<li><a class="reference internal" href="#start-the-service">Start the service</a></li>
+<li><a class="reference internal" href="#enable-the-service">Enable the service</a></li>
+<li><a class="reference internal" href="#test-that-the-service-is-automatically-restarted">Test that the service is automatically restarted</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#socket-activation">Socket Activation</a><ul>
+<li><a class="reference internal" href="#create-a-systemd-socket-file">Create a systemd.socket file</a></li>
+<li><a class="reference internal" href="#start-and-enable-the-socket">Start and enable the socket</a></li>
+<li><a class="reference internal" href="#activate-the-port-to-start-the-service">Activate the port to start the service</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+<li><a class="reference internal" href="#limitations-and-known-issues">Limitations and Known Issues</a></li>
+<li><a class="reference internal" href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="tap.html"
+                                  title="previous chapter">Writing a twistd Plugin</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="logger.html"
+                                  title="next chapter">Logging with twisted.logger</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/systemd.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

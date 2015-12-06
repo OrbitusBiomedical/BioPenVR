@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Examples &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Twisted Core" href="../index.html" />
+    <link rel="next" title="Specifications" href="../specifications/index.html" />
+    <link rel="prev" title="Debugging Python(Twisted) with Emacs" href="../howto/debug-with-emacs.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../specifications/index.html" title="Specifications"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../howto/debug-with-emacs.html" title="Debugging Python(Twisted) with Emacs"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Twisted Core</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="simple-echo-server-and-client">
+<h2>Simple Echo server and client<a class="headerlink" href="#simple-echo-server-and-client" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference download internal" href="../../_downloads/simpleclient.py"><code class="xref download docutils literal"><span class="pre">simpleclient.py</span></code></a> - simple TCP client</li>
+<li><a class="reference download internal" href="../../_downloads/simpleserv.py"><code class="xref download docutils literal"><span class="pre">simpleserv.py</span></code></a> - simple TCP echo server</li>
+</ul>
+</div>
+<div class="section" id="chat">
+<h2>Chat<a class="headerlink" href="#chat" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference download internal" href="../../_downloads/chatserver.py"><code class="xref download docutils literal"><span class="pre">chatserver.py</span></code></a> - shows how to communicate between clients</li>
+</ul>
+</div>
+<div class="section" id="echo-server-client-variants">
+<h2>Echo server &amp; client variants<a class="headerlink" href="#echo-server-client-variants" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference download internal" href="../../_downloads/echoserv.py"><code class="xref download docutils literal"><span class="pre">echoserv.py</span></code></a> - variant on a simple TCP echo server</li>
+<li><a class="reference download internal" href="../../_downloads/echoclient.py"><code class="xref download docutils literal"><span class="pre">echoclient.py</span></code></a> - variant on a simple TCP client</li>
+<li><a class="reference download internal" href="../../_downloads/echoserv_udp.py"><code class="xref download docutils literal"><span class="pre">echoserv_udp.py</span></code></a> - simplest possible UDP server</li>
+<li><a class="reference download internal" href="../../_downloads/echoclient_udp.py"><code class="xref download docutils literal"><span class="pre">echoclient_udp.py</span></code></a> - simple UDP client</li>
+<li><a class="reference download internal" href="../../_downloads/echoserv_ssl.py"><code class="xref download docutils literal"><span class="pre">echoserv_ssl.py</span></code></a> - simple SSL server</li>
+<li><a class="reference download internal" href="../../_downloads/echoclient_ssl.py"><code class="xref download docutils literal"><span class="pre">echoclient_ssl.py</span></code></a> - simple SSL client</li>
+</ul>
+</div>
+<div class="section" id="amp-server-client-variants">
+<h2>AMP server &amp; client variants<a class="headerlink" href="#amp-server-client-variants" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference download internal" href="../../_downloads/ampserver.py"><code class="xref download docutils literal"><span class="pre">ampserver.py</span></code></a> - do math using AMP</li>
+<li><a class="reference download internal" href="../../_downloads/ampclient.py"><code class="xref download docutils literal"><span class="pre">ampclient.py</span></code></a> - do math using AMP</li>
+</ul>
+</div>
+<div class="section" id="perspective-broker">
+<h2>Perspective Broker<a class="headerlink" href="#perspective-broker" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference download internal" href="../../_downloads/pbsimple.py"><code class="xref download docutils literal"><span class="pre">pbsimple.py</span></code></a> - simplest possible PB server</li>
+<li><a class="reference download internal" href="../../_downloads/pbsimpleclient.py"><code class="xref download docutils literal"><span class="pre">pbsimpleclient.py</span></code></a> - simplest possible PB client</li>
+<li><a class="reference download internal" href="../../_downloads/pbbenchclient.py"><code class="xref download docutils literal"><span class="pre">pbbenchclient.py</span></code></a> - benchmarking client</li>
+<li><a class="reference download internal" href="../../_downloads/pbbenchserver.py"><code class="xref download docutils literal"><span class="pre">pbbenchserver.py</span></code></a> - benchmarking server</li>
+<li><a class="reference download internal" href="../../_downloads/pbecho.py"><code class="xref download docutils literal"><span class="pre">pbecho.py</span></code></a> - echo server that uses login</li>
+<li><a class="reference download internal" href="../../_downloads/pbechoclient.py"><code class="xref download docutils literal"><span class="pre">pbechoclient.py</span></code></a> - echo client using login</li>
+<li><a class="reference download internal" href="../../_downloads/pb_exceptions.py"><code class="xref download docutils literal"><span class="pre">pb_exceptions.py</span></code></a> - example of exceptions over PB</li>
+<li><a class="reference download internal" href="../../_downloads/pbgtk2.py"><code class="xref download docutils literal"><span class="pre">pbgtk2.py</span></code></a> - example of using GTK2 with PB</li>
+<li><a class="reference download internal" href="../../_downloads/pbinterop.py"><code class="xref download docutils literal"><span class="pre">pbinterop.py</span></code></a> - shows off various types supported by PB</li>
+<li><a class="reference download internal" href="../../_downloads/bananabench.py"><code class="xref download docutils literal"><span class="pre">bananabench.py</span></code></a> - benchmark for banana</li>
+</ul>
+</div>
+<div class="section" id="cred">
+<h2>Cred<a class="headerlink" href="#cred" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference download internal" href="../../_downloads/cred.py"><code class="xref download docutils literal"><span class="pre">cred.py</span></code></a> - Authenticate a user with an in-memory username/password database</li>
+<li><a class="reference download internal" href="../../_downloads/dbcred.py"><code class="xref download docutils literal"><span class="pre">dbcred.py</span></code></a> - Using a database backend to authenticate a user</li>
+</ul>
+</div>
+<div class="section" id="gui">
+<h2>GUI<a class="headerlink" href="#gui" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference download internal" href="../../_downloads/wxdemo.py"><code class="xref download docutils literal"><span class="pre">wxdemo.py</span></code></a> - demo of wxPython integration with Twisted</li>
+<li><a class="reference download internal" href="../../_downloads/pbgtk2.py"><code class="xref download docutils literal"><span class="pre">pbgtk2.py</span></code></a> - example of using GTK2 with PB</li>
+<li><a class="reference download internal" href="../../_downloads/pyuidemo.py"><code class="xref download docutils literal"><span class="pre">pyuidemo.py</span></code></a> - PyUI</li>
+</ul>
+</div>
+<div class="section" id="ftp-examples">
+<h2>FTP examples<a class="headerlink" href="#ftp-examples" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference download internal" href="../../_downloads/ftpclient.py"><code class="xref download docutils literal"><span class="pre">ftpclient.py</span></code></a> - example of using the FTP client</li>
+<li><a class="reference download internal" href="../../_downloads/ftpserver.py"><code class="xref download docutils literal"><span class="pre">ftpserver.py</span></code></a> - create an FTP server which serves files for anonymous users from the working directory and serves files for authenticated users from <code class="docutils literal"><span class="pre">/home</span></code>.</li>
+</ul>
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference download internal" href="../../_downloads/twistd-logging.tac"><code class="xref download docutils literal"><span class="pre">twistd-logging.tac</span></code></a> - logging example using ILogObserver</li>
+<li><a class="reference download internal" href="../../_downloads/testlogging.py"><code class="xref download docutils literal"><span class="pre">testlogging.py</span></code></a> - use twisted.python.log to log errors to standard out</li>
+<li><a class="reference download internal" href="../../_downloads/rotatinglog.py"><code class="xref download docutils literal"><span class="pre">rotatinglog.py</span></code></a> - example of log file rotation</li>
+</ul>
+</div>
+<div class="section" id="posix-specific-tricks">
+<h2>POSIX Specific Tricks<a class="headerlink" href="#posix-specific-tricks" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference download internal" href="../../_downloads/sendfd.py"><code class="xref download docutils literal"><span class="pre">sendfd.py</span></code></a>, <a class="reference download internal" href="../../_downloads/recvfd.py"><code class="xref download docutils literal"><span class="pre">recvfd.py</span></code></a> - send and receive file descriptors over UNIX domain sockets</li>
+</ul>
+</div>
+<div class="section" id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference download internal" href="../../_downloads/shaper.py"><code class="xref download docutils literal"><span class="pre">shaper.py</span></code></a> - example of rate-limiting your web server</li>
+<li><a class="reference download internal" href="../../_downloads/stdiodemo.py"><code class="xref download docutils literal"><span class="pre">stdiodemo.py</span></code></a> - example using stdio, Deferreds, LineReceiver and twisted.web.client.</li>
+<li><a class="reference download internal" href="../../_downloads/mouse.py"><code class="xref download docutils literal"><span class="pre">mouse.py</span></code></a> - example using MouseMan protocol with the SerialPort transport</li>
+<li><a class="reference download internal" href="../../_downloads/ptyserv.py"><code class="xref download docutils literal"><span class="pre">ptyserv.py</span></code></a> - serve shells in pseudo-terminals over TCP</li>
+<li><a class="reference download internal" href="../../_downloads/courier.py"><code class="xref download docutils literal"><span class="pre">courier.py</span></code></a> - example of interfacing to Courier&#8217;s mail filter interface</li>
+<li><a class="reference download internal" href="../../_downloads/longex.py"><code class="xref download docutils literal"><span class="pre">longex.py</span></code></a> - example of doing arbitrarily long calculations nicely in Twisted</li>
+<li><a class="reference download internal" href="../../_downloads/longex2.py"><code class="xref download docutils literal"><span class="pre">longex2.py</span></code></a> - using generators to do long calculations</li>
+<li><a class="reference download internal" href="../../_downloads/stdin.py"><code class="xref download docutils literal"><span class="pre">stdin.py</span></code></a> - reading a line at a time from standard input without blocking the reactor</li>
+<li><a class="reference download internal" href="../../_downloads/streaming.py"><code class="xref download docutils literal"><span class="pre">streaming.py</span></code></a> - example of a push producer/consumer system</li>
+<li><a class="reference download internal" href="../../_downloads/filewatch.py"><code class="xref download docutils literal"><span class="pre">filewatch.py</span></code></a> - write the content of a file to standard out one line at a time</li>
+<li><a class="reference download internal" href="../../_downloads/shoutcast.py"><code class="xref download docutils literal"><span class="pre">shoutcast.py</span></code></a> - example Shoutcast client</li>
+<li><a class="reference download internal" href="../../_downloads/gpsfix.py"><code class="xref download docutils literal"><span class="pre">gpsfix.py</span></code></a> - example using the SerialPort transport and GPS protocols to display fix data as it is received from the device</li>
+<li><a class="reference download internal" href="../../_downloads/wxacceptance.py"><code class="xref download docutils literal"><span class="pre">wxacceptance.py</span></code></a> - acceptance tests for wxreactor</li>
+<li><a class="reference download internal" href="../../_downloads/postfix.py"><code class="xref download docutils literal"><span class="pre">postfix.py</span></code></a> - test application for PostfixTCPMapServer</li>
+<li><a class="reference download internal" href="../../_downloads/udpbroadcast.py"><code class="xref download docutils literal"><span class="pre">udpbroadcast.py</span></code></a> - broadcasting using UDP</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Examples</a><ul>
+<li><a class="reference internal" href="#simple-echo-server-and-client">Simple Echo server and client</a></li>
+<li><a class="reference internal" href="#chat">Chat</a></li>
+<li><a class="reference internal" href="#echo-server-client-variants">Echo server &amp; client variants</a></li>
+<li><a class="reference internal" href="#amp-server-client-variants">AMP server &amp; client variants</a></li>
+<li><a class="reference internal" href="#perspective-broker">Perspective Broker</a></li>
+<li><a class="reference internal" href="#cred">Cred</a></li>
+<li><a class="reference internal" href="#gui">GUI</a></li>
+<li><a class="reference internal" href="#ftp-examples">FTP examples</a></li>
+<li><a class="reference internal" href="#logging">Logging</a></li>
+<li><a class="reference internal" href="#posix-specific-tricks">POSIX Specific Tricks</a></li>
+<li><a class="reference internal" href="#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../howto/debug-with-emacs.html"
+                                  title="previous chapter">Debugging Python(Twisted) with Emacs</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../specifications/index.html"
+                                  title="next chapter">Specifications</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/examples/index.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

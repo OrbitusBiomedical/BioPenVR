@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Overview of Twisted IM &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Using the Twisted IRC Client" href="ircclient.html" />
+    <link rel="prev" title="Developer Guides" href="index.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ircclient.html" title="Using the Twisted IRC Client"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Developer Guides"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Words</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="overview-of-twisted-im">
+<h1>Overview of Twisted IM<a class="headerlink" href="#overview-of-twisted-im" title="Permalink to this headline">¶</a></h1>
+<p>Twisted IM (Instance Messenger) is a multi-protocol chat
+framework, based on the Twisted framework we&#8217;ve all come to know
+and love. It&#8217;s fairly simple and extensible in two directions -
+it&#8217;s pretty easy to add new protocols, and it&#8217;s also quite easy
+to add new front-ends.</p>
+<div class="section" id="code-flow">
+<h2>Code flow<a class="headerlink" href="#code-flow" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="accountmanager">
+<h3>AccountManager<a class="headerlink" href="#accountmanager" title="Permalink to this headline">¶</a></h3>
+<p>The control flow starts at the relevant subclass of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.words.im.baseaccount.AccountManager.html">baseaccount.AccountManager</a> .
+The AccountManager is responsible for, well, managing accounts
+- remembering what accounts are available, their
+settings, adding and removal of accounts, and making accounts
+log on at startup.</p>
+<p>This would be a good place to start your interface, load a
+list of accounts from disk and tell them to login. Most of the
+method names in <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.words.im.baseaccount.AccountManager.html">AccountManager</a>
+are pretty self-explanatory, and your subclass can override
+whatever it wants, but you <em>need</em> to override <code class="docutils literal"><span class="pre">__init__</span></code> . Something like
+this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chatui</span> <span class="o">=</span> <span class="o">...</span> <span class="c"># Your subclass of basechat.ChatUI</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accounts</span> <span class="o">=</span> <span class="o">...</span> <span class="c"># Load account list</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">accounts</span><span class="p">:</span>
+            <span class="n">a</span><span class="o">.</span><span class="n">logOn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chatui</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="chatui">
+<h3>ChatUI<a class="headerlink" href="#chatui" title="Permalink to this headline">¶</a></h3>
+<p>Account objects talk to the user via a subclass of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.words.im.basechat.ChatUI.html">basechat.ChatUI</a> .
+This class keeps track of all the various conversations that
+are currently active, so that when an account receives and
+incoming message, it can put that message in its correct
+context.</p>
+<p>How much of this class you need to override depends on what
+you need to do. You will need to override
+<code class="docutils literal"><span class="pre">getConversation</span></code> (a one-on-one conversation, like
+an IRC DCC chat) and <code class="docutils literal"><span class="pre">getGroupConversation</span></code> (a
+multiple user conversation, like an IRC channel). You might
+want to override <code class="docutils literal"><span class="pre">getGroup</span></code> and
+<code class="docutils literal"><span class="pre">getPerson</span></code> .</p>
+<p>The main problem with the default versions of the above
+routines is that they take a parameter, <code class="docutils literal"><span class="pre">Class</span></code> ,
+which defaults to an abstract implementation of that class -
+for example, <code class="docutils literal"><span class="pre">getConversation</span></code> has a
+<code class="docutils literal"><span class="pre">Class</span></code> parameter that defaults to <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.words.im.basechat.Conversation.html">basechat.Conversation</a> which
+raises a lot of <code class="docutils literal"><span class="pre">NotImplementedError</span></code> s. In your
+subclass, override the method with a new method whose Class
+parameter defaults to your own implementation of
+<code class="docutils literal"><span class="pre">Conversation</span></code> , that simply calls the parent
+class&#8217; implementation.</p>
+</div>
+<div class="section" id="conversation-and-groupconversation">
+<h3>Conversation and GroupConversation<a class="headerlink" href="#conversation-and-groupconversation" title="Permalink to this headline">¶</a></h3>
+<p>These classes are where your interface meets the chat
+protocol. Chat protocols get a message, find the appropriate
+<code class="docutils literal"><span class="pre">Conversation</span></code> or <code class="docutils literal"><span class="pre">GroupConversation</span></code>
+object, and call its methods when various interesting things
+happen.</p>
+<p>Override whatever methods you want to get the information
+you want to display. You must override the <code class="docutils literal"><span class="pre">hide</span></code>
+and <code class="docutils literal"><span class="pre">show</span></code> methods, however - they are called
+frequently and the default implementation raises
+<code class="docutils literal"><span class="pre">NotImplementedError</span></code> .</p>
+</div>
+<div class="section" id="accounts">
+<h3>Accounts<a class="headerlink" href="#accounts" title="Permalink to this headline">¶</a></h3>
+<p>An account is an instance of a subclass of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.words.im.basesupport.AbstractAccount.html">basesupport.AbstractAccount</a> .
+For more details and sample code, see the various
+<code class="docutils literal"><span class="pre">*support</span></code> files in <code class="docutils literal"><span class="pre">twisted.words.im</span></code> .</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Overview of Twisted IM</a><ul>
+<li><a class="reference internal" href="#code-flow">Code flow</a><ul>
+<li><a class="reference internal" href="#accountmanager">AccountManager</a></li>
+<li><a class="reference internal" href="#chatui">ChatUI</a></li>
+<li><a class="reference internal" href="#conversation-and-groupconversation">Conversation and GroupConversation</a></li>
+<li><a class="reference internal" href="#accounts">Accounts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter">Developer Guides</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="ircclient.html"
+                                  title="next chapter">Using the Twisted IRC Client</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/words/howto/im.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

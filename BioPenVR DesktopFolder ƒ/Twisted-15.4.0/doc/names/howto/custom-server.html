@@ -1,0 +1,418 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Creating a custom server &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Examples" href="../examples/index.html" />
+    <link rel="prev" title="Creating and working with a names (DNS) server" href="names.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../examples/index.html" title="Examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="names.html" title="Creating and working with a names (DNS) server"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Names</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="creating-a-custom-server">
+<h1>Creating a custom server<a class="headerlink" href="#creating-a-custom-server" title="Permalink to this headline">¶</a></h1>
+<p>The builtin DNS server plugin is useful,
+but the beauty of Twisted Names is that you can build your own custom servers and clients using the names components.</p>
+<blockquote>
+<div><ul class="simple">
+<li>In this section you will learn about the components required to build a simple DNS server.</li>
+<li>You will then learn how to create a custom DNS server which calculates responses dynamically.</li>
+</ul>
+</div></blockquote>
+<div class="section" id="a-simple-forwarding-dns-server">
+<h2>A simple forwarding DNS server<a class="headerlink" href="#a-simple-forwarding-dns-server" title="Permalink to this headline">¶</a></h2>
+<p>Lets start by creating a simple forwarding DNS server, which forwards all requests to an upstream server (or servers).</p>
+<p><a class="reference download internal" href="../../_downloads/simple_server.py"><code class="xref download docutils literal"><span class="pre">simple_server.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">An example of a simple non-authoritative DNS server.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.names</span> <span class="kn">import</span> <span class="n">client</span><span class="p">,</span> <span class="n">dns</span><span class="p">,</span> <span class="n">server</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Run the server.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">DNSServerFactory</span><span class="p">(</span>
+        <span class="n">clients</span><span class="o">=</span><span class="p">[</span><span class="n">client</span><span class="o">.</span><span class="n">Resolver</span><span class="p">(</span><span class="n">resolv</span><span class="o">=</span><span class="s">&#39;/etc/resolv.conf&#39;</span><span class="p">)]</span>
+    <span class="p">)</span>
+
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">DNSDatagramProtocol</span><span class="p">(</span><span class="n">controller</span><span class="o">=</span><span class="n">factory</span><span class="p">)</span>
+
+    <span class="n">reactor</span><span class="o">.</span><span class="n">listenUDP</span><span class="p">(</span><span class="mi">10053</span><span class="p">,</span> <span class="n">protocol</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">10053</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>In this example we are passing a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.names.client.Resolver.html">client.Resolver</a> instance
+to the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.names.server.DNSServerFactory.html">DNSServerFactory</a>
+and we are configuring that client to use the upstream DNS servers which are specified in a local <code class="docutils literal"><span class="pre">resolv.conf</span></code> file.</p>
+<p>Also note that we start the server listening on both UDP and TCP ports.
+This is a standard requirement for DNS servers.</p>
+<p>You can test the server using <code class="docutils literal"><span class="pre">dig</span></code>.
+For example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> dig -p <span class="m">10053</span> @127.0.0.1 example.com SOA +short
+<span class="go">sns.dns.icann.org. noc.dns.icann.org. 2013102791 7200 3600 1209600 3600</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-server-which-computes-responses-dynamically">
+<h2>A server which computes responses dynamically<a class="headerlink" href="#a-server-which-computes-responses-dynamically" title="Permalink to this headline">¶</a></h2>
+<p>Now suppose we want to create a bespoke DNS server which responds to certain hostname queries
+by dynamically calculating the resulting IP address, while passing all other queries to another DNS server.
+Queries for hostnames matching the pattern <strong>workstation{0-9}+</strong>
+will result in an IP address where the last octet matches the workstation number.</p>
+<p>We&#8217;ll write a custom resolver which we insert before the standard client resolver.
+The custom resolver will be queried first.</p>
+<p>Here&#8217;s the code:</p>
+<p><a class="reference download internal" href="../../_downloads/override_server.py"><code class="xref download docutils literal"><span class="pre">override_server.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">An example demonstrating how to create a custom DNS server.</span>
+
+<span class="sd">The server will calculate the responses to A queries where the name begins with</span>
+<span class="sd">the word &quot;workstation&quot;.</span>
+
+<span class="sd">Other queries will be handled by a fallback resolver.</span>
+
+<span class="sd">eg</span>
+<span class="sd">    python doc/names/howto/listings/names/override_server.py</span>
+
+<span class="sd">    $ dig -p 10053 @localhost workstation1.example.com A +short</span>
+<span class="sd">    172.0.2.1</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">defer</span>
+<span class="kn">from</span> <span class="nn">twisted.names</span> <span class="kn">import</span> <span class="n">client</span><span class="p">,</span> <span class="n">dns</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">server</span>
+
+
+
+<span class="k">class</span> <span class="nc">DynamicResolver</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A resolver which calculates the answers to certain queries based on the</span>
+<span class="sd">    query type and name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_pattern</span> <span class="o">=</span> <span class="s">&#39;workstation&#39;</span>
+    <span class="n">_network</span> <span class="o">=</span> <span class="s">&#39;172.0.2&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_dynamicResponseRequired</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check the query to determine if a dynamic response is required.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">query</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">dns</span><span class="o">.</span><span class="n">A</span><span class="p">:</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pattern</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="k">return</span> <span class="bp">False</span>
+
+
+    <span class="k">def</span> <span class="nf">_doDynamicResponse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the response to a query.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pattern</span><span class="p">)</span>
+        <span class="n">lastOctet</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">answer</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">RRHeader</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">payload</span><span class="o">=</span><span class="n">dns</span><span class="o">.</span><span class="n">Record_A</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">b</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">.</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_network</span><span class="p">,</span> <span class="n">lastOctet</span><span class="p">)))</span>
+        <span class="n">answers</span> <span class="o">=</span> <span class="p">[</span><span class="n">answer</span><span class="p">]</span>
+        <span class="n">authority</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">additional</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">answers</span><span class="p">,</span> <span class="n">authority</span><span class="p">,</span> <span class="n">additional</span>
+
+
+    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the query should be answered dynamically, otherwise dispatch to</span>
+<span class="sd">        the fallback resolver.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dynamicResponseRequired</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">defer</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_doDynamicResponse</span><span class="p">(</span><span class="n">query</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">defer</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">DomainError</span><span class="p">())</span>
+
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Run the server.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">DNSServerFactory</span><span class="p">(</span>
+        <span class="n">clients</span><span class="o">=</span><span class="p">[</span><span class="n">DynamicResolver</span><span class="p">(),</span> <span class="n">client</span><span class="o">.</span><span class="n">Resolver</span><span class="p">(</span><span class="n">resolv</span><span class="o">=</span><span class="s">&#39;/etc/resolv.conf&#39;</span><span class="p">)]</span>
+    <span class="p">)</span>
+
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">DNSDatagramProtocol</span><span class="p">(</span><span class="n">controller</span><span class="o">=</span><span class="n">factory</span><span class="p">)</span>
+
+    <span class="n">reactor</span><span class="o">.</span><span class="n">listenUDP</span><span class="p">(</span><span class="mi">10053</span><span class="p">,</span> <span class="n">protocol</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">10053</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Notice that <code class="docutils literal"><span class="pre">DynamicResolver.query</span></code> returns a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a>.
+On success, it returns three lists of DNS records (answers, authority, additional),
+which will be encoded by <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.names.dns.Message.html">dns.Message</a> and returned to the client.
+On failure, it returns a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.names.error.DomainError.html">DomainError</a>,
+which is a signal that the query should be dispatched to the next client resolver in the list.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The fallback behaviour is actually handled by <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.names.resolve.ResolverChain.html">ResolverChain</a>.</p>
+<p>ResolverChain is a proxy for other resolvers.
+It takes a list of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IResolver.html">IResolver</a> providers
+and queries each one in turn until it receives an answer, or until the list is exhausted.</p>
+<p>Each <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IResolver.html">IResolver</a> in the chain may return a deferred <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.names.error.DomainError.html">DomainError</a>,
+which is a signal that <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.names.resolve.ResolverChain.html">ResolverChain</a> should query the next chained resolver.</p>
+<p class="last">The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.names.server.DNSServerFactory.html">DNSServerFactory</a> constructor takes a list of authoritative resolvers, caches and client resolvers
+and ensures that they are added to the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.names.resolve.ResolverChain.html">ResolverChain</a> in the correct order.</p>
+</div>
+<p>Let&#8217;s use <code class="docutils literal"><span class="pre">dig</span></code> to see how this server responds to requests that match the pattern we specified:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> dig -p <span class="m">10053</span> @127.0.0.1 workstation1.example.com A +short
+<span class="go">172.0.2.1</span>
+
+<span class="gp">$</span> dig -p <span class="m">10053</span> @127.0.0.1 workstation100.example.com A +short
+<span class="go">172.0.2.100</span>
+</pre></div>
+</div>
+<p>And if we issue a request that doesn&#8217;t match the pattern:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> dig -p <span class="m">10053</span> @localhost www.example.com A +short
+<span class="go">93.184.216.119</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+<p>For simplicity, the examples above use the <code class="docutils literal"><span class="pre">reactor.listenXXX</span></code> APIs.
+But your application will be more flexible if you use the <a class="reference internal" href="../../core/howto/application.html"><span class="doc">Twisted Application APIs</span></a>,
+along with the <a class="reference internal" href="../../core/howto/plugin.html"><span class="doc">Twisted plugin system</span></a> and <code class="docutils literal"><span class="pre">twistd</span></code>.
+Read the source code of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.names.tap.html">names.tap</a> to see how the <code class="docutils literal"><span class="pre">twistd</span> <span class="pre">names</span></code> plugin works.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Creating a custom server</a><ul>
+<li><a class="reference internal" href="#a-simple-forwarding-dns-server">A simple forwarding DNS server</a></li>
+<li><a class="reference internal" href="#a-server-which-computes-responses-dynamically">A server which computes responses dynamically</a></li>
+<li><a class="reference internal" href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="names.html"
+                                  title="previous chapter">Creating and working with a names (DNS) server</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../examples/index.html"
+                                  title="next chapter">Examples</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/names/howto/custom-server.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

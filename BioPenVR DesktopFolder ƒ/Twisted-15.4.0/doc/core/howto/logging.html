@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Twisted’s Legacy Logging System: twisted.python.log &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Symbolic Constants" href="constants.html" />
+    <link rel="prev" title="Logging with twisted.logger" href="logger.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="constants.html" title="Symbolic Constants"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="logger.html" title="Logging with twisted.logger"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="twisted-s-legacy-logging-system-twisted-python-log">
+<h1>Twisted&#8217;s Legacy Logging System: <code class="docutils literal"><span class="pre">twisted.python.log</span></code><a class="headerlink" href="#twisted-s-legacy-logging-system-twisted-python-log" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>There is now a new logging system in Twisted (<a class="reference internal" href="logger.html"><span class="doc">you can read about how to use it here</span></a> and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.logger.html">its API reference here</a>) which is a replacement for <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.log.html">twisted.python.log</a>.</p>
+<p>The old logging API, described here, remains for compatibility, and is now implemented as a client of the new logging system.</p>
+<p class="last">New code should adopt the new API.</p>
+</div>
+<div class="section" id="basic-usage">
+<h2>Basic usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>Twisted provides a simple and flexible logging system in the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.log.html">twisted.python.log</a> module.  It has three commonly used
+functions:</p>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.log.LogPublisher.msg.html">msg</a></p>
+<blockquote>
+<div><p>Logs a new message.  For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="n">log</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s">&#39;Hello, world.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.log.err.html">err</a></p>
+<blockquote>
+<div><p>Writes a failure to the log, including traceback information (if any).
+You can pass it a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.failure.Failure.html">Failure</a> or Exception instance, or
+nothing.  If you pass something else, it will be converted to a string
+with <code class="docutils literal"><span class="pre">repr</span></code> and logged.</p>
+<p>If you pass nothing, it will construct a Failure from the
+currently active exception, which makes it convenient to use in an <code class="docutils literal"><span class="pre">except</span></code> clause:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">err</span><span class="p">()</span>   <span class="c"># will log the ZeroDivisionError</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.log.startLogging.html">startLogging</a></p>
+<blockquote>
+<div><p>Starts logging to a given file-like object.  For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">log</span><span class="o">.</span><span class="n">startLogging</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;/var/log/foo.log&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">log</span><span class="o">.</span><span class="n">startLogging</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.python.logfile</span> <span class="kn">import</span> <span class="n">DailyLogFile</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">startLogging</span><span class="p">(</span><span class="n">DailyLogFile</span><span class="o">.</span><span class="n">fromFullPath</span><span class="p">(</span><span class="s">&quot;/var/log/foo.log&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>By default, <code class="docutils literal"><span class="pre">startLogging</span></code> will also redirect anything written
+to <code class="docutils literal"><span class="pre">sys.stdout</span></code> and <code class="docutils literal"><span class="pre">sys.stderr</span></code> to the log.  You
+can disable this by passing <code class="docutils literal"><span class="pre">setStdout=False</span></code> to
+<code class="docutils literal"><span class="pre">startLogging</span></code> .</p>
+</div></blockquote>
+<p>Before <code class="docutils literal"><span class="pre">startLogging</span></code> is called, log messages will be
+discarded and errors will be written to stderr.</p>
+<div class="section" id="logging-and-twistd">
+<h3>Logging and twistd<a class="headerlink" href="#logging-and-twistd" title="Permalink to this headline">¶</a></h3>
+<p>If you are using <code class="docutils literal"><span class="pre">twistd</span></code> to run your daemon, it
+will take care of calling <code class="docutils literal"><span class="pre">startLogging</span></code> for you, and will also
+rotate log files.  See <a class="reference internal" href="application.html#core-howto-application-twistd"><span class="std std-ref">twistd and tac</span></a>
+and the <code class="docutils literal"><span class="pre">twistd</span></code> man page for details of using
+twistd.</p>
+</div>
+<div class="section" id="log-files">
+<h3>Log files<a class="headerlink" href="#log-files" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.logfile.html">twisted.python.logfile</a> module provides
+some standard classes suitable for use with <code class="docutils literal"><span class="pre">startLogging</span></code> , such
+as <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.logfile.DailyLogFile.html">DailyLogFile</a> ,
+which will rotate the log to a new file once per day.</p>
+</div>
+<div class="section" id="using-the-standard-library-logging-module">
+<h3>Using the standard library logging module<a class="headerlink" href="#using-the-standard-library-logging-module" title="Permalink to this headline">¶</a></h3>
+<p>If your application uses the
+Python <a class="reference external" href="http://docs.python.org/library/logging.html">standard    library logging module</a> or you want to use its easy configuration but
+don&#8217;t want to lose twisted-produced messages, the observer
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.log.PythonLoggingObserver.html">PythonLoggingObserver</a>
+should be useful to you.</p>
+<p>You just start it like any other observer:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">observer</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">PythonLoggingObserver</span><span class="p">()</span>
+<span class="n">observer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Then <a class="reference external" href="http://docs.python.org/library/logging.html">configure the    standard library logging module</a> to behave as you want.</p>
+<p>This method allows you to customize the log level received by the
+standard library logging module using the <code class="docutils literal"><span class="pre">logLevel</span></code> keyword:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">log</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s">&quot;This is important!&quot;</span><span class="p">,</span> <span class="n">logLevel</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s">&quot;Don&#39;t mind&quot;</span><span class="p">,</span> <span class="n">logLevel</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Unless <code class="docutils literal"><span class="pre">logLevel</span></code> is provided, logging.INFO is used for <code class="docutils literal"><span class="pre">log.msg</span></code>
+and <code class="docutils literal"><span class="pre">logging.ERROR</span></code> is used for <code class="docutils literal"><span class="pre">log.err</span></code> .</p>
+<p>One special care should be made when you use special configuration of
+the standard library logging module: some handlers (e.g. SMTP, HTTP) use the network and
+so can block inside the reactor loop. <em>Nothing</em> in <code class="docutils literal"><span class="pre">PythonLoggingObserver</span></code> is
+done to prevent that.</p>
+</div>
+</div>
+<div class="section" id="writing-log-observers">
+<h2>Writing log observers<a class="headerlink" href="#writing-log-observers" title="Permalink to this headline">¶</a></h2>
+<p>Log observers are the basis of the Twisted logging system.
+Whenever <code class="docutils literal"><span class="pre">log.msg</span></code> (or <code class="docutils literal"><span class="pre">log.err</span></code> ) is called, an
+event is emitted.  The event is passed to each observer which has been
+registered.  There can be any number of observers, and each can treat
+the event in any way desired.
+An example of
+a log observer in Twisted is the <code class="docutils literal"><span class="pre">emit</span></code> method of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.log.FileLogObserver.html">FileLogObserver</a> .
+<code class="docutils literal"><span class="pre">FileLogObserver</span></code> , used by
+<code class="docutils literal"><span class="pre">startLogging</span></code> , writes events to a log file.  A log observer
+is just a callable that accepts a dictionary as its only argument.  You can
+then register it to receive all log events (in addition to any other
+observers):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">twisted</span><span class="o">.</span><span class="n">python</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">addObserver</span><span class="p">(</span><span class="n">yourCallable</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The dictionary will have at least two items:</p>
+<p>message</p>
+<blockquote>
+<div>The message (a list, usually of strings)
+for this log event, as passed to <code class="docutils literal"><span class="pre">log.msg</span></code> or the
+message in the failure passed to <code class="docutils literal"><span class="pre">log.err</span></code> .</div></blockquote>
+<p>isError</p>
+<blockquote>
+<div>This is a boolean that will be true if this event came from a call to
+<code class="docutils literal"><span class="pre">log.err</span></code> .  If this is set, there may be a <code class="docutils literal"><span class="pre">failure</span></code>
+item in the dictionary as will, with a Failure object in it.</div></blockquote>
+<p>Other items the built in logging functionality may add include:</p>
+<p>printed</p>
+<blockquote>
+<div>This message was captured from <code class="docutils literal"><span class="pre">sys.stdout</span></code> , i.e. this
+message came from a <code class="docutils literal"><span class="pre">print</span></code> statement.  If
+<code class="docutils literal"><span class="pre">isError</span></code> is also true, it came from
+<code class="docutils literal"><span class="pre">sys.stderr</span></code> .</div></blockquote>
+<p>You can pass additional items to the event dictionary by passing keyword
+arguments to <code class="docutils literal"><span class="pre">log.msg</span></code> and <code class="docutils literal"><span class="pre">log.err</span></code> .  The standard
+log observers will ignore dictionary items they don&#8217;t use.</p>
+<p>Important notes:</p>
+<ul class="simple">
+<li>Never block in a log observer, as it may run in main Twisted thread.
+This means you can&#8217;t use socket or syslog standard library logging backends.</li>
+<li>The observer needs to be thread safe if you anticipate using threads
+in your program.</li>
+</ul>
+</div>
+<div class="section" id="customizing-twistd-logging">
+<h2>Customizing <code class="docutils literal"><span class="pre">twistd</span></code>  logging<a class="headerlink" href="#customizing-twistd-logging" title="Permalink to this headline">¶</a></h2>
+<p>The behavior of the logging that <code class="docutils literal"><span class="pre">twistd</span></code> does can be
+customized either with the <code class="docutils literal"><span class="pre">--logger</span></code> option or by setting the
+<code class="docutils literal"><span class="pre">ILogObserver</span></code> component on the application object.  See the <a class="reference internal" href="application.html"><span class="doc">Application document</span></a> for more information.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Twisted&#8217;s Legacy Logging System: <code class="docutils literal"><span class="pre">twisted.python.log</span></code></a><ul>
+<li><a class="reference internal" href="#basic-usage">Basic usage</a><ul>
+<li><a class="reference internal" href="#logging-and-twistd">Logging and twistd</a></li>
+<li><a class="reference internal" href="#log-files">Log files</a></li>
+<li><a class="reference internal" href="#using-the-standard-library-logging-module">Using the standard library logging module</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#writing-log-observers">Writing log observers</a></li>
+<li><a class="reference internal" href="#customizing-twistd-logging">Customizing <code class="docutils literal"><span class="pre">twistd</span></code>  logging</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="logger.html"
+                                  title="previous chapter">Logging with twisted.logger</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="constants.html"
+                                  title="next chapter">Symbolic Constants</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/logging.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

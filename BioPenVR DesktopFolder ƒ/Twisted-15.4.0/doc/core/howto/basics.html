@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Basics &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Using the Twisted Application Framework" href="application.html" />
+    <link rel="prev" title="The Twisted Plugin System" href="plugin.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="application.html" title="Using the Twisted Application Framework"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="plugin.html" title="The Twisted Plugin System"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="the-basics">
+<h1>The Basics<a class="headerlink" href="#the-basics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="application">
+<h2>Application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h2>
+<p>Twisted programs usually work with <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.Application.html">twisted.application.service.Application</a>.
+This class usually holds all persistent configuration of a running server, such as:</p>
+<ul class="simple">
+<li>ports to bind to,</li>
+<li>places where connections to must be kept or attempted,</li>
+<li>periodic actions to do,</li>
+<li>and almost everything else to do with your <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.Application.html">Application</a>.</li>
+</ul>
+<p>It is the root object in a tree of services implementing <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.IService.html">twisted.application.service.IService</a>.</p>
+<p>Other howtos describe how to write custom code for <code class="docutils literal"><span class="pre">Application</span></code>s, but this one describes how to use already written code (which can be part of Twisted or from a third-party Twisted plugin developer).
+The Twisted distribution comes with an important tool to deal with <code class="docutils literal"><span class="pre">Application</span></code>s: <code class="docutils literal"><span class="pre">twistd(1)</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">Application</span></code>s are just Python objects, which can be created and manipulated in the same ways as any other object.</p>
+</div>
+<div class="section" id="twistd">
+<h2>twistd<a class="headerlink" href="#twistd" title="Permalink to this headline">¶</a></h2>
+<p>The Twisted Daemon is a program that knows how to run <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.Application.html">Application</a>s.
+Strictly speaking, <code class="docutils literal"><span class="pre">twistd</span></code> is not necessary.
+Fetching the application, getting the <code class="docutils literal"><span class="pre">IService</span></code> component, calling <code class="docutils literal"><span class="pre">startService()</span></code>, scheduling <code class="docutils literal"><span class="pre">stopService()</span></code> when the reactor shuts down, and then calling <code class="docutils literal"><span class="pre">reactor.run()</span></code> could be done manually.</p>
+<p>However, <code class="docutils literal"><span class="pre">twistd</span></code> supplies many options which are highly useful for program set up:</p>
+<ul class="simple">
+<li>choosing a reactor (for more on reactors, see <a class="reference internal" href="choosing-reactor.html"><span class="doc">Choosing a Reactor</span></a>),</li>
+<li>logging configuration (see the <a class="reference internal" href="logging.html"><span class="doc">logging</span></a> documentation for more),</li>
+<li>daemonizing (forking to the background),</li>
+<li>and <a class="reference internal" href="application.html"><span class="doc">more</span></a>.</li>
+</ul>
+<p><code class="docutils literal"><span class="pre">twistd</span></code> supports all Applications mentioned above &#8211; and an additional one.
+Sometimes it is convenient to write the code for building a class in straight Python.
+One big source of such Python files is the <a class="reference internal" href="../examples/index.html"><span class="doc">examples</span></a> directory.
+When a straight Python file which defines an <code class="docutils literal"><span class="pre">Application</span></code> object called <code class="docutils literal"><span class="pre">application</span></code> is used, use the <code class="docutils literal"><span class="pre">-y</span></code> option.</p>
+<p>When <code class="docutils literal"><span class="pre">twistd</span></code> runs, it records its process id in a <code class="docutils literal"><span class="pre">twistd.pid</span></code> file (this can be configured via a command line switch).
+In order to shutdown the <code class="docutils literal"><span class="pre">twistd</span></code> process, kill that pid.
+The usual way to do this would be:</p>
+<div class="highlight-python"><div class="highlight"><pre>kill `cat twistd.pid`
+</pre></div>
+</div>
+<p>To prevent <code class="docutils literal"><span class="pre">twistd</span></code> from daemonizing, you can pass it the <code class="docutils literal"><span class="pre">--no-daemon</span></code> option (or <code class="docutils literal"><span class="pre">-n</span></code>, in conjunction with other short options).</p>
+<p>As always, the gory details are in the manual page.</p>
+</div>
+<div class="section" id="os-integration">
+<h2>OS Integration<a class="headerlink" href="#os-integration" title="Permalink to this headline">¶</a></h2>
+<p>If you have an <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.Application.html">Application</a> that runs with <code class="docutils literal"><span class="pre">twistd</span></code>, you can deploy it on RedHat Linux or Debian GNU/Linux based systems using the <code class="docutils literal"><span class="pre">tap2deb</span></code> or <code class="docutils literal"><span class="pre">tap2rpm</span></code> tools.
+These take a Twisted <code class="docutils literal"><span class="pre">Application</span></code> file (of any of the supported formats — Python source, XML or pickle), and build a Debian or RPM package (respectively) that installs the <code class="docutils literal"><span class="pre">Application</span></code> as a system service.
+The package includes the <code class="docutils literal"><span class="pre">Application</span></code> file, a default <code class="docutils literal"><span class="pre">/etc/init.d/</span></code> script that starts and stops the process with twistd, and post-installation scripts that configure the <code class="docutils literal"><span class="pre">Application</span></code> to be run in the appropriate init levels.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">tap2rpm</span></code> and <code class="docutils literal"><span class="pre">tap2deb</span></code> do not package your entire application and dependent code, just the Twisted Application file.
+You will need to find some other way to package your Python code, such as <a class="reference external" href="http://docs.python.org/library/distutils.html">distutils</a>&#8216; <code class="docutils literal"><span class="pre">bdist_rpm</span></code> command.</p>
+</div>
+<p>For more savvy users, these tools also generate the source package, allowing you to modify and polish things which automated software cannot detect (such as dependencies or relationships to virtual packages).</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">The Basics</a><ul>
+<li><a class="reference internal" href="#application">Application</a></li>
+<li><a class="reference internal" href="#twistd">twistd</a></li>
+<li><a class="reference internal" href="#os-integration">OS Integration</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="plugin.html"
+                                  title="previous chapter">The Twisted Plugin System</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="application.html"
+                                  title="next chapter">Using the Twisted Application Framework</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/basics.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using TLS in Twisted &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="UDP Networking" href="udp.html" />
+    <link rel="prev" title="Reactor Overview" href="reactor-basics.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="udp.html" title="UDP Networking"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="reactor-basics.html" title="Reactor Overview"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="using-tls-in-twisted">
+<h1>Using TLS in Twisted<a class="headerlink" href="#using-tls-in-twisted" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This document describes how to secure your communications using TLS (Transport Layer Security) &#8212; also known as SSL (Secure Sockets Layer) &#8212; in Twisted servers and clients.
+It assumes that you know what TLS is, what some of the major reasons to use it are, and how to generate your own certificates.
+It also assumes that you are comfortable with creating TCP servers and clients as described in the <a class="reference internal" href="servers.html"><span class="doc">server howto</span></a> and <a class="reference internal" href="clients.html"><span class="doc">client howto</span></a> .
+After reading this document you should be able to create servers and clients that can use TLS to encrypt their connections, switch from using an unencrypted channel to an encrypted one mid-connection, and require client authentication.</p>
+<p>Using TLS in Twisted requires that you have <a class="reference external" href="https://github.com/pyca/pyopenssl">pyOpenSSL</a> installed. A quick test to verify that you do is to run <code class="docutils literal"><span class="pre">from</span> <span class="pre">OpenSSL</span> <span class="pre">import</span> <span class="pre">SSL</span></code> at a python prompt and not get an error.</p>
+<p>Twisted provides TLS support as a transport &#8212; that is, as an alternative to TCP.
+When using TLS, use of the TCP APIs you&#8217;re already familiar with, <code class="docutils literal"><span class="pre">TCP4ClientEndpoint</span></code> and <code class="docutils literal"><span class="pre">TCP4ServerEndpoint</span></code> &#8212; or <code class="docutils literal"><span class="pre">reactor.listenTCP</span></code> and <code class="docutils literal"><span class="pre">reactor.connectTCP</span></code> &#8212; is replaced by use of parallel TLS APIs (many of which still use the legacy name &#8220;SSL&#8221; due to age and/or compatibility with older APIs).
+To create a TLS server, use <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.endpoints.SSL4ServerEndpoint.html">SSL4ServerEndpoint</a> or <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorSSL.listenSSL.html">listenSSL</a> .
+To create a TLS client, use <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.endpoints.SSL4ClientEndpoint.html">SSL4ClientEndpoint</a> or <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorSSL.connectSSL.html">connectSSL</a> .</p>
+<p>TLS provides transport layer security, but it&#8217;s important to understand what &#8220;security&#8221; means.
+With respect to TLS it means three things:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Identity: TLS servers (and sometimes clients) present a certificate, offering proof of who they are, so that you know who you are talking to.</li>
+<li>Confidentiality: once you know who you are talking to, encryption of the connection ensures that the communications can&#8217;t be understood by any third parties who might be listening in.</li>
+<li>Integrity: TLS checks the encrypted messages to ensure that they actually came from the party you originally authenticated to.
+If the messages fail these checks, then they are discarded and your application does not see them.</li>
+</ol>
+</div></blockquote>
+<p>Without identity, neither confidentiality nor integrity is possible.
+If you don&#8217;t know who you&#8217;re talking to, then you might as easily be talking to your bank or to a thief who wants to steal your bank password.
+Each of the APIs listed above with &#8220;SSL&#8221; in the name requires a configuration object called (for historical reasons) a <code class="docutils literal"><span class="pre">contextFactory</span></code>.
+(Please pardon the somewhat awkward name.)
+The <code class="docutils literal"><span class="pre">contextFactory</span></code> serves three purposes:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>It provides the materials to prove your own identity to the other side of the connection: in other words, who you are.</li>
+<li>It expresses your requirements of the other side&#8217;s identity: in other words, who you would like to talk to (and who you trust to tell you that you&#8217;re talking to the right party).</li>
+<li>It allows you to specify certain specialized options about the way the TLS protocol itself operates.</li>
+</ol>
+</div></blockquote>
+<p>The requirements of clients and servers are slightly different.
+Both <em>can</em> provide a certificate to prove their identity, but commonly, TLS <em>servers</em> provide a certificate, whereas TLS <em>clients</em> check the server&#8217;s certificate (to make sure they&#8217;re talking to the right server) and then later identify themselves to the server some other way, often by offering a shared secret such as a password or API key via an application protocol secured with TLS and not as part of TLS itself.</p>
+<p>Since these requirements are slightly different, there are different APIs to construct an appropriate <code class="docutils literal"><span class="pre">contextFactory</span></code> value for a client or a server.</p>
+<p>For servers, we can use <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.ssl.CertificateOptions.html">twisted.internet.ssl.CertificateOptions</a>.
+In order to prove the server&#8217;s identity, you pass the <code class="docutils literal"><span class="pre">privateKey</span></code> and <code class="docutils literal"><span class="pre">certificate</span></code> arguments to this object.
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.ssl.PrivateCertificate.options.html">twisted.internet.ssl.PrivateCertificate.options</a> is a convenient way to create a <code class="docutils literal"><span class="pre">CertificateOptions</span></code> instance configured to use a particular key and certificate.</p>
+<p>For clients, we can use <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.ssl.optionsForClientTLS.html">twisted.internet.ssl.optionsForClientTLS</a>.
+This takes two arguments, <code class="docutils literal"><span class="pre">hostname</span></code> (which indicates what hostname must be advertised in the server&#8217;s certificate) and optionally <code class="docutils literal"><span class="pre">trustRoot</span></code>.
+By default, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.ssl.optionsForClientTLS.html">optionsForClientTLS</a> tries to obtain the trust roots from your platform, but you can specify your own.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Currently, Twisted only supports loading of OpenSSL&#8217;s default trust roots.
+If you&#8217;ve built OpenSSL yourself, you must take care to include these in the appropriate location.
+If you&#8217;re using the OpenSSL shipped as part of Mac OS X 10.5-10.9, this behavior will also be correct.
+If you&#8217;re using Debian, or one of its derivatives like Ubuntu, install the <cite>ca-certificates</cite> package to ensure you have trust roots available, and this behavior should also be correct.
+Work is ongoing to make <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.ssl.platformTrust.html">platformTrust</a> &#8212; the API that <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.ssl.optionsForClientTLS.html">optionsForClientTLS</a> uses by default &#8212; more robust.
+For example, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.ssl.platformTrust.html">platformTrust</a> should fall back to <a class="reference external" href="http://pypi.python.org/pypi/certifi">the &#8220;certifi&#8221; package</a> if no platform trust roots are available but it doesn&#8217;t do that yet.
+When this happens, you shouldn&#8217;t need to change your code.</p>
+</div>
+</div>
+<div class="section" id="tls-echo-server-and-client">
+<h2>TLS echo server and client<a class="headerlink" href="#tls-echo-server-and-client" title="Permalink to this headline">¶</a></h2>
+<p>Now that we&#8217;ve got the theory out of the way, let&#8217;s try some working examples of how to get started with a TLS server.
+The following examples rely on the files <code class="docutils literal"><span class="pre">server.pem</span></code> (private key and self-signed certificate together) and <code class="docutils literal"><span class="pre">public.pem</span></code> (the server&#8217;s public certificate by itself).</p>
+<div class="section" id="tls-echo-server">
+<h3>TLS echo server<a class="headerlink" href="#tls-echo-server" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/echoserv_ssl.py"><code class="xref download docutils literal"><span class="pre">echoserv_ssl.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">ssl</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">defer</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">twisted.python.modules</span> <span class="kn">import</span> <span class="n">getModule</span>
+
+<span class="kn">import</span> <span class="nn">echoserv</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">reactor</span><span class="p">):</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">startLogging</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="n">certData</span> <span class="o">=</span> <span class="n">getModule</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span><span class="o">.</span><span class="n">filePath</span><span class="o">.</span><span class="n">sibling</span><span class="p">(</span><span class="s">&#39;server.pem&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getContent</span><span class="p">()</span>
+    <span class="n">certificate</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">PrivateCertificate</span><span class="o">.</span><span class="n">loadPEM</span><span class="p">(</span><span class="n">certData</span><span class="p">)</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">protocol</span><span class="o">.</span><span class="n">Factory</span><span class="o">.</span><span class="n">forProtocol</span><span class="p">(</span><span class="n">echoserv</span><span class="o">.</span><span class="n">Echo</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">listenSSL</span><span class="p">(</span><span class="mi">8000</span><span class="p">,</span> <span class="n">factory</span><span class="p">,</span> <span class="n">certificate</span><span class="o">.</span><span class="n">options</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">echoserv_ssl</span>
+    <span class="n">task</span><span class="o">.</span><span class="n">react</span><span class="p">(</span><span class="n">echoserv_ssl</span><span class="o">.</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This server uses <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorSSL.listenSSL.html">listenSSL</a> to listen for TLS traffic on port 8000, using the certificate and private key contained in the file <code class="docutils literal"><span class="pre">server.pem</span></code>.
+It uses the same echo example server as the TCP echo server &#8212; even going so far as to import its protocol class.
+Assuming that you can buy your own TLS certificate from a certificate authority, this is a fairly realistic TLS server.</p>
+</div>
+<div class="section" id="tls-echo-client">
+<h3>TLS echo client<a class="headerlink" href="#tls-echo-client" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/echoclient_ssl.py"><code class="xref download docutils literal"><span class="pre">echoclient_ssl.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">ssl</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">endpoints</span><span class="p">,</span> <span class="n">defer</span>
+<span class="kn">from</span> <span class="nn">twisted.python.modules</span> <span class="kn">import</span> <span class="n">getModule</span>
+
+<span class="kn">import</span> <span class="nn">echoclient</span>
+
+<span class="nd">@defer.inlineCallbacks</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">reactor</span><span class="p">):</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">protocol</span><span class="o">.</span><span class="n">Factory</span><span class="o">.</span><span class="n">forProtocol</span><span class="p">(</span><span class="n">echoclient</span><span class="o">.</span><span class="n">EchoClient</span><span class="p">)</span>
+    <span class="n">certData</span> <span class="o">=</span> <span class="n">getModule</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span><span class="o">.</span><span class="n">filePath</span><span class="o">.</span><span class="n">sibling</span><span class="p">(</span><span class="s">&#39;public.pem&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getContent</span><span class="p">()</span>
+    <span class="n">authority</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">Certificate</span><span class="o">.</span><span class="n">loadPEM</span><span class="p">(</span><span class="n">certData</span><span class="p">)</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">optionsForClientTLS</span><span class="p">(</span><span class="s">u&#39;example.com&#39;</span><span class="p">,</span> <span class="n">authority</span><span class="p">)</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">endpoints</span><span class="o">.</span><span class="n">SSL4ClientEndpoint</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">,</span>
+                                            <span class="n">options</span><span class="p">)</span>
+    <span class="n">echoClient</span> <span class="o">=</span> <span class="k">yield</span> <span class="n">endpoint</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">factory</span><span class="p">)</span>
+
+    <span class="n">done</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+    <span class="n">echoClient</span><span class="o">.</span><span class="n">connectionLost</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">reason</span><span class="p">:</span> <span class="n">done</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">done</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">echoclient_ssl</span>
+    <span class="n">task</span><span class="o">.</span><span class="n">react</span><span class="p">(</span><span class="n">echoclient_ssl</span><span class="o">.</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This client uses <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.endpoints.SSL4ClientEndpoint.html">SSL4ClientEndpoint</a> to connect to <code class="docutils literal"><span class="pre">echoserv_ssl.py</span></code>.
+It <em>also</em> uses the same echo example client as the TCP echo client.
+Whenever you have a protocol that listens on plain-text TCP it is easy to run it over TLS instead.
+It specifies that it only wants to talk to a host named <code class="docutils literal"><span class="pre">&quot;example.com&quot;</span></code>, and that it trusts the certificate authority in <code class="docutils literal"><span class="pre">&quot;public.pem&quot;</span></code> to say who <code class="docutils literal"><span class="pre">&quot;example.com&quot;</span></code> is.
+Note that the host you are connecting to &#8212; localhost &#8212; and the host whose identity you are verifying &#8212; example.com &#8212; can differ.
+In this case, our example <code class="docutils literal"><span class="pre">server.pem</span></code> certificate identifies a host named &#8220;example.com&#8221;, but your server is proably running on localhost.</p>
+<p>In a realistic client, it&#8217;s very important that you pass the same &#8220;hostname&#8221;  your connection API (in this case, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.endpoints.SSL4ClientEndpoint.html">SSL4ClientEndpoint</a>) and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.ssl.optionsForClientTLS.html">optionsForClientTLS</a>.
+In this case we&#8217;re using &#8220;<code class="docutils literal"><span class="pre">localhost</span></code>&#8221; as the host to connect to because you&#8217;re probably running this example on your own computer and &#8220;<code class="docutils literal"><span class="pre">example.com</span></code>&#8221; because that&#8217;s the value hard-coded in the dummy certificate distributed along with Twisted&#8217;s example code.</p>
+</div>
+<div class="section" id="connecting-to-public-servers">
+<h3>Connecting To Public Servers<a class="headerlink" href="#connecting-to-public-servers" title="Permalink to this headline">¶</a></h3>
+<p>Here is a short example, now using the default trust roots for <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.ssl.optionsForClientTLS.html">optionsForClientTLS</a> from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.ssl.platformTrust.html">platformTrust</a>.</p>
+<p><a class="reference download internal" href="../../_downloads/check_server_certificate.py"><code class="xref download docutils literal"><span class="pre">check_server_certificate.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span><span class="p">,</span> <span class="n">endpoints</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">ssl</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">error</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">443</span><span class="p">):</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">optionsForClientTLS</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="n">host</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">ShowCertificate</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">Protocol</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">b</span><span class="s">&quot;GET / HTTP/1.0</span><span class="se">\r\n\r\n</span><span class="s">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">done</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+        <span class="k">def</span> <span class="nf">dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+            <span class="n">certificate</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">Certificate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">getPeerCertificate</span><span class="p">())</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;OK:&quot;</span><span class="p">,</span> <span class="n">certificate</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">abortConnection</span><span class="p">()</span>
+        <span class="k">def</span> <span class="nf">connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Lost.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">reason</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">ConnectionClosed</span><span class="p">):</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&quot;BAD:&quot;</span><span class="p">,</span> <span class="n">reason</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">done</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">endpoints</span><span class="o">.</span><span class="n">connectProtocol</span><span class="p">(</span>
+        <span class="n">endpoints</span><span class="o">.</span><span class="n">SSL4ClientEndpoint</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">options</span><span class="p">),</span>
+        <span class="n">ShowCertificate</span><span class="p">()</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="k">lambda</span> <span class="n">protocol</span><span class="p">:</span> <span class="n">protocol</span><span class="o">.</span><span class="n">done</span><span class="p">)</span>
+
+<span class="n">task</span><span class="o">.</span><span class="n">react</span><span class="p">(</span><span class="n">main</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</pre></div>
+</div>
+<p>You can use this tool fairly simply to retrieve certificates from an HTTPS server with a valid TLS certificate, by running it with a host name.
+For example:</p>
+<div class="highlight-text"><div class="highlight"><pre>$ python check_server_certificate.py www.twistedmatrix.com
+OK: &lt;Certificate Subject=www.twistedmatrix.com ...&gt;
+$ python check_server_certificate.py www.cacert.org
+BAD: [(... &#39;certificate verify failed&#39;)]
+$ python check_server_certificate.py dornkirk.twistedmatrix.com
+BAD: No service reference ID could be validated against certificate.
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To <em>properly</em> validate your <code class="docutils literal"><span class="pre">hostname</span></code> parameter according to RFC6125, please also install the <a class="reference external" href="https://pypi.python.org/pypi/service_identity">&#8220;service_identity&#8221;</a> and <a class="reference external" href="https://pypi.python.org/pypi/idna">&#8220;idna&#8221;</a> packages from PyPI.
+Without this package, Twisted will currently make a conservative guess as to the correctness of the server&#8217;s certificate, but this will reject a large number of potentially valid certificates.
+<cite>service_identity</cite> implements the standard correctly and it will be a required dependency for TLS in a future release of Twisted.</p>
+</div>
+</div>
+</div>
+<div class="section" id="using-starttls">
+<h2>Using startTLS<a class="headerlink" href="#using-starttls" title="Permalink to this headline">¶</a></h2>
+<p>If you want to switch from unencrypted to encrypted traffic
+mid-connection, you&#8217;ll need to turn on TLS with <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.ITLSTransport.startTLS.html">startTLS</a> on both
+ends of the connection at the same time via some agreed-upon signal like the
+reception of a particular message. You can readily verify the switch to an
+encrypted channel by examining the packet payloads with a tool like
+<a class="reference external" href="http://www.wireshark.org/">Wireshark</a> .</p>
+<div class="section" id="starttls-server">
+<h3>startTLS server<a class="headerlink" href="#starttls-server" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/starttls_server.py"><code class="xref download docutils literal"><span class="pre">starttls_server.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">ssl</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">defer</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">endpoints</span>
+<span class="kn">from</span> <span class="nn">twisted.protocols.basic</span> <span class="kn">import</span> <span class="n">LineReceiver</span>
+<span class="kn">from</span> <span class="nn">twisted.python.modules</span> <span class="kn">import</span> <span class="n">getModule</span>
+
+<span class="k">class</span> <span class="nc">TLSServer</span><span class="p">(</span><span class="n">LineReceiver</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;received: &quot;</span> <span class="o">+</span> <span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s">&quot;STARTTLS&quot;</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;-- Switching to TLS&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sendLine</span><span class="p">(</span><span class="s">&#39;READY&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">startTLS</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">reactor</span><span class="p">):</span>
+    <span class="n">certData</span> <span class="o">=</span> <span class="n">getModule</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span><span class="o">.</span><span class="n">filePath</span><span class="o">.</span><span class="n">sibling</span><span class="p">(</span><span class="s">&#39;server.pem&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getContent</span><span class="p">()</span>
+    <span class="n">cert</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">PrivateCertificate</span><span class="o">.</span><span class="n">loadPEM</span><span class="p">(</span><span class="n">certData</span><span class="p">)</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">protocol</span><span class="o">.</span><span class="n">Factory</span><span class="o">.</span><span class="n">forProtocol</span><span class="p">(</span><span class="n">TLSServer</span><span class="p">)</span>
+    <span class="n">factory</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">cert</span><span class="o">.</span><span class="n">options</span><span class="p">()</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">endpoints</span><span class="o">.</span><span class="n">TCP4ServerEndpoint</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="mi">8000</span><span class="p">)</span>
+    <span class="n">endpoint</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">factory</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">starttls_server</span>
+    <span class="n">task</span><span class="o">.</span><span class="n">react</span><span class="p">(</span><span class="n">starttls_server</span><span class="o">.</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="starttls-client">
+<h3>startTLS client<a class="headerlink" href="#starttls-client" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/starttls_client.py"><code class="xref download docutils literal"><span class="pre">starttls_client.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">ssl</span><span class="p">,</span> <span class="n">endpoints</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">defer</span>
+<span class="kn">from</span> <span class="nn">twisted.protocols.basic</span> <span class="kn">import</span> <span class="n">LineReceiver</span>
+<span class="kn">from</span> <span class="nn">twisted.python.modules</span> <span class="kn">import</span> <span class="n">getModule</span>
+
+<span class="k">class</span> <span class="nc">StartTLSClient</span><span class="p">(</span><span class="n">LineReceiver</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendLine</span><span class="p">(</span><span class="s">&quot;plain text&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendLine</span><span class="p">(</span><span class="s">&quot;STARTTLS&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;received: &quot;</span> <span class="o">+</span> <span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s">&quot;READY&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">startTLS</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sendLine</span><span class="p">(</span><span class="s">&quot;secure text&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+
+<span class="nd">@defer.inlineCallbacks</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">reactor</span><span class="p">):</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">protocol</span><span class="o">.</span><span class="n">Factory</span><span class="o">.</span><span class="n">forProtocol</span><span class="p">(</span><span class="n">StartTLSClient</span><span class="p">)</span>
+    <span class="n">certData</span> <span class="o">=</span> <span class="n">getModule</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span><span class="o">.</span><span class="n">filePath</span><span class="o">.</span><span class="n">sibling</span><span class="p">(</span><span class="s">&#39;server.pem&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getContent</span><span class="p">()</span>
+    <span class="n">factory</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">optionsForClientTLS</span><span class="p">(</span>
+        <span class="s">u&quot;example.com&quot;</span><span class="p">,</span> <span class="n">ssl</span><span class="o">.</span><span class="n">PrivateCertificate</span><span class="o">.</span><span class="n">loadPEM</span><span class="p">(</span><span class="n">certData</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">endpoints</span><span class="o">.</span><span class="n">HostnameEndpoint</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">)</span>
+    <span class="n">startTLSClient</span> <span class="o">=</span> <span class="k">yield</span> <span class="n">endpoint</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">factory</span><span class="p">)</span>
+
+    <span class="n">done</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+    <span class="n">startTLSClient</span><span class="o">.</span><span class="n">connectionLost</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">reason</span><span class="p">:</span> <span class="n">done</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">done</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">starttls_client</span>
+    <span class="n">task</span><span class="o">.</span><span class="n">react</span><span class="p">(</span><span class="n">starttls_client</span><span class="o">.</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">startTLS</span></code> is a transport method that gets passed a <code class="docutils literal"><span class="pre">contextFactory</span></code>.
+It is invoked at an agreed-upon time in the data reception method of the client and server protocols.
+The server uses <code class="docutils literal"><span class="pre">PrivateCertificate.options</span></code> to create a <code class="docutils literal"><span class="pre">contextFactory</span></code> which will use a particular certificate and private key (a common requirement for TLS servers).</p>
+<p>The client creates an uncustomized <code class="docutils literal"><span class="pre">CertificateOptions</span></code> which is all that&#8217;s necessary for a TLS client to interact with a TLS server.</p>
+</div>
+</div>
+<div class="section" id="client-authentication">
+<h2>Client authentication<a class="headerlink" href="#client-authentication" title="Permalink to this headline">¶</a></h2>
+<p>Server and client-side changes to require client authentication fall
+largely under the dominion of pyOpenSSL, but few examples seem to exist on
+the web so for completeness a sample server and client are provided here.</p>
+<div class="section" id="tls-server-with-client-authentication-via-client-certificate-verification">
+<h3>TLS server with client authentication via client certificate verification<a class="headerlink" href="#tls-server-with-client-authentication-via-client-certificate-verification" title="Permalink to this headline">¶</a></h3>
+<p>When one or more certificates are passed to <code class="docutils literal"><span class="pre">PrivateCertificate.options</span></code>, the resulting <code class="docutils literal"><span class="pre">contextFactory</span></code> will use those certificates as trusted authorities and require that the peer present a certificate with a valid chain anchored by one of those authorities.</p>
+<p>A server can use this to verify that a client provides a valid certificate signed by one of those certificate authorities; here is an example of such a certificate.</p>
+<p><a class="reference download internal" href="../../_downloads/ssl_clientauth_server.py"><code class="xref download docutils literal"><span class="pre">ssl_clientauth_server.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">ssl</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">defer</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">twisted.python.modules</span> <span class="kn">import</span> <span class="n">getModule</span>
+
+<span class="kn">import</span> <span class="nn">echoserv</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">reactor</span><span class="p">):</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">startLogging</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="n">certData</span> <span class="o">=</span> <span class="n">getModule</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span><span class="o">.</span><span class="n">filePath</span><span class="o">.</span><span class="n">sibling</span><span class="p">(</span><span class="s">&#39;public.pem&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getContent</span><span class="p">()</span>
+    <span class="n">authData</span> <span class="o">=</span> <span class="n">getModule</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span><span class="o">.</span><span class="n">filePath</span><span class="o">.</span><span class="n">sibling</span><span class="p">(</span><span class="s">&#39;server.pem&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getContent</span><span class="p">()</span>
+    <span class="n">authority</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">Certificate</span><span class="o">.</span><span class="n">loadPEM</span><span class="p">(</span><span class="n">certData</span><span class="p">)</span>
+    <span class="n">certificate</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">PrivateCertificate</span><span class="o">.</span><span class="n">loadPEM</span><span class="p">(</span><span class="n">authData</span><span class="p">)</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">protocol</span><span class="o">.</span><span class="n">Factory</span><span class="o">.</span><span class="n">forProtocol</span><span class="p">(</span><span class="n">echoserv</span><span class="o">.</span><span class="n">Echo</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">listenSSL</span><span class="p">(</span><span class="mi">8000</span><span class="p">,</span> <span class="n">factory</span><span class="p">,</span> <span class="n">certificate</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">authority</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">ssl_clientauth_server</span>
+    <span class="n">task</span><span class="o">.</span><span class="n">react</span><span class="p">(</span><span class="n">ssl_clientauth_server</span><span class="o">.</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="client-with-certificates">
+<h3>Client with certificates<a class="headerlink" href="#client-with-certificates" title="Permalink to this headline">¶</a></h3>
+<p>The following client then supplies such a certificate as the <code class="docutils literal"><span class="pre">clientCertificate</span></code> argument to <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.ssl.optionsForClientTLS.html">optionsForClientTLS</a>, while still validating the server&#8217;s identity.</p>
+<p><a class="reference download internal" href="../../_downloads/ssl_clientauth_client.py"><code class="xref download docutils literal"><span class="pre">ssl_clientauth_client.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">ssl</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">endpoints</span><span class="p">,</span> <span class="n">defer</span>
+<span class="kn">from</span> <span class="nn">twisted.python.modules</span> <span class="kn">import</span> <span class="n">getModule</span>
+
+<span class="kn">import</span> <span class="nn">echoclient</span>
+
+<span class="nd">@defer.inlineCallbacks</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">reactor</span><span class="p">):</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">protocol</span><span class="o">.</span><span class="n">Factory</span><span class="o">.</span><span class="n">forProtocol</span><span class="p">(</span><span class="n">echoclient</span><span class="o">.</span><span class="n">EchoClient</span><span class="p">)</span>
+    <span class="n">certData</span> <span class="o">=</span> <span class="n">getModule</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span><span class="o">.</span><span class="n">filePath</span><span class="o">.</span><span class="n">sibling</span><span class="p">(</span><span class="s">&#39;public.pem&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getContent</span><span class="p">()</span>
+    <span class="n">authData</span> <span class="o">=</span> <span class="n">getModule</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span><span class="o">.</span><span class="n">filePath</span><span class="o">.</span><span class="n">sibling</span><span class="p">(</span><span class="s">&#39;server.pem&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getContent</span><span class="p">()</span>
+    <span class="n">clientCertificate</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">PrivateCertificate</span><span class="o">.</span><span class="n">loadPEM</span><span class="p">(</span><span class="n">authData</span><span class="p">)</span>
+    <span class="n">authority</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">Certificate</span><span class="o">.</span><span class="n">loadPEM</span><span class="p">(</span><span class="n">certData</span><span class="p">)</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">optionsForClientTLS</span><span class="p">(</span><span class="s">u&#39;example.com&#39;</span><span class="p">,</span> <span class="n">authority</span><span class="p">,</span>
+                                      <span class="n">clientCertificate</span><span class="p">)</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">endpoints</span><span class="o">.</span><span class="n">SSL4ClientEndpoint</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">,</span>
+                                            <span class="n">options</span><span class="p">)</span>
+    <span class="n">echoClient</span> <span class="o">=</span> <span class="k">yield</span> <span class="n">endpoint</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">factory</span><span class="p">)</span>
+
+    <span class="n">done</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+    <span class="n">echoClient</span><span class="o">.</span><span class="n">connectionLost</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">reason</span><span class="p">:</span> <span class="n">done</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">done</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">ssl_clientauth_client</span>
+    <span class="n">task</span><span class="o">.</span><span class="n">react</span><span class="p">(</span><span class="n">ssl_clientauth_client</span><span class="o">.</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that these two examples are very, very similar to the TLS echo examples above.
+In fact, you can demonstrate a failed authentication by simply running <code class="docutils literal"><span class="pre">echoclient_ssl.py</span></code> against <code class="docutils literal"><span class="pre">ssl_clientauth_server.py</span></code>; you&#8217;ll see no output because the server closed the connection rather than echoing the client&#8217;s authenticated input.</p>
+</div>
+<div class="section" id="tls-protocol-options">
+<h3>TLS Protocol Options<a class="headerlink" href="#tls-protocol-options" title="Permalink to this headline">¶</a></h3>
+<p>For servers, it is desirable to offer Diffie-Hellman based key exchange that provides perfect forward secrecy.
+The ciphers are activated by default, however it is necessary to pass an instance of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.ssl.DiffieHellmanParameters.html">DiffieHellmanParameters</a> to <code class="docutils literal"><span class="pre">CertificateOptions</span></code> via the <code class="docutils literal"><span class="pre">dhParameters</span></code> option to be able to use them.</p>
+<p>For example,</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.ssl</span> <span class="kn">import</span> <span class="n">CertificateOptions</span><span class="p">,</span> <span class="n">DiffieHellmanParameters</span>
+<span class="kn">from</span> <span class="nn">twisted.python.filepath</span> <span class="kn">import</span> <span class="n">FilePath</span>
+<span class="n">dhFilePath</span> <span class="o">=</span> <span class="n">FilePath</span><span class="p">(</span><span class="s">&#39;dh_param_1024.pem&#39;</span><span class="p">)</span>
+<span class="n">dhParams</span> <span class="o">=</span> <span class="n">DiffieHellmanParameters</span><span class="o">.</span><span class="n">fromFile</span><span class="p">(</span><span class="n">dhFilePath</span><span class="p">)</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">CertificateOptions</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">dhParameters</span><span class="o">=</span><span class="n">dhParams</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Another part of the TLS protocol which <code class="docutils literal"><span class="pre">CertificateOptions</span></code> can control is the version of the TLS or SSL protocol used.
+This is often called the context&#8217;s &#8220;method&#8221;.
+By default, <code class="docutils literal"><span class="pre">CertificateOptions</span></code> creates contexts that require at least the TLSv1 protocol.
+<code class="docutils literal"><span class="pre">CertificateOptions</span></code> also supports the older SSLv3 protocol (which may be required interoperate with an existing service or piece of software).
+To allow SSLv3, just pass <code class="docutils literal"><span class="pre">OpenSSL.SSL.SSLv3_METHOD</span></code> to <code class="docutils literal"><span class="pre">CertificateOptions</span></code>&#8216;s initializer:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet.ssl</span> <span class="kn">import</span> <span class="n">CertificateOptions</span>
+<span class="kn">from</span> <span class="nn">OpenSSL.SSL</span> <span class="kn">import</span> <span class="n">SSLv3_METHOD</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">CertificateOptions</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">SSLv3_METHOD</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The somewhat confusingly-named <code class="docutils literal"><span class="pre">OpenSSL.SSL.SSLv23_METHOD</span></code> is also supported (to enable SSLv3 or better, based on negotiation).
+SSLv2 is insecure; it is explicitly not supported and will be disabled in all configurations.</p>
+<p>Additionally, it is possible to limit the acceptable ciphers for your connection by passing an <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IAcceptableCiphers.html">IAcceptableCiphers</a> object to <code class="docutils literal"><span class="pre">CertificateOptions</span></code>.
+Since Twisted uses a secure cipher configuration by default, it is discouraged to do so unless absolutely necessary.</p>
+</div>
+</div>
+<div class="section" id="related-facilities">
+<h2>Related facilities<a class="headerlink" href="#related-facilities" title="Permalink to this headline">¶</a></h2>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.protocols.amp.html">twisted.protocols.amp</a> supports encrypted
+connections and exposes a <code class="docutils literal"><span class="pre">startTLS</span></code> method one can use or
+subclass. <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.html">twisted.web</a> has built-in TLS support in
+its <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.client.html">client</a> , <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.http.html">http</a> , and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.xmlrpc.html">xmlrpc</a> modules.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>After reading through this tutorial, you should be able to:</p>
+<ul class="simple">
+<li>Use <code class="docutils literal"><span class="pre">listenSSL</span></code> and <code class="docutils literal"><span class="pre">connectSSL</span></code> to create servers and clients that use
+TLS</li>
+<li>Use <code class="docutils literal"><span class="pre">startTLS</span></code> to switch a channel from being unencrypted to using TLS
+mid-connection</li>
+<li>Add server and client support for client authentication</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Using TLS in Twisted</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#tls-echo-server-and-client">TLS echo server and client</a><ul>
+<li><a class="reference internal" href="#tls-echo-server">TLS echo server</a></li>
+<li><a class="reference internal" href="#tls-echo-client">TLS echo client</a></li>
+<li><a class="reference internal" href="#connecting-to-public-servers">Connecting To Public Servers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-starttls">Using startTLS</a><ul>
+<li><a class="reference internal" href="#starttls-server">startTLS server</a></li>
+<li><a class="reference internal" href="#starttls-client">startTLS client</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#client-authentication">Client authentication</a><ul>
+<li><a class="reference internal" href="#tls-server-with-client-authentication-via-client-certificate-verification">TLS server with client authentication via client certificate verification</a></li>
+<li><a class="reference internal" href="#client-with-certificates">Client with certificates</a></li>
+<li><a class="reference internal" href="#tls-protocol-options">TLS Protocol Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#related-facilities">Related facilities</a></li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="reactor-basics.html"
+                                  title="previous chapter">Reactor Overview</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="udp.html"
+                                  title="next chapter">UDP Networking</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/ssl.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

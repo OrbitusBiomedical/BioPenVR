@@ -1,0 +1,435 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Twisted Glossary &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Debugging Python(Twisted) with Emacs" href="debug-with-emacs.html" />
+    <link rel="prev" title="Twisted Positioning" href="positioning.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="debug-with-emacs.html" title="Debugging Python(Twisted) with Emacs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="positioning.html" title="Twisted Positioning"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="twisted-glossary">
+<h1>Twisted Glossary<a class="headerlink" href="#twisted-glossary" title="Permalink to this headline">¶</a></h1>
+<p id="core-howto-glossary-adaptee">adaptee</p>
+<blockquote>
+<div>An object that has been adapted, also called &#8220;original&#8221; .  See <a class="reference internal" href="#core-howto-glossary-adapter"><span class="std std-ref">Adapter</span></a> .</div></blockquote>
+<p id="core-howto-glossary-adapter"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.components.Adapter.html">Adapter</a></p>
+<blockquote>
+<div>An object whose sole purpose is to implement an Interface for another object.
+See <a class="reference internal" href="components.html"><span class="doc">Interfaces and Adapters</span></a> .</div></blockquote>
+<p id="core-howto-glossary-application"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.Application.html">Application</a></p>
+<blockquote>
+<div>A <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.Application.html">twisted.application.service.Application</a> .  There are
+HOWTOs on <a class="reference internal" href="basics.html"><span class="doc">creating and manipulating</span></a> them as a
+system-administrator, as well as <a class="reference internal" href="application.html"><span class="doc">using</span></a> them in
+your code.</div></blockquote>
+<p id="core-howto-glossary-avatar">Avatar</p>
+<blockquote>
+<div>(from <a class="reference internal" href="#core-howto-glossary-cred"><span class="std std-ref">Twisted Cred</span></a> ) business logic for specific user.
+For example, in <a class="reference internal" href="#core-howto-glossary-pb"><span class="std std-ref">PB</span></a> these are perspectives, in POP3 these
+are mailboxes, and so on.</div></blockquote>
+<p id="core-howto-glossary-banana"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.banana.Banana.html">Banana</a></p>
+<blockquote>
+<div>The low-level data marshalling layer of <a class="reference internal" href="#core-howto-glossary-spread"><span class="std std-ref">Twisted Spread</span></a> .
+See <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.banana.html">twisted.spread.banana</a> .</div></blockquote>
+<p id="core-howto-glossary-broker"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Broker.html">Broker</a></p>
+<blockquote>
+<div>A <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Broker.html">twisted.spread.pb.Broker</a> , the object request
+broker for <a class="reference internal" href="#core-howto-glossary-spread"><span class="std std-ref">Twisted Spread</span></a> .</div></blockquote>
+<p id="core-howto-glossary-cache">cache</p>
+<blockquote>
+<div>A way to store data in readily accessible place for later reuse. Caching data
+is often done because the data is expensive to produce or access. Caching data
+risks being stale, or out of sync with the original data.</div></blockquote>
+<p id="core-howto-glossary-component">component</p>
+<blockquote>
+<div>A special kind of (persistent) <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.components.Adapter.html">Adapter</a> that works with a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.components.Componentized.html">twisted.python.components.Componentized</a> .  See also <a class="reference internal" href="components.html"><span class="doc">Interfaces and Adapters</span></a> .</div></blockquote>
+<p id="core-howto-glossary-componentized"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.components.Componentized.html">Componentized</a></p>
+<blockquote>
+<div>A Componentized object is a collection of information, separated
+into domain-specific or role-specific instances, that all stick
+together and refer to each other.
+Each object is an <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.components.Adapter.html">Adapter</a> , which, in the
+context of Componentized, we call &#8220;components&#8221; .  See also <a class="reference internal" href="components.html"><span class="doc">Interfaces and Adapters</span></a> .</div></blockquote>
+<p id="core-howto-glossary-conch"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.conch.html">conch</a></p>
+<blockquote>
+<div>Twisted&#8217;s SSH implementation.</div></blockquote>
+<p id="core-howto-glossary-connector">Connector</p>
+<blockquote>
+<div>Object used to interface between client connections and protocols, usually
+used with a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.ClientFactory.html">twisted.internet.protocol.ClientFactory</a>
+to give you control over how a client connection reconnects.  See <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IConnector.html">twisted.internet.interfaces.IConnector</a> and <a class="reference internal" href="clients.html"><span class="doc">Writing Clients</span></a> .</div></blockquote>
+<p id="core-howto-glossary-consumer">Consumer</p>
+<blockquote>
+<div>An object that consumes data from a <a class="reference internal" href="#core-howto-glossary-producer"><span class="std std-ref">Producer</span></a> .  See
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IConsumer.html">twisted.internet.interfaces.IConsumer</a> .</div></blockquote>
+<p id="core-howto-glossary-cred">Cred</p>
+<blockquote>
+<div>Twisted&#8217;s authentication API, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.html">twisted.cred</a> .  See
+<a class="reference internal" href="cred.html"><span class="doc">Introduction to Twisted Cred</span></a> and
+<a class="reference internal" href="pb-cred.html"><span class="doc">Twisted Cred usage</span></a> .</div></blockquote>
+<p id="core-howto-glossary-credentials">credentials</p>
+<blockquote>
+<div>A username/password, public key, or some other information used for
+authentication.</div></blockquote>
+<p id="core-howto-glossary-credential-checker">credential checker</p>
+<blockquote>
+<div>Where authentication actually happens.  See
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.checkers.ICredentialsChecker.html">ICredentialsChecker</a> .</div></blockquote>
+<p id="core-howto-glossary-cvstoys">CVSToys</p>
+<blockquote>
+<div>A nifty set of tools for CVS, available at <a class="reference external" href="http://twistedmatrix.com/users/acapnotic/wares/code/CVSToys/">http://twistedmatrix.com/users/acapnotic/wares/code/CVSToys/</a> .</div></blockquote>
+<p id="core-howto-glossary-daemon">Daemon</p>
+<blockquote>
+<div>A background process that does a job or handles client requests.
+<em>Daemon</em> is a Unix term; <em>service</em> is the Windows equivalent.</div></blockquote>
+<p id="core-howto-glossary-deferred"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a></p>
+<blockquote>
+<div>A instance of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">twisted.internet.defer.Deferred</a> , an
+abstraction for handling chains of callbacks and error handlers
+(&#8220;errbacks&#8221; ).
+See the <a class="reference internal" href="defer.html"><span class="doc">Deferring Execution</span></a> HOWTO.</div></blockquote>
+<p id="core-howto-glossary-enterprise">Enterprise</p>
+<blockquote>
+<div>Twisted&#8217;s RDBMS support.  It contains <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.enterprise.adbapi.html">twisted.enterprise.adbapi</a> for asynchronous access to any
+standard DB-API 2.0 module. See <a class="reference internal" href="rdbms.html"><span class="doc">Introduction to Twisted Enterprise</span></a> for more details.</div></blockquote>
+<p id="core-howto-glossary-errback">errback</p>
+<blockquote>
+<div>A callback attached to a <a class="reference internal" href="#core-howto-glossary-deferred"><span class="std std-ref">Deferred</span></a> with
+<code class="docutils literal"><span class="pre">.addErrback</span></code> to handle errors.</div></blockquote>
+<p id="core-howto-glossary-factory"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.Factory.html">Factory</a></p>
+<blockquote>
+<div>In general, an object that constructs other objects.  In Twisted, a Factory
+usually refers to a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.Factory.html">twisted.internet.protocol.Factory</a> , which constructs
+<a class="reference internal" href="#core-howto-glossary-protocol"><span class="std std-ref">Protocol</span></a> instances for incoming or outgoing
+connections.  See <a class="reference internal" href="servers.html"><span class="doc">Writing Servers</span></a> and <a class="reference internal" href="clients.html"><span class="doc">Writing Clients</span></a> .</div></blockquote>
+<p id="core-howto-glossary-failure"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.failure.Failure.html">Failure</a></p>
+<blockquote>
+<div>Basically, an asynchronous exception that contains traceback information;
+these are used for passing errors through asynchronous callbacks.</div></blockquote>
+<p id="core-howto-glossary-im">im</p>
+<blockquote>
+<div>Abbreviation of &#8220;(Twisted) <a class="reference internal" href="#core-howto-glossary-instancemessenger"><span class="std std-ref">Instance Messenger</span></a>&#8221; .</div></blockquote>
+<p id="core-howto-glossary-instancemessenger">Instance Messenger</p>
+<blockquote>
+<div>Instance Messenger is a multi-protocol chat program that comes with
+Twisted.  It can communicate via TOC with the AOL servers, via IRC, as well as
+via <a class="reference internal" href="#core-howto-glossary-perspectivebroker"><span class="std std-ref">PB</span></a> with
+<a class="reference internal" href="#core-howto-glossary-words"><span class="std std-ref">Twisted Words</span></a> .  See <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.words.im.html">twisted.words.im</a> .</div></blockquote>
+<p id="core-howto-glossary-interface">Interface</p>
+<blockquote>
+<div>A class that defines and documents methods that a class conforming to that
+interface needs to have.  A collection of core <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.html">twisted.internet</a> interfaces can
+be found in <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.html">twisted.internet.interfaces</a> .  See also <a class="reference internal" href="components.html"><span class="doc">Interfaces and Adapters</span></a> .</div></blockquote>
+<p id="core-howto-glossary-jelly">Jelly</p>
+<blockquote>
+<div>The serialization layer for <a class="reference internal" href="#core-howto-glossary-spread"><span class="std std-ref">Twisted Spread</span></a> , although it
+can be used separately from Twisted Spread as well.  It is similar in purpose
+to Python&#8217;s standard <code class="docutils literal"><span class="pre">pickle</span></code> module, but is more
+network-friendly, and depends on a separate marshaller (<a class="reference internal" href="#core-howto-glossary-banana"><span class="std std-ref">Banana</span></a> , in most cases).  See <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.jelly.html">twisted.spread.jelly</a> .</div></blockquote>
+<p id="core-howto-glossary-manhole">Manhole</p>
+<blockquote>
+<div>A debugging/administration interface to a Twisted application.</div></blockquote>
+<p id="core-howto-glossary-microdom">Microdom</p>
+<blockquote>
+<div>A partial DOM implementation using <a class="reference internal" href="#core-howto-glossary-sux"><span class="std std-ref">SUX</span></a> .  It is simple and
+pythonic, rather than strictly standards-compliant.  See <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.microdom.html">twisted.web.microdom</a> .</div></blockquote>
+<p id="core-howto-glossary-names">Names</p>
+<blockquote>
+<div>Twisted&#8217;s DNS server, found in <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.names.html">twisted.names</a> .</div></blockquote>
+<p id="core-howto-glossary-nevow">Nevow</p>
+<blockquote>
+<div>The successor to <a class="reference internal" href="#core-howto-glossary-woven"><span class="std std-ref">Woven</span></a> ; available from <a class="reference external" href="http://launchpad.net/nevow">Divmod</a> .</div></blockquote>
+<p id="core-howto-glossary-pb">PB</p>
+<blockquote>
+<div>Abbreviation of &#8220;<a class="reference internal" href="#core-howto-glossary-perspectivebroker"><span class="std std-ref">Perspective Broker</span></a>&#8221; .</div></blockquote>
+<p id="core-howto-glossary-perspectivebroker">Perspective Broker</p>
+<blockquote>
+<div>The high-level object layer of Twisted <a class="reference internal" href="#core-howto-glossary-spread"><span class="std std-ref">Spread</span></a> ,
+implementing semantics for method calling and object copying, caching, and
+referencing.  See <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.html">twisted.spread.pb</a> .</div></blockquote>
+<p id="core-howto-glossary-portal">Portal</p>
+<blockquote>
+<div>Glues <a class="reference internal" href="#core-howto-glossary-credential-checker"><span class="std std-ref">credential checkers</span></a> and
+<a class="reference internal" href="#core-howto-glossary-realm"><span class="std std-ref">realm</span></a> s together.</div></blockquote>
+<p id="core-howto-glossary-producer">Producer</p>
+<blockquote>
+<div>An object that generates data a chunk at a time, usually to be processed by a
+<a class="reference internal" href="#core-howto-glossary-consumer"><span class="std std-ref">Consumer</span></a> .  See
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IProducer.html">twisted.internet.interfaces.IProducer</a> .</div></blockquote>
+<p id="core-howto-glossary-protocol"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.protocol.Protocol.html">Protocol</a></p>
+<blockquote>
+<div>In general each network connection has its own Protocol instance to manage
+connection-specific state.  There is a collection of standard
+protocol implementations in <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.protocols.html">twisted.protocols</a> .  See
+also <a class="reference internal" href="servers.html"><span class="doc">Writing Servers</span></a> and <a class="reference internal" href="clients.html"><span class="doc">Writing Clients</span></a> .</div></blockquote>
+<p id="core-howto-glossary-psu">PSU</p>
+<blockquote>
+<div>There is no PSU.</div></blockquote>
+<p id="core-howto-glossary-reactor">Reactor</p>
+<blockquote>
+<div>The core event-loop of a Twisted application.  See
+<a class="reference internal" href="reactor-basics.html"><span class="doc">Reactor Basics</span></a> .</div></blockquote>
+<p id="core-howto-glossary-reality">Reality</p>
+<blockquote>
+<div>See &#8220;<a class="reference internal" href="#core-howto-glossary-twistedreality"><span class="std std-ref">Twisted Reality</span></a>&#8220;</div></blockquote>
+<p id="core-howto-glossary-realm">realm</p>
+<blockquote>
+<div>(in <a class="reference internal" href="#core-howto-glossary-cred"><span class="std std-ref">Twisted Cred</span></a> ) stores <a class="reference internal" href="#core-howto-glossary-avatar"><span class="std std-ref">avatars</span></a>
+and perhaps general business logic.  See
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.portal.IRealm.html">IRealm</a> .</div></blockquote>
+<p id="core-howto-glossary-resource"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.resource.Resource.html">Resource</a></p>
+<blockquote>
+<div>A <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.resource.Resource.html">twisted.web.resource.Resource</a> , which are served
+by Twisted Web.  Resources can be as simple as a static file on disk, or they
+can have dynamically generated content.</div></blockquote>
+<p id="core-howto-glossary-service">Service</p>
+<blockquote>
+<div>A <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.application.service.Service.html">twisted.application.service.Service</a> .  See <a class="reference internal" href="application.html"><span class="doc">Application howto</span></a> for a description of how they
+relate to <a class="reference internal" href="#core-howto-glossary-application"><span class="std std-ref">Applications</span></a> .</div></blockquote>
+<p id="core-howto-glossary-spread">Spread</p>
+<blockquote>
+<div>Twisted Spread is
+Twisted&#8217;s remote-object suite.  It consists of three layers: <a class="reference internal" href="#core-howto-glossary-perspectivebroker"><span class="std std-ref">Perspective Broker</span></a> , <a class="reference internal" href="#core-howto-glossary-jelly"><span class="std std-ref">Jelly</span></a>
+and <a class="reference internal" href="#core-howto-glossary-banana"><span class="std std-ref">Banana.</span></a> See <a class="reference internal" href="pb.html"><span class="doc">Writing Applications with Perspective Broker</span></a> .</div></blockquote>
+<p id="core-howto-glossary-sux">SUX</p>
+<blockquote>
+<div><em>S</em> mall <em>U</em> ncomplicated <em>X</em> ML, Twisted&#8217;s simple XML
+parser written in pure Python.  See <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.sux.html">twisted.web.sux</a> .</div></blockquote>
+<p id="core-howto-glossary-tac">TAC</p>
+<blockquote>
+<div>A <em>T</em> wisted <em>A</em> pplication <em>C</em> onfiguration is a Python
+source file, generally with the <em>.tac</em> extension, which defines
+configuration to make an application runnable using <code class="docutils literal"><span class="pre">twistd</span></code> .</div></blockquote>
+<p id="core-howto-glossary-tap">TAP</p>
+<blockquote>
+<div><em>T</em> wisted <em>A</em> pplication <em>P</em> ickle (no longer supported), or simply just a*T* wisted <em>AP</em> plication.  A serialised application that was created
+with <code class="docutils literal"><span class="pre">mktap</span></code> (no longer supported) and runnable by <code class="docutils literal"><span class="pre">twistd</span></code> .  See:doc:<cite>Using the Utilities &lt;basics&gt;</cite> .</div></blockquote>
+<p id="core-howto-glossary-trial">Trial</p>
+<blockquote>
+<div><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.trial.html">twisted.trial</a> , Twisted&#8217;s unit-testing framework,
+based on the <code class="docutils literal"><span class="pre">unittest</span></code> standard library module.  See also <a class="reference internal" href="testing.html"><span class="doc">Writing tests for Twisted code</span></a> .</div></blockquote>
+<p id="core-howto-glossary-twistedmatrixlaboratories">Twisted Matrix Laboratories</p>
+<blockquote>
+<div>The team behind Twisted.  <a class="reference external" href="http://twistedmatrix.com/">http://twistedmatrix.com/</a> .</div></blockquote>
+<p id="core-howto-glossary-twistedreality">Twisted Reality</p>
+<blockquote>
+<div>In days of old, the Twisted Reality multiplayer text-based interactive-fiction
+system was the main focus of Twisted Matrix Labs; Twisted, the general networking
+framework, grew out of Reality&#8217;s need for better network functionality. Twisted
+Reality has been superseded by the <a class="reference external" href="http://launchpad.net/imaginary">Imaginary</a> project.</div></blockquote>
+<p id="core-howto-glossary-usage"><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.usage.html">usage</a></p>
+<blockquote>
+<div>The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.usage.html">twisted.python.usage</a> module, a replacement for
+the standard <code class="docutils literal"><span class="pre">getopt</span></code> module for parsing command-lines which is much
+easier to work with.  See <a class="reference internal" href="options.html"><span class="doc">Parsing command-lines</span></a> .</div></blockquote>
+<p id="core-howto-glossary-words">Words</p>
+<blockquote>
+<div>Twisted Words is a multi-protocol chat server that uses the <a class="reference internal" href="#core-howto-glossary-perspectivebroker"><span class="std std-ref">Perspective Broker</span></a> protocol as its native
+communication style.  See <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.words.html">twisted.words</a> .</div></blockquote>
+<p id="core-howto-glossary-woven">Woven</p>
+<blockquote>
+<div><em>W</em> eb <em>O</em> bject <em>V</em> isualization <em>En</em> vironment.
+A templating system previously, but no longer, included with Twisted.  Woven
+has largely been superseded by <a class="reference external" href="http://launchpad.net/nevow">Divmod Nevow</a> .</div></blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="positioning.html"
+                                  title="previous chapter">Twisted Positioning</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="debug-with-emacs.html"
+                                  title="next chapter">Debugging Python(Twisted) with Emacs</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/glossary.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Session Endings &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Twisted Web In 60 Seconds" href="index.html" />
+    <link rel="next" title="Light Weight Templating With Resource Templates" href="../resource-templates.html" />
+    <link rel="prev" title="Storing Objects in the Session" href="session-store.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../resource-templates.html" title="Light Weight Templating With Resource Templates"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="session-store.html" title="Storing Objects in the Session"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Twisted Web</a> &raquo;</li>
+          <li><a href="../index.html" >Developer Guides</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Twisted Web In 60 Seconds</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="session-endings">
+<h1>Session Endings<a class="headerlink" href="#session-endings" title="Permalink to this headline">¶</a></h1>
+<p>The previous two examples introduced Twisted Web&#8217;s session APIs. This
+included accessing the session object, storing state on it, and retrieving it
+later, as well as the idea that the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.server.Session.html">Session</a> object has a lifetime which is tied to
+the notional session it represents. This example demonstrates how to exert some
+control over that lifetime and react when it expires.</p>
+<p>The lifetime of a session is controlled by the <code class="docutils literal"><span class="pre">sessionTimeout</span></code>
+attribute of the <code class="docutils literal"><span class="pre">Session</span></code> class. This attribute gives the number of
+seconds a session may go without being accessed before it expires. The default
+is 15 minutes. In this example we&#8217;ll change that to a different value.</p>
+<p>One way to override the value is with a subclass:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.server</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="k">class</span> <span class="nc">ShortSession</span><span class="p">(</span><span class="n">Session</span><span class="p">):</span>
+    <span class="n">sessionTimeout</span> <span class="o">=</span> <span class="mi">60</span>
+</pre></div>
+</div>
+<p>To have Twisted Web actually make use of this session class, rather
+than the default, it is also necessary to override
+the <code class="docutils literal"><span class="pre">sessionFactory</span></code> attribute of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.server.Site.html">Site</a> . We could do this with another
+subclass, but we could also do it to just one instance
+of <code class="docutils literal"><span class="pre">Site</span></code> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.server</span> <span class="kn">import</span> <span class="n">Site</span>
+
+<span class="n">factory</span> <span class="o">=</span> <span class="n">Site</span><span class="p">(</span><span class="n">rootResource</span><span class="p">)</span>
+<span class="n">factory</span><span class="o">.</span><span class="n">sessionFactory</span> <span class="o">=</span> <span class="n">ShortSession</span>
+</pre></div>
+</div>
+<p>Sessions given out for requests served by this <code class="docutils literal"><span class="pre">Site</span></code> will
+use <code class="docutils literal"><span class="pre">ShortSession</span></code> and only last one minute without activity.</p>
+<p>You can have arbitrary functions run when sessions expire,
+too. This can be useful for cleaning up external resources associated
+with the session, tracking usage statistics, and more. This
+functionality is provided via <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.server.Session.notifyOnExpire.html">Session.notifyOnExpire</a> . It accepts a
+single argument: a function to call when the session expires. Here&#8217;s a
+trivial example which prints a message whenever a session expires:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.resource</span> <span class="kn">import</span> <span class="n">Resource</span>
+
+<span class="k">class</span> <span class="nc">ExpirationLogger</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="n">sessions</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">render_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">getSession</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">uid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sessions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sessions</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">notifyOnExpire</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expired</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">uid</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s">&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_expired</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;Session&quot;</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="s">&quot;has expired.&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sessions</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Keep in mind that using a method as the callback will keep the instance (in
+this case, the <code class="docutils literal"><span class="pre">ExpirationLogger</span></code> resource) in memory until the
+session expires.</p>
+<p>With those pieces in hand, here&#8217;s an example that prints a message whenever a
+session expires, and uses sessions which last for 5 seconds:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.server</span> <span class="kn">import</span> <span class="n">Site</span><span class="p">,</span> <span class="n">Session</span>
+<span class="kn">from</span> <span class="nn">twisted.web.resource</span> <span class="kn">import</span> <span class="n">Resource</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">ShortSession</span><span class="p">(</span><span class="n">Session</span><span class="p">):</span>
+    <span class="n">sessionTimeout</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="k">class</span> <span class="nc">ExpirationLogger</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="n">sessions</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">render_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">getSession</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">uid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sessions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sessions</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">notifyOnExpire</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expired</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">uid</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s">&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_expired</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;Session&quot;</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="s">&quot;has expired.&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sessions</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+
+<span class="n">rootResource</span> <span class="o">=</span> <span class="n">Resource</span><span class="p">()</span>
+<span class="n">rootResource</span><span class="o">.</span><span class="n">putChild</span><span class="p">(</span><span class="s">&quot;logme&quot;</span><span class="p">,</span> <span class="n">ExpirationLogger</span><span class="p">())</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">Site</span><span class="p">(</span><span class="n">rootResource</span><span class="p">)</span>
+<span class="n">factory</span><span class="o">.</span><span class="n">sessionFactory</span> <span class="o">=</span> <span class="n">ShortSession</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8080</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Since <code class="docutils literal"><span class="pre">Site</span></code> customization is required, this example can&#8217;t be
+rpy-based, so it brings back the manual <code class="docutils literal"><span class="pre">reactor.listenTCP</span></code>
+and <code class="docutils literal"><span class="pre">reactor.run</span></code> calls. Run it and visit <code class="docutils literal"><span class="pre">/logme</span></code> to see
+it in action. Keep visiting it to keep your session active. Stop visiting it for
+five seconds to see your session expiration message.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="session-store.html"
+                                  title="previous chapter">Storing Objects in the Session</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../resource-templates.html"
+                                  title="next chapter">Light Weight Templating With Resource Templates</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../../_sources/web/howto/web-in-60/session-endings.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

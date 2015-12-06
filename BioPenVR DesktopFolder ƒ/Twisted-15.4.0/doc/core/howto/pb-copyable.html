@@ -1,0 +1,1053 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PB Copyable: Passing Complex Types &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Authentication with Perspective Broker" href="pb-cred.html" />
+    <link rel="prev" title="Managing Clients of Perspectives" href="pb-clients.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pb-cred.html" title="Authentication with Perspective Broker"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pb-clients.html" title="Managing Clients of Perspectives"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="pb-copyable-passing-complex-types">
+<h1>PB Copyable: Passing Complex Types<a class="headerlink" href="#pb-copyable-passing-complex-types" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This chapter focuses on how to use PB to pass complex types (specifically
+class instances) to and from a remote process. The first section is on
+simply copying the contents of an object to a remote process (<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Copyable.html">pb.Copyable</a> ). The second covers how
+to copy those contents once, then update them later when they change (<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Cacheable.html">Cacheable</a> ).</p>
+</div>
+<div class="section" id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<p>From the <a class="reference internal" href="pb-usage.html"><span class="doc">previous chapter</span></a> , you&#8217;ve seen how to
+pass basic types to a remote process, by using them in the arguments or
+return values of a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteReference.callRemote.html">callRemote</a> function. However,
+if you&#8217;ve experimented with it, you may have discovered problems when trying
+to pass anything more complicated than a primitive int/list/dict/string
+type, or another <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Referenceable.html">pb.Referenceable</a> object. At some point you want
+to pass entire objects between processes, instead of having to reduce them
+down to dictionaries on one end and then re-instantiating them on the
+other.</p>
+</div>
+<div class="section" id="passing-objects">
+<h2>Passing Objects<a class="headerlink" href="#passing-objects" title="Permalink to this headline">¶</a></h2>
+<p>The most obvious and straightforward way to send an object to a remote
+process is with something like the following code. It also happens that this
+code doesn&#8217;t work, as will be explained below.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">LilyPond</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frogs</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">frogs</span> <span class="o">=</span> <span class="n">frogs</span>
+
+<span class="n">pond</span> <span class="o">=</span> <span class="n">LilyPond</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ref</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;sendPond&quot;</span><span class="p">,</span> <span class="n">pond</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you try to run this, you might hope that a suitable remote end which
+implements the <code class="docutils literal"><span class="pre">remote_sendPond</span></code> method would see that method get
+invoked with an instance from the <code class="docutils literal"><span class="pre">LilyPond</span></code> class. But instead,
+you&#8217;ll encounter the dreaded <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.jelly.InsecureJelly.html">InsecureJelly</a> exception. This is
+Twisted&#8217;s way of telling you that you&#8217;ve violated a security restriction,
+and that the receiving end refuses to accept your object.</p>
+<div class="section" id="security-options">
+<h3>Security Options<a class="headerlink" href="#security-options" title="Permalink to this headline">¶</a></h3>
+<p>What&#8217;s the big deal? What&#8217;s wrong with just copying a class into another
+process&#8217; namespace?</p>
+<p>Reversing the question might make it easier to see the issue: what is the
+problem with accepting a stranger&#8217;s request to create an arbitrary object in
+your local namespace? The real question is how much power you are granting
+them: what actions can they convince you to take on the basis of the bytes
+they are sending you over that remote connection.</p>
+<p>Objects generally represent more power than basic types like strings and
+dictionaries because they also contain (or reference) code, which can modify
+other data structures when executed. Once previously-trusted data is
+subverted, the rest of the program is compromised.</p>
+<p>The built-in Python &#8220;batteries included&#8221; classes are relatively
+tame, but you still wouldn&#8217;t want to let a foreign program use them to
+create arbitrary objects in your namespace or on your computer. Imagine a
+protocol that involved sending a file-like object with a <code class="docutils literal"><span class="pre">read()</span></code>
+method that was supposed to used later to retrieve a document. Then imagine
+what if that object were created with
+<code class="docutils literal"><span class="pre">os.fdopen(&quot;~/.gnupg/secring.gpg&quot;)</span></code> . Or an instance of
+<code class="docutils literal"><span class="pre">telnetlib.Telnet(&quot;localhost&quot;,</span> <span class="pre">&quot;chargen&quot;)</span></code> .</p>
+<p>Classes you&#8217;ve written for your own program are likely to have far more
+power. They may run code during <code class="docutils literal"><span class="pre">__init__</span></code> , or even have special
+meaning simply because of their existence. A program might have
+<code class="docutils literal"><span class="pre">User</span></code> objects to represent user accounts, and have a rule that
+says all <code class="docutils literal"><span class="pre">User</span></code> objects in the system are referenced when
+authorizing a login session. (In this system, <code class="docutils literal"><span class="pre">User.__init__</span></code>
+would probably add the object to a global list of known users). The simple
+act of creating an object would give access to somebody. If you could be
+tricked into creating a bad object, an unauthorized user would get
+access.</p>
+<p>So object creation needs to be part of a system&#8217;s security design. The
+dotted line between &#8220;trusted inside&#8221; and &#8220;untrusted outside&#8221; needs
+to describe what may be done in response to outside events. One of those
+events is the receipt of an object through a PB remote procedure call, which
+is a request to create an object in your &#8220;inside&#8221; namespace. The
+question is what to do in response to it. For this reason, you must
+explicitly specify what remote classes will be accepted, and how their
+local representatives are to be created.</p>
+</div>
+<div class="section" id="what-class-to-use">
+<h3>What class to use?<a class="headerlink" href="#what-class-to-use" title="Permalink to this headline">¶</a></h3>
+<p>Another basic question to answer before we can do anything useful with an
+incoming serialized object is: what class should we create? The simplistic
+answer is to create the &#8220;same kind&#8221; that was serialized on the sender&#8217;s
+end of the wire, but this is not as easy or as straightforward as you might
+think. Remember that the request is coming from a different program, using a
+potentially different set of class libraries. In fact, since PB has also
+been implemented in Java, Emacs-Lisp, and other languages, there&#8217;s no
+guarantee that the sender is even running Python! All we know on the
+receiving end is a list of two things which describe the instance they are
+trying to send us: the name of the class, and a representation of the
+contents of the object.</p>
+<p>PB lets you specify the mapping from remote class names to local classes
+with the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.jelly.setUnjellyableForClass.html">setUnjellyableForClass</a> function  <a class="footnote-reference" href="#id7" id="id1">[1]</a> .</p>
+<p>This function takes a remote/sender class reference (either the
+fully-qualified name as used by the sending end, or a class object from
+which the name can be extracted), and a local/recipient class (used to
+create the local representation for incoming serialized objects). Whenever
+the remote end sends an object, the class name that they transmit is looked
+up in the table controlled by this function. If a matching class is found,
+it is used to create the local object. If not, you get the
+<code class="docutils literal"><span class="pre">InsecureJelly</span></code> exception.</p>
+<p>In general you expect both ends to share the same codebase: either you
+control the program that is running on both ends of the wire, or both
+programs share some kind of common language that is implemented in code
+which exists on both ends. You wouldn&#8217;t expect them to send you an object of
+the MyFooziWhatZit class unless you also had a definition for that class. So
+it is reasonable for the Jelly layer to reject all incoming classes except
+the ones that you have explicitly marked with
+<code class="docutils literal"><span class="pre">setUnjellyableForClass</span></code> . But keep in mind that the sender&#8217;s idea
+of a <code class="docutils literal"><span class="pre">User</span></code> object might differ from the recipient&#8217;s, either
+through namespace collisions between unrelated packages, version skew
+between nodes that haven&#8217;t been updated at the same rate, or a malicious
+intruder trying to cause your code to fail in some interesting or
+potentially vulnerable way.</p>
+</div>
+</div>
+<div class="section" id="pb-copyable">
+<h2>pb.Copyable<a class="headerlink" href="#pb-copyable" title="Permalink to this headline">¶</a></h2>
+<p>Ok, enough of this theory. How do you send a fully-fledged object from
+one side to the other?</p>
+<p><a class="reference download internal" href="../../_downloads/copy_sender.py"><code class="xref download docutils literal"><span class="pre">copy_sender.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span><span class="p">,</span> <span class="n">jelly</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">LilyPond</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">setStuff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">numFrogs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numFrogs</span> <span class="o">=</span> <span class="n">numFrogs</span>
+    <span class="k">def</span> <span class="nf">countFrogs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s"> frogs&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">numFrogs</span>
+
+<span class="k">class</span> <span class="nc">CopyPond</span><span class="p">(</span><span class="n">LilyPond</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">Copyable</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Sender</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pond</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pond</span> <span class="o">=</span> <span class="n">pond</span>
+
+    <span class="k">def</span> <span class="nf">got_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">remote</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote</span> <span class="o">=</span> <span class="n">remote</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">remote</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;takePond&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pond</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ok</span><span class="p">)</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notOk</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">ok</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;pond arrived&quot;</span><span class="p">,</span> <span class="n">response</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">notOk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">failure</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;error during takePond:&quot;</span>
+        <span class="k">if</span> <span class="n">failure</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">jelly</span><span class="o">.</span><span class="n">InsecureJelly</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot; InsecureJelly&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">failure</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">copy_sender</span> <span class="kn">import</span> <span class="n">CopyPond</span>  <span class="c"># so it&#39;s not __main__.CopyPond</span>
+    <span class="n">pond</span> <span class="o">=</span> <span class="n">CopyPond</span><span class="p">()</span>
+    <span class="n">pond</span><span class="o">.</span><span class="n">setStuff</span><span class="p">(</span><span class="s">&quot;green&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+    <span class="n">pond</span><span class="o">.</span><span class="n">countFrogs</span><span class="p">()</span>
+    <span class="c"># class name:</span>
+    <span class="k">print</span> <span class="s">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">pond</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__module__</span><span class="p">,</span> <span class="n">pond</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">])</span>
+
+    <span class="n">sender</span> <span class="o">=</span> <span class="n">Sender</span><span class="p">(</span><span class="n">pond</span><span class="p">)</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBClientFactory</span><span class="p">()</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8800</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+    <span class="n">deferred</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getRootObject</span><span class="p">()</span>
+    <span class="n">deferred</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">sender</span><span class="o">.</span><span class="n">got_obj</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/copy_receiver.tac"><code class="xref download docutils literal"><span class="pre">copy_receiver.tac</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">PB copy receiver example.</span>
+
+<span class="sd">This is a Twisted Application Configuration (tac) file.  Run with e.g.</span>
+<span class="sd">   twistd -ny copy_receiver.tac</span>
+
+<span class="sd">See the twistd(1) man page or</span>
+<span class="sd">http://twistedmatrix.com/documents/current/howto/application for details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">__doc__</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">twisted.application</span> <span class="kn">import</span> <span class="n">service</span><span class="p">,</span> <span class="n">internet</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">copy_sender</span> <span class="kn">import</span> <span class="n">LilyPond</span><span class="p">,</span> <span class="n">CopyPond</span>
+
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="c">#log.startLogging(sys.stdout)</span>
+
+<span class="k">class</span> <span class="nc">ReceiverPond</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">RemoteCopy</span><span class="p">,</span> <span class="n">LilyPond</span><span class="p">):</span>
+    <span class="k">pass</span>
+<span class="n">pb</span><span class="o">.</span><span class="n">setUnjellyableForClass</span><span class="p">(</span><span class="n">CopyPond</span><span class="p">,</span> <span class="n">ReceiverPond</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Receiver</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Root</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">remote_takePond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pond</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot; got pond:&quot;</span><span class="p">,</span> <span class="n">pond</span>
+        <span class="n">pond</span><span class="o">.</span><span class="n">countFrogs</span><span class="p">()</span>
+        <span class="k">return</span> <span class="s">&quot;safe and sound&quot;</span> <span class="c"># positive acknowledgement</span>
+    <span class="k">def</span> <span class="nf">remote_shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">Application</span><span class="p">(</span><span class="s">&quot;copy_receiver&quot;</span><span class="p">)</span>
+<span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="mi">8800</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">Receiver</span><span class="p">()))</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span>
+    <span class="n">service</span><span class="o">.</span><span class="n">IServiceCollection</span><span class="p">(</span><span class="n">application</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The sending side has a class called <code class="docutils literal"><span class="pre">LilyPond</span></code> . To make this
+eligible for transport through <code class="docutils literal"><span class="pre">callRemote</span></code> (either as an
+argument, a return value, or something referenced by either of those [like a
+dictionary value]), it must inherit from one of the four <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Serializable.html">Serializable</a> classes. In this section,
+we focus on <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Copyable.html">Copyable</a> .
+The copyable subclass of <code class="docutils literal"><span class="pre">LilyPond</span></code> is called
+<code class="docutils literal"><span class="pre">CopyPond</span></code> . We create an instance of it and send it through
+<code class="docutils literal"><span class="pre">callRemote</span></code> as an argument to the receiver&#8217;s
+<code class="docutils literal"><span class="pre">remote_takePond</span></code> method. The Jelly layer will serialize
+(&#8220;jelly&#8221; ) that object as an instance with a class name of&#8221;copy_sender.CopyPond&#8221; and some chunk of data that represents the
+object&#8217;s state. <code class="docutils literal"><span class="pre">pond.__class__.__module__</span></code> and
+<code class="docutils literal"><span class="pre">pond.__class__.__name__</span></code> are used to derive the class name
+string. The object&#8217;s <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.flavors.Copyable.getStateToCopy.html">getStateToCopy</a> method is
+used to get the state: this is provided by <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Copyable.html">pb.Copyable</a> , and the default just retrieves
+<code class="docutils literal"><span class="pre">self.__dict__</span></code> . This works just like the optional
+<code class="docutils literal"><span class="pre">__getstate__</span></code> method used by <code class="docutils literal"><span class="pre">pickle</span></code> . The pair of
+name and state are sent over the wire to the receiver.</p>
+<p>The receiving end defines a local class named <code class="docutils literal"><span class="pre">ReceiverPond</span></code>
+to represent incoming <code class="docutils literal"><span class="pre">LilyPond</span></code> instances. This class derives
+from the sender&#8217;s <code class="docutils literal"><span class="pre">LilyPond</span></code> class (with a fully-qualified name
+of <code class="docutils literal"><span class="pre">copy_sender.LilyPond</span></code> ), which specifies how we expect it to
+behave. We trust that this is the same <code class="docutils literal"><span class="pre">LilyPond</span></code> class as the
+sender used. (At the very least, we hope ours will be able to accept a state
+created by theirs). It also inherits from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteCopy.html">pb.RemoteCopy</a> , which is a requirement for all
+classes that act in this local-representative role (those which are given to
+the second argument of <code class="docutils literal"><span class="pre">setUnjellyableForClass</span></code> ).
+<code class="docutils literal"><span class="pre">RemoteCopy</span></code> provides the methods that tell the Jelly layer how
+to create the local object from the incoming serialized state.</p>
+<p>Then <code class="docutils literal"><span class="pre">setUnjellyableForClass</span></code> is used to register the two
+classes. This has two effects: instances of the remote class (the first
+argument) will be allowed in through the security layer, and instances of
+the local class (the second argument) will be used to contain the state that
+is transmitted when the sender serializes the remote object.</p>
+<p>When the receiver unserializes (&#8220;unjellies&#8221; ) the object, it will
+create an instance of the local <code class="docutils literal"><span class="pre">ReceiverPond</span></code> class, and hand
+the transmitted state (usually in the form of a dictionary) to that object&#8217;s
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.flavors.RemoteCopy.setCopyableState.html">setCopyableState</a> method.
+This acts just like the <code class="docutils literal"><span class="pre">__setstate__</span></code> method that
+<code class="docutils literal"><span class="pre">pickle</span></code> uses when unserializing an object.
+<code class="docutils literal"><span class="pre">getStateToCopy</span></code> /<code class="docutils literal"><span class="pre">setCopyableState</span></code> are distinct from
+<code class="docutils literal"><span class="pre">__getstate__</span></code> /<code class="docutils literal"><span class="pre">__setstate__</span></code> to allow objects to be
+persisted (across time) differently than they are transmitted (across
+[memory]space).</p>
+<p>When this is run, it produces the following output:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">[-] twisted.spread.pb.PBServerFactory starting on 8800</span>
+<span class="go">[-] Starting factory &lt;twisted.spread.pb.PBServerFactory instance at</span>
+<span class="go">0x406159cc&gt;</span>
+<span class="go">[Broker,0,127.0.0.1]  got pond: &lt;__builtin__.ReceiverPond instance at</span>
+<span class="go">0x406ec5ec&gt;</span>
+<span class="go">[Broker,0,127.0.0.1] 7 frogs</span>
+</pre></div>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> ./copy_sender.py
+<span class="go">7 frogs</span>
+<span class="go">copy_sender.CopyPond</span>
+<span class="go">pond arrived safe and sound</span>
+<span class="go">Main loop terminated.</span>
+<span class="gp">$</span>
+</pre></div>
+</div>
+<div class="section" id="controlling-the-copied-state">
+<h3>Controlling the Copied State<a class="headerlink" href="#controlling-the-copied-state" title="Permalink to this headline">¶</a></h3>
+<p>By overriding <code class="docutils literal"><span class="pre">getStateToCopy</span></code> and
+<code class="docutils literal"><span class="pre">setCopyableState</span></code> , you can control how the object is transmitted
+over the wire. For example, you might want perform some data-reduction:
+pre-compute some results instead of sending all the raw data over the wire.
+Or you could replace references to a local object on the sender&#8217;s side with
+markers before sending, then upon receipt replace those markers with
+references to a receiver-side proxy that could perform the same operations
+against a local cache of data.</p>
+<p>Another good use for <code class="docutils literal"><span class="pre">getStateToCopy</span></code> is to implement &#8220;local-only&#8221; attributes: data that is only accessible by the local
+process, not to any remote users. For example, a <code class="docutils literal"><span class="pre">.password</span></code>
+attribute could be removed from the object state before sending to a remote
+system. Combined with the fact that <code class="docutils literal"><span class="pre">Copyable</span></code> objects return
+unchanged from a round trip, this could be used to build a
+challenge-response system (in fact PB does this with
+<code class="docutils literal"><span class="pre">pb.Referenceable</span></code> objects to implement authorization as
+described <a class="reference internal" href="pb-cred.html"><span class="doc">here</span></a> ).</p>
+<p>Whatever <code class="docutils literal"><span class="pre">getStateToCopy</span></code> returns from the sending object will
+be serialized and sent over the wire; <code class="docutils literal"><span class="pre">setCopyableState</span></code> gets
+whatever comes over the wire and is responsible for setting up the state of
+the object it lives in.</p>
+<p><a class="reference download internal" href="../../_downloads/copy2_classes.py"><code class="xref download docutils literal"><span class="pre">copy2_classes.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+
+<span class="k">class</span> <span class="nc">FrogPond</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numFrogs</span><span class="p">,</span> <span class="n">numToads</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numFrogs</span> <span class="o">=</span> <span class="n">numFrogs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numToads</span> <span class="o">=</span> <span class="n">numToads</span>
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numFrogs</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">numToads</span>
+
+<span class="k">class</span> <span class="nc">SenderPond</span><span class="p">(</span><span class="n">FrogPond</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">Copyable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">getStateToCopy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">d</span><span class="p">[</span><span class="s">&#39;frogsAndToads&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;numFrogs&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;numToads&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;numFrogs&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;numToads&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+<span class="k">class</span> <span class="nc">ReceiverPond</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">RemoteCopy</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setCopyableState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frogsAndToads</span>
+
+<span class="n">pb</span><span class="o">.</span><span class="n">setUnjellyableForClass</span><span class="p">(</span><span class="n">SenderPond</span><span class="p">,</span> <span class="n">ReceiverPond</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/copy2_sender.py"><code class="xref download docutils literal"><span class="pre">copy2_sender.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span><span class="p">,</span> <span class="n">jelly</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">copy2_classes</span> <span class="kn">import</span> <span class="n">SenderPond</span>
+
+<span class="k">class</span> <span class="nc">Sender</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pond</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pond</span> <span class="o">=</span> <span class="n">pond</span>
+
+    <span class="k">def</span> <span class="nf">got_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;takePond&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pond</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ok</span><span class="p">)</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notOk</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">ok</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;pond arrived&quot;</span><span class="p">,</span> <span class="n">response</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">notOk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">failure</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;error during takePond:&quot;</span>
+        <span class="k">if</span> <span class="n">failure</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">jelly</span><span class="o">.</span><span class="n">InsecureJelly</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot; InsecureJelly&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">failure</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">pond</span> <span class="o">=</span> <span class="n">SenderPond</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;count </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">pond</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+    <span class="n">sender</span> <span class="o">=</span> <span class="n">Sender</span><span class="p">(</span><span class="n">pond</span><span class="p">)</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBClientFactory</span><span class="p">()</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8800</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+    <span class="n">deferred</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getRootObject</span><span class="p">()</span>
+    <span class="n">deferred</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">sender</span><span class="o">.</span><span class="n">got_obj</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/copy2_receiver.py"><code class="xref download docutils literal"><span class="pre">copy2_receiver.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.application</span> <span class="kn">import</span> <span class="n">service</span><span class="p">,</span> <span class="n">internet</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">import</span> <span class="nn">copy2_classes</span> <span class="c"># needed to get ReceiverPond registered with Jelly</span>
+
+<span class="k">class</span> <span class="nc">Receiver</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Root</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">remote_takePond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pond</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot; got pond:&quot;</span><span class="p">,</span> <span class="n">pond</span>
+        <span class="k">print</span> <span class="s">&quot; count </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">pond</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+        <span class="k">return</span> <span class="s">&quot;safe and sound&quot;</span> <span class="c"># positive acknowledgement</span>
+    <span class="k">def</span> <span class="nf">remote_shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">Application</span><span class="p">(</span><span class="s">&quot;copy_receiver&quot;</span><span class="p">)</span>
+<span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="mi">8800</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">Receiver</span><span class="p">()))</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span>
+    <span class="n">service</span><span class="o">.</span><span class="n">IServiceCollection</span><span class="p">(</span><span class="n">application</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>In this example, the classes are defined in a separate source file, which
+also sets up the binding between them. The <code class="docutils literal"><span class="pre">SenderPond</span></code> and <code class="docutils literal"><span class="pre">ReceiverPond</span></code> are unrelated save for this binding: they happen
+to implement the same methods, but use different internal instance variables
+to accomplish them.</p>
+<p>The recipient of the object doesn&#8217;t even have to import the class
+definition into their namespace. It is sufficient that they import the class
+definition (and thus execute the <code class="docutils literal"><span class="pre">setUnjellyableForClass</span></code>
+statement). The Jelly layer remembers the class definition until a matching
+object is received. The sender of the object needs the definition, of
+course, to create the object in the first place.</p>
+<p>When run, the <code class="docutils literal"><span class="pre">copy2</span></code> example emits the following:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> twistd -n -y copy2_receiver.py
+<span class="go">[-] twisted.spread.pb.PBServerFactory starting on 8800</span>
+<span class="go">[-] Starting factory &lt;twisted.spread.pb.PBServerFactory instance at</span>
+<span class="go">0x40604b4c&gt;</span>
+<span class="go">[Broker,0,127.0.0.1]  got pond: &lt;copy2_classes.ReceiverPond instance at</span>
+<span class="go">0x406eb2ac&gt;</span>
+<span class="go">[Broker,0,127.0.0.1]  count 7</span>
+</pre></div>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> ./copy2_sender.py
+<span class="go">count 7</span>
+<span class="go">pond arrived safe and sound</span>
+<span class="go">Main loop terminated.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="things-to-watch-out-for">
+<h3>Things To Watch Out For<a class="headerlink" href="#things-to-watch-out-for" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>The first argument to <code class="docutils literal"><span class="pre">setUnjellyableForClass</span></code> must refer
+to the class <em>as known by the sender</em> . The sender has no way of
+knowing about how your local <code class="docutils literal"><span class="pre">import</span></code> statements are set up,
+and Python&#8217;s flexible namespace semantics allow you to access the same
+class through a variety of different names. You must match whatever the
+sender does. Having both ends import the class from a separate file, using
+a canonical module name (no &#8220;sibling imports&#8221; ), is a good way to get
+this right, especially when both the sending and the receiving classes are
+defined together, with the <code class="docutils literal"><span class="pre">setUnjellyableForClass</span></code> immediately
+following them.</li>
+<li>The class that is sent must inherit from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Copyable.html">pb.Copyable</a> . The class that is registered to
+receive it must inherit from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteCopy.html">pb.RemoteCopy</a>  <a class="footnote-reference" href="#id8" id="id2">[2]</a> .</li>
+<li>The same class can be used to send and receive. Just have it inherit
+from both <code class="docutils literal"><span class="pre">pb.Copyable</span></code> and <code class="docutils literal"><span class="pre">pb.RemoteCopy</span></code> . This
+will also make it possible to send the same class symmetrically back and
+forth over the wire. But don&#8217;t get confused about when it is coming (and
+using <code class="docutils literal"><span class="pre">setCopyableState</span></code> ) versus when it is going (using
+<code class="docutils literal"><span class="pre">getStateToCopy</span></code> ).</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.jelly.InsecureJelly.html">InsecureJelly</a>
+exceptions are raised by the receiving end. They will be delivered
+asynchronously to an <code class="docutils literal"><span class="pre">errback</span></code> handler. If you do not add one
+to the <code class="docutils literal"><span class="pre">Deferred</span></code> returned by <code class="docutils literal"><span class="pre">callRemote</span></code> , then you
+will never receive notification of the problem.</li>
+<li>The class that is derived from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteCopy.html">pb.RemoteCopy</a> will be created using a
+constructor <code class="docutils literal"><span class="pre">__init__</span></code> method that takes no arguments. All
+setup must be performed in the <code class="docutils literal"><span class="pre">setCopyableState</span></code> method. As
+the docstring on <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteCopy.html">RemoteCopy</a> says, don&#8217;t implement a
+constructor that requires arguments in a subclass of
+<code class="docutils literal"><span class="pre">RemoteCopy</span></code> .</li>
+</ul>
+</div>
+<div class="section" id="more-information">
+<h3>More Information<a class="headerlink" href="#more-information" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">pb.Copyable</span></code> is mostly implemented
+in <code class="docutils literal"><span class="pre">twisted.spread.flavors</span></code> , and the docstrings there are
+the best source of additional information.</li>
+<li><code class="docutils literal"><span class="pre">Copyable</span></code> is also used in <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.distrib.html">twisted.web.distrib</a> to deliver HTTP requests to other
+programs for rendering, allowing subtrees of URL space to be delegated to
+multiple programs (on multiple machines).</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.manhole.explorer.html">twisted.manhole.explorer</a> also uses
+<code class="docutils literal"><span class="pre">Copyable</span></code> to distribute debugging information from the program
+under test to the debugging tool.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="pb-cacheable">
+<h2>pb.Cacheable<a class="headerlink" href="#pb-cacheable" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes the object you want to send to the remote process is big and
+slow. &#8220;big&#8221; means it takes a lot of data (storage, network bandwidth,
+processing) to represent its state. &#8220;slow&#8221; means that state doesn&#8217;t
+change very frequently. It may be more efficient to send the full state only
+once, the first time it is needed, then afterwards only send the differences
+or changes in state whenever it is modified. The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Cacheable.html">pb.Cacheable</a> class provides a framework to
+implement this.</p>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Cacheable.html">pb.Cacheable</a> is derived
+from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Copyable.html">pb.Copyable</a> , so it is
+based upon the idea of an object&#8217;s state being captured on the sending side,
+and then turned into a new object on the receiving side. This is extended to
+have an object &#8220;publishing&#8221; on the sending side (derived from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Cacheable.html">pb.Cacheable</a> ), matched with one&#8221;observing&#8221; on the receiving side (derived from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteCache.html">pb.RemoteCache</a> ).</p>
+<p>To effectively use <code class="docutils literal"><span class="pre">pb.Cacheable</span></code> , you need to isolate changes
+to your object into accessor functions (specifically &#8220;setter&#8221;
+functions). Your object needs to get control <em>every</em> single time some
+attribute is changed <a class="footnote-reference" href="#id9" id="id3">[3]</a> .</p>
+<p>You derive your sender-side class from <code class="docutils literal"><span class="pre">pb.Cacheable</span></code> , and you
+add two methods: <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.flavors.Cacheable.getStateToCacheAndObserveFor.html">getStateToCacheAndObserveFor</a>
+and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.flavors.Cacheable.stoppedObserving.html">stoppedObserving</a> . The first
+is called when a remote caching reference is first created, and retrieves
+the data with which the cache is first filled. It also provides an
+object called the &#8220;observer&#8221;  <a class="footnote-reference" href="#id10" id="id4">[4]</a> that points at that receiver-side cache. Every time the state of the object
+is changed, you give a message to the observer, informing them of the
+change. The other method, <code class="docutils literal"><span class="pre">stoppedObserving</span></code> , is called when the
+remote cache goes away, so that you can stop sending updates.</p>
+<p>On the receiver end, you make your cache class inherit from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteCache.html">pb.RemoteCache</a> , and implement the
+<code class="docutils literal"><span class="pre">setCopyableState</span></code> as you would for a <code class="docutils literal"><span class="pre">pb.RemoteCopy</span></code>
+object. In addition, you must implement methods to receive the updates sent
+to the observer by the <code class="docutils literal"><span class="pre">pb.Cacheable</span></code> : these methods should have
+names that start with <code class="docutils literal"><span class="pre">observe_</span></code> , and match the
+<code class="docutils literal"><span class="pre">callRemote</span></code> invocations from the sender side just as the usual
+<code class="docutils literal"><span class="pre">remote_*</span></code> and <code class="docutils literal"><span class="pre">perspective_*</span></code> methods match normal
+<code class="docutils literal"><span class="pre">callRemote</span></code> calls.</p>
+<p>The first time a reference to the <code class="docutils literal"><span class="pre">pb.Cacheable</span></code> object is
+sent to any particular recipient, a sender-side Observer will be created for
+it, and the <code class="docutils literal"><span class="pre">getStateToCacheAndObserveFor</span></code> method will be called
+to get the current state and register the Observer. The state which that
+returns is sent to the remote end and turned into a local representation
+using <code class="docutils literal"><span class="pre">setCopyableState</span></code> just like <code class="docutils literal"><span class="pre">pb.RemoteCopy</span></code> ,
+described above (in fact it inherits from that class).</p>
+<p>After that, your &#8220;setter&#8221; functions on the sender side should call
+<code class="docutils literal"><span class="pre">callRemote</span></code> on the Observer, which causes <code class="docutils literal"><span class="pre">observe_*</span></code>
+methods to run on the receiver, which are then supposed to update the
+receiver-local (cached) state.</p>
+<p>When the receiver stops following the cached object and the last
+reference goes away, the <code class="docutils literal"><span class="pre">pb.RemoteCache</span></code> object can be freed.
+Just before it dies, it tells the sender side it no longer cares about the
+original object. When <em>that</em> reference count goes to zero, the
+Observer goes away and the <code class="docutils literal"><span class="pre">pb.Cacheable</span></code> object can stop
+announcing every change that takes place. The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.flavors.Cacheable.stoppedObserving.html">stoppedObserving</a> method is
+used to tell the <code class="docutils literal"><span class="pre">pb.Cacheable</span></code> that the Observer has gone
+away.</p>
+<p>With the <code class="docutils literal"><span class="pre">pb.Cacheable</span></code> and <code class="docutils literal"><span class="pre">pb.RemoteCache</span></code>
+classes in place, bound together by a call to
+<code class="docutils literal"><span class="pre">pb.setUnjellyableForClass</span></code> , all that remains is to pass a
+reference to your <code class="docutils literal"><span class="pre">pb.Cacheable</span></code> over the wire to the remote end.
+The corresponding <code class="docutils literal"><span class="pre">pb.RemoteCache</span></code> object will automatically be
+created, and the matching methods will be used to keep the receiver-side
+slave object in sync with the sender-side master object.</p>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p>Here is a complete example, in which the <code class="docutils literal"><span class="pre">MasterDuckPond</span></code> is
+controlled by the sending side, and the <code class="docutils literal"><span class="pre">SlaveDuckPond</span></code> is a
+cache that tracks changes to the master:</p>
+<p><a class="reference download internal" href="../../_downloads/cache_classes.py"><code class="xref download docutils literal"><span class="pre">cache_classes.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+
+<span class="k">class</span> <span class="nc">MasterDuckPond</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Cacheable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ducks</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ducks</span> <span class="o">=</span> <span class="n">ducks</span>
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;I have [</span><span class="si">%d</span><span class="s">] ducks&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ducks</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">addDuck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duck</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ducks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">duck</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observers</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&#39;addDuck&#39;</span><span class="p">,</span> <span class="n">duck</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">removeDuck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duck</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ducks</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">duck</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observers</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&#39;removeDuck&#39;</span><span class="p">,</span> <span class="n">duck</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getStateToCacheAndObserveFor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perspective</span><span class="p">,</span> <span class="n">observer</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span>
+        <span class="c"># you should ignore pb.Cacheable-specific state, like self.observers</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ducks</span> <span class="c"># in this case, just a list of ducks</span>
+    <span class="k">def</span> <span class="nf">stoppedObserving</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perspective</span><span class="p">,</span> <span class="n">observer</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SlaveDuckPond</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">RemoteCache</span><span class="p">):</span>
+    <span class="c"># This is a cache of a remote MasterDuckPond</span>
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cacheducks</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">getDucks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cacheducks</span>
+    <span class="k">def</span> <span class="nf">setCopyableState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot; cache - sitting, er, setting ducks&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cacheducks</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="k">def</span> <span class="nf">observe_addDuck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newDuck</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot; cache - addDuck&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cacheducks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newDuck</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">observe_removeDuck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deadDuck</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot; cache - removeDuck&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cacheducks</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">deadDuck</span><span class="p">)</span>
+
+<span class="n">pb</span><span class="o">.</span><span class="n">setUnjellyableForClass</span><span class="p">(</span><span class="n">MasterDuckPond</span><span class="p">,</span> <span class="n">SlaveDuckPond</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/cache_sender.py"><code class="xref download docutils literal"><span class="pre">cache_sender.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span><span class="p">,</span> <span class="n">jelly</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">cache_classes</span> <span class="kn">import</span> <span class="n">MasterDuckPond</span>
+
+<span class="k">class</span> <span class="nc">Sender</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pond</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pond</span> <span class="o">=</span> <span class="n">pond</span>
+
+    <span class="k">def</span> <span class="nf">phase1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">remote</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote</span> <span class="o">=</span> <span class="n">remote</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">remote</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;takePond&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pond</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phase2</span><span class="p">)</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">err</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">phase2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pond</span><span class="o">.</span><span class="n">addDuck</span><span class="p">(</span><span class="s">&quot;ugly duckling&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pond</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">phase3</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">phase3</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;checkDucks&quot;</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phase4</span><span class="p">)</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">err</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">phase4</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dummy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pond</span><span class="o">.</span><span class="n">removeDuck</span><span class="p">(</span><span class="s">&quot;one duck&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pond</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;checkDucks&quot;</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;ignorePond&quot;</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phase5</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">phase5</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dummy</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;shutdown&quot;</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phase6</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">phase6</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dummy</span><span class="p">):</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">master</span> <span class="o">=</span> <span class="n">MasterDuckPond</span><span class="p">([</span><span class="s">&quot;one duck&quot;</span><span class="p">,</span> <span class="s">&quot;two duck&quot;</span><span class="p">])</span>
+    <span class="n">master</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+    <span class="n">sender</span> <span class="o">=</span> <span class="n">Sender</span><span class="p">(</span><span class="n">master</span><span class="p">)</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBClientFactory</span><span class="p">()</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8800</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+    <span class="n">deferred</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">getRootObject</span><span class="p">()</span>
+    <span class="n">deferred</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">sender</span><span class="o">.</span><span class="n">phase1</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/cache_receiver.py"><code class="xref download docutils literal"><span class="pre">cache_receiver.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.application</span> <span class="kn">import</span> <span class="n">service</span><span class="p">,</span> <span class="n">internet</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">import</span> <span class="nn">cache_classes</span>
+
+<span class="k">class</span> <span class="nc">Receiver</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Root</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">remote_takePond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pond</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pond</span> <span class="o">=</span> <span class="n">pond</span>
+        <span class="k">print</span> <span class="s">&quot;got pond:&quot;</span><span class="p">,</span> <span class="n">pond</span> <span class="c"># a DuckPondCache</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote_checkDucks</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">remote_checkDucks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;[</span><span class="si">%d</span><span class="s">] ducks: &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">pond</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">pond</span><span class="o">.</span><span class="n">getDucks</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">remote_ignorePond</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># stop watching the pond</span>
+        <span class="k">print</span> <span class="s">&quot;dropping pond&quot;</span>
+        <span class="c"># gc causes __del__ causes &#39;decache&#39; msg causes stoppedObserving</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pond</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">remote_shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">Application</span><span class="p">(</span><span class="s">&quot;copy_receiver&quot;</span><span class="p">)</span>
+<span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="mi">8800</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">Receiver</span><span class="p">()))</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span>
+    <span class="n">service</span><span class="o">.</span><span class="n">IServiceCollection</span><span class="p">(</span><span class="n">application</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>When run, this example emits the following:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> twistd -n -y cache_receiver.py
+<span class="go">[-] twisted.spread.pb.PBServerFactory starting on 8800</span>
+<span class="go">[-] Starting factory &lt;twisted.spread.pb.PBServerFactory instance at</span>
+<span class="go">0x40615acc&gt;</span>
+<span class="go">[Broker,0,127.0.0.1]  cache - sitting, er, setting ducks</span>
+<span class="go">[Broker,0,127.0.0.1] got pond: &lt;cache_classes.SlaveDuckPond instance at</span>
+<span class="go">0x406eb5ec&gt;</span>
+<span class="go">[Broker,0,127.0.0.1] [2] ducks:  [&#39;one duck&#39;, &#39;two duck&#39;]</span>
+<span class="go">[Broker,0,127.0.0.1]  cache - addDuck</span>
+<span class="go">[Broker,0,127.0.0.1] [3] ducks:  [&#39;one duck&#39;, &#39;two duck&#39;, &#39;ugly duckling&#39;]</span>
+<span class="go">[Broker,0,127.0.0.1]  cache - removeDuck</span>
+<span class="go">[Broker,0,127.0.0.1] [2] ducks:  [&#39;two duck&#39;, &#39;ugly duckling&#39;]</span>
+<span class="go">[Broker,0,127.0.0.1] dropping pond</span>
+</pre></div>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> ./cache_sender.py
+<span class="go">I have [2] ducks</span>
+<span class="go">I have [3] ducks</span>
+<span class="go">I have [2] ducks</span>
+<span class="go">Main loop terminated.</span>
+</pre></div>
+</div>
+<p>Points to notice:</p>
+<ul>
+<li><p class="first">There is one <code class="docutils literal"><span class="pre">Observer</span></code> for each remote program that holds
+an active reference. Multiple references inside the same program don&#8217;t
+matter: the serialization layer notices the duplicates and does the
+appropriate reference counting <a class="footnote-reference" href="#id11" id="id5">[5]</a> .</p>
+</li>
+<li><p class="first">Multiple Observers need to be kept in a list, and all of them need to
+be updated when something changes. By sending the initial state at the
+same time as you add the observer to the list, in a single atomic action
+that cannot be interrupted by a state change, you insure that you can send
+the same status update to all the observers.</p>
+</li>
+<li><p class="first">The <code class="docutils literal"><span class="pre">observer.callRemote</span></code> calls can still fail. If the
+remote side has disconnected very recently and
+<code class="docutils literal"><span class="pre">stoppedObserving</span></code> has not yet been called, you may get a
+<code class="docutils literal"><span class="pre">DeadReferenceError</span></code> . It is a good idea to add an errback to
+those <code class="docutils literal"><span class="pre">callRemote</span></code> s to throw away such an error. This is a
+useful idiom:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">observer</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">getStateToCacheAndObserverFor</span></code> must return some object
+that represents the current state of the object. This may simply be the
+object&#8217;s <code class="docutils literal"><span class="pre">__dict__</span></code> attribute. It is a good idea to remove the
+<code class="docutils literal"><span class="pre">pb.Cacheable</span></code> -specific members of it before sending it to the
+remote end. The list of Observers, in particular, should be left out, to
+avoid dizzying recursive Cacheable references. The mind boggles as to the
+potential consequences of leaving in such an item.</li>
+<li>A <code class="docutils literal"><span class="pre">perspective</span></code> argument is available to
+<code class="docutils literal"><span class="pre">getStateToCacheAndObserveFor</span></code> , as well as
+<code class="docutils literal"><span class="pre">stoppedObserving</span></code> . I think the purpose of this is to allow
+viewer-specific changes to the way the cache is updated. If all remote
+viewers are supposed to see the same data, it can be ignored.</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h3>More Information<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>The best source for information comes from the docstrings
+in <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.flavors.html">twisted.spread.flavors</a> ,
+where <code class="docutils literal"><span class="pre">pb.Cacheable</span></code> is implemented.</li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.manhole.explorer.html">twisted.manhole.explorer</a> uses
+<code class="docutils literal"><span class="pre">Cacheable</span></code> , and does some fairly interesting things with it.</li>
+<li>The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.publish.html">spread.publish</a> module also
+uses <code class="docutils literal"><span class="pre">Cacheable</span></code> , and might be a source of further
+information.</li>
+</ul>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Note that, in this context, &#8220;unjelly&#8221;  is
+a verb with the opposite meaning of &#8220;jelly&#8221; . The verb &#8220;to jelly&#8221;
+means to serialize an object or data structure into a sequence of bytes (or
+other primitive transmittable/storable representation), while &#8220;to unjelly&#8221;  means to unserialize the bytestream into a live object in the
+receiver&#8217;s memory space. &#8220;Unjellyable&#8221;  is a noun, (<em>not</em>  an
+adjective), referring to the class that serves as a destination or
+recipient of the unjellying process. &#8220;A is unjellyable into B&#8221;  means
+that a serialized representation A (of some remote object) can be
+unserialized into a local object of type B. It is these objects &#8220;B&#8221;
+that are the &#8220;Unjellyable&#8221;  second argument of the
+<code class="docutils literal"><span class="pre">setUnjellyableForClass</span></code>  function.
+In particular, &#8220;unjellyable&#8221;  does <em>not</em>  mean &#8220;cannot be jellied&#8221; . <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.jelly.Unpersistable.html">Unpersistable</a>  means &#8220;not persistable&#8221; , but &#8220;unjelly&#8221; , &#8220;unserialize&#8221; , and &#8220;unpickle&#8221;
+mean to reverse the operations of &#8220;jellying&#8221; , &#8220;serializing&#8221; , and
+&#8220;pickling&#8221; .</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteCopy.html">pb.RemoteCopy</a>  is actually defined
+in <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.flavors.html">twisted.spread.flavors</a> , but
+<code class="docutils literal"><span class="pre">pb.RemoteCopy</span></code>  is the preferred way to access it</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Of course you could be clever and
+add a hook to <code class="docutils literal"><span class="pre">__setattr__</span></code> , along with magical change-announcing
+subclasses of the usual builtin types, to detect changes that result from
+normal &#8220;=&#8221;  set operations. The semi-magical &#8220;property attributes&#8221;
+that were introduced in Python 2.2 could be useful too. The result might be
+hard to maintain or extend, though.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>This is actually a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.RemoteCacheObserver.html">RemoteCacheObserver</a> , but it isn&#8217;t very
+useful to subclass or modify, so simply treat it as a little demon that sits
+in your <code class="docutils literal"><span class="pre">pb.Cacheable</span></code>  class and helps you distribute change
+notifications. The only useful thing to do with it is to run its
+<code class="docutils literal"><span class="pre">callRemote</span></code>  method, which acts just like a normal
+<code class="docutils literal"><span class="pre">pb.Referenceable</span></code> &#8216;s method of the same name.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id11" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>This applies to
+multiple references through the same <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Broker.html">Broker</a> . If you&#8217;ve managed to make multiple
+TCP connections to the same program, you deserve whatever you get.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">PB Copyable: Passing Complex Types</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#motivation">Motivation</a></li>
+<li><a class="reference internal" href="#passing-objects">Passing Objects</a><ul>
+<li><a class="reference internal" href="#security-options">Security Options</a></li>
+<li><a class="reference internal" href="#what-class-to-use">What class to use?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pb-copyable">pb.Copyable</a><ul>
+<li><a class="reference internal" href="#controlling-the-copied-state">Controlling the Copied State</a></li>
+<li><a class="reference internal" href="#things-to-watch-out-for">Things To Watch Out For</a></li>
+<li><a class="reference internal" href="#more-information">More Information</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pb-cacheable">pb.Cacheable</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#id6">More Information</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="pb-clients.html"
+                                  title="previous chapter">Managing Clients of Perspectives</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="pb-cred.html"
+                                  title="next chapter">Authentication with Perspective Broker</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/pb-copyable.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

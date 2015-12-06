@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using Threads in Twisted &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Producers and Consumers: Efficient High-Volume Streaming" href="producers.html" />
+    <link rel="prev" title="Scheduling tasks for the future" href="time.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="producers.html" title="Producers and Consumers: Efficient High-Volume Streaming"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="time.html" title="Scheduling tasks for the future"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="using-threads-in-twisted">
+<h1>Using Threads in Twisted<a class="headerlink" href="#using-threads-in-twisted" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="how-twisted-uses-threads-itself">
+<h2>How Twisted Uses Threads Itself<a class="headerlink" href="#how-twisted-uses-threads-itself" title="Permalink to this headline">¶</a></h2>
+<p>All callbacks registered with the reactor - for example, <code class="docutils literal"><span class="pre">dataReceived</span></code>, <code class="docutils literal"><span class="pre">connectionLost</span></code>, or any higher-level method that comes from these, such as <code class="docutils literal"><span class="pre">render_GET</span></code> in twisted.web, or a callback added to a <code class="docutils literal"><span class="pre">Deferred</span></code> - are called from <code class="docutils literal"><span class="pre">reactor.run</span></code>.
+The terminology around this is that we say these callbacks are run in the &#8220;main thread&#8221;, or &#8220;reactor thread&#8221; or &#8220;I/O thread&#8221;.</p>
+<p>Therefore, internally, Twisted makes very little use of threads.
+This is not to say that it makes <em>no</em> use of threads; there are plenty of APIs which have no non-blocking equivalent, so when Twisted needs to call those, it calls them in a thread.
+One prominent example of this is system hostname resolution: unless you have configured Twisted to use its own DNS client in <code class="docutils literal"><span class="pre">twisted.names</span></code>, it will have to use your operating system&#8217;s blocking APIs to map host names to IP addresses, in the reactor&#8217;s thread pool.
+However, this is something you only need to know about for resource-tuning purposes, like setting the number of threads to use; otherwise, it is an implementation detail you can ignore.</p>
+<p>It is a common mistake is to think that because Twisted can manage multiple connections once, things are happening in multiple threads, and so you need to carefully manage locks.
+Lucky for you, Twisted does most things in one thread!
+This document will explain how to interact with existing APIs which need to be run within their own threads because they block.
+If you&#8217;re just using Twisted&#8217;s own APIs, the rule for threads is simply &#8220;don&#8217;t use them&#8221;.</p>
+</div>
+<div class="section" id="invoking-twisted-from-other-threads">
+<h2>Invoking Twisted From Other Threads<a class="headerlink" href="#invoking-twisted-from-other-threads" title="Permalink to this headline">¶</a></h2>
+<p>Methods within Twisted may only be invoked from the reactor thread unless otherwise noted.
+Very few things within Twisted are thread-safe.
+For example, writing data to a transport from a protocol is not thread-safe.
+This means that if you start a thread and call a Twisted method, you might get correct behavior... or you might get hangs, crashes, or corrupted data.
+So don&#8217;t do it.</p>
+<p>The right way to call methods on the reactor from another thread, and therefore any objects which might call methods on the reactor, is to give a function to the reactor to execute within its own thread.
+This can be done using the function <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorThreads.callFromThread.html">callFromThread</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="k">def</span> <span class="nf">notThreadSafe</span><span class="p">(</span><span class="n">someProtocol</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="n">someProtocol</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">b</span><span class="s">&quot;a message: &quot;</span> <span class="o">+</span> <span class="n">message</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">callFromWhateverThreadYouWant</span><span class="p">():</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">callFromThread</span><span class="p">(</span><span class="n">notThreadSafe</span><span class="p">,</span> <span class="n">b</span><span class="s">&quot;hello&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal"><span class="pre">callFromWhateverThreadYouWant</span></code> is thread-safe and can be invoked by any thread, but <code class="docutils literal"><span class="pre">notThreadSafe</span></code> should only ever be called by code running in the thread where <code class="docutils literal"><span class="pre">reactor.run</span></code> is running.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There are many objects within Twisted that represent values - for example, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.filepath.FilePath.html">FilePath</a> and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.urlpath.URLPath.html">URLPath</a> - which you may construct yourself.
+These may be safely constructed and used within a non-reactor thread as long as they are not shared with other threads.
+However, you should be sure that these objects do not share any state, especially not with the reactor.
+One good rule of thumb is that any object whose methods return <code class="docutils literal"><span class="pre">Deferred</span></code>s is almost certainly touching the reactor at some point, and should never be accessed from a non-reactor thread.</p>
+</div>
+</div>
+<div class="section" id="running-code-in-threads">
+<h2>Running Code In Threads<a class="headerlink" href="#running-code-in-threads" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes we may want to run code in a non-reactor thread, to avoid blocking the reactor.
+Twisted provides an API for doing so, the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorThreads.callInThread.html">callInThread</a> method on the reactor.</p>
+<p>For example, to run a method in a non-reactor thread we can do:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">def</span> <span class="nf">aSillyBlockingMethod</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">callInThread</span><span class="p">(</span><span class="n">aSillyBlockingMethod</span><span class="p">,</span> <span class="s">&quot;2 seconds have passed&quot;</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">callInThread</span></code> will put your code into a queue, to be run by the next available thread in the reactor&#8217;s thread pool.
+This means that depending on what other work has been submitted to the pool, your method may not run immediately.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Keep in mind that <code class="docutils literal"><span class="pre">callInThread</span></code> can only concurrently run a fixed maximum number of tasks, and all users of the reactor are sharing that limit.
+Therefore, you should not submit <em>tasks which depend on other tasks in order to complete</em> to be executed by <code class="docutils literal"><span class="pre">callInThread</span></code>.
+An example of such a task would be something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">blocker</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">unblocker</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this case, <code class="docutils literal"><span class="pre">blocker</span></code> will block <em>forever</em> unless <code class="docutils literal"><span class="pre">unblocker</span></code> can successfully run to give it inputs; similarly, <code class="docutils literal"><span class="pre">unblocker</span></code> might block forever if <code class="docutils literal"><span class="pre">blocker</span></code> is not run to consume its outputs.
+So if you had a threadpool of maximum size X, and you ran <code class="docutils literal"><span class="pre">for</span> <span class="pre">each</span> <span class="pre">in</span> <span class="pre">range(X):</span> <span class="pre">reactor.callInThread(blocker)</span></code>, the reactor threadpool would be wedged forever, unable to process more work or even shut down.</p>
+<p class="last">See &#8220;Managing the Reactor Thread Pool&#8221; below to tune these limits.</p>
+</div>
+</div>
+<div class="section" id="getting-results">
+<h2>Getting Results<a class="headerlink" href="#getting-results" title="Permalink to this headline">¶</a></h2>
+<p>callInThread and callFromThread allow you to move the execution of your code out of and into the reactor thread, respectively, but that isn&#8217;t always enough.</p>
+<p>When we run some code, we often want to know what its result was.  For this, Twisted provides two methods: <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.threads.deferToThread.html">deferToThread</a> and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.threads.blockingCallFromThread.html">blockingCallFromThread</a>, defined in the <code class="docutils literal"><span class="pre">twisted.internet.threads</span></code> module.</p>
+<p>To get a result from some blocking code back into the reactor thread, we can use <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.threads.deferToThread.html">deferToThread</a> to execute it instead of callFromThread.</p>
+<blockquote>
+<div><p>from twisted.internet import reactor, threads</p>
+<dl class="docutils">
+<dt>def doLongCalculation():</dt>
+<dd># .... do long calculation here ...
+return 3</dd>
+<dt>def printResult(x):</dt>
+<dd>print(x)</dd>
+</dl>
+<p># run method in thread and get result as defer.Deferred
+d = threads.deferToThread(doLongCalculation)
+d.addCallback(printResult)
+reactor.run()</p>
+</div></blockquote>
+<p>Similarly, you want some code running in a non-reactor thread wants to invoke some code in the reactor thread and get its result, you can use <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.threads.blockingCallFromThread.html">blockingCallFromThread</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">threads</span><span class="p">,</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">defer</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="kn">import</span> <span class="n">getPage</span>
+<span class="kn">from</span> <span class="nn">twisted.web.error</span> <span class="kn">import</span> <span class="n">Error</span>
+
+<span class="k">def</span> <span class="nf">inThread</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">threads</span><span class="o">.</span><span class="n">blockingCallFromThread</span><span class="p">(</span>
+            <span class="n">reactor</span><span class="p">,</span> <span class="n">getPage</span><span class="p">,</span> <span class="s">&quot;http://twistedmatrix.com/&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">Error</span><span class="p">,</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">exc</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">result</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">callFromThread</span><span class="p">(</span><span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">callInThread</span><span class="p">(</span><span class="n">inThread</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">blockingCallFromThread</span></code> will return the object or raise the exception returned or raised by the function passed to it.
+If the function passed to it returns a Deferred, it will return the value the Deferred is called back with or raise the exception it is errbacked with.</p>
+</div>
+<div class="section" id="managing-the-reactor-thread-pool">
+<h2>Managing the Reactor Thread Pool<a class="headerlink" href="#managing-the-reactor-thread-pool" title="Permalink to this headline">¶</a></h2>
+<p>We may want to modify the size of the thread pool, increasing or decreasing the number of threads in use.
+We can do this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">suggestThreadPoolSize</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The default size of the thread pool depends on the reactor being used; the default reactor uses a minimum size of 5 and a maximum size of 10.</p>
+<p>The reactor thread pool is implemented by <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.threadpool.ThreadPool.html">ThreadPool</a>.
+To access methods on this object for more advanced tuning and monitoring (see the API documentation for details) you can get the thread pool with <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IReactorThreads.getThreadPool.html">getThreadPool</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Using Threads in Twisted</a><ul>
+<li><a class="reference internal" href="#how-twisted-uses-threads-itself">How Twisted Uses Threads Itself</a></li>
+<li><a class="reference internal" href="#invoking-twisted-from-other-threads">Invoking Twisted From Other Threads</a></li>
+<li><a class="reference internal" href="#running-code-in-threads">Running Code In Threads</a></li>
+<li><a class="reference internal" href="#getting-results">Getting Results</a></li>
+<li><a class="reference internal" href="#managing-the-reactor-thread-pool">Managing the Reactor Thread Pool</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="time.html"
+                                  title="previous chapter">Scheduling tasks for the future</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="producers.html"
+                                  title="next chapter">Producers and Consumers: Efficient High-Volume Streaming</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/threading.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

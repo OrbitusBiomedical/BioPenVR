@@ -1,0 +1,331 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Storing Objects in the Session &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Twisted Web In 60 Seconds" href="index.html" />
+    <link rel="next" title="Session Endings" href="session-endings.html" />
+    <link rel="prev" title="Session Basics" href="session-basics.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="session-endings.html" title="Session Endings"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="session-basics.html" title="Session Basics"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Twisted Web</a> &raquo;</li>
+          <li><a href="../index.html" >Developer Guides</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Twisted Web In 60 Seconds</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="storing-objects-in-the-session">
+<h1>Storing Objects in the Session<a class="headerlink" href="#storing-objects-in-the-session" title="Permalink to this headline">¶</a></h1>
+<p>This example shows you how you can persist objects across requests in the
+session object.</p>
+<p>As was discussed <a class="reference internal" href="session-basics.html"><span class="doc">previously</span></a> , instances
+of <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.server.Session.html">Session</a> last as long as
+the notional session itself does. Each time <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.server.Request.getSession.html">Request.getSession</a> is called, if the session
+for the request is still active, then the same <code class="docutils literal"><span class="pre">Session</span></code> instance is
+returned as was returned previously. Because of this, <code class="docutils literal"><span class="pre">Session</span></code>
+instances can be used to keep other objects around for as long as the session
+exists.</p>
+<p>It&#8217;s easier to demonstrate how this works than explain it, so here&#8217;s an
+example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span>&gt;&gt; from zope.interface import Interface, Attribute, implements
+<span class="gp">&gt;</span>&gt;&gt; from twisted.python.components import registerAdapter
+<span class="gp">&gt;</span>&gt;&gt; from twisted.web.server import Session
+<span class="gp">&gt;</span>&gt;&gt; class ICounter<span class="o">(</span>Interface<span class="o">)</span>:
+<span class="go">...     value = Attribute(&quot;An int value which counts up once per page view.&quot;)</span>
+<span class="go">...</span>
+<span class="gp">&gt;</span>&gt;&gt; class Counter<span class="o">(</span>object<span class="o">)</span>:
+<span class="go">...     implements(ICounter)</span>
+<span class="go">...     def __init__(self, session):</span>
+<span class="go">...         self.value = 0</span>
+<span class="go">...</span>
+<span class="gp">&gt;</span>&gt;&gt; registerAdapter<span class="o">(</span>Counter, Session, ICounter<span class="o">)</span>
+<span class="gp">&gt;</span>&gt;&gt; <span class="nv">ses</span> <span class="o">=</span> Session<span class="o">(</span>None, None<span class="o">)</span>
+<span class="gp">&gt;</span>&gt;&gt; <span class="nv">data</span> <span class="o">=</span> ICounter<span class="o">(</span>ses<span class="o">)</span>
+<span class="gp">&gt;</span>&gt;&gt; print data
+<span class="go">&lt;__main__.Counter object at 0x8d535ec&gt;</span>
+<span class="gp">&gt;</span>&gt;&gt; print data is ICounter<span class="o">(</span>ses<span class="o">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;</span>&gt;&gt;
+</pre></div>
+</div>
+<p><em>What?</em> , I hear you say.</p>
+<p>What&#8217;s shown in this example is the interface and adaption-based
+API which <code class="docutils literal"><span class="pre">Session</span></code> exposes for persisting state. There are
+several critical pieces interacting here:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">ICounter</span></code> is an interface which serves several purposes. Like
+all interfaces, it documents the API of some class of objects (in this case,
+just the <code class="docutils literal"><span class="pre">value</span></code> attribute). It also serves as a key into what is
+basically a dictionary within the session object: the interface is used to
+store or retrieve a value on the session (the <code class="docutils literal"><span class="pre">Counter</span></code> instance,
+in this case).</li>
+<li><code class="docutils literal"><span class="pre">Counter</span></code> is the class which actually holds the session data in
+this example. It implements <code class="docutils literal"><span class="pre">ICounter</span></code> (again, mostly for
+documentation purposes). It also has a <code class="docutils literal"><span class="pre">value</span></code> attribute, as the
+interface declared.</li>
+<li>The <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.components.registerAdapter.html">registerAdapter</a> call sets up the
+relationship between its three arguments so that adaption will do what we
+want in this case.</li>
+<li>Adaption is performed by the expression <code class="docutils literal"><span class="pre">ICounter(ses)</span></code> . This
+is read as : adapt <code class="docutils literal"><span class="pre">ses</span></code> to <code class="docutils literal"><span class="pre">ICounter</span></code> . Because
+of the <code class="docutils literal"><span class="pre">registerAdapter</span></code> call, it is roughly equivalent
+to <code class="docutils literal"><span class="pre">Counter(ses)</span></code> . However (because of certain
+things <code class="docutils literal"><span class="pre">Session</span></code> does), it also saves the <code class="docutils literal"><span class="pre">Counter</span></code>
+instance created so that it will be returned the next time this adaption is
+done. This is why the last statement produces <code class="docutils literal"><span class="pre">True</span></code> .</li>
+</ul>
+<p>If you&#8217;re still not clear on some of the details there, don&#8217;t worry about it
+and just remember this: <code class="docutils literal"><span class="pre">ICounter(ses)</span></code> gives you an object you can
+persist state on. It can be as much or as little state as you want, and you can
+use as few or as many different <code class="docutils literal"><span class="pre">Interface</span></code> classes as you want on a
+single <code class="docutils literal"><span class="pre">Session</span></code> instance.</p>
+<p>With those conceptual dependencies out of the way, it&#8217;s a very short step to
+actually getting persistent state into a Twisted Web application. Here&#8217;s an
+example which implements a simple counter, re-using the definitions from the
+example above:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.resource</span> <span class="kn">import</span> <span class="n">Resource</span>
+
+<span class="k">class</span> <span class="nc">CounterResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">render_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">getSession</span><span class="p">()</span>
+        <span class="n">counter</span> <span class="o">=</span> <span class="n">ICounter</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+        <span class="n">counter</span><span class="o">.</span><span class="n">value</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="s">&quot;Visit #</span><span class="si">%d</span><span class="s"> for you!&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">value</span><span class="p">,)</span>
+</pre></div>
+</div>
+<p>Pretty simple from this side, eh? All this does is
+use <code class="docutils literal"><span class="pre">Request.getSession</span></code> and the adaption from above, plus some
+integer math to give you a session-based visit counter.</p>
+<p>Here&#8217;s the complete source for an <a class="reference internal" href="rpy-scripts.html"><span class="doc">rpy script</span></a>
+based on this example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">cache</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">Interface</span><span class="p">,</span> <span class="n">Attribute</span><span class="p">,</span> <span class="n">implements</span>
+<span class="kn">from</span> <span class="nn">twisted.python.components</span> <span class="kn">import</span> <span class="n">registerAdapter</span>
+<span class="kn">from</span> <span class="nn">twisted.web.server</span> <span class="kn">import</span> <span class="n">Session</span>
+<span class="kn">from</span> <span class="nn">twisted.web.resource</span> <span class="kn">import</span> <span class="n">Resource</span>
+
+<span class="k">class</span> <span class="nc">ICounter</span><span class="p">(</span><span class="n">Interface</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Attribute</span><span class="p">(</span><span class="s">&quot;An int value which counts up once per page view.&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Counter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">ICounter</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">registerAdapter</span><span class="p">(</span><span class="n">Counter</span><span class="p">,</span> <span class="n">Session</span><span class="p">,</span> <span class="n">ICounter</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CounterResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">render_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">getSession</span><span class="p">()</span>
+        <span class="n">counter</span> <span class="o">=</span> <span class="n">ICounter</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+        <span class="n">counter</span><span class="o">.</span><span class="n">value</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="s">&quot;Visit #</span><span class="si">%d</span><span class="s"> for you!&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">value</span><span class="p">,)</span>
+
+<span class="n">resource</span> <span class="o">=</span> <span class="n">CounterResource</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>One more thing to note is the <code class="docutils literal"><span class="pre">cache()</span></code> call at the top
+of this example. As with the <a class="reference internal" href="http-auth.html"><span class="doc">previous example</span></a> where this came up, this rpy script is stateful. This
+time, it&#8217;s the <code class="docutils literal"><span class="pre">ICounter</span></code> definition and
+the <code class="docutils literal"><span class="pre">registerAdapter</span></code> call that need to be executed only
+once. If we didn&#8217;t use <code class="docutils literal"><span class="pre">cache</span></code> , every request would define
+a new, different interface named <code class="docutils literal"><span class="pre">ICounter</span></code> . Each of these
+would be a different key in the session, so the counter would never
+get past one.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="session-basics.html"
+                                  title="previous chapter">Session Basics</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="session-endings.html"
+                                  title="next chapter">Session Endings</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../../_sources/web/howto/web-in-60/session-store.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

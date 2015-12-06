@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Light Weight Templating With Resource Templates &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Using the Twisted Web Client" href="client.html" />
+    <link rel="prev" title="Session Endings" href="web-in-60/session-endings.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="client.html" title="Using the Twisted Web Client"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="web-in-60/session-endings.html" title="Session Endings"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Web</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="light-weight-templating-with-resource-templates">
+<h1>Light Weight Templating With Resource Templates<a class="headerlink" href="#light-weight-templating-with-resource-templates" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>While high-level templating systems can be used with Twisted (for
+example, <a class="reference external" href="https://launchpad.net/nevow">DivmodNevow</a> , sometimes one needs a less file-heavy system which lets one
+directly write HTML. While <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.script.ResourceScript.html">ResourceScript</a> is
+available, it has a high coding overhead, and requires some boring string
+arithmetic. <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.script.ResourceTemplate.html">ResourceTemplate</a> fills the
+space between Nevow and ResourceScript using Quixote&#8217;s PTL (Python Templating
+Language).</p>
+<p>ResourceTemplates need Quixote
+installed. In <a class="reference external" href="http://www.debian.org">Debian</a> , that means
+installing the <code class="docutils literal"><span class="pre">python-quixote</span></code> package
+(<code class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python-quixote</span></code> ). Other operating systems
+require other ways to install Quixote, or it can be done manually.</p>
+</div>
+<div class="section" id="configuring-twisted-web">
+<h2>Configuring Twisted Web<a class="headerlink" href="#configuring-twisted-web" title="Permalink to this headline">¶</a></h2>
+<p>The easiest way to get Twisted Web to support ResourceTemplates is to
+bind them to some extension using the web tap&#8217;s <code class="docutils literal"><span class="pre">--processor</span></code>
+flag. Here is an example:</p>
+<div class="highlight-python"><div class="highlight"><pre>% twistd web --path=/var/www \
+        --processor=.rtl=twisted.web.script.ResourceTemplate
+</pre></div>
+</div>
+<p>The above command line binds the <code class="docutils literal"><span class="pre">rtl</span></code> extension to use the
+ResourceTemplate processor. Other ways are possible, but would require
+more Python coding and are outside the scope of this HOWTO.</p>
+</div>
+<div class="section" id="using-resourcetemplate">
+<h2>Using ResourceTemplate<a class="headerlink" href="#using-resourcetemplate" title="Permalink to this headline">¶</a></h2>
+<p>ResourceTemplates are coded in an extension of Python called the&#8221;Python Templating Language&#8221; . Complete documentation of the PTL
+is available
+at <a class="reference external" href="http://quixote.python.ca/quixote.dev/doc/PTL.html">the quixote web site</a> . The web server will expect the PTL source file
+to define a variable named <code class="docutils literal"><span class="pre">resource</span></code> .  This should be
+a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.web.resource.Resource.html">twisted.web.resource.Resource</a> ,
+whose <code class="docutils literal"><span class="pre">.render</span></code> method be called. Usually, you would want
+to define <code class="docutils literal"><span class="pre">render</span></code> using the keyword <code class="docutils literal"><span class="pre">template</span></code>
+rather than <code class="docutils literal"><span class="pre">def</span></code> .</p>
+<p>Here is a simple example for a resource template.</p>
+<p><a class="reference download internal" href="../../_downloads/webquote.rtl"><code class="xref download docutils literal"><span class="pre">webquote.rtl</span></code></a></p>
+<div class="highlight-py3"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.web.resource</span> <span class="k">import</span> <span class="n">Resource</span>
+
+<span class="k">def</span> <span class="nf">getQuote</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">&quot;An apple a day keeps the doctor away.&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">QuoteResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+
+    <span class="n">template</span> <span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;\</span>
+<span class="sd">        &lt;html&gt;</span>
+<span class="sd">        &lt;head&gt;&lt;title&gt;Quotes Galore&lt;/title&gt;&lt;/head&gt;</span>
+
+<span class="sd">        &lt;body&gt;&lt;h1&gt;Quotes&lt;/h1&gt;&quot;&quot;&quot;</span>
+        <span class="n">getQuote</span><span class="p">()</span>
+        <span class="s">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>
+
+
+<span class="n">resource</span> <span class="o">=</span> <span class="n">QuoteResource</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Light Weight Templating With Resource Templates</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#configuring-twisted-web">Configuring Twisted Web</a></li>
+<li><a class="reference internal" href="#using-resourcetemplate">Using ResourceTemplate</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="web-in-60/session-endings.html"
+                                  title="previous chapter">Session Endings</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="client.html"
+                                  title="next chapter">Using the Twisted Web Client</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/web/howto/resource-templates.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

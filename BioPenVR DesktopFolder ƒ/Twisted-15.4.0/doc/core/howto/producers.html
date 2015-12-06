@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Producers and Consumers: Efficient High-Volume Streaming &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Choosing a Reactor and GUI Toolkit Integration" href="choosing-reactor.html" />
+    <link rel="prev" title="Using Threads in Twisted" href="threading.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="choosing-reactor.html" title="Choosing a Reactor and GUI Toolkit Integration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="threading.html" title="Using Threads in Twisted"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="producers-and-consumers-efficient-high-volume-streaming">
+<h1>Producers and Consumers: Efficient High-Volume Streaming<a class="headerlink" href="#producers-and-consumers-efficient-high-volume-streaming" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of this guide is to describe the Twisted <em>producer</em> and <em>consumer</em> system.  The producer system allows applications to stream large amounts of data in a manner which is both memory and CPU efficient, and which does not introduce a source of unacceptable latency into the reactor.</p>
+<p>Readers should have at least a passing familiarity with the terminology associated with interfaces.</p>
+<div class="section" id="push-producers">
+<h2>Push Producers<a class="headerlink" href="#push-producers" title="Permalink to this headline">¶</a></h2>
+<p>A push producer is one which will continue to generate data without external prompting until told to stop; a pull producer will generate one chunk of data at a time in response to an explicit request for more data.</p>
+<p>The push producer API is defined by the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IPushProducer.html">IPushProducer</a> interface.  It is best to create a push producer when data generation is closedly tied to an event source.  For example, a proxy which forwards incoming bytes from one socket to another outgoing socket might be implemented using a push producer: the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IProtocol.dataReceived.html">dataReceived</a> takes the role of an event source from which the producer generates bytes, and requires no external intervention in order to do so.</p>
+<p>There are three methods which may be invoked on a push producer at various points in its lifetime: <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IPushProducer.pauseProducing.html">pauseProducing</a> , <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IPushProducer.resumeProducing.html">resumeProducing</a> , and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IProducer.stopProducing.html">stopProducing</a> .</p>
+<div class="section" id="pauseproducing">
+<h3>pauseProducing()<a class="headerlink" href="#pauseproducing" title="Permalink to this headline">¶</a></h3>
+<p>In order to avoid the possibility of using an unbounded amount of memory to buffer produced data which cannot be processed quickly enough, it is necessary to be able to tell a push producer to stop producing data for a while.  This is done using the <code class="docutils literal"><span class="pre">pauseProducing</span></code> method.  Implementers of a push producer should temporarily stop producing data when this method is invoked.</p>
+</div>
+<div class="section" id="resumeproducing">
+<h3>resumeProducing()<a class="headerlink" href="#resumeproducing" title="Permalink to this headline">¶</a></h3>
+<p>After a push producer has been paused for some time, the excess of data which it produced will have been processed and the producer may again begin producing data.  When the time for this comes, the push producer will have <code class="docutils literal"><span class="pre">resumeProducing</span></code> invoked on it.</p>
+</div>
+<div class="section" id="stopproducing">
+<h3>stopProducing()<a class="headerlink" href="#stopproducing" title="Permalink to this headline">¶</a></h3>
+<p>Most producers will generate some finite (albeit, perhaps, unknown in advance) amount of data and then stop, having served their intended purpose. However, it is possible that before this happens an event will occur which renders the remaining, unproduced data irrelevant.  In these cases, producing it anyway would be wasteful.  The <code class="docutils literal"><span class="pre">stopProducing</span></code> method will be invoked on the push producer.  The implementation should stop producing data and clean up any resources owned by the producer.</p>
+</div>
+</div>
+<div class="section" id="pull-producers">
+<h2>Pull Producers<a class="headerlink" href="#pull-producers" title="Permalink to this headline">¶</a></h2>
+<p>The pull producer API is defined by the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IPullProducer.html">IPullProducer</a> interface.  Pull producers are useful in cases where there is no clear event source involved with the generation of data.  For example, if the data is the result of some algorithmic process that is bound only by CPU time, a pull producer is appropriate.</p>
+<p>Pull producers are defined in terms of only two methods: <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IPullProducer.resumeProducing.html">resumeProducing</a> and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IProducer.stopProducing.html">stopProducing</a> .</p>
+<div class="section" id="id1">
+<h3>resumeProducing()<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Unlike push producers, a pull producer is expected to <strong>only</strong> produce data in response to <code class="docutils literal"><span class="pre">resumeProducing</span></code> being called.  This method will be called whenever more data is required.  How much data to produce in response to this method call depends on various factors: too little data and runtime costs will be dominated by the back-and-forth event notification associated with a buffer becoming empty and requesting more data to process; too much data and memory usage will be driven higher than it needs to be and the latency associated with creating so much data will cause overall performance in the application to suffer.  A good rule of thumb is to generate between 16 and 64 kilobytes of data at a time, but you should experiment with various values to determine what is best for your application.</p>
+</div>
+<div class="section" id="id2">
+<h3>stopProducing()<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>This method has the same meaning for pull producers as it does for push producers.</p>
+</div>
+</div>
+<div class="section" id="consumers">
+<h2>Consumers<a class="headerlink" href="#consumers" title="Permalink to this headline">¶</a></h2>
+<p>This far, I&#8217;ve discussed the various external APIs of the two kinds of producers supported by Twisted.  However, I have not mentioned where the data a producer generates actually goes, nor what entity is responsible for invoking these APIs.  Both of these roles are filled by <em>consumers</em> . Consumers are defined by the one interface <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IConsumer.html">IConsumer</a> .</p>
+<p><code class="docutils literal"><span class="pre">IConsumer</span></code> , defines three methods: <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IConsumer.registerProducer.html">registerProducer</a> , <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IConsumer.unregisterProducer.html">unregisterProducer</a> , and <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.interfaces.IConsumer.write.html">write</a> .</p>
+<div class="section" id="registerproducer-producer-streaming">
+<h3>registerProducer(producer, streaming)<a class="headerlink" href="#registerproducer-producer-streaming" title="Permalink to this headline">¶</a></h3>
+<p>So that a consumer can invoke methods on a producer, the consumer needs to be told about the producer.  This is done with the <code class="docutils literal"><span class="pre">registerProducer</span></code> method.  The first argument is either a <code class="docutils literal"><span class="pre">IPullProducer</span></code> or <code class="docutils literal"><span class="pre">IPushProducer</span></code> provider; the second argument indicates which of these interfaces is provided: <code class="docutils literal"><span class="pre">True</span></code> for push producers, <code class="docutils literal"><span class="pre">False</span></code> for pull producers.</p>
+</div>
+<div class="section" id="unregisterproducer">
+<h3>unregisterProducer()<a class="headerlink" href="#unregisterproducer" title="Permalink to this headline">¶</a></h3>
+<p>Eventually a consumer will not longer be interested in a producer.  This could be because the producer has finished generating all its data, or because the consumer is moving on to something else, or any number of other reasons.  In any case, this method reverses the effects of <code class="docutils literal"><span class="pre">registerProducer</span></code> .</p>
+</div>
+<div class="section" id="write-data">
+<h3>write(data)<a class="headerlink" href="#write-data" title="Permalink to this headline">¶</a></h3>
+<p>As you might guess, this is the method which a producer calls when it has generated some data.  Push producers should call it as frequently as they like as long as they are not paused.  Pull producers should call it once for each time <code class="docutils literal"><span class="pre">resumeProducing</span></code> is called on them.</p>
+</div>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+<p>An example push producer application can be found in <code class="docutils literal"><span class="pre">doc/examples/streaming.py</span></code> .</p>
+<ul class="simple">
+<li><a class="reference internal" href="components.html"><span class="doc">Components: Interfaces and Adapters</span></a></li>
+<li><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.protocols.basic.FileSender.html">FileSender</a> : A Simple Pull Producer</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Producers and Consumers: Efficient High-Volume Streaming</a><ul>
+<li><a class="reference internal" href="#push-producers">Push Producers</a><ul>
+<li><a class="reference internal" href="#pauseproducing">pauseProducing()</a></li>
+<li><a class="reference internal" href="#resumeproducing">resumeProducing()</a></li>
+<li><a class="reference internal" href="#stopproducing">stopProducing()</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pull-producers">Pull Producers</a><ul>
+<li><a class="reference internal" href="#id1">resumeProducing()</a></li>
+<li><a class="reference internal" href="#id2">stopProducing()</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#consumers">Consumers</a><ul>
+<li><a class="reference internal" href="#registerproducer-producer-streaming">registerProducer(producer, streaming)</a></li>
+<li><a class="reference internal" href="#unregisterproducer">unregisterProducer()</a></li>
+<li><a class="reference internal" href="#write-data">write(data)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="threading.html"
+                                  title="previous chapter">Using Threads in Twisted</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="choosing-reactor.html"
+                                  title="next chapter">Choosing a Reactor and GUI Toolkit Integration</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/producers.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

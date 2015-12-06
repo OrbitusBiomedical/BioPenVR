@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>rpy scripts (or, how to save yourself some typing) &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Twisted Web In 60 Seconds" href="index.html" />
+    <link rel="next" title="Asynchronous Responses" href="asynchronous.html" />
+    <link rel="prev" title="Other Request Bodies" href="other-request-bodies.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="asynchronous.html" title="Asynchronous Responses"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="other-request-bodies.html" title="Other Request Bodies"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Twisted Web</a> &raquo;</li>
+          <li><a href="../index.html" >Developer Guides</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Twisted Web In 60 Seconds</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="rpy-scripts-or-how-to-save-yourself-some-typing">
+<h1>rpy scripts (or, how to save yourself some typing)<a class="headerlink" href="#rpy-scripts-or-how-to-save-yourself-some-typing" title="Permalink to this headline">¶</a></h1>
+<p>The goal of this installment is to show you another way to run a Twisted Web
+server with a custom resource which doesn&#8217;t require as much code as the previous
+examples.</p>
+<p>The feature in question is called an <code class="docutils literal"><span class="pre">rpy</span> <span class="pre">script</span></code> . An rpy script
+is a Python source file which defines a resource and can be loaded into a
+Twisted Web server. The advantages of this approach are that you don&#8217;t have to
+write code to create the site or set up a listening port with the reactor. That
+means fewer lines of code that aren&#8217;t dedicated to the task you&#8217;re trying to
+accomplish.</p>
+<p>There are some disadvantages, though. An rpy script must have the
+extension <code class="docutils literal"><span class="pre">.rpy</span></code> . This means you can&#8217;t import it using the
+usual Python import statement. This means it&#8217;s hard to re-use code in
+an rpy script. This also means you can&#8217;t easily unit test it. The code
+in an rpy script is evaluated in an unusual context. So, while rpy
+scripts may be useful for testing out ideas, they&#8217;re not recommend for
+much more than that.</p>
+<p>Okay, with that warning out of the way, let&#8217;s dive in. First, as mentioned,
+rpy scripts are Python source files with the <code class="docutils literal"><span class="pre">.rpy</span></code> extension. So,
+open up an appropriately named file (for example, <code class="docutils literal"><span class="pre">example.rpy</span></code> ) and
+put this code in it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">twisted.web.resource</span> <span class="kn">import</span> <span class="n">Resource</span>
+
+<span class="k">class</span> <span class="nc">ClockPage</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="n">isLeaf</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">def</span> <span class="nf">render_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;&lt;html&gt;&lt;body&gt;</span><span class="si">%s</span><span class="s">&lt;/body&gt;&lt;/html&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(),)</span>
+
+<span class="n">resource</span> <span class="o">=</span> <span class="n">ClockPage</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You may recognize this as the resource from
+the <a class="reference internal" href="dynamic-content.html"><span class="doc">first dynamic rendering example</span></a> . What&#8217;s different is what you don&#8217;t see: we didn&#8217;t
+import <code class="docutils literal"><span class="pre">reactor</span></code> or <code class="docutils literal"><span class="pre">Site</span></code> . There are no calls
+to <code class="docutils literal"><span class="pre">listenTCP</span></code> or <code class="docutils literal"><span class="pre">run</span></code> . Instead, and this is
+the core idea for rpy scripts, we just bound the
+name <code class="docutils literal"><span class="pre">resource</span></code> to the resource we want the script to
+serve. Every rpy script must bind this name, and this name is the only
+thing Twisted Web will pay attention to in an rpy script.</p>
+<p>All that&#8217;s left is to drop this rpy script into a Twisted Web server. There
+are a few ways to do this. The simplest way is with <code class="docutils literal"><span class="pre">twistd</span></code> :</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> twistd -n web --path .
+</pre></div>
+</div>
+<p>Hit <a class="reference external" href="http://localhost:8080/example.rpy">http://localhost:8080/example.rpy</a>
+to see it run. You can pass other arguments here too. <code class="docutils literal"><span class="pre">twistd</span> <span class="pre">web</span></code>
+has options for specifying which port number to bind, whether to set up an HTTPS
+server, and plenty more. Other options you can pass to <code class="docutils literal"><span class="pre">twistd</span></code> allow
+you to configure logging to work differently, to select a different reactor,
+etc. For a full list of options, see <code class="docutils literal"><span class="pre">twistd</span> <span class="pre">--help</span></code> and <code class="docutils literal"><span class="pre">twistd</span> <span class="pre">web</span> <span class="pre">--help</span></code> .</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="other-request-bodies.html"
+                                  title="previous chapter">Other Request Bodies</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="asynchronous.html"
+                                  title="next chapter">Asynchronous Responses</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../../_sources/web/howto/web-in-60/rpy-scripts.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

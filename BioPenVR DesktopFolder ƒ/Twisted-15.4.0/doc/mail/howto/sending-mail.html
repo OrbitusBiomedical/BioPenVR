@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Sending Mail &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Twisted Mail Tutorial: Building an SMTP Client from Scratch" href="../tutorial/smtpclient/smtpclient.html" />
+    <link rel="prev" title="Developer Guides" href="index.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../tutorial/smtpclient/smtpclient.html" title="Twisted Mail Tutorial: Building an SMTP Client from Scratch"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Developer Guides"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Mail</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="sending-mail">
+<h1>Sending Mail<a class="headerlink" href="#sending-mail" title="Permalink to this headline">¶</a></h1>
+<p>Twisted contains many ways of sending email, but the simplest is <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.mail.smtp.sendmail.html">sendmail</a>.
+Intended as a near drop-in replacement of <a class="reference external" href="http://docs.python.org/3.3/library/smtplib.html#smtplib.SMTP" title="(in Python v3.3)"><code class="xref py py-class docutils literal"><span class="pre">smtplib.SMTP</span></code></a>&#8216;s <code class="docutils literal"><span class="pre">sendmail</span></code> method, it provides the ability to send email over SMTP/ESMTP with minimal fuss or configuration.</p>
+<p>Knowledge of Twisted&#8217;s Deferreds is required for making full use of this document.</p>
+<div class="section" id="sending-an-email-over-smtp">
+<h2>Sending an Email over SMTP<a class="headerlink" href="#sending-an-email-over-smtp" title="Permalink to this headline">¶</a></h2>
+<p>Although insecure, some email systems still use plain SMTP for sending email.
+Plain SMTP has no authentication, no transport security (emails are transmitted in plain text), and should not be done over untrusted networks.</p>
+<p><code class="docutils literal"><span class="pre">sendmail</span></code>&#8216;s positional arguments are, in order:</p>
+<ul class="simple">
+<li>The SMTP/ESMTP server you are sending the message to</li>
+<li>The email address you are sending from</li>
+<li>A <code class="docutils literal"><span class="pre">list</span></code> of email addresses you are sending to</li>
+<li>The message.</li>
+</ul>
+<p>The following example shows these in action.</p>
+<p><a class="reference download internal" href="../../_downloads/sendmail_smtp.py"><code class="xref download docutils literal"><span class="pre">sendmail_smtp.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">twisted.mail.smtp</span> <span class="kn">import</span> <span class="n">sendmail</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.task</span> <span class="kn">import</span> <span class="n">react</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">reactor</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">sendmail</span><span class="p">(</span><span class="s">&quot;myinsecuremailserver.example.com&quot;</span><span class="p">,</span>
+                 <span class="s">&quot;alice@example.com&quot;</span><span class="p">,</span>
+                 <span class="p">[</span><span class="s">&quot;bob@gmail.com&quot;</span><span class="p">,</span> <span class="s">&quot;charlie@gmail.com&quot;</span><span class="p">],</span>
+                 <span class="s">&quot;This is my super awesome email, sent with Twisted!&quot;</span><span class="p">)</span>
+
+    <span class="n">d</span><span class="o">.</span><span class="n">addBoth</span><span class="p">(</span><span class="k">print</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+<span class="n">react</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Assuming that the values in it were replaced with real emails and a real SMTP server, it would send an email to the two addresses specified and print the return status.</p>
+</div>
+<div class="section" id="sending-an-email-over-esmtp">
+<h2>Sending an Email over ESMTP<a class="headerlink" href="#sending-an-email-over-esmtp" title="Permalink to this headline">¶</a></h2>
+<p>Extended SMTP (ESMTP) is an improved version of SMTP, and is used by most modern mail servers.
+Unlike SMTP, ESMTP supports authentication and transport security (emails are encrypted in transit).
+If you wish to send mail through services like GMail/Google Apps or Outlook.com/Office 365, you will have to use ESMTP.</p>
+<p>Using ESMTP requires more options &#8211; usually the default port of 25 is not open, so you must find out your email provider&#8217;s TLS-enabled ESMTP port.
+It also allows the use of authentication via a username and password.</p>
+<p>The following example shows part of the ESMTP functionality of <code class="docutils literal"><span class="pre">sendmail</span></code>.</p>
+<p><a class="reference download internal" href="../../_downloads/sendmail_gmail.py"><code class="xref download docutils literal"><span class="pre">sendmail_gmail.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">twisted.mail.smtp</span> <span class="kn">import</span> <span class="n">sendmail</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.task</span> <span class="kn">import</span> <span class="n">react</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">reactor</span><span class="p">):</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">sendmail</span><span class="p">(</span><span class="s">&quot;smtp.gmail.com&quot;</span><span class="p">,</span>
+                 <span class="s">&quot;alice@gmail.com&quot;</span><span class="p">,</span>
+                 <span class="p">[</span><span class="s">&quot;bob@gmail.com&quot;</span><span class="p">,</span> <span class="s">&quot;charlie@gmail.com&quot;</span><span class="p">],</span>
+                 <span class="s">&quot;This is my super awesome email, sent with Twisted!&quot;</span><span class="p">,</span>
+                 <span class="n">port</span><span class="o">=</span><span class="mi">587</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&quot;alice@gmail.com&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">&quot;*********&quot;</span><span class="p">)</span>
+
+    <span class="n">d</span><span class="o">.</span><span class="n">addBoth</span><span class="p">(</span><span class="k">print</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+<span class="n">react</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Assuming you own the account <code class="docutils literal"><span class="pre">alice&#64;gmail.com</span></code>, this would send an email to both <code class="docutils literal"><span class="pre">bob&#64;gmail.com</span></code> and <code class="docutils literal"><span class="pre">charlie&#64;gmail.com</span></code>, and print out something like the following (formatted for clarity):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;bob@gmail.com&#39;</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="s">&#39;2.1.5 OK hz13sm11691456pac.6 - gsmtp&#39;</span><span class="p">),</span>
+     <span class="p">(</span><span class="s">&#39;charlie@gmail.com&#39;</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="s">&#39;2.1.5 OK hz13sm11691456pac.6 - gsmtp&#39;</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">sendmail</span></code> returns a 2-tuple, containing the number of emails sent successfully (note that this is from you to the server you specified, not to the recepient &#8211; emails may still be lost between that server and the recepient) and a list of statuses of the sent mail.
+Each status is a 3-tuple containing the address it was sent to, the SMTP status code, and the server response.</p>
+</div>
+<div class="section" id="sending-complex-emails">
+<h2>Sending Complex Emails<a class="headerlink" href="#sending-complex-emails" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes you want to send more complicated emails &#8211; ones with headers, or with attachments.
+<code class="docutils literal"><span class="pre">sendmail</span></code> supports using Python&#8217;s <code class="xref py py-class docutils literal"><span class="pre">email.Message</span></code>, which lets you make complex emails:</p>
+<p><a class="reference download internal" href="../../_downloads/sendmail_message.py"><code class="xref download docutils literal"><span class="pre">sendmail_message.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">twisted.mail.smtp</span> <span class="kn">import</span> <span class="n">sendmail</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.task</span> <span class="kn">import</span> <span class="n">react</span>
+
+<span class="kn">from</span> <span class="nn">email.mime.text</span> <span class="kn">import</span> <span class="n">MIMEText</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">reactor</span><span class="p">):</span>
+    <span class="n">me</span> <span class="o">=</span> <span class="s">&quot;alice@gmail.com&quot;</span>
+    <span class="n">to</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;bob@gmail.com&quot;</span><span class="p">,</span> <span class="s">&quot;charlie@gmail.com&quot;</span><span class="p">]</span>
+
+    <span class="n">message</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="s">&quot;This is my super awesome email, sent with Twisted!&quot;</span><span class="p">)</span>
+    <span class="n">message</span><span class="p">[</span><span class="s">&quot;Subject&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Twisted is great!&quot;</span>
+    <span class="n">message</span><span class="p">[</span><span class="s">&quot;From&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">me</span>
+    <span class="n">message</span><span class="p">[</span><span class="s">&quot;To&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">to</span><span class="p">)</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">sendmail</span><span class="p">(</span><span class="s">&quot;smtp.gmail.com&quot;</span><span class="p">,</span> <span class="n">me</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span>
+                 <span class="n">port</span><span class="o">=</span><span class="mi">587</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">me</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">&quot;*********&quot;</span><span class="p">,</span>
+                 <span class="n">requireAuthentication</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                 <span class="n">requireTransportSecurity</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="n">d</span><span class="o">.</span><span class="n">addBoth</span><span class="p">(</span><span class="k">print</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+<span class="n">react</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more information on how to use <code class="docutils literal"><span class="pre">Message</span></code>, please see <a class="reference external" href="http://docs.python.org/2.7/library/email-examples.html#email-examples" title="(in Python v2.7)"><span class="xref std std-ref">the module&#8217;s Python docs</span></a>.</p>
+</div>
+<div class="section" id="enforcing-transport-security">
+<h2>Enforcing Transport Security<a class="headerlink" href="#enforcing-transport-security" title="Permalink to this headline">¶</a></h2>
+<p>To prevent downgrade attacks, you can pass <code class="docutils literal"><span class="pre">requireTransportSecurity=True</span></code> to <code class="docutils literal"><span class="pre">sendmail</span></code>.
+This means that your emails will not be transmitted in plain text.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sendmail</span><span class="p">(</span><span class="s">&quot;smtp.gmail.com&quot;</span><span class="p">,</span> <span class="n">me</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span>
+         <span class="n">port</span><span class="o">=</span><span class="mi">587</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">me</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">&quot;*********&quot;</span><span class="p">,</span>
+         <span class="n">requireTransportSecurity</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>In this document, you have seen how to:</p>
+<ol class="arabic simple">
+<li>Send an email over SMTP using <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.mail.smtp.sendmail.html">sendmail</a>.</li>
+<li>Send an email over encrypted &amp; authenticated ESMTP with <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.mail.smtp.sendmail.html">sendmail</a>.</li>
+<li>Send a &#8220;complex&#8221; email containing a subject line using the stdlib&#8217;s <code class="docutils literal"><span class="pre">email.Message</span></code> functionality.</li>
+<li>Enforce transport security for emails sent using <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.mail.smtp.sendmail.html">sendmail</a>.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Sending Mail</a><ul>
+<li><a class="reference internal" href="#sending-an-email-over-smtp">Sending an Email over SMTP</a></li>
+<li><a class="reference internal" href="#sending-an-email-over-esmtp">Sending an Email over ESMTP</a></li>
+<li><a class="reference internal" href="#sending-complex-emails">Sending Complex Emails</a></li>
+<li><a class="reference internal" href="#enforcing-transport-security">Enforcing Transport Security</a></li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter">Developer Guides</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../tutorial/smtpclient/smtpclient.html"
+                                  title="next chapter">Twisted Mail Tutorial: Building an SMTP Client from Scratch</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/mail/howto/sending-mail.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

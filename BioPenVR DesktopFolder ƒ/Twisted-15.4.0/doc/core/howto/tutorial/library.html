@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Evolution of Finger: making a finger library &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Developer Guides" href="../index.html" />
+    <link rel="next" title="The Evolution of Finger: configuration and packaging of the finger service" href="configuration.html" />
+    <link rel="prev" title="The Evolution of Finger: a Twisted finger client" href="client.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="configuration.html" title="The Evolution of Finger: configuration and packaging of the finger service"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="client.html" title="The Evolution of Finger: a Twisted finger client"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="the-evolution-of-finger-making-a-finger-library">
+<h1>The Evolution of Finger: making a finger library<a class="headerlink" href="#the-evolution-of-finger-making-a-finger-library" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This is the tenth part of the Twisted tutorial <a class="reference internal" href="index.html"><span class="doc">Twisted from Scratch, or The Evolution of Finger</span></a> .</p>
+<p>In this part, we separate the application code that launches a finger service
+from the library code which defines a finger service, placing the application in
+a Twisted Application Configuration (.tac) file. We also move configuration
+(such as HTML templates) into separate files. Configuration and deployment with
+.tac and twistd are introduced in <a class="reference internal" href="../application.html"><span class="doc">Using the Twisted Application Framework</span></a> .</p>
+</div>
+<div class="section" id="organization">
+<h2>Organization<a class="headerlink" href="#organization" title="Permalink to this headline">¶</a></h2>
+<p>Now this code, while quite modular and well-designed, isn&#8217;t
+properly organized. Everything above the <code class="docutils literal"><span class="pre">application=</span></code> belongs in a
+module, and the HTML templates all belong in separate files.</p>
+<p>We can use the <code class="docutils literal"><span class="pre">templateFile</span></code> and <code class="docutils literal"><span class="pre">templateDirectory</span></code>
+attributes to indicate what HTML template file to use for each Page, and where
+to look for it.</p>
+<p><a class="reference download internal" href="../../../_downloads/organized-finger.tac"><code class="xref download docutils literal"><span class="pre">organized-finger.tac</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># organized-finger.tac</span>
+<span class="c"># eg:  twistd -ny organized-finger.tac</span>
+
+<span class="kn">import</span> <span class="nn">finger</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">defer</span>
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.web</span> <span class="kn">import</span> <span class="n">resource</span><span class="p">,</span> <span class="n">server</span>
+<span class="kn">from</span> <span class="nn">twisted.application</span> <span class="kn">import</span> <span class="n">internet</span><span class="p">,</span> <span class="n">service</span><span class="p">,</span> <span class="n">strports</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">Application</span><span class="p">(</span><span class="s">&#39;finger&#39;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">gid</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">finger</span><span class="o">.</span><span class="n">FingerService</span><span class="p">(</span><span class="s">&#39;/etc/users&#39;</span><span class="p">)</span>
+<span class="n">serviceCollection</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">IServiceCollection</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
+<span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="mi">79</span><span class="p">,</span> <span class="n">finger</span><span class="o">.</span><span class="n">IFingerFactory</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                   <span class="p">)</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">serviceCollection</span><span class="p">)</span>
+
+<span class="n">site</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">Site</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">IResource</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+<span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="mi">8000</span><span class="p">,</span> <span class="n">site</span>
+                   <span class="p">)</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">serviceCollection</span><span class="p">)</span>
+
+<span class="n">internet</span><span class="o">.</span><span class="n">SSLServer</span><span class="p">(</span><span class="mi">443</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">finger</span><span class="o">.</span><span class="n">ServerContextFactory</span><span class="p">()</span>
+                   <span class="p">)</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">serviceCollection</span><span class="p">)</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="n">finger</span><span class="o">.</span><span class="n">IIRCClientFactory</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">i</span><span class="o">.</span><span class="n">nickname</span> <span class="o">=</span> <span class="s">&#39;fingerbot&#39;</span>
+<span class="n">internet</span><span class="o">.</span><span class="n">TCPClient</span><span class="p">(</span><span class="s">&#39;irc.freenode.org&#39;</span><span class="p">,</span> <span class="mi">6667</span><span class="p">,</span> <span class="n">i</span>
+                   <span class="p">)</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">serviceCollection</span><span class="p">)</span>
+
+<span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="mi">8889</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">finger</span><span class="o">.</span><span class="n">IPerspectiveFinger</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+                   <span class="p">)</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">serviceCollection</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that our program is now quite separated. We have:</p>
+<ul class="simple">
+<li>Code (in the module)</li>
+<li>Configuration (file above)</li>
+<li>Presentation (templates)</li>
+<li>Content (<code class="docutils literal"><span class="pre">/etc/users</span></code> )</li>
+<li>Deployment (twistd)</li>
+</ul>
+<p>Prototypes don&#8217;t need this level of separation, so our earlier examples all
+bunched together. However, real applications do. Thankfully, if we write our
+code correctly, it is easy to achieve a good separation of parts.</p>
+</div>
+<div class="section" id="easy-configuration">
+<h2>Easy Configuration<a class="headerlink" href="#easy-configuration" title="Permalink to this headline">¶</a></h2>
+<p>We can also supply easy configuration for common cases with a <code class="docutils literal"><span class="pre">makeService</span></code> method that will also help build .tap files later:</p>
+<p><a class="reference download internal" href="../../../_downloads/finger_config.py"><code class="xref download docutils literal"><span class="pre">finger_config.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Easy configuration</span>
+<span class="c"># makeService from finger module</span>
+
+<span class="k">def</span> <span class="nf">makeService</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="c"># finger on port 79</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">MultiService</span><span class="p">()</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">FingerService</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;file&#39;</span><span class="p">])</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="mi">79</span><span class="p">,</span> <span class="n">IFingerFactory</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+    <span class="n">h</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="c"># website on port 8000</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">IResource</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">templateDirectory</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;templates&#39;</span><span class="p">]</span>
+    <span class="n">site</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">Site</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span><span class="mi">8000</span><span class="p">,</span> <span class="n">site</span><span class="p">)</span>
+    <span class="n">j</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="c"># ssl on port 443</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;ssl&#39;</span><span class="p">):</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">internet</span><span class="o">.</span><span class="n">SSLServer</span><span class="p">(</span><span class="mi">443</span><span class="p">,</span> <span class="n">site</span><span class="p">,</span> <span class="n">ServerContextFactory</span><span class="p">())</span>
+        <span class="n">k</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="c"># irc fingerbot</span>
+    <span class="k">if</span> <span class="s">&#39;ircnick&#39;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">IIRCClientFactory</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">i</span><span class="o">.</span><span class="n">nickname</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;ircnick&#39;</span><span class="p">]</span>
+        <span class="n">ircserver</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;ircserver&#39;</span><span class="p">]</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">internet</span><span class="o">.</span><span class="n">TCPClient</span><span class="p">(</span><span class="n">ircserver</span><span class="p">,</span> <span class="mi">6667</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">b</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="c"># Pespective Broker on port 8889</span>
+    <span class="k">if</span> <span class="s">&#39;pbport&#39;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">internet</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">(</span>
+            <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;pbport&#39;</span><span class="p">]),</span>
+            <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">IPerspectiveFinger</span><span class="p">(</span><span class="n">f</span><span class="p">)))</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">s</span>
+</pre></div>
+</div>
+<p>And we can write simpler files now:</p>
+<p><a class="reference download internal" href="../../../_downloads/simple-finger.tac"><code class="xref download docutils literal"><span class="pre">simple-finger.tac</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># simple-finger.tac</span>
+<span class="c"># eg:  twistd -ny simple-finger.tac</span>
+
+<span class="kn">from</span> <span class="nn">twisted.application</span> <span class="kn">import</span> <span class="n">service</span>
+
+<span class="kn">import</span> <span class="nn">finger</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;file&#39;</span><span class="p">:</span> <span class="s">&#39;/etc/users&#39;</span><span class="p">,</span>
+            <span class="s">&#39;templates&#39;</span><span class="p">:</span> <span class="s">&#39;/usr/share/finger/templates&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ircnick&#39;</span><span class="p">:</span> <span class="s">&#39;fingerbot&#39;</span><span class="p">,</span>           
+            <span class="s">&#39;ircserver&#39;</span><span class="p">:</span> <span class="s">&#39;irc.freenode.net&#39;</span><span class="p">,</span>
+            <span class="s">&#39;pbport&#39;</span><span class="p">:</span> <span class="mi">8889</span><span class="p">,</span>
+            <span class="s">&#39;ssl&#39;</span><span class="p">:</span> <span class="s">&#39;ssl=0&#39;</span> <span class="p">}</span>
+
+<span class="n">ser</span> <span class="o">=</span> <span class="n">finger</span><span class="o">.</span><span class="n">makeService</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+<span class="n">application</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">Application</span><span class="p">(</span><span class="s">&#39;finger&#39;</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">gid</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ser</span><span class="o">.</span><span class="n">setServiceParent</span><span class="p">(</span><span class="n">service</span><span class="o">.</span><span class="n">IServiceCollection</span><span class="p">(</span><span class="n">application</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">%</span> twistd -ny simple-finger.tac
+</pre></div>
+</div>
+<p>Note: the finger <em>user</em> still has ultimate power: they can use <code class="docutils literal"><span class="pre">makeService</span></code>, or they can use the lower-level interface if they have specific needs (maybe an IRC server on some other port? Maybe we want the non-SSL webserver to listen only locally? etc. etc.).
+This is an important design principle: never <em>force</em> a layer of abstraction; <em>allow</em> usage of layers of abstractions instead.</p>
+<p>The pasta theory of design:</p>
+<dl class="docutils">
+<dt>Spaghetti</dt>
+<dd>Each piece of code interacts with every other piece of code (can be implemented with GOTO, functions, objects).</dd>
+<dt>Lasagna</dt>
+<dd>Code has carefully designed layers.
+Each layer is, in theory independent.
+However low-level layers usually cannot be used easily, and high-level layers depend on low-level layers.</dd>
+<dt>Ravioli</dt>
+<dd>Each part of the code is useful by itself.
+There is a thin layer of interfaces between various parts (the sauce).
+Each part can be usefully be used elsewhere.</dd>
+</dl>
+<p>...but sometimes, the user just wants to order &#8220;Ravioli&#8221;, so one coarse-grain easily definable layer of abstraction on top of it all can be useful.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">The Evolution of Finger: making a finger library</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#organization">Organization</a></li>
+<li><a class="reference internal" href="#easy-configuration">Easy Configuration</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="client.html"
+                                  title="previous chapter">The Evolution of Finger: a Twisted finger client</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="configuration.html"
+                                  title="next chapter">The Evolution of Finger: configuration and packaging of the finger service</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../../_sources/core/howto/tutorial/library.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

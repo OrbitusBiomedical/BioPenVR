@@ -1,0 +1,1613 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Test-driven development with Twisted &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Twisted from Scratch, or The Evolution of Finger" href="tutorial/index.html" />
+    <link rel="prev" title="Writing Clients" href="clients.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tutorial/index.html" title="Twisted from Scratch, or The Evolution of Finger"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="clients.html" title="Writing Clients"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="test-driven-development-with-twisted">
+<h1>Test-driven development with Twisted<a class="headerlink" href="#test-driven-development-with-twisted" title="Permalink to this headline">¶</a></h1>
+<p>Writing good code is hard, or at least it can be. A major challenge is
+to ensure that your code remains correct as you add new functionality.</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Unit_test">Unit testing</a> is a
+modern, light-weight testing methodology in widespread use in many
+programming languages. Development that relies on unit tests is often
+referred to as Test-Driven Development
+(<a class="reference external" href="http://en.wikipedia.org/wiki/Test-driven_development">TDD</a> ).
+Most Twisted code is tested using TDD.</p>
+<p>To gain a solid understanding of unit testing in Python, you should read
+the <a class="reference external" href="http://docs.python.org/library/unittest.html">unittest &#8211;Unit testing framework chapter</a> of the <a class="reference external" href="http://docs.python.org/library/index.html">Python LibraryReference</a> . There is a lot of information available online and in
+books.</p>
+<div class="section" id="introductory-example-of-python-unit-testing">
+<h2>Introductory example of Python unit testing<a class="headerlink" href="#introductory-example-of-python-unit-testing" title="Permalink to this headline">¶</a></h2>
+<p>This document is principally a guide to Trial, Twisted&#8217;s unit testing
+framework. Trial is based on Python&#8217;s unit testing framework. While we do not
+aim to give a comprehensive guide to general Python unit testing, it will be
+helpful to consider a simple non-networked example before expanding to cover
+networking code that requires the special capabilities of Trial. If you are
+already familiar with unit test in Python, jump straight to the section
+specific to <a class="reference internal" href="#core-howto-trial-twisted"><span class="std std-ref">testing Twisted code</span></a> .</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In what follows we will make a series of refinements
+to some simple classes. In order to keep the examples and source code links
+complete and to allow you to run Trial on the intermediate results at every
+stage, I add <code class="docutils literal"><span class="pre">_N</span></code>  (where the <code class="docutils literal"><span class="pre">N</span></code>  are successive
+integers) to file names to keep them separate. This is a minor visual
+distraction that should be ignored.</p>
+</div>
+</div>
+<div class="section" id="creating-an-api-and-writing-tests">
+<h2>Creating an API and writing tests<a class="headerlink" href="#creating-an-api-and-writing-tests" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;ll create a library for arithmetic calculation. First, create a
+project structure with a directory called <code class="docutils literal"><span class="pre">calculus</span></code> containing an empty <code class="docutils literal"><span class="pre">__init__.py</span></code> file.</p>
+<p>Then put the following simple class definition API into <code class="docutils literal"><span class="pre">calculus/base_1.py</span></code> :</p>
+<p><a class="reference download internal" href="../../_downloads/base_1.py"><code class="xref download docutils literal"><span class="pre">base_1.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- test-case-name: calculus.test.test_base_1 -*-</span>
+
+
+
+<span class="k">class</span> <span class="nc">Calculation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">divide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>(Ignore the <code class="docutils literal"><span class="pre">test-case-name</span></code> comment for
+now. You&#8217;ll see why that&#8217;s useful <a class="reference internal" href="#core-howto-trial-comment"><span class="std std-ref">below</span></a> .)</p>
+<p>We&#8217;ve written the interface, but not the code. Now we&#8217;ll write a set of
+tests. At this point of development, we&#8217;ll be expecting all tests to
+fail. Don&#8217;t worry, that&#8217;s part of the point. Once we have a test framework
+functioning, and we have some decent tests written (and failing!), we&#8217;ll go
+and do the actual development of our calculation API. This is the preferred
+way to work for many people using TDD - write tests first, make sure they
+fail, then do development. Others are not so strict and write tests after
+doing the development.</p>
+<p>Create a <code class="docutils literal"><span class="pre">test</span></code> directory beneath <code class="docutils literal"><span class="pre">calculus</span></code> , with an empty <code class="docutils literal"><span class="pre">__init__.py</span></code> file. In a <code class="docutils literal"><span class="pre">calculus/test/test_base_1.py</span></code> , put the
+following:</p>
+<p><a class="reference download internal" href="../../_downloads/test_base_1.py"><code class="xref download docutils literal"><span class="pre">test_base_1.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">calculus.base_1</span> <span class="kn">import</span> <span class="n">Calculation</span>
+<span class="kn">from</span> <span class="nn">twisted.trial</span> <span class="kn">import</span> <span class="n">unittest</span>
+
+<span class="k">class</span> <span class="nc">CalculationTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">calc</span> <span class="o">=</span> <span class="n">Calculation</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">calc</span> <span class="o">=</span> <span class="n">Calculation</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">calc</span> <span class="o">=</span> <span class="n">Calculation</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_divide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">calc</span> <span class="o">=</span> <span class="n">Calculation</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You should now have the following 4 files:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">calculus/__init__.py</span>
+<span class="go">calculus/base_1.py</span>
+<span class="go">calculus/test/__init__.py</span>
+<span class="go">calculus/test/test_base_1.py</span>
+</pre></div>
+</div>
+<p>To run the tests, there are two things you must set up. Make sure
+you get both done - nothing below will work unless you do.</p>
+<p>First, make sure that the directory that <em>contains</em> your
+<code class="docutils literal"><span class="pre">calculus</span></code> directory is in your Python load path. If you&#8217;re
+using the Bash shell on some form of unix (e.g., Linux, Mac OS X), run
+<code class="docutils literal"><span class="pre">PYTHONPATH=&quot;$PYTHONPATH:`pwd`/..&quot;</span></code> at
+the command line in the <code class="docutils literal"><span class="pre">calculus</span></code> directory. Once you have your
+Python path set up correctly, you should be able to run Python from the
+command line and <code class="docutils literal"><span class="pre">import</span> <span class="pre">calculus</span></code> without seeing
+an import error.</p>
+<p>Second, make sure you can run the <code class="docutils literal"><span class="pre">trial</span></code>
+command. That is, make sure the directory containing the <code class="docutils literal"><span class="pre">trial</span></code>
+program on you system is in your shell&#8217;s <code class="docutils literal"><span class="pre">PATH</span></code> . The easiest way to check if you have this is to
+try running <code class="docutils literal"><span class="pre">trial</span> <span class="pre">--help</span></code> at the command line. If
+you see a list of invocation options, you&#8217;re in business. If your shell
+reports something like <code class="docutils literal"><span class="pre">trial:</span> <span class="pre">command</span> <span class="pre">not</span> <span class="pre">found</span></code> ,
+make sure you have Twisted installed properly, and that the Twisted
+<code class="docutils literal"><span class="pre">bin</span></code> directory is in your <code class="docutils literal"><span class="pre">PATH</span></code> . If
+you don&#8217;t know how to do this, get some local help, or figure it out by
+searching online for information on setting and changing environment
+variables for you operating system.</p>
+<p>With those (one-time) preliminary steps out of the way, let&#8217;s perform
+the tests. Run <code class="docutils literal"><span class="pre">trial</span> <span class="pre">calculus.test.test_base_1</span></code> from the
+command line when you are in the directory containing the <code class="docutils literal"><span class="pre">calculus</span></code>
+directory.</p>
+<p>You should see the following output (though your files are probably not in
+<code class="docutils literal"><span class="pre">/tmp</span></code> ):</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> trial calculus.test.test_base_1
+<span class="go">calculus.test.test_base_1</span>
+<span class="go">  CalculationTestCase</span>
+<span class="go">    test_add ...                                                         [FAIL]</span>
+<span class="go">    test_divide ...                                                      [FAIL]</span>
+<span class="go">    test_multiply ...                                                    [FAIL]</span>
+<span class="go">    test_subtract ...                                                    [FAIL]</span>
+
+<span class="go">===============================================================================</span>
+<span class="go">[FAIL]</span>
+<span class="go">Traceback (most recent call last):</span>
+<span class="go">  File &quot;/tmp/calculus/test/test_base_1.py&quot;, line 8, in test_add</span>
+<span class="go">    self.assertEqual(result, 11)</span>
+<span class="go">twisted.trial.unittest.FailTest: not equal:</span>
+<span class="go">a = None</span>
+<span class="go">b = 11</span>
+
+
+<span class="go">calculus.test.test_base_1.CalculationTestCase.test_add</span>
+<span class="go">===============================================================================</span>
+<span class="go">[FAIL]</span>
+<span class="go">Traceback (most recent call last):</span>
+<span class="go">  File &quot;/tmp/calculus/test/test_base_1.py&quot;, line 23, in test_divide</span>
+<span class="go">    self.assertEqual(result, 2)</span>
+<span class="go">twisted.trial.unittest.FailTest: not equal:</span>
+<span class="go">a = None</span>
+<span class="go">b = 2</span>
+
+
+<span class="go">calculus.test.test_base_1.CalculationTestCase.test_divide</span>
+<span class="go">===============================================================================</span>
+<span class="go">[FAIL]</span>
+<span class="go">Traceback (most recent call last):</span>
+<span class="go">  File &quot;/tmp/calculus/test/test_base_1.py&quot;, line 18, in test_multiply</span>
+<span class="go">    self.assertEqual(result, 60)</span>
+<span class="go">twisted.trial.unittest.FailTest: not equal:</span>
+<span class="go">a = None</span>
+<span class="go">b = 60</span>
+
+
+<span class="go">calculus.test.test_base_1.CalculationTestCase.test_multiply</span>
+<span class="go">===============================================================================</span>
+<span class="go">[FAIL]</span>
+<span class="go">Traceback (most recent call last):</span>
+<span class="go">  File &quot;/tmp/calculus/test/test_base_1.py&quot;, line 13, in test_subtract</span>
+<span class="go">    self.assertEqual(result, 4)</span>
+<span class="go">twisted.trial.unittest.FailTest: not equal:</span>
+<span class="go">a = None</span>
+<span class="go">b = 4</span>
+
+
+<span class="go">calculus.test.test_base_1.CalculationTestCase.test_subtract</span>
+<span class="go">-------------------------------------------------------------------------------</span>
+<span class="go">Ran 4 tests in 0.042s</span>
+
+<span class="go">FAILED (failures=4)</span>
+</pre></div>
+</div>
+<p>How to interpret this output? You get a list of the individual tests, each
+followed by its result. By default, failures are printed at the end, but this
+can be changed with the <code class="docutils literal"><span class="pre">-e</span></code> (or <code class="docutils literal"><span class="pre">--rterrors</span></code> ) option.</p>
+<p>One very useful thing in this output is the fully-qualified name of the
+failed tests. This appears at the bottom of each =-delimited area of the
+output. This allows you to copy and paste it to just run a single test you&#8217;re
+interested in. In our example, you could run <code class="docutils literal"><span class="pre">trial</span> <span class="pre">calculus.test.test_base_1.CalculationTestCase.test_subtract</span></code> from the
+shell.</p>
+<p>Note that trial can use different reporters to modify its output. Run
+<code class="docutils literal"><span class="pre">trial</span> <span class="pre">--help-reporters</span></code> to see a list of
+reporters.</p>
+<p>The tests can be run by <code class="docutils literal"><span class="pre">trial</span></code> in multiple ways:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">trial</span> <span class="pre">calculus</span></code> : run all the tests for the
+calculus package.</li>
+<li><code class="docutils literal"><span class="pre">trial</span> <span class="pre">calculus.test</span></code> : run using Python&#8217;s
+<code class="docutils literal"><span class="pre">import</span></code> notation.</li>
+<li><code class="docutils literal"><span class="pre">trial</span> <span class="pre">calculus.test.test_base_1</span></code> : as above, for
+a specific test module. You can follow that logic by putting your class name
+and even a method name to only run those specific tests.</li>
+<li><p id="core-howto-trial-comment"><code class="docutils literal"><span class="pre">trial</span> <span class="pre">--testmodule=calculus/base_1.py</span></code> : use the <code class="docutils literal"><span class="pre">test-case-name</span></code> comment in the first line of
+<code class="docutils literal"><span class="pre">calculus/base_1.py</span></code> to find the tests.</p>
+</li>
+<li><code class="docutils literal"><span class="pre">trial</span> <span class="pre">calculus/test</span></code> : run all the tests in the
+test directory (not recommended).</li>
+<li><code class="docutils literal"><span class="pre">trial</span> <span class="pre">calculus/test/test_base_1.py</span></code> : run a
+specific test file (not recommended).</li>
+</ul>
+<p>The first 3 versions using full qualified names are strongly encouraged: they
+are much more reliable and they allow you to easily be more selective in your
+test runs.</p>
+<p>You&#8217;ll notice that Trial creates a <code class="docutils literal"><span class="pre">_trial_temp</span></code> directory in
+the directory where you run the tests. This has a file called
+<code class="docutils literal"><span class="pre">test.log</span></code> which contains the log output of the tests (created
+using <code class="docutils literal"><span class="pre">log.msg</span></code> or <code class="docutils literal"><span class="pre">log.err</span></code> functions). Examine this file if you add
+logging to your tests.</p>
+</div>
+<div class="section" id="making-the-tests-pass">
+<h2>Making the tests pass<a class="headerlink" href="#making-the-tests-pass" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have a working test framework in place, and our tests are
+failing (as expected) we can go and try to implement the correct API. We&#8217;ll do
+that in a new version of the above base_1
+module, <code class="docutils literal"><span class="pre">calculus/base_2.py</span></code> :</p>
+<p><a class="reference download internal" href="../../_downloads/base_2.py"><code class="xref download docutils literal"><span class="pre">base_2.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- test-case-name: calculus.test.test_base_2 -*-</span>
+
+<span class="k">class</span> <span class="nc">Calculation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+    <span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+
+    <span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+
+    <span class="k">def</span> <span class="nf">divide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>We&#8217;ll also create a new version of test_base_1 which imports and tests this
+new implementation,
+in <code class="docutils literal"><span class="pre">calculus/test_base_2.py</span></code> :</p>
+<p><a class="reference download internal" href="../../_downloads/test_base_2.py"><code class="xref download docutils literal"><span class="pre">test_base_2.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">calculus.base_2</span> <span class="kn">import</span> <span class="n">Calculation</span>
+<span class="kn">from</span> <span class="nn">twisted.trial</span> <span class="kn">import</span> <span class="n">unittest</span>
+
+
+
+<span class="k">class</span> <span class="nc">CalculationTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">calc</span> <span class="o">=</span> <span class="n">Calculation</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">calc</span> <span class="o">=</span> <span class="n">Calculation</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">calc</span> <span class="o">=</span> <span class="n">Calculation</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_divide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">calc</span> <span class="o">=</span> <span class="n">Calculation</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>is a copy of test_base_1, but with the import changed. Run <code class="docutils literal"><span class="pre">trial</span></code> again as above, and your tests should now pass:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> trial calculus.test.test_base_2
+
+<span class="go">Running 4 tests.</span>
+<span class="go">calculus.test.test_base</span>
+<span class="go">  CalculationTestCase</span>
+<span class="go">    test_add ...                                                           [OK]</span>
+<span class="go">    test_divide ...                                                        [OK]</span>
+<span class="go">    test_multiply ...                                                      [OK]</span>
+<span class="go">    test_subtract ...                                                      [OK]</span>
+
+<span class="go">-------------------------------------------------------------------------------</span>
+<span class="go">Ran 4 tests in 0.067s</span>
+
+<span class="go">PASSED (successes=4)</span>
+</pre></div>
+</div>
+<div class="section" id="factoring-out-common-test-logic">
+<h3>Factoring out common test logic<a class="headerlink" href="#factoring-out-common-test-logic" title="Permalink to this headline">¶</a></h3>
+<p>You&#8217;ll notice that our test file contains redundant code. Let&#8217;s get rid
+of that. Python&#8217;s unit testing framework allows your test class to define a
+<code class="docutils literal"><span class="pre">setUp</span></code> method that is called before
+<em>each</em> test method in the class. This allows you to add attributes
+to <code class="docutils literal"><span class="pre">self</span></code> that can be used in test
+methods. We&#8217;ll also add a parameterized test method to further simplify the
+code.</p>
+<p>Note that a test class may also provide the counterpart of <code class="docutils literal"><span class="pre">setUp</span></code> , named <code class="docutils literal"><span class="pre">tearDown</span></code> ,
+which will be called after <em>each</em> test (whether successful or
+not). <code class="docutils literal"><span class="pre">tearDown</span></code> is mainly used for post-test
+cleanup purposes. We will not use <code class="docutils literal"><span class="pre">tearDown</span></code>
+until later.</p>
+<p>Create <code class="docutils literal"><span class="pre">calculus/test/test_base_2b.py</span></code> as
+follows:</p>
+<p><a class="reference download internal" href="../../_downloads/test_base_2b.py"><code class="xref download docutils literal"><span class="pre">test_base_2b.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">calculus.base_2</span> <span class="kn">import</span> <span class="n">Calculation</span>
+<span class="kn">from</span> <span class="nn">twisted.trial</span> <span class="kn">import</span> <span class="n">unittest</span>
+
+
+
+<span class="k">class</span> <span class="nc">CalculationTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="n">Calculation</span><span class="p">()</span>
+
+
+    <span class="k">def</span> <span class="nf">_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">operation</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">subtract</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">multiply</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">54</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_divide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">divide</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Much cleaner, isn&#8217;t it?</p>
+<p>We&#8217;ll now add some additional error tests. Testing just for successful
+use of the API is generally not enough, especially if you expect your code
+to be used by others. Let&#8217;s make sure the <code class="docutils literal"><span class="pre">Calculation</span></code> class raises exceptions if someone tries
+to call its methods with arguments that cannot be converted to
+integers.</p>
+<p>We arrive at <code class="docutils literal"><span class="pre">calculus/test/test_base_3.py</span></code> :</p>
+<p><a class="reference download internal" href="../../_downloads/test_base_3.py"><code class="xref download docutils literal"><span class="pre">test_base_3.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">calculus.base_3</span> <span class="kn">import</span> <span class="n">Calculation</span>
+<span class="kn">from</span> <span class="nn">twisted.trial</span> <span class="kn">import</span> <span class="n">unittest</span>
+
+
+
+<span class="k">class</span> <span class="nc">CalculationTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="n">Calculation</span><span class="p">()</span>
+
+
+    <span class="k">def</span> <span class="nf">_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">operation</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_test_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">&quot;egg&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;e&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;r&quot;</span><span class="p">:</span> <span class="s">&quot;t&quot;</span><span class="p">})</span>
+
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">subtract</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">multiply</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">54</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_divide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">divide</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_errorAdd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test_error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">add</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_errorSubtract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test_error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">subtract</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_errorMultiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test_error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">multiply</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_errorDivide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test_error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">divide</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We&#8217;ve added four new tests and one general-purpose function, <code class="docutils literal"><span class="pre">_test_error</span></code> . This function uses the <code class="docutils literal"><span class="pre">assertRaises</span></code> method, which takes an exception class,
+a function to run and its arguments, and checks that calling the function
+on the arguments does indeed raise the given exception.</p>
+<p>If you run the above, you&#8217;ll see that not all tests fail. In Python it&#8217;s
+often valid to add and multiply objects of different and even differing
+types, so the code in the add and multiply tests does not raise an exception
+and those tests therefore fail. So let&#8217;s add explicit type conversion to
+our API class. This brings us to <code class="docutils literal"><span class="pre">calculus/base_3.py</span></code> :</p>
+<p><a class="reference download internal" href="../../_downloads/base_3.py"><code class="xref download docutils literal"><span class="pre">base_3.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- test-case-name: calculus.test.test_base_3 -*-</span>
+
+<span class="k">class</span> <span class="nc">Calculation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_make_ints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t coerce arguments to integers: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">args</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_ints</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+    
+    <span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_ints</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+
+    <span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_ints</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+
+    <span class="k">def</span> <span class="nf">divide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_ints</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>Here the <code class="docutils literal"><span class="pre">_make_ints</span></code> helper function tries to
+convert a list into a list of equivalent integers, and raises a <code class="docutils literal"><span class="pre">TypeError</span></code> in case the conversion goes wrong.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal"><span class="pre">int</span></code> conversion can also raise a <code class="docutils literal"><span class="pre">TypeError</span></code> if passed something of
+the wrong type, such as a list. We&#8217;ll just let that exception go by, as
+<code class="docutils literal"><span class="pre">TypeError</span></code> is already what we want in case something goes wrong.</p>
+</div>
+</div>
+</div>
+<div class="section" id="twisted-specific-testing">
+<span id="core-howto-trial-twisted"></span><h2>Twisted specific testing<a class="headerlink" href="#twisted-specific-testing" title="Permalink to this headline">¶</a></h2>
+<p>Up to this point we&#8217;ve been doing fairly standard Python unit testing.
+With only a few cosmetic changes (most importantly, directly importing
+<code class="docutils literal"><span class="pre">unittest</span></code> instead of using Twisted&#8217;s <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.trial.unittest.html">unittest</a> version) we could make the
+above tests run using Python&#8217;s standard library unit testing framework.</p>
+<p>Here we will assume a basic familiarity with Twisted&#8217;s network I/O, timing,
+and Deferred APIs.  If you haven&#8217;t already read them, you should read the
+documentation on <a class="reference internal" href="servers.html"><span class="doc">Writing Servers</span></a> , <a class="reference internal" href="clients.html"><span class="doc">Writing Clients</span></a> ,
+and <a class="reference internal" href="defer.html"><span class="doc">Deferreds</span></a> .</p>
+<p>Now we&#8217;ll get to the real point of this tutorial and take advantage of
+Trial to test Twisted code.</p>
+</div>
+<div class="section" id="testing-a-protocol">
+<h2>Testing a protocol<a class="headerlink" href="#testing-a-protocol" title="Permalink to this headline">¶</a></h2>
+<p>We&#8217;ll now create a custom protocol to invoke our class from a
+telnet-like session. We&#8217;ll remotely call commands with arguments and read back
+the response. The goal will be to test our network code without creating
+sockets.</p>
+<div class="section" id="creating-and-testing-the-server">
+<h3>Creating and testing the server<a class="headerlink" href="#creating-and-testing-the-server" title="Permalink to this headline">¶</a></h3>
+<p>First we&#8217;ll write the tests, and then explain what they do.  The first
+version of the remote test code is:</p>
+<p><a class="reference download internal" href="../../_downloads/test_remote_1.py"><code class="xref download docutils literal"><span class="pre">test_remote_1.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">calculus.remote_1</span> <span class="kn">import</span> <span class="n">RemoteCalculationFactory</span>
+<span class="kn">from</span> <span class="nn">twisted.trial</span> <span class="kn">import</span> <span class="n">unittest</span>
+<span class="kn">from</span> <span class="nn">twisted.test</span> <span class="kn">import</span> <span class="n">proto_helpers</span>
+
+
+
+<span class="k">class</span> <span class="nc">RemoteCalculationTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">factory</span> <span class="o">=</span> <span class="n">RemoteCalculationFactory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">buildProtocol</span><span class="p">((</span><span class="s">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="n">proto_helpers</span><span class="o">.</span><span class="n">StringTransport</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">makeConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">dataReceived</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="se">\r\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">operation</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">value</span><span class="p">()),</span> <span class="n">expected</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;add&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;subtract&#39;</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;multiply&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_divide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;divide&#39;</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>To fully understand this client, it helps a lot to be comfortable with
+the Factory/Protocol/Transport pattern used in Twisted.</p>
+<p>We first create a protocol factory object. Note that we have yet to see
+the <code class="docutils literal"><span class="pre">RemoteCalculationFactory</span></code> class. It is in
+<code class="docutils literal"><span class="pre">calculus/remote_1.py</span></code> below. We
+call <code class="docutils literal"><span class="pre">buildProtocol</span></code> to ask the factory to build us a
+protocol object that knows how to talk to our server.  We then make a fake
+network transport, an instance of <code class="docutils literal"><span class="pre">twisted.test.proto_helpers.StringTransport</span></code>
+class (note that test packages are generally not part of Twisted&#8217;s public API;``twisted.test.proto_helpers`` is an exception).  This fake
+transport is the key to the communications. It is used to emulate a network
+connection without a network. The address and port passed to <code class="docutils literal"><span class="pre">buildProtocol</span></code>
+are typically used by the factory to choose to immediately deny remote connections; since we&#8217;re using a fake transport, we can choose any value that will be acceptable to the factory. In this case the factory just ignores the address, so we don&#8217;t need to pick anything in particular.</p>
+<p>Testing protocols without the use of real network connections is both simple and recommended when testing Twisted
+code.  Even though there are many tests in Twisted that use the network,
+most good tests don&#8217;t. The problem with unit tests and networking is that
+networks aren&#8217;t reliable. We cannot know that they will exhibit reasonable
+behavior all the time. This creates intermittent test failures due to
+network vagaries. Right now we&#8217;re trying to test our Twisted code, not
+network reliability.  By setting up and using a fake transport, we can
+write 100% reliable tests. We can also test network failures in a deterministic manner, another important part of your complete test suite.</p>
+<p>The final key to understanding this client code is the <code class="docutils literal"><span class="pre">_test</span></code> method. The call to <code class="docutils literal"><span class="pre">dataReceived</span></code> simulates data arriving on the network
+transport. But where does it arrive? It&#8217;s handed to the <code class="docutils literal"><span class="pre">lineReceived</span></code> method of the protocol instance (in
+<code class="docutils literal"><span class="pre">calculus/remote_1.py</span></code> below). So the client
+is essentially tricking the server into thinking it has received the
+operation and the arguments over the network. The server (once again, see
+below) hands over the work to its <code class="docutils literal"><span class="pre">CalculationProxy</span></code> object which in turn hands it to its
+<code class="docutils literal"><span class="pre">Calculation</span></code> instance. The result is written
+back via <code class="docutils literal"><span class="pre">sendLine</span></code> (into the fake string
+transport object), and is then immediately available to the client, who
+fetches it with <code class="docutils literal"><span class="pre">tr.value()</span></code> and checks that it
+has the expected value. So there&#8217;s quite a lot going on behind the scenes
+in the two-line <code class="docutils literal"><span class="pre">_test</span></code> method above.</p>
+<p><em>Finally</em> , let&#8217;s see the implementation of this protocol. Put the
+following into <code class="docutils literal"><span class="pre">calculus/remote_1.py</span></code> :</p>
+<p><a class="reference download internal" href="../../_downloads/remote_1.py"><code class="xref download docutils literal"><span class="pre">remote_1.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- test-case-name: calculus.test.test_remote_1 -*-</span>
+
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span>
+<span class="kn">from</span> <span class="nn">calculus.base_3</span> <span class="kn">import</span> <span class="n">Calculation</span>
+
+
+
+<span class="k">class</span> <span class="nc">CalculationProxy</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="n">Calculation</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;add&#39;</span><span class="p">,</span> <span class="s">&#39;subtract&#39;</span><span class="p">,</span> <span class="s">&#39;multiply&#39;</span><span class="p">,</span> <span class="s">&#39;divide&#39;</span><span class="p">]:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;remote_</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">m</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+
+
+
+<span class="k">class</span> <span class="nc">RemoteCalculationProtocol</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proxy</span> <span class="o">=</span> <span class="n">CalculationProxy</span><span class="p">()</span>
+
+
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">op</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proxy</span><span class="p">,</span> <span class="s">&#39;remote_</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">op</span><span class="p">,))</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendLine</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+
+
+
+<span class="k">class</span> <span class="nc">RemoteCalculationFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">Factory</span><span class="p">):</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">RemoteCalculationProtocol</span>
+
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+    <span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">startLogging</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">RemoteCalculationFactory</span><span class="p">())</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>As mentioned, this server creates a protocol that inherits from <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.protocols.basic.LineReceiver.html">basic.LineReceiver</a> , and then a
+factory that uses it as protocol. The only trick is the <code class="docutils literal"><span class="pre">CalculationProxy</span></code> object, which calls <code class="docutils literal"><span class="pre">Calculation</span></code> methods through <code class="docutils literal"><span class="pre">remote_*</span></code> methods. This pattern is used frequently in
+Twisted, because it is very explicit about what methods you are making
+accessible.</p>
+<p>If you run this test (<code class="docutils literal"><span class="pre">trial</span> <span class="pre">calculus.test.test_remote_1</span></code> ), everything should be fine. You can also
+run a server to test it with a telnet client. To do that, call <code class="docutils literal"><span class="pre">python</span> <span class="pre">calculus/remote_1.py</span></code> . You should have the following output:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">2008-04-25 10:53:27+0200 [-] Log opened.</span>
+<span class="go">2008-04-25 10:53:27+0200 [-] __main__.RemoteCalculationFactory starting on 46194</span>
+<span class="go">2008-04-25 10:53:27+0200 [-] Starting factory &lt;__main__.RemoteCalculationFactory instance at 0x846a0cc&gt;</span>
+</pre></div>
+</div>
+<p>46194 is replaced by a random port. You can then call telnet on it:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ telnet localhost 46194
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is &#39;^]&#39;.
+add 4123 9423
+13546
+</pre></div>
+</div>
+<p>It works!</p>
+</div>
+<div class="section" id="creating-and-testing-the-client">
+<h3>Creating and testing the client<a class="headerlink" href="#creating-and-testing-the-client" title="Permalink to this headline">¶</a></h3>
+<p>Of course, what we build is not particularly useful for now: we&#8217;ll now build
+a client for our server, to be able to use it inside a Python program. And it
+will serve our next purpose.</p>
+<p>Create <code class="docutils literal"><span class="pre">calculus/test/test_client_1.py</span></code> :</p>
+<p><a class="reference download internal" href="../../_downloads/test_client_1.py"><code class="xref download docutils literal"><span class="pre">test_client_1.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">calculus.client_1</span> <span class="kn">import</span> <span class="n">RemoteCalculationClient</span>
+<span class="kn">from</span> <span class="nn">twisted.trial</span> <span class="kn">import</span> <span class="n">unittest</span>
+<span class="kn">from</span> <span class="nn">twisted.test</span> <span class="kn">import</span> <span class="n">proto_helpers</span>
+
+
+
+<span class="k">class</span> <span class="nc">ClientCalculationTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="n">proto_helpers</span><span class="o">.</span><span class="n">StringTransport</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span> <span class="o">=</span> <span class="n">RemoteCalculationClient</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">makeConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="p">,</span> <span class="n">operation</span><span class="p">)(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="se">\r\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">operation</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">dataReceived</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d</span><span class="se">\r\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">expected</span><span class="p">,))</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;add&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;subtract&#39;</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;multiply&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_divide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;divide&#39;</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>It&#8217;s really symmetric to the server test cases. The only tricky part is
+that we don&#8217;t use a client factory. We&#8217;re lazy, and it&#8217;s not very useful in
+the client part, so we instantiate the protocol directly.</p>
+<p>Incidentally, we have introduced a very important concept here: the tests
+now return a Deferred object, and the assertion is done in a callback. When
+a test returns a Deferred, the reactor is run until the Deferred fires and
+its callbacks run.  The
+important thing to do here is to <strong>not forget to return the Deferred</strong> . If you do, your tests will pass even if nothing is asserted.
+That&#8217;s also why it&#8217;s important to make tests fail first: if your tests pass
+whereas you know they shouldn&#8217;t, there is a problem in your tests.</p>
+<p>We&#8217;ll now add the remote client class to produce <code class="docutils literal"><span class="pre">calculus/client_1.py</span></code> :</p>
+<p><a class="reference download internal" href="../../_downloads/client_1.py"><code class="xref download docutils literal"><span class="pre">client_1.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- test-case-name: calculus.test.test_client_1 -*-</span>
+
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span>
+
+
+
+<span class="k">class</span> <span class="nc">RemoteCalculationClient</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+
+
+    <span class="k">def</span> <span class="nf">_sendOperation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendLine</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendOperation</span><span class="p">(</span><span class="s">&quot;add&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendOperation</span><span class="p">(</span><span class="s">&quot;subtract&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendOperation</span><span class="p">(</span><span class="s">&quot;multiply&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">divide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendOperation</span><span class="p">(</span><span class="s">&quot;divide&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="more-good-practices">
+<h2>More good practices<a class="headerlink" href="#more-good-practices" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="testing-scheduling">
+<h3>Testing scheduling<a class="headerlink" href="#testing-scheduling" title="Permalink to this headline">¶</a></h3>
+<p>When testing code that involves the passage of time, waiting e.g. for a two hour timeout to occur in a test is not very realistic. Twisted provides a solution to this, the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.task.Clock.html">Clock</a> class that allows one to simulate the passage of time.</p>
+<p>As an example we&#8217;ll test the code for client request timeout: since our client
+uses TCP it can hang for a long time (firewall, connectivity problems, etc...).
+So generally we need to implement timeouts on the client side. Basically it&#8217;s
+just that we send a request, don&#8217;t receive a response and expect a timeout error
+to be triggered after a certain duration.</p>
+<p><a class="reference download internal" href="../../_downloads/test_client_2.py"><code class="xref download docutils literal"><span class="pre">test_client_2.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">calculus.client_2</span> <span class="kn">import</span> <span class="n">RemoteCalculationClient</span><span class="p">,</span> <span class="n">ClientTimeoutError</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">task</span>
+<span class="kn">from</span> <span class="nn">twisted.trial</span> <span class="kn">import</span> <span class="n">unittest</span>
+<span class="kn">from</span> <span class="nn">twisted.test</span> <span class="kn">import</span> <span class="n">proto_helpers</span>
+
+
+
+<span class="k">class</span> <span class="nc">ClientCalculationTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="n">proto_helpers</span><span class="o">.</span><span class="n">StringTransportWithDisconnection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clock</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span> <span class="o">=</span> <span class="n">RemoteCalculationClient</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">protocol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">callLater</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">callLater</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">makeConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="p">,</span> <span class="n">operation</span><span class="p">)(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="se">\r\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">operation</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">dataReceived</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d</span><span class="se">\r\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">expected</span><span class="p">,))</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;add&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;subtract&#39;</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;multiply&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_divide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;divide&#39;</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span> <span class="s">&#39;add 9 4</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">timeOut</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertFailure</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">ClientTimeoutError</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>What happens here? We instantiate our protocol as usual, the only trick
+is to create the clock, and assign <code class="docutils literal"><span class="pre">proto.callLater</span></code> to
+<code class="docutils literal"><span class="pre">clock.callLater</span></code> . Thus, every <code class="docutils literal"><span class="pre">callLater</span></code>
+call in the protocol will finish before <code class="docutils literal"><span class="pre">clock.advance()</span></code> returns.</p>
+<p>In the new test (test_timeout), we call <code class="docutils literal"><span class="pre">clock.advance</span></code> , that simulates an advance in time
+(logically it&#8217;s similar to a <code class="docutils literal"><span class="pre">time.sleep</span></code> call). And
+we just have to verify that our Deferred got a timeout error.</p>
+<p>Let&#8217;s implement that in our code.</p>
+<p><a class="reference download internal" href="../../_downloads/client_2.py"><code class="xref download docutils literal"><span class="pre">client_2.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- test-case-name: calculus.test.test_client_2 -*-</span>
+
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span><span class="p">,</span> <span class="n">reactor</span>
+
+
+
+<span class="k">class</span> <span class="nc">ClientTimeoutError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+
+<span class="k">class</span> <span class="nc">RemoteCalculationClient</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+
+    <span class="n">callLater</span> <span class="o">=</span> <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span>
+    <span class="n">timeOut</span> <span class="o">=</span> <span class="mi">60</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="n">d</span><span class="p">,</span> <span class="n">callID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">callID</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+
+
+    <span class="k">def</span> <span class="nf">_cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">errback</span><span class="p">(</span><span class="n">ClientTimeoutError</span><span class="p">())</span>
+
+
+    <span class="k">def</span> <span class="nf">_sendOperation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+        <span class="n">callID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timeOut</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cancel</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">d</span><span class="p">,</span> <span class="n">callID</span><span class="p">))</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendLine</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendOperation</span><span class="p">(</span><span class="s">&quot;add&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendOperation</span><span class="p">(</span><span class="s">&quot;subtract&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendOperation</span><span class="p">(</span><span class="s">&quot;multiply&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">divide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendOperation</span><span class="p">(</span><span class="s">&quot;divide&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If everything completed successfully,
+it is important to remember to cancel the
+<code class="docutils literal"><span class="pre">DelayedCall</span></code>
+returned by <code class="docutils literal"><span class="pre">callLater</span></code> .</p>
+</div>
+<div class="section" id="cleaning-up-after-tests">
+<h3>Cleaning up after tests<a class="headerlink" href="#cleaning-up-after-tests" title="Permalink to this headline">¶</a></h3>
+<p>This chapter is mainly intended for people who want to have sockets or
+processes created in their tests. If it&#8217;s still not obvious, you must try to
+avoid using them, because it ends up with a lot of problems, one of
+them being intermittent failures. And intermittent failures are the plague
+of automated tests.</p>
+<p>To actually test that, we&#8217;ll launch a server with our protocol.</p>
+<p><a class="reference download internal" href="../../_downloads/test_remote_2.py"><code class="xref download docutils literal"><span class="pre">test_remote_2.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">calculus.remote_1</span> <span class="kn">import</span> <span class="n">RemoteCalculationFactory</span>
+<span class="kn">from</span> <span class="nn">calculus.client_2</span> <span class="kn">import</span> <span class="n">RemoteCalculationClient</span>
+
+<span class="kn">from</span> <span class="nn">twisted.trial</span> <span class="kn">import</span> <span class="n">unittest</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">protocol</span>
+
+
+
+<span class="k">class</span> <span class="nc">RemoteRunCalculationTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">factory</span> <span class="o">=</span> <span class="n">RemoteCalculationFactory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">factory</span><span class="p">,</span> <span class="n">interface</span><span class="o">=</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="bp">None</span>
+
+
+    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">stopListening</span><span class="p">()</span>
+
+
+    <span class="k">def</span> <span class="nf">_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+        <span class="n">creator</span> <span class="o">=</span> <span class="n">protocol</span><span class="o">.</span><span class="n">ClientCreator</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="n">RemoteCalculationClient</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">cb</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="n">op</span><span class="p">)(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">creator</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">getHost</span><span class="p">()</span><span class="o">.</span><span class="n">port</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&quot;add&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&quot;subtract&quot;</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">34</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&quot;multiply&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_divide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&quot;divide&quot;</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Recent versions of trial will fail loudly if you remove the
+<code class="docutils literal"><span class="pre">stopListening</span></code> call, which is good.</p>
+<p>Also, you should be aware that <code class="docutils literal"><span class="pre">tearDown</span></code> will
+be called in any case, after success or failure. So don&#8217;t expect every
+object you created in the test method to be present, because your tests may
+have failed in the middle.</p>
+<p>Trial also has a <code class="docutils literal"><span class="pre">addCleanup</span></code> method, which makes
+these kind of cleanups easy and removes the need for <code class="docutils literal"><span class="pre">tearDown</span></code> . For example, you could remove the code in <code class="docutils literal"><span class="pre">_test</span></code>
+this way:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">RemoteCalculationFactory</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">factory</span><span class="p">,</span> <span class="n">interface</span><span class="o">=</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">addCleanup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">stopListening</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+    <span class="n">creator</span> <span class="o">=</span> <span class="n">protocol</span><span class="o">.</span><span class="n">ClientCreator</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="n">RemoteCalculationClient</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">cb</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addCleanup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">op</span><span class="p">)(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">creator</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">getHost</span><span class="p">()</span><span class="o">.</span><span class="n">port</span><span class="p">)</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This removes the need of a <code class="docutils literal"><span class="pre">tearDown</span></code> method, and you don&#8217;t have to check for
+the value of self.client: you only call addCleanup when the client is
+created.</p>
+</div>
+<div class="section" id="handling-logged-errors">
+<h3>Handling logged errors<a class="headerlink" href="#handling-logged-errors" title="Permalink to this headline">¶</a></h3>
+<p>Currently, if you send an invalid command or invalid arguments to our
+server, it logs an exception and closes the connection. This is a perfectly
+valid behavior, but for the sake of this tutorial, we want to return an error
+to the user if they send invalid operators, and log any errors on server side.
+So we&#8217;ll want a test like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_invalidParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">dataReceived</span><span class="p">(</span><span class="s">&#39;add foo bar</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span> <span class="s">&quot;error</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/remote_2.py"><code class="xref download docutils literal"><span class="pre">remote_2.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- test-case-name: calculus.test.test_remote_1 -*-</span>
+
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">calculus.base_3</span> <span class="kn">import</span> <span class="n">Calculation</span>
+
+
+
+<span class="k">class</span> <span class="nc">CalculationProxy</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="n">Calculation</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;add&#39;</span><span class="p">,</span> <span class="s">&#39;subtract&#39;</span><span class="p">,</span> <span class="s">&#39;multiply&#39;</span><span class="p">,</span> <span class="s">&#39;divide&#39;</span><span class="p">]:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;remote_</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">m</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+
+
+
+<span class="k">class</span> <span class="nc">RemoteCalculationProtocol</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proxy</span> <span class="o">=</span> <span class="n">CalculationProxy</span><span class="p">()</span>
+
+
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">op</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proxy</span><span class="p">,</span> <span class="s">&#39;remote_</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">op</span><span class="p">,))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">err</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sendLine</span><span class="p">(</span><span class="s">&quot;error&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sendLine</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+
+
+
+<span class="k">class</span> <span class="nc">RemoteCalculationFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">Factory</span><span class="p">):</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="n">RemoteCalculationProtocol</span>
+
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+    <span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">startLogging</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">RemoteCalculationFactory</span><span class="p">())</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you try something like that, it will not work. Here is the output you should have:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">trial calculus.test.test_remote_3.RemoteCalculationTestCase.test_invalidParameters</span>
+<span class="go">calculus.test.test_remote_3</span>
+<span class="go">  RemoteCalculationTestCase</span>
+<span class="go">    test_invalidParameters ...                                          [ERROR]</span>
+
+<span class="go">===============================================================================</span>
+<span class="go">[ERROR]: calculus.test.test_remote_3.RemoteCalculationTestCase.test_invalidParameters</span>
+
+<span class="go">Traceback (most recent call last):</span>
+<span class="go">  File &quot;/tmp/calculus/remote_2.py&quot;, line 27, in lineReceived</span>
+<span class="go">    result = op(a, b)</span>
+<span class="go">  File &quot;/tmp/calculus/base_3.py&quot;, line 11, in add</span>
+<span class="go">    a, b = self._make_ints(a, b)</span>
+<span class="go">  File &quot;/tmp/calculus/base_3.py&quot;, line 8, in _make_ints</span>
+<span class="go">    raise TypeError</span>
+<span class="go">exceptions.TypeError:</span>
+<span class="go">-------------------------------------------------------------------------------</span>
+<span class="go">Ran 1 tests in 0.004s</span>
+
+<span class="go">FAILED (errors=1)</span>
+</pre></div>
+</div>
+<p>At first, you could think there is a problem, because you catch this
+exception. But in fact trial doesn&#8217;t let you do that without controlling it:
+you must expect logged errors and clean them. To do that, you have to use the
+<code class="docutils literal"><span class="pre">flushLoggedErrors</span></code> method. You call it with the
+exception you expect, and it returns the list of exceptions logged since the
+start of the test. Generally, you&#8217;ll want to check that this list has the
+expected length, or possibly that each exception has an expected message. We do
+the former in our test:</p>
+<p><a class="reference download internal" href="../../_downloads/test_remote_3.py"><code class="xref download docutils literal"><span class="pre">test_remote_3.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">calculus.remote_2</span> <span class="kn">import</span> <span class="n">RemoteCalculationFactory</span>
+<span class="kn">from</span> <span class="nn">twisted.trial</span> <span class="kn">import</span> <span class="n">unittest</span>
+<span class="kn">from</span> <span class="nn">twisted.test</span> <span class="kn">import</span> <span class="n">proto_helpers</span>
+
+
+
+<span class="k">class</span> <span class="nc">RemoteCalculationTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">factory</span> <span class="o">=</span> <span class="n">RemoteCalculationFactory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">buildProtocol</span><span class="p">((</span><span class="s">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="n">proto_helpers</span><span class="o">.</span><span class="n">StringTransport</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">makeConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">dataReceived</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="se">\r\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">operation</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">value</span><span class="p">()),</span> <span class="n">expected</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;add&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;subtract&#39;</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;multiply&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_divide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;divide&#39;</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_invalidParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">dataReceived</span><span class="p">(</span><span class="s">&#39;add foo bar</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span> <span class="s">&quot;error</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flushLoggedErrors</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="resolve-a-bug">
+<h2>Resolve a bug<a class="headerlink" href="#resolve-a-bug" title="Permalink to this headline">¶</a></h2>
+<p>A bug was left over during the development of the timeout (probably several
+bugs, but that&#8217;s not the point), concerning the reuse of the protocol when you
+got a timeout: the connection is not dropped, so you can get timeout forever.
+Generally a user will come to you saying &#8220;I have this strange problem on
+my crappy network. It seems you could solve it with doing XXX at
+YYY.&#8221;</p>
+<p>Actually, this bug can be corrected several ways. But if you correct it
+without adding tests, one day you&#8217;ll face a big problem: regression.
+So the first step is adding a failing test.</p>
+<p><a class="reference download internal" href="../../_downloads/test_client_3.py"><code class="xref download docutils literal"><span class="pre">test_client_3.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">calculus.client_3</span> <span class="kn">import</span> <span class="n">RemoteCalculationClient</span><span class="p">,</span> <span class="n">ClientTimeoutError</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">task</span>
+<span class="kn">from</span> <span class="nn">twisted.trial</span> <span class="kn">import</span> <span class="n">unittest</span>
+<span class="kn">from</span> <span class="nn">twisted.test</span> <span class="kn">import</span> <span class="n">proto_helpers</span>
+
+
+
+<span class="k">class</span> <span class="nc">ClientCalculationTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="n">proto_helpers</span><span class="o">.</span><span class="n">StringTransportWithDisconnection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clock</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span> <span class="o">=</span> <span class="n">RemoteCalculationClient</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">protocol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">callLater</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">callLater</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">makeConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="p">,</span> <span class="n">operation</span><span class="p">)(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="se">\r\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">operation</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">dataReceived</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d</span><span class="se">\r\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">expected</span><span class="p">,))</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;add&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;subtract&#39;</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;multiply&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_divide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;divide&#39;</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span> <span class="s">&#39;add 9 4</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">timeOut</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertFailure</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">ClientTimeoutError</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_timeoutConnectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">called</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">def</span> <span class="nf">lost</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+            <span class="n">called</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">connectionLost</span> <span class="o">=</span> <span class="n">lost</span>
+
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span> <span class="s">&#39;add 9 4</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">timeOut</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">ignore</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">called</span><span class="p">,</span> <span class="p">[</span><span class="bp">True</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertFailure</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">ClientTimeoutError</span><span class="p">)</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>What have we done here ?</p>
+<ul class="simple">
+<li>We switched to StringTransportWithDisconnection. This transport manages
+<code class="docutils literal"><span class="pre">loseConnection</span></code> and forwards it to its protocol.</li>
+<li>We assign the protocol to the transport via the <code class="docutils literal"><span class="pre">protocol</span></code> attribute.</li>
+<li>We check that after a timeout our connection has closed.</li>
+</ul>
+<p>For doing that, we then use the <code class="docutils literal"><span class="pre">TimeoutMixin</span></code>
+class, that does almost everything we want. The great thing is that it almost
+changes nothing to our class.</p>
+<p><a class="reference download internal" href="../../_downloads/client_3.py"><code class="xref download docutils literal"><span class="pre">client_3.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- test-case-name: calculus.test.test_client -*-</span>
+
+<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span><span class="p">,</span> <span class="n">policies</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span>
+
+
+
+<span class="k">class</span> <span class="nc">ClientTimeoutError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+
+<span class="k">class</span> <span class="nc">RemoteCalculationClient</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">basic</span><span class="o">.</span><span class="n">LineReceiver</span><span class="p">,</span> <span class="n">policies</span><span class="o">.</span><span class="n">TimeoutMixin</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timeOut</span> <span class="o">=</span> <span class="mi">60</span>
+
+    <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setTimeout</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+
+
+    <span class="k">def</span> <span class="nf">timeoutConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">errback</span><span class="p">(</span><span class="n">ClientTimeoutError</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+
+
+    <span class="k">def</span> <span class="nf">_sendOperation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendLine</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setTimeout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_timeOut</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendOperation</span><span class="p">(</span><span class="s">&quot;add&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendOperation</span><span class="p">(</span><span class="s">&quot;subtract&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendOperation</span><span class="p">(</span><span class="s">&quot;multiply&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">divide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendOperation</span><span class="p">(</span><span class="s">&quot;divide&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-deferreds-without-the-reactor">
+<h2>Testing Deferreds without the reactor<a class="headerlink" href="#testing-deferreds-without-the-reactor" title="Permalink to this headline">¶</a></h2>
+<p>Above we learned about returning Deferreds from test methods in order to make
+assertions about their results, or side-effects that only happen after they
+fire.  This can be useful, but we don&#8217;t actually need the feature in this
+example.  Because we were careful to use <code class="docutils literal"><span class="pre">Clock</span></code> , we
+don&#8217;t need the global reactor to run in our tests.  Instead of returning the
+Deferred with a callback attached to it which performs the necessary assertions,
+we can use a testing helper,
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.trial.unittest.SynchronousTestCase.successResultOf.html">successResultOf</a> (and
+the corresponding error-case helper
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.trial.unittest.SynchronousTestCase.failureResultOf.html">failureResultOf</a> ), to
+extract its result and make assertions against it directly.  Compared to
+returning a Deferred, this avoids the problem of forgetting to return the
+Deferred, improves the stack trace reported when the assertion fails, and avoids
+the complexity of using global reactor (which, for example, may then require
+cleanup).</p>
+<p><a class="reference download internal" href="../../_downloads/test_client_4.py"><code class="xref download docutils literal"><span class="pre">test_client_4.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">calculus.client_3</span> <span class="kn">import</span> <span class="n">RemoteCalculationClient</span><span class="p">,</span> <span class="n">ClientTimeoutError</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">task</span>
+<span class="kn">from</span> <span class="nn">twisted.trial</span> <span class="kn">import</span> <span class="n">unittest</span>
+<span class="kn">from</span> <span class="nn">twisted.test</span> <span class="kn">import</span> <span class="n">proto_helpers</span>
+
+
+
+<span class="k">class</span> <span class="nc">ClientCalculationTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="n">proto_helpers</span><span class="o">.</span><span class="n">StringTransportWithDisconnection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clock</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span> <span class="o">=</span> <span class="n">RemoteCalculationClient</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">protocol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">callLater</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">callLater</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">makeConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="p">,</span> <span class="n">operation</span><span class="p">)(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="se">\r\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">operation</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">dataReceived</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d</span><span class="se">\r\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">expected</span><span class="p">,))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">successResultOf</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+
+
+    <span class="k">def</span> <span class="nf">test_add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;add&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;subtract&#39;</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_multiply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;multiply&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_divide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test</span><span class="p">(</span><span class="s">&#39;divide&#39;</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span> <span class="s">&#39;add 9 4</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">timeOut</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failureResultOf</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">trap</span><span class="p">(</span><span class="n">ClientTimeoutError</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">test_timeoutConnectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">called</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">def</span> <span class="nf">lost</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+            <span class="n">called</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">connectionLost</span> <span class="o">=</span> <span class="n">lost</span>
+
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span> <span class="s">&#39;add 9 4</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">timeOut</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">ignore</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">called</span><span class="p">,</span> <span class="p">[</span><span class="bp">True</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">failureResultOf</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">trap</span><span class="p">(</span><span class="n">ClientTimeoutError</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">called</span><span class="p">,</span> <span class="p">[</span><span class="bp">True</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>This version of the code makes the same assertions, but no longer returns any
+Deferreds from any test methods.  Instead of making assertions about the result
+of the Deferred in a callback, it makes the assertions as soon as
+it <em>knows</em> the Deferred is supposed to have a result (in
+the <code class="docutils literal"><span class="pre">_test</span></code> method and in <code class="docutils literal"><span class="pre">test_timeout</span></code>
+and <code class="docutils literal"><span class="pre">test_timeoutConnectionLost</span></code> ).  The possibility
+of <em>knowing</em> exactly when a Deferred is supposed to have a test is what
+makes <code class="docutils literal"><span class="pre">successResultOf</span></code> useful in unit testing, but prevents it from being
+applicable to non-testing purposes.</p>
+<p><code class="docutils literal"><span class="pre">successResultOf</span></code> will raise an exception (failing the test) if
+the <code class="docutils literal"><span class="pre">Deferred</span></code> passed to it does not have a result, or has a failure
+result.  Similarly, <code class="docutils literal"><span class="pre">failureResultOf</span></code> will raise an exception (also
+failing the test) if the <code class="docutils literal"><span class="pre">Deferred</span></code> passed to it does not have a
+result, or has a success result.  There is a third helper method for testing the
+final case,
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.trial.unittest.SynchronousTestCase.assertNoResult.html">assertNoResult</a> ,
+which only raises an exception (failing the test) if the <code class="docutils literal"><span class="pre">Deferred</span></code> passed
+to it <em>has</em> a result (either success or failure).</p>
+</div>
+<div class="section" id="dropping-into-a-debugger">
+<h2>Dropping into a debugger<a class="headerlink" href="#dropping-into-a-debugger" title="Permalink to this headline">¶</a></h2>
+<p>In the course of writing and running your tests, it is often helpful to
+employ the use of a debugger. This can be particularly helpful in tracking down
+where the source of a troublesome bug is in your code. Python&#8217;s standard library
+includes a debugger in the form of the <a class="reference external" href="http://docs.python.org/library/pdb.html">pdb</a> module.
+Running your tests with <code class="docutils literal"><span class="pre">pdb</span></code> is as simple as invoking
+twisted with the <code class="docutils literal"><span class="pre">--debug</span></code> option, which will start <code class="docutils literal"><span class="pre">pdb</span></code> at the beginning of the execution of your test
+suite.</p>
+<p>Trial also provides a <code class="docutils literal"><span class="pre">--debugger</span></code> option which can
+run your test suite using another debugger instead. To specify a debugger other
+than <code class="docutils literal"><span class="pre">pdb</span></code> , pass in the fully-qualified name of an
+object that provides the same interface as <code class="docutils literal"><span class="pre">pdb</span></code> .
+Most third-party debuggers tend to implement an interface similar to <code class="docutils literal"><span class="pre">pdb</span></code> , or at least provide a wrapper object that
+does. For example, invoking trial with the line <code class="docutils literal"><span class="pre">trial</span> <span class="pre">--debug</span> <span class="pre">--debugger</span> <span class="pre">pudb</span></code> will open the <a class="reference external" href="http://pypi.python.org/pypi/pudb">PuDB</a> debugger instead, provided
+it is properly installed.</p>
+</div>
+<div class="section" id="code-coverage">
+<h2>Code coverage<a class="headerlink" href="#code-coverage" title="Permalink to this headline">¶</a></h2>
+<p>Code coverage is one of the aspects of software testing that shows how much
+your tests cross (cover) the code of your program. There are different kinds of
+measures: path coverage, condition coverage, statement coverage... We&#8217;ll only
+consider statement coverage here, whether a line has been executed or not.</p>
+<p>Trial has an option to generate the statement coverage of your tests.
+This option is &#8211;coverage. It creates a coverage directory in _trial_temp,
+with a file .cover for every module used during the tests. The ones
+interesting for us are calculus.base.cover and calculus.remote.cover. Each line
+starts with a counter showing how many times the line was executed during the
+tests, or the marker &#8216;&gt;&gt;&gt;&gt;&gt;&gt;&#8217; if the line was not
+covered. If you went through the whole tutorial to this point, you should
+have complete coverage :).</p>
+<p>Again, this is only another useful pointer, but it doesn&#8217;t mean your
+code is perfect: your tests should consider every possible input and
+output, to get <strong>full</strong> coverage (condition, path, etc.) as well
+.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>So what did you learn in this document?</p>
+<ul class="simple">
+<li>How to use the trial command-line tool to run your tests</li>
+<li>How to use string transports to test individual clients and servers
+without creating sockets</li>
+<li>If you really want to create sockets, how to cleanly do it so that it
+doesn&#8217;t have bad side effects</li>
+<li>And some small tips you can&#8217;t live without.</li>
+</ul>
+<p>If one of the topics still looks cloudy to you, please give us your feedback!
+You can file tickets to improve this document - learn how to contribute <a class="reference external" href="http://twistedmatrix.com/trac/wiki/TwistedDevelopment/">on the Twisted web site</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Test-driven development with Twisted</a><ul>
+<li><a class="reference internal" href="#introductory-example-of-python-unit-testing">Introductory example of Python unit testing</a></li>
+<li><a class="reference internal" href="#creating-an-api-and-writing-tests">Creating an API and writing tests</a></li>
+<li><a class="reference internal" href="#making-the-tests-pass">Making the tests pass</a><ul>
+<li><a class="reference internal" href="#factoring-out-common-test-logic">Factoring out common test logic</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#twisted-specific-testing">Twisted specific testing</a></li>
+<li><a class="reference internal" href="#testing-a-protocol">Testing a protocol</a><ul>
+<li><a class="reference internal" href="#creating-and-testing-the-server">Creating and testing the server</a></li>
+<li><a class="reference internal" href="#creating-and-testing-the-client">Creating and testing the client</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#more-good-practices">More good practices</a><ul>
+<li><a class="reference internal" href="#testing-scheduling">Testing scheduling</a></li>
+<li><a class="reference internal" href="#cleaning-up-after-tests">Cleaning up after tests</a></li>
+<li><a class="reference internal" href="#handling-logged-errors">Handling logged errors</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#resolve-a-bug">Resolve a bug</a></li>
+<li><a class="reference internal" href="#testing-deferreds-without-the-reactor">Testing Deferreds without the reactor</a></li>
+<li><a class="reference internal" href="#dropping-into-a-debugger">Dropping into a debugger</a></li>
+<li><a class="reference internal" href="#code-coverage">Code coverage</a></li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="clients.html"
+                                  title="previous chapter">Writing Clients</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="tutorial/index.html"
+                                  title="next chapter">Twisted from Scratch, or The Evolution of Finger</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/trial.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

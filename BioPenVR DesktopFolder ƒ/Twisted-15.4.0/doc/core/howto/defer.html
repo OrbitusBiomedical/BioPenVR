@@ -1,0 +1,1002 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Deferred Reference &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Generating Deferreds" href="gendefer.html" />
+    <link rel="prev" title="Introduction to Deferreds" href="defer-intro.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="gendefer.html" title="Generating Deferreds"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="defer-intro.html" title="Introduction to Deferreds"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="deferred-reference">
+<h1>Deferred Reference<a class="headerlink" href="#deferred-reference" title="Permalink to this headline">¶</a></h1>
+<p>This document is a guide to the behaviour of the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">twisted.internet.defer.Deferred</a> object, and to various
+ways you can use them when they are returned by functions.</p>
+<p>This document assumes that you are familiar with the basic principle that
+the Twisted framework is structured around: asynchronous, callback-based
+programming, where instead of having blocking code in your program or using
+threads to run blocking code, you have functions that return immediately and
+then begin a callback chain when data is available.</p>
+<p>After reading this document, the reader should expect to be able to
+deal with most simple APIs in Twisted and Twisted-using code that
+return Deferreds.</p>
+<ul class="simple">
+<li>what sorts of things you can do when you get a Deferred from a
+function call; and</li>
+<li>how you can write your code to robustly handle errors in Deferred
+code.</li>
+</ul>
+<div class="section" id="deferreds">
+<span id="core-howto-defer-deferreds"></span><h2>Deferreds<a class="headerlink" href="#deferreds" title="Permalink to this headline">¶</a></h2>
+<p>Twisted uses the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a> object to manage the callback
+sequence. The client application attaches a series of functions to the
+deferred to be called in order when the results of the asynchronous request are
+available (this series of functions is known as a series of <strong>callbacks</strong> , or a <strong>callback chain</strong> ), together
+with a series of functions to be called if there is an error in the
+asynchronous request (known as a series of <strong>errbacks</strong> or an**errback chain** ). The asynchronous library code calls the first
+callback when the result is available, or the first errback when an error
+occurs, and the <code class="docutils literal"><span class="pre">Deferred</span></code> object then hands the results of each
+callback or errback function to the next function in the chain.</p>
+</div>
+<div class="section" id="callbacks">
+<h2>Callbacks<a class="headerlink" href="#callbacks" title="Permalink to this headline">¶</a></h2>
+<p>A <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">twisted.internet.defer.Deferred</a> is a promise that
+a function will at some point have a result.  We can attach callback functions
+to a Deferred, and once it gets a result these callbacks will be called. In
+addition Deferreds allow the developer to register a callback for an error,
+with the default behavior of logging the error.  The deferred mechanism
+standardizes the application programmer&#8217;s interface with all sorts of
+blocking or delayed operations.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">defer</span>
+
+<span class="k">def</span> <span class="nf">getDummyData</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function is a dummy which simulates a delayed result and</span>
+<span class="sd">    returns a Deferred which will fire with that result. Don&#39;t try too</span>
+<span class="sd">    hard to understand this.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+    <span class="c"># simulate a delayed result by asking the reactor to fire the</span>
+    <span class="c"># Deferred in 2 seconds time with the result x * 3</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">callback</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+<span class="k">def</span> <span class="nf">printData</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Data handling function to be added as a callback: handles the</span>
+<span class="sd">    data by printing the result</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="n">d</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">getDummyData</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printData</span><span class="p">)</span>
+
+<span class="c"># manually set up the end of the process by asking the reactor to</span>
+<span class="c"># stop itself in 4 seconds time</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+<span class="c"># start up the Twisted reactor (event loop handler) manually</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="section" id="multiple-callbacks">
+<h3>Multiple callbacks<a class="headerlink" href="#multiple-callbacks" title="Permalink to this headline">¶</a></h3>
+<p>Multiple callbacks can be added to a Deferred.  The first callback in the
+Deferred&#8217;s callback chain will be called with the result, the second with the
+result of the first callback, and so on. Why do we need this?  Well, consider
+a Deferred returned by twisted.enterprise.adbapi - the result of a SQL query.
+A web widget might add a callback that converts this result into HTML, and
+pass the Deferred onwards, where the callback will be used by twisted to
+return the result to the HTTP client. The callback chain will be bypassed in
+case of errors or exceptions.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">defer</span>
+
+<span class="k">class</span> <span class="nc">Getter</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">gotResults</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Deferred mechanism provides a mechanism to signal error</span>
+<span class="sd">        conditions.  In this case, odd numbers are bad.</span>
+
+<span class="sd">        This function demonstrates a more complex way of starting</span>
+<span class="sd">        the callback chain by checking for expected results and</span>
+<span class="sd">        choosing whether to fire the callback or errback chain</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Nowhere to put results&quot;</span>
+            <span class="k">return</span>
+
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">d</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">errback</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;You used an odd number!&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_toHTML</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function converts r to HTML.</span>
+
+<span class="sd">        It is added to the callback chain by getDummyData in</span>
+<span class="sd">        order to demonstrate how a callback passes its own result</span>
+<span class="sd">        to the next callback</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot;Result: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">r</span>
+
+    <span class="k">def</span> <span class="nf">getDummyData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Deferred mechanism allows for chained callbacks.</span>
+<span class="sd">        In this example, the output of gotResults is first</span>
+<span class="sd">        passed through _toHTML on its way to printData.</span>
+
+<span class="sd">        Again this function is a dummy, simulating a delayed result</span>
+<span class="sd">        using callLater, rather than using a real asynchronous</span>
+<span class="sd">        setup.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+        <span class="c"># simulate a delayed result by asking the reactor to schedule</span>
+        <span class="c"># gotResults in 2 seconds time</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gotResults</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_toHTML</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">d</span>
+
+<span class="k">def</span> <span class="nf">printData</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">d</span>
+
+<span class="k">def</span> <span class="nf">printError</span><span class="p">(</span><span class="n">failure</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">failure</span><span class="p">))</span>
+
+<span class="c"># this series of callbacks and errbacks will print an error message</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">Getter</span><span class="p">()</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">getDummyData</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printData</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">printError</span><span class="p">)</span>
+
+<span class="c"># this series of callbacks and errbacks will print &quot;Result: 12&quot;</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">Getter</span><span class="p">()</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">getDummyData</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printData</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">printError</span><span class="p">)</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<dl class="last docutils">
+<dt>Pay particular attention to the handling of</dt>
+<dd><code class="docutils literal"><span class="pre">self.d</span></code>  in the <code class="docutils literal"><span class="pre">gotResults</span></code>  method.  Before the
+<code class="docutils literal"><span class="pre">Deferred</span></code>  is fired with a result or an error, the attribute is
+set to <code class="docutils literal"><span class="pre">None</span></code>  so that the <code class="docutils literal"><span class="pre">Getter</span></code>  instance no longer
+has a reference to the <code class="docutils literal"><span class="pre">Deferred</span></code>  about to be fired.  This has
+several benefits.  First, it avoids any chance <code class="docutils literal"><span class="pre">Getter.gotResults</span></code>
+will accidentally fire the same <code class="docutils literal"><span class="pre">Deferred</span></code>  more than once (which
+would result in an <code class="docutils literal"><span class="pre">AlreadyCalledError</span></code>  exception).  Second, it
+allows a callback on that <code class="docutils literal"><span class="pre">Deferred</span></code>  to call
+<code class="docutils literal"><span class="pre">Getter.getDummyData</span></code>  (which sets a new value for the
+<code class="docutils literal"><span class="pre">d</span></code>  attribute) without causing problems.  Third, it makes the
+Python garbage collector&#8217;s job easier by eliminating a reference cycle.</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="visual-explanation">
+<h3>Visual Explanation<a class="headerlink" href="#visual-explanation" title="Permalink to this headline">¶</a></h3>
+<img alt="../../_images/deferred-attach.png" src="../../_images/deferred-attach.png" />
+<ol class="arabic simple">
+<li>Requesting method (data sink) requests data, gets
+Deferred object.</li>
+<li>Requesting method attaches callbacks to Deferred
+object.</li>
+</ol>
+<img alt="../../_images/deferred-process.png" src="../../_images/deferred-process.png" />
+<ol class="arabic simple">
+<li>When the result is ready, give it to the Deferred
+object. <code class="docutils literal"><span class="pre">.callback(result)</span></code> if the operation succeeded,
+<code class="docutils literal"><span class="pre">.errback(failure)</span></code> if it failed. Note that
+<code class="docutils literal"><span class="pre">failure</span></code> is typically an instance of a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.failure.Failure.html">twisted.python.failure.Failure</a>
+instance.</li>
+<li>Deferred object triggers previously-added (call/err)back
+with the <code class="docutils literal"><span class="pre">result</span></code> or <code class="docutils literal"><span class="pre">failure</span></code> .
+Execution then follows the following rules, going down the
+chain of callbacks to be processed.<ul>
+<li>Result of the callback is always passed as the first
+argument to the next callback, creating a chain of
+processors.</li>
+<li>If a callback raises an exception, switch to
+errback.</li>
+<li>An unhandled failure gets passed down the line of
+errbacks, this creating an asynchronous analog to a
+series to a series of <code class="docutils literal"><span class="pre">except:</span></code>
+statements.</li>
+<li>If an errback doesn&#8217;t raise an exception or return a
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.failure.Failure.html">twisted.python.failure.Failure</a>
+instance, switch to callback.</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="errbacks">
+<h2>Errbacks<a class="headerlink" href="#errbacks" title="Permalink to this headline">¶</a></h2>
+<p>Deferred&#8217;s error handling is modeled after Python&#8217;s
+exception handling. In the case that no errors occur, all the
+callbacks run, one after the other, as described above.</p>
+<p>If the errback is called instead of the callback (e.g.  because a DB query
+raised an error), then a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.failure.Failure.html">twisted.python.failure.Failure</a> is passed into the first
+errback (you can add multiple errbacks, just like with callbacks). You can
+think of your errbacks as being like <code class="docutils literal"><span class="pre">except</span></code> blocks
+of ordinary Python code.</p>
+<p>Unless you explicitly <code class="docutils literal"><span class="pre">raise</span></code> an error in an except
+block, the <code class="docutils literal"><span class="pre">Exception</span></code> is caught and stops
+propagating, and normal execution continues. The same thing happens with
+errbacks: unless you explicitly <code class="docutils literal"><span class="pre">return</span></code> a <code class="docutils literal"><span class="pre">Failure</span></code> or (re-)raise an exception, the error stops
+propagating, and normal callbacks continue executing from that point (using the
+value returned from the errback). If the errback does return a <code class="docutils literal"><span class="pre">Failure</span></code> or raise an exception, then that is passed to the
+next errback, and so on.</p>
+<p><em>Note:</em> If an errback doesn&#8217;t return anything, then it effectively
+returns <code class="docutils literal"><span class="pre">None</span></code> , meaning that callbacks will continue
+to be executed after this errback.  This may not be what you expect to happen,
+so be careful. Make sure your errbacks return a <code class="docutils literal"><span class="pre">Failure</span></code> (probably the one that was passed to it), or a
+meaningful return value for the next callback.</p>
+<p>Also, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.python.failure.Failure.html">twisted.python.failure.Failure</a> instances have
+a useful method called trap, allowing you to effectively do the equivalent
+of:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="c"># code that may throw an exception</span>
+    <span class="n">cookSpamAndEggs</span><span class="p">()</span>
+<span class="k">except</span> <span class="p">(</span><span class="n">SpamException</span><span class="p">,</span> <span class="n">EggException</span><span class="p">):</span>
+    <span class="c"># Handle SpamExceptions and EggExceptions</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>You do this by:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">errorHandler</span><span class="p">(</span><span class="n">failure</span><span class="p">):</span>
+    <span class="n">failure</span><span class="o">.</span><span class="n">trap</span><span class="p">(</span><span class="n">SpamException</span><span class="p">,</span> <span class="n">EggException</span><span class="p">)</span>
+    <span class="c"># Handle SpamExceptions and EggExceptions</span>
+
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">cookSpamAndEggs</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">errorHandler</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If none of arguments passed to <code class="docutils literal"><span class="pre">failure.trap</span></code>
+match the error encapsulated in that <code class="docutils literal"><span class="pre">Failure</span></code> , then
+it re-raises the error.</p>
+<p>There&#8217;s another potential &#8220;gotcha&#8221; here.  There&#8217;s a
+method <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.addCallbacks.html">twisted.internet.defer.Deferred.addCallbacks</a>
+which is similar to, but not exactly the same as, <code class="docutils literal"><span class="pre">addCallback</span></code> followed by <code class="docutils literal"><span class="pre">addErrback</span></code> . In particular, consider these two cases:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Case 1</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">getDeferredFromSomewhere</span><span class="p">()</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">callback1</span><span class="p">)</span>       <span class="c"># A</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">errback1</span><span class="p">)</span>         <span class="c"># B</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">callback2</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">errback2</span><span class="p">)</span>
+
+<span class="c"># Case 2</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">getDeferredFromSomewhere</span><span class="p">()</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallbacks</span><span class="p">(</span><span class="n">callback1</span><span class="p">,</span> <span class="n">errback1</span><span class="p">)</span>  <span class="c"># C</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallbacks</span><span class="p">(</span><span class="n">callback2</span><span class="p">,</span> <span class="n">errback2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If an error occurs in <code class="docutils literal"><span class="pre">callback1</span></code> , then for Case 1 <code class="docutils literal"><span class="pre">errback1</span></code> will be called with the failure. For Case
+2, <code class="docutils literal"><span class="pre">errback2</span></code> will be called. Be careful with your
+callbacks and errbacks.</p>
+<p>What this means in a practical sense is in Case 1, the callback in line
+A will handle a success condition from <code class="docutils literal"><span class="pre">getDeferredFromSomewhere</span></code> ,
+and the errback in line B will handle any errors that occur <em>from either the upstream source, or that occur in A</em> .  In Case 2, the errback in line C  <em>will  only handle an error condition raised by</em> <code class="docutils literal"><span class="pre">getDeferredFromSomewhere</span></code> ,
+it will not do any handling of errors
+raised in <code class="docutils literal"><span class="pre">callback1</span></code> .</p>
+<div class="section" id="unhandled-errors">
+<h3>Unhandled Errors<a class="headerlink" href="#unhandled-errors" title="Permalink to this headline">¶</a></h3>
+<p>If a Deferred is garbage-collected with an unhandled error (i.e. it would
+call the next errback if there was one), then Twisted will write the error&#8217;s
+traceback to the log file.  This means that you can typically get away with not
+adding errbacks and still get errors logged.  Be careful though; if you keep a
+reference to the Deferred around, preventing it from being garbage-collected,
+then you may never see the error (and your callbacks will mysteriously seem to
+have never been called).  If unsure, you should explicitly add an errback after
+your callbacks, even if all you do is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Make sure errors get logged</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">log</span><span class="o">.</span><span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="handling-either-synchronous-or-asynchronous-results">
+<h2>Handling either synchronous or asynchronous results<a class="headerlink" href="#handling-either-synchronous-or-asynchronous-results" title="Permalink to this headline">¶</a></h2>
+<p>In some applications, there are functions that might be either asynchronous or
+synchronous. For example, a user authentication function might be able to
+check in memory whether a user is authenticated, allowing the authentication
+function to return an immediate result, or it may need to wait on
+network data, in which case it should return a Deferred to be fired
+when that data arrives. However, a function that wants to check if a user is
+authenticated will then need to accept both immediate results <em>and</em>
+Deferreds.</p>
+<p>In this example, the library function <code class="docutils literal"><span class="pre">authenticateUser</span></code> uses the
+application function <code class="docutils literal"><span class="pre">isValidUser</span></code> to authenticate a user:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">authenticateUser</span><span class="p">(</span><span class="n">isValidUser</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">isValidUser</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;User is authenticated&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;User is not authenticated&quot;</span>
+</pre></div>
+</div>
+<p>However, it assumes that <code class="docutils literal"><span class="pre">isValidUser</span></code> returns immediately,
+whereas <code class="docutils literal"><span class="pre">isValidUser</span></code> may actually authenticate the user
+asynchronously and return a Deferred. It is possible to adapt this
+trivial user authentication code to accept either a
+synchronous <code class="docutils literal"><span class="pre">isValidUser</span></code> or an
+asynchronous <code class="docutils literal"><span class="pre">isValidUser</span></code> , allowing the library to handle
+either type of function. It is, however, also possible to adapt
+synchronous functions to return Deferreds. This section describes both
+alternatives: handling functions that might be synchronous or
+asynchronous in the library function (<code class="docutils literal"><span class="pre">authenticateUser</span></code> )
+or in the application code.</p>
+<div class="section" id="handling-possible-deferreds-in-the-library-code">
+<h3>Handling possible Deferreds in the library code<a class="headerlink" href="#handling-possible-deferreds-in-the-library-code" title="Permalink to this headline">¶</a></h3>
+<p>Here is an example of a synchronous user authentication function that might be
+passed to <code class="docutils literal"><span class="pre">authenticateUser</span></code> :</p>
+<p><a class="reference download internal" href="../../_downloads/synch-validation.py"><code class="xref download docutils literal"><span class="pre">synch-validation.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">synchronousIsValidUser</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Return true if user is a valid user, false otherwise</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">user</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;Alice&quot;</span><span class="p">,</span> <span class="s">&quot;Angus&quot;</span><span class="p">,</span> <span class="s">&quot;Agnes&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>However, here&#8217;s an <code class="docutils literal"><span class="pre">asynchronousIsValidUser</span></code> function that returns
+a Deferred:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">defer</span>
+
+<span class="k">def</span> <span class="nf">asynchronousIsValidUser</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">callLater</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">callback</span><span class="p">,</span> <span class="n">user</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;Alice&quot;</span><span class="p">,</span> <span class="s">&quot;Angus&quot;</span><span class="p">,</span> <span class="s">&quot;Agnes&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">d</span>
+</pre></div>
+</div>
+<p>Our original implementation of <code class="docutils literal"><span class="pre">authenticateUser</span></code> expected  <code class="docutils literal"><span class="pre">isValidUser</span></code> to be synchronous, but now we need to change it to handle both
+synchronous and asynchronous implementations of <code class="docutils literal"><span class="pre">isValidUser</span></code> . For this, we
+use <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.maybeDeferred.html">maybeDeferred</a> to
+call <code class="docutils literal"><span class="pre">isValidUser</span></code> , ensuring that the result of <code class="docutils literal"><span class="pre">isValidUser</span></code> is a Deferred,
+even if <code class="docutils literal"><span class="pre">isValidUser</span></code> is a synchronous function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span>
+
+<span class="k">def</span> <span class="nf">printResult</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;User is authenticated&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;User is not authenticated&quot;</span>
+
+<span class="k">def</span> <span class="nf">authenticateUser</span><span class="p">(</span><span class="n">isValidUser</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">maybeDeferred</span><span class="p">(</span><span class="n">isValidUser</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printResult</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now <code class="docutils literal"><span class="pre">isValidUser</span></code> could be either <code class="docutils literal"><span class="pre">synchronousIsValidUser</span></code> or  <code class="docutils literal"><span class="pre">asynchronousIsValidUser</span></code> .</p>
+<p>It is also possible to modify <code class="docutils literal"><span class="pre">synchronousIsValidUser</span></code> to return
+a Deferred, see <a class="reference internal" href="gendefer.html"><span class="doc">Generating Deferreds</span></a> for more
+information.</p>
+</div>
+</div>
+<div class="section" id="cancellation">
+<h2>Cancellation<a class="headerlink" href="#cancellation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="motivation">
+<h3>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h3>
+<p>A Deferred may take any amount of time to be called back; in fact, it may
+never be called back.  Your users may not be that patient.  Since all actions
+taken when the Deferred completes are in your application or library&#8217;s callback
+code, you always have the option of simply disregarding the result when you
+receive it, if it&#8217;s been too long.  However, while you&#8217;re ignoring it, the
+underlying operation represented by that Deferred is still chugging along in the
+background, possibly consuming resources such as CPU time, memory, network
+bandwidth and maybe even disk space.  So, when the user has closed the window,
+hit the cancel button, disconnected from your server or sent a &#8220;stop&#8221; network
+message, you will want to announce your indifference to the result of that
+operation so that the originator of the Deferred can clean everything up and
+free those resources to be put to better use.</p>
+</div>
+<div class="section" id="cancellation-for-applications-which-consume-deferreds">
+<h3>Cancellation for Applications which Consume Deferreds<a class="headerlink" href="#cancellation-for-applications-which-consume-deferreds" title="Permalink to this headline">¶</a></h3>
+<p>Here&#8217;s a simple example.  You&#8217;re connecting to an external host with an <a class="reference internal" href="endpoints.html"><span class="doc">endpoint</span></a> , but that host is really slow.  You want to
+put a &#8220;cancel&#8221; button into your application to terminate the connection attempt,
+so the user can try connecting to a different host instead.  Here&#8217;s a simple
+sketch of such an application, with the actual user interface left as an
+exercise for the reader:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">startConnecting</span><span class="p">(</span><span class="n">someEndpoint</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">connected</span><span class="p">(</span><span class="n">it</span><span class="p">):</span>
+        <span class="s">&quot;Do something useful when connected.&quot;</span>
+    <span class="k">return</span> <span class="n">someEndpoint</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">myFactory</span><span class="p">)</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">connected</span><span class="p">)</span>
+<span class="c"># ...</span>
+<span class="n">connectionAttempt</span> <span class="o">=</span> <span class="n">startConnecting</span><span class="p">(</span><span class="n">endpoint</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">cancelClicked</span><span class="p">():</span>
+    <span class="n">connectionAttempt</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Obviously (I hope), startConnecting is meant to be called by some UI element
+that lets the user choose what host to connect to and then constructs an
+appropriate endpoint (perhaps using <code class="docutils literal"><span class="pre">twisted.internet.endpoints.clientFromString</span></code> ).  Then, a cancel
+button, or similar, is hooked up to the <code class="docutils literal"><span class="pre">cancelClicked</span></code> .</p>
+<p>When <code class="docutils literal"><span class="pre">connectionAttempt.cancel</span></code> is invoked, that will:</p>
+<ol class="arabic simple">
+<li>cause the underlying connection operation to be terminated, if it is still ongoing</li>
+<li>cause the connectionAttempt Deferred to be completed, one way or another, in a timely manner</li>
+<li><em>likely</em> cause the connectionAttempt Deferred to be errbacked with <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/CancelledError.html">CancelledError</a></li>
+</ol>
+<p>You may notice that that set of consequences is very heavily qualified.
+Although cancellation indicates the calling API&#8217;s <em>desire</em> for the
+underlying operation to be stopped, the underlying operation cannot necessarily
+react immediately.  Even in this very simple example, there is already one thing
+that might not be interruptable: platform-native name resolution blocks, and
+therefore needs to be executed in a thread; the connection operation can&#8217;t be
+cancelled if it&#8217;s stuck waiting for a name to be resolved in this manner.  So,
+the Deferred that you are cancelling may not callback or errback right away.</p>
+<p>A Deferred may wait upon another Deferred at any point in its callback chain
+(see &#8220;Handling...asynchronous results&#8221;, above).  There&#8217;s no way for a particular
+point in the callback chain to know if everything is finished.  Since multiple
+layers of the callback chain may wish to cancel the same Deferred, any layer may
+call <code class="docutils literal"><span class="pre">.cancel()</span></code> at any time. The <code class="docutils literal"><span class="pre">.cancel()</span></code> method never
+raises any exception or returns any value; you may call it repeatedly, even on a
+Deferred which has already fired, or which has no remaining callbacks.</p>
+<p>The main reason for all these qualifications, aside from specific examples,
+is that anyone who instantiates a Deferred may supply it with a cancellation
+function; that function can do absolutely anything that it wants to.  Ideally,
+anything it does will be in the service of stopping the operation your
+requested, but there&#8217;s no way to guarantee any exact behavior across all
+Deferreds that might be cancelled. Cancellation of Deferreds is best effort. This may be the case for a number of
+reasons:</p>
+<ol class="arabic simple">
+<li>The <code class="docutils literal"><span class="pre">Deferred</span></code> doesn&#8217;t know how to cancel the underlying
+operation.</li>
+<li>The underlying operation may have reached an uncancellable state,
+because some irreversible operation has been done.</li>
+<li>The <code class="docutils literal"><span class="pre">Deferred</span></code> may already have a result, and so there&#8217;s
+nothing to cancel.</li>
+</ol>
+<p>Calling <code class="docutils literal"><span class="pre">cancel()</span></code> will always succeed without an error
+regardless of whether or not cancellation was possible. In cases 1 and 2 the <code class="docutils literal"><span class="pre">Deferred</span></code> may well errback with a <code class="docutils literal"><span class="pre">twisted.internet.defer.CancelledError</span></code> while the underlying
+operation continues. <code class="docutils literal"><span class="pre">Deferred</span></code> s that support cancellation should
+document what they do when cancelled, if they are uncancellable in certain edge
+cases, etc..</p>
+<p>If the cancelled <code class="docutils literal"><span class="pre">Deferred</span></code> is waiting on another <code class="docutils literal"><span class="pre">Deferred</span></code> , the cancellation will be forwarded to the other <code class="docutils literal"><span class="pre">Deferred</span></code> .</p>
+</div>
+<div class="section" id="default-cancellation-behavior">
+<h3>Default Cancellation Behavior<a class="headerlink" href="#default-cancellation-behavior" title="Permalink to this headline">¶</a></h3>
+<p>All Deferreds support cancellation.
+However, by default, they support a very rudimentary form of cancellation which doesn&#8217;t free any resources.</p>
+<p>Consider this example of a Deferred which is ignorant of cancellation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">operation</span> <span class="o">=</span> <span class="n">Deferred</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Hooray, a result:&quot;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">operation</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c"># ...</span>
+<span class="k">def</span> <span class="nf">operationDone</span><span class="p">():</span>
+    <span class="n">operation</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="s">&quot;completed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A caller of an API that receives <code class="docutils literal"><span class="pre">operation</span></code> may call <code class="docutils literal"><span class="pre">cancel</span></code> on it.  Since <code class="docutils literal"><span class="pre">operation</span></code> does not have a
+cancellation function, one of two things will happen.</p>
+<ol class="arabic">
+<li><p class="first">If <code class="docutils literal"><span class="pre">operationDone</span></code> has been called, and the operation has
+completed, nothing much will change.  <code class="docutils literal"><span class="pre">operation</span></code> will still have a
+result, and there are no more callbacks, so there&#8217;s no observable change in
+behavior.</p>
+</li>
+<li><p class="first">If <code class="docutils literal"><span class="pre">operationDone</span></code> has <em>not</em> yet been invoked, then <code class="docutils literal"><span class="pre">operation</span></code> will be immediately errbacked with a <code class="docutils literal"><span class="pre">CancelledError</span></code> .</p>
+<p>However, once it&#8217;s cancelled, there&#8217;s no way to tell <code class="docutils literal"><span class="pre">operationDone</span></code>
+not to run; it will eventually call <code class="docutils literal"><span class="pre">operation.callback</span></code> later.  In
+normal operation, issuing <code class="docutils literal"><span class="pre">callback</span></code> on a <code class="docutils literal"><span class="pre">Deferred</span></code> that
+has already called back results in an <code class="docutils literal"><span class="pre">AlreadyCalledError</span></code> , and this
+would cause an ugly traceback that could not be caught.  Therefore, <code class="docutils literal"><span class="pre">.callback</span></code> can be invoked exactly once, causing a no-op, on a <code class="docutils literal"><span class="pre">Deferred</span></code> which has been cancelled but has no canceller.  If you
+call it multiple times, you will still get an <code class="docutils literal"><span class="pre">AlreadyCalledError</span></code>
+exception.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="creating-cancellable-deferreds-custom-cancellation-functions">
+<h3>Creating Cancellable Deferreds: Custom Cancellation Functions<a class="headerlink" href="#creating-cancellable-deferreds-custom-cancellation-functions" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s imagine you are implementing an HTTP client, which returns a Deferred
+firing with the response from the server. Cancellation is best achieved by
+closing the connection. In order to make cancellation do that, all you have to
+do is pass a function to the constructor of the Deferred (it will get called
+with the Deferred that is being cancelled):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">HTTPClient</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resultDeferred</span> <span class="o">=</span> <span class="n">Deferred</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">ignore</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">abortConnection</span><span class="p">())</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">b</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> HTTP/1.0</span><span class="se">\r\n\r\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resultDeferred</span>
+
+    <span class="k">def</span> <span class="nf">dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="c"># ... parse HTTP response ...</span>
+        <span class="c"># ... eventually call self.resultDeferred.callback() ...</span>
+</pre></div>
+</div>
+<p>Now if someone calls <code class="docutils literal"><span class="pre">cancel()</span></code> on the <code class="docutils literal"><span class="pre">Deferred</span></code>
+returned from <code class="docutils literal"><span class="pre">HTTPClient.request()</span></code> , the HTTP request will be
+cancelled (assuming it&#8217;s not too late to do so). Care should be taken not to``callback()`` a Deferred that has already been cancelled.</p>
+</div>
+</div>
+<div class="section" id="deferredlist">
+<span id="core-howto-defer-deferredlist"></span><h2>DeferredList<a class="headerlink" href="#deferredlist" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes you want to be notified after several different events have all
+happened, rather than waiting for each one individually.  For example, you may
+want to wait for all the connections in a list to close.  <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.DeferredList.html">twisted.internet.defer.DeferredList</a> is the way to do
+this.</p>
+<p>To create a DeferredList from multiple Deferreds, you simply pass a list of
+the Deferreds you want it to wait for:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Creates a DeferredList</span>
+<span class="n">dl</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">DeferredList</span><span class="p">([</span><span class="n">deferred1</span><span class="p">,</span> <span class="n">deferred2</span><span class="p">,</span> <span class="n">deferred3</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>You can now treat the DeferredList like an ordinary Deferred; you can call  <code class="docutils literal"><span class="pre">addCallbacks</span></code> and so on.  The DeferredList will call its callback
+when all the deferreds have completed.  The callback will be called with a list
+of the results of the Deferreds it contains, like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># A callback that unpacks and prints the results of a DeferredList</span>
+<span class="k">def</span> <span class="nf">printResult</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">success</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;Success:&#39;</span><span class="p">,</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;Failure:&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">getErrorMessage</span><span class="p">()</span>
+
+<span class="c"># Create three deferreds.</span>
+<span class="n">deferred1</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+<span class="n">deferred2</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+<span class="n">deferred3</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+
+<span class="c"># Pack them into a DeferredList</span>
+<span class="n">dl</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">DeferredList</span><span class="p">([</span><span class="n">deferred1</span><span class="p">,</span> <span class="n">deferred2</span><span class="p">,</span> <span class="n">deferred3</span><span class="p">],</span> <span class="n">consumeErrors</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># Add our callback</span>
+<span class="n">dl</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printResult</span><span class="p">)</span>
+
+<span class="c"># Fire our three deferreds with various values.</span>
+<span class="n">deferred1</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="n">deferred2</span><span class="o">.</span><span class="n">errback</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;bang!&#39;</span><span class="p">))</span>
+<span class="n">deferred3</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="s">&#39;three&#39;</span><span class="p">)</span>
+
+<span class="c"># At this point, dl will fire its callback, printing:</span>
+<span class="c">#    Success: one</span>
+<span class="c">#    Failure: bang!</span>
+<span class="c">#    Success: three</span>
+<span class="c"># (note that defer.SUCCESS == True, and defer.FAILURE == False)</span>
+</pre></div>
+</div>
+<p>A standard DeferredList will never call errback, but failures in Deferreds
+passed to a DeferredList will still errback unless <code class="docutils literal"><span class="pre">consumeErrors</span></code>
+is passed <code class="docutils literal"><span class="pre">True</span></code> .  See below for more details about this and other
+flags which modify the behavior of DeferredList.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you want to apply callbacks to the individual Deferreds that
+go into the DeferredList, you should be careful about when those callbacks
+are added. The act of adding a Deferred to a DeferredList inserts a callback
+into that Deferred (when that callback is run, it checks to see if the
+DeferredList has been completed yet). The important thing to remember is
+that it is <em>this callback</em> which records the value that goes into the
+result list handed to the DeferredList&#8217;s callback.</p>
+<p class="last">Therefore, if you add a callback to the Deferred <em>after</em> adding the
+Deferred to the DeferredList, the value returned by that callback will not
+be given to the DeferredList&#8217;s callback.  To avoid confusion, we recommend not
+adding callbacks to a Deferred once it has been used in a DeferredList.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">printResult</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">result</span>
+<span class="k">def</span> <span class="nf">addTen</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">result</span> <span class="o">+</span> <span class="s">&quot; ten&quot;</span>
+
+<span class="c"># Deferred gets callback before DeferredList is created</span>
+<span class="n">deferred1</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+<span class="n">deferred2</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+<span class="n">deferred1</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">addTen</span><span class="p">)</span>
+<span class="n">dl</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">DeferredList</span><span class="p">([</span><span class="n">deferred1</span><span class="p">,</span> <span class="n">deferred2</span><span class="p">])</span>
+<span class="n">dl</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printResult</span><span class="p">)</span>
+<span class="n">deferred1</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="s">&quot;one&quot;</span><span class="p">)</span> <span class="c"># fires addTen, checks DeferredList, stores &quot;one ten&quot;</span>
+<span class="n">deferred2</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="s">&quot;two&quot;</span><span class="p">)</span>
+<span class="c"># At this point, dl will fire its callback, printing:</span>
+<span class="c">#     [(1, &#39;one ten&#39;), (1, &#39;two&#39;)]</span>
+
+<span class="c"># Deferred gets callback after DeferredList is created</span>
+<span class="n">deferred1</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+<span class="n">deferred2</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+<span class="n">dl</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">DeferredList</span><span class="p">([</span><span class="n">deferred1</span><span class="p">,</span> <span class="n">deferred2</span><span class="p">])</span>
+<span class="n">deferred1</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">addTen</span><span class="p">)</span> <span class="c"># will run *after* DeferredList gets its value</span>
+<span class="n">dl</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printResult</span><span class="p">)</span>
+<span class="n">deferred1</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="s">&quot;one&quot;</span><span class="p">)</span> <span class="c"># checks DeferredList, stores &quot;one&quot;, fires addTen</span>
+<span class="n">deferred2</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="s">&quot;two&quot;</span><span class="p">)</span>
+<span class="c"># At this point, dl will fire its callback, printing:</span>
+<span class="c">#     [(1, &#39;one), (1, &#39;two&#39;)]</span>
+</pre></div>
+</div>
+<div class="section" id="other-behaviours">
+<h3>Other behaviours<a class="headerlink" href="#other-behaviours" title="Permalink to this headline">¶</a></h3>
+<p>DeferredList accepts three keyword arguments that modify its behaviour:<code class="docutils literal"><span class="pre">fireOnOneCallback</span></code> , <code class="docutils literal"><span class="pre">fireOnOneErrback</span></code> and <code class="docutils literal"><span class="pre">consumeErrors</span></code> .  If <code class="docutils literal"><span class="pre">fireOnOneCallback</span></code> is set, the
+DeferredList will immediately call its callback as soon as any of its Deferreds
+call their callback.  Similarly, <code class="docutils literal"><span class="pre">fireOnOneErrback</span></code> will call errback
+as soon as any of the Deferreds call their errback.  Note that DeferredList is
+still one-shot, like ordinary Deferreds, so after a callback or errback has been
+called the DeferredList will do nothing further (it will just silently ignore
+any other results from its Deferreds).</p>
+<p>The <code class="docutils literal"><span class="pre">fireOnOneErrback</span></code> option is particularly useful when you
+want to wait for all the results if everything succeeds, but also want to know
+immediately if something fails.</p>
+<p>The <code class="docutils literal"><span class="pre">consumeErrors</span></code> argument will stop the DeferredList from
+propagating any errors along the callback chains of any Deferreds it contains
+(usually creating a DeferredList has no effect on the results passed along the
+callbacks and errbacks of their Deferreds).  Stopping errors at the DeferredList
+with this option will prevent &#8220;Unhandled error in Deferred&#8221; warnings from
+the Deferreds it contains without needing to add extra errbacks <a class="footnote-reference" href="#id2" id="id1">[1]</a> .  Passing a true value
+for the <code class="docutils literal"><span class="pre">consumeErrors</span></code> parameter will not change the behavior of <code class="docutils literal"><span class="pre">fireOnOneCallback</span></code> or <code class="docutils literal"><span class="pre">fireOnOneErrback</span></code> .</p>
+</div>
+<div class="section" id="gatherresults">
+<h3>gatherResults<a class="headerlink" href="#gatherresults" title="Permalink to this headline">¶</a></h3>
+<p>A common use for DeferredList is to &#8220;join&#8221; a number of parallel asynchronous
+operations, finishing successfully if all of the operations were successful, or
+failing if any one of the operations fails.  In this case, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.gatherResults.html">twisted.internet.defer.gatherResults</a> is a useful
+shortcut:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span>
+<span class="n">d1</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+<span class="n">d2</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">gatherResults</span><span class="p">([</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">],</span> <span class="n">consumeErrors</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">printResult</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">result</span>
+<span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printResult</span><span class="p">)</span>
+<span class="n">d1</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="s">&quot;one&quot;</span><span class="p">)</span>
+<span class="c"># nothing is printed yet; d is still awaiting completion of d2</span>
+<span class="n">d2</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="s">&quot;two&quot;</span><span class="p">)</span>
+<span class="c"># printResult prints [&quot;one&quot;, &quot;two&quot;]</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">consumeErrors</span></code> argument has the same meaning as it does
+for <a class="reference internal" href="#core-howto-defer-deferredlist"><span class="std std-ref">NEEDS A TITLE</span></a> : if true, it causes <code class="docutils literal"><span class="pre">gatherResults</span></code> to consume any errors in the passed-in Deferreds.
+Always use this argument unless you are adding further callbacks or errbacks to
+the passed-in Deferreds, or unless you know that they will not fail.
+Otherwise, a failure will result in an unhandled error being logged by Twisted.
+This argument is available since Twisted 11.1.0.</p>
+</div>
+</div>
+<div class="section" id="class-overview">
+<span id="core-howto-defer-class"></span><h2>Class Overview<a class="headerlink" href="#class-overview" title="Permalink to this headline">¶</a></h2>
+<p>This is an overview API reference for Deferred from the point of using a
+Deferred returned by a function. It is not meant to be a
+substitute for the docstrings in the Deferred class, but can provide guidelines
+for its use.</p>
+<p>There is a parallel overview of functions used by the Deferred&#8217;s  <em>creator</em> in <a class="reference internal" href="gendefer.html#core-howto-gendefer-class"><span class="std std-ref">Generating Deferreds</span></a> .</p>
+<div class="section" id="basic-callback-functions">
+<h3>Basic Callback Functions<a class="headerlink" href="#basic-callback-functions" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">addCallbacks(self,</span> <span class="pre">callback[,</span> <span class="pre">errback,</span> <span class="pre">callbackArgs,</span> <span class="pre">callbackKeywords,</span> <span class="pre">errbackArgs,</span> <span class="pre">errbackKeywords])</span></code></p>
+<p>This is the method you will use to interact
+with Deferred. It adds a pair of callbacks &#8220;parallel&#8221; to
+each other (see diagram above) in the list of callbacks
+made when the Deferred is called back to. The signature of
+a method added using addCallbacks should be
+<code class="docutils literal"><span class="pre">myMethod(result,</span> <span class="pre">*methodArgs,</span> <span class="pre">**methodKeywords)</span></code> . If your method is passed in the
+callback slot, for example, all arguments in the tuple
+<code class="docutils literal"><span class="pre">callbackArgs</span></code> will be passed as
+<code class="docutils literal"><span class="pre">*methodArgs</span></code> to your method.</p>
+<p>There are various convenience methods that are
+derivative of addCallbacks. I will not cover them in detail
+here, but it is important to know about them in order to
+create concise code.</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">addCallback(callback,</span> <span class="pre">*callbackArgs,</span> <span class="pre">**callbackKeywords)</span></code></p>
+<p>Adds your callback at the next point in the
+processing chain, while adding an errback that will
+re-raise its first argument, not affecting further
+processing in the error case.</p>
+<p>Note that, while addCallbacks (plural) requires the arguments to be
+passed in a tuple, addCallback (singular) takes all its remaining
+arguments as things to be passed to the callback function. The reason is
+obvious: addCallbacks (plural) cannot tell whether the arguments are
+meant for the callback or the errback, so they must be specifically
+marked by putting them into a tuple. addCallback (singular) knows that
+everything is destined to go to the callback, so it can use Python&#8217;s
+&#8220;*&#8221; and &#8220;**&#8221; syntax to collect the remaining arguments.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">addErrback(errback,</span> <span class="pre">*errbackArgs,</span> <span class="pre">**errbackKeywords)</span></code></p>
+<p>Adds your errback at the next point in the
+processing chain, while adding a callback that will
+return its first argument, not affecting further
+processing in the success case.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">addBoth(callbackOrErrback,</span> <span class="pre">*callbackOrErrbackArgs,</span> <span class="pre">**callbackOrErrbackKeywords)</span></code></p>
+<p>This method adds the same callback into both sides
+of the processing chain at both points. Keep in mind
+that the type of the first argument is indeterminate if
+you use this method! Use it for <code class="docutils literal"><span class="pre">finally:</span></code>
+style blocks.</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="chaining-deferreds">
+<h3>Chaining Deferreds<a class="headerlink" href="#chaining-deferreds" title="Permalink to this headline">¶</a></h3>
+<p>If you need one Deferred to wait on another, all you need to do is return a
+Deferred from a method added to addCallbacks.  Specifically, if you return
+Deferred B from a method added to Deferred A using A.addCallbacks, Deferred A&#8217;s
+processing chain will stop until Deferred B&#8217;s .callback() method is called; at
+that point, the next callback in A will be passed the result of the last
+callback in Deferred B&#8217;s processing chain at the time.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If a Deferred is somehow returned from its <em>own</em>
+callbacks (directly or indirectly), the behavior is undefined. The Deferred
+code will make an attempt to detect this situation and produce a warning. In
+the future, this will become an exception.</p>
+</div>
+<p>If this seems confusing, don&#8217;t worry about it right now &#8211; when you run into
+a situation where you need this behavior, you will probably recognize it
+immediately and realize why this happens.  If you want to chain deferreds
+manually, there is also a convenience method to help you.</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">chainDeferred(otherDeferred)</span></code></p>
+<p>Add <code class="docutils literal"><span class="pre">otherDeferred</span></code> to the end of this
+Deferred&#8217;s processing chain. When self.callback is called,
+the result of my processing chain up to this point will be
+passed to <code class="docutils literal"><span class="pre">otherDeferred.callback</span></code> . Further
+additions to my callback chain do not affect
+<code class="docutils literal"><span class="pre">otherDeferred</span></code></p>
+<p>This is the same as <code class="docutils literal"><span class="pre">self.addCallbacks(otherDeferred.callback,</span> <span class="pre">otherDeferred.errback)</span></code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="see-also">
+<h2>See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><a class="reference internal" href="gendefer.html"><span class="doc">Generating Deferreds</span></a> , an introduction to
+writing asynchronous functions that return Deferreds.</li>
+</ol>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Unless of course a later callback starts a fresh error —
+but as we&#8217;ve already noted, adding callbacks to a Deferred after its used in a
+DeferredList is confusing and usually avoided.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Deferred Reference</a><ul>
+<li><a class="reference internal" href="#deferreds">Deferreds</a></li>
+<li><a class="reference internal" href="#callbacks">Callbacks</a><ul>
+<li><a class="reference internal" href="#multiple-callbacks">Multiple callbacks</a></li>
+<li><a class="reference internal" href="#visual-explanation">Visual Explanation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#errbacks">Errbacks</a><ul>
+<li><a class="reference internal" href="#unhandled-errors">Unhandled Errors</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#handling-either-synchronous-or-asynchronous-results">Handling either synchronous or asynchronous results</a><ul>
+<li><a class="reference internal" href="#handling-possible-deferreds-in-the-library-code">Handling possible Deferreds in the library code</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cancellation">Cancellation</a><ul>
+<li><a class="reference internal" href="#motivation">Motivation</a></li>
+<li><a class="reference internal" href="#cancellation-for-applications-which-consume-deferreds">Cancellation for Applications which Consume Deferreds</a></li>
+<li><a class="reference internal" href="#default-cancellation-behavior">Default Cancellation Behavior</a></li>
+<li><a class="reference internal" href="#creating-cancellable-deferreds-custom-cancellation-functions">Creating Cancellable Deferreds: Custom Cancellation Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#deferredlist">DeferredList</a><ul>
+<li><a class="reference internal" href="#other-behaviours">Other behaviours</a></li>
+<li><a class="reference internal" href="#gatherresults">gatherResults</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#class-overview">Class Overview</a><ul>
+<li><a class="reference internal" href="#basic-callback-functions">Basic Callback Functions</a></li>
+<li><a class="reference internal" href="#chaining-deferreds">Chaining Deferreds</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#see-also">See also</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="defer-intro.html"
+                                  title="previous chapter">Introduction to Deferreds</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="gendefer.html"
+                                  title="next chapter">Generating Deferreds</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/defer.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

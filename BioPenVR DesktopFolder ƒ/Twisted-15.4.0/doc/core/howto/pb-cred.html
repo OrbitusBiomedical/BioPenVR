@@ -1,0 +1,1345 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Authentication with Perspective Broker &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="PB Limits" href="pb-limits.html" />
+    <link rel="prev" title="PB Copyable: Passing Complex Types" href="pb-copyable.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pb-limits.html" title="PB Limits"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pb-copyable.html" title="PB Copyable: Passing Complex Types"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="authentication-with-perspective-broker">
+<h1>Authentication with Perspective Broker<a class="headerlink" href="#authentication-with-perspective-broker" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The examples shown in <a class="reference internal" href="pb-usage.html"><span class="doc">Using Perspective Broker</span></a> demonstrate how to do basic remote method calls, but provided no
+facilities for authentication. In this context, authentication is about who
+gets which remote references, and how to restrict access to the &#8220;right&#8221;
+set of people or programs.</p>
+<p>As soon as you have a program which offers services to multiple users,
+where those users should not be allowed to interfere with each other, you
+need to think about authentication. Many services use the idea of an &#8220;account&#8221; , and rely upon fact that each user has access to only one
+account. Twisted uses a system called <a class="reference internal" href="cred.html"><span class="doc">cred</span></a> to
+handle authentication issues, and Perspective Broker has code to make it
+easy to implement the most common use cases.</p>
+</div>
+<div class="section" id="compartmentalizing-services">
+<h2>Compartmentalizing Services<a class="headerlink" href="#compartmentalizing-services" title="Permalink to this headline">¶</a></h2>
+<p>Imagine how you would write a chat server using PB. The first step might
+be a <code class="docutils literal"><span class="pre">ChatServer</span></code> object which had a bunch of
+<code class="docutils literal"><span class="pre">pb.RemoteReference</span></code> s that point at user clients. Pretend that
+those clients offered a <code class="docutils literal"><span class="pre">remote_print</span></code> method which lets the
+server print a message on the user&#8217;s console. In that case, the server might
+look something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ChatServer</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Referenceable</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># indexed by name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># indexed by name</span>
+    <span class="k">def</span> <span class="nf">remote_joinGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">groupname</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">groupname</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="p">[</span><span class="n">username</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">remote_sendMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_username</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">group</span><span class="p">:</span>
+            <span class="c"># send the message to all members of the group</span>
+            <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                <span class="n">user</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;print&quot;</span><span class="p">,</span>
+                                <span class="s">&quot;&lt;</span><span class="si">%s</span><span class="s">&gt; says: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">from_username</span><span class="p">,</span>
+                                                         <span class="n">message</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>For now, assume that all clients have somehow acquired a
+<code class="docutils literal"><span class="pre">pb.RemoteReference</span></code> to this <code class="docutils literal"><span class="pre">ChatServer</span></code> object,
+perhaps using <code class="docutils literal"><span class="pre">pb.Root</span></code> and <code class="docutils literal"><span class="pre">getRootObject</span></code> as
+described in the <a class="reference internal" href="pb-usage.html"><span class="doc">previous chapter</span></a> . In this
+scheme, when a user sends a message to the group, their client runs
+something like the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">remotegroup</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;sendMessage&quot;</span><span class="p">,</span> <span class="s">&quot;alice&quot;</span><span class="p">,</span> <span class="s">&quot;Hi, my name is alice.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="incorrect-arguments">
+<h3>Incorrect Arguments<a class="headerlink" href="#incorrect-arguments" title="Permalink to this headline">¶</a></h3>
+<p>You&#8217;ve probably seen the first problem: users can trivially spoof each
+other. We depend upon the user to pass a correct value in their
+&#8220;username&#8221; argument, and have no way to tell if they&#8217;re lying or not.
+There is nothing to prevent Alice from modifying her client to do:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">remotegroup</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;sendMessage&quot;</span><span class="p">,</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span> <span class="s">&quot;i like pork&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>much to the horror of Bob&#8217;s vegetarian friends. <a class="footnote-reference" href="#id5" id="id1">[1]</a></p>
+<p>(In general, learn to get suspicious if you see any argument of a
+remotely-invokable method described as &#8220;must be X&#8221; )</p>
+<p>The best way to fix this is to keep track of the user&#8217;s name locally,
+rather than asking them to send it to the server with each message. The best
+place to keep state is in an object, so this suggests we need a per-user
+object. Rather than choosing an obvious name <a class="footnote-reference" href="#id6" id="id2">[2]</a> , let&#8217;s call this the
+<code class="docutils literal"><span class="pre">User</span></code> class.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Referenceable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">clientref</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote</span> <span class="o">=</span> <span class="n">clientref</span>
+    <span class="k">def</span> <span class="nf">remote_joinGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">joinGroup</span><span class="p">(</span><span class="n">groupname</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">remote_sendMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;print&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ChatServer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># indexed by name</span>
+    <span class="k">def</span> <span class="nf">joinGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">groupname</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">sendMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_username</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">group</span><span class="p">:</span>
+            <span class="c"># send the message to all members of the group</span>
+            <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                <span class="n">user</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;&lt;</span><span class="si">%s</span><span class="s">&gt; says: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">from_username</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Again, assume that each remote client gets access to a single
+<code class="docutils literal"><span class="pre">User</span></code> object, which is created with the proper username.</p>
+<p>Note how the <code class="docutils literal"><span class="pre">ChatServer</span></code> object has no remote access: it
+isn&#8217;t even <code class="docutils literal"><span class="pre">pb.Referenceable</span></code> anymore. This means that all access
+to it must be mediated through other objects, with code that is under your
+control.</p>
+<p>As long as Alice only has access to her own <code class="docutils literal"><span class="pre">User</span></code> object, she
+can no longer spoof Bob. The only way for her to invoke
+<code class="docutils literal"><span class="pre">ChatServer.sendMessage</span></code> is to call her <code class="docutils literal"><span class="pre">User</span></code>
+object&#8217;s <code class="docutils literal"><span class="pre">remote_sendMessage</span></code> method, and that method uses its
+own state to provide the <code class="docutils literal"><span class="pre">from_username</span></code> argument. It doesn&#8217;t
+give her any way to change that state.</p>
+<p>This restriction is important. The <code class="docutils literal"><span class="pre">User</span></code> object is able to
+maintain its own integrity because there is a wall between the object and
+the client: the client cannot inspect or modify internal state, like the
+<code class="docutils literal"><span class="pre">.name</span></code> attribute. The only way through this wall is via remote
+method invocations, and the only control Alice has over those invocations is
+when they get invoked and what arguments they are given.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">No object can maintain its integrity against local threats: by design,
+Python offers no mechanism for class instances to hide their attributes, and
+once an intruder has a copy of <code class="docutils literal"><span class="pre">self.__dict__</span></code> , they can do
+everything the original object was able to do.</p>
+</div>
+</div>
+<div class="section" id="unforgeable-references">
+<h3>Unforgeable References<a class="headerlink" href="#unforgeable-references" title="Permalink to this headline">¶</a></h3>
+<p>Now suppose you wanted to implement group parameters, for example a mode
+in which nobody was allowed to talk about mattresses because some users were
+sensitive and calming them down after someone said &#8220;mattress&#8221; is a
+hassle that&#8217;s best avoided altogether. Again, per-group state implies a
+per-group object. We&#8217;ll go out on a limb and call this the
+<code class="docutils literal"><span class="pre">Group</span></code> object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Referenceable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">clientref</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote</span> <span class="o">=</span> <span class="n">clientref</span>
+    <span class="k">def</span> <span class="nf">remote_joinGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">allowMattress</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">joinGroup</span><span class="p">(</span><span class="n">groupname</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">allowMattress</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;print&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Group</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Referenceable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">allowMattress</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">groupname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allowMattress</span> <span class="o">=</span> <span class="n">allowMattress</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="nf">remote_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_user</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">allowMattress</span> <span class="ow">and</span> <span class="s">&quot;mattress&quot;</span> <span class="ow">in</span> <span class="n">message</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s">&quot;Don&#39;t say that word&quot;</span>
+        <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="p">:</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;&lt;</span><span class="si">%s</span><span class="s">&gt; says: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">from_user</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">addUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ChatServer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># indexed by name</span>
+    <span class="k">def</span> <span class="nf">joinGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">allowMattress</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">groupname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span> <span class="o">=</span> <span class="n">Group</span><span class="p">(</span><span class="n">groupname</span><span class="p">,</span> <span class="n">allowMattress</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span><span class="o">.</span><span class="n">addUser</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This example takes advantage of the fact that
+<code class="docutils literal"><span class="pre">pb.Referenceable</span></code> objects sent over a wire can be returned to
+you, and they will be turned into references to the same object that you
+originally sent. The client cannot modify the object in any way: all they
+can do is point at it and invoke its <code class="docutils literal"><span class="pre">remote_*</span></code> methods. Thus,
+you can be sure that the <code class="docutils literal"><span class="pre">.name</span></code> attribute remains the same as
+you left it. In this case, the client code would look something like
+this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ClientThing</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Referenceable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">remote_print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">print</span> <span class="n">message</span>
+    <span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remoteUser</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;joinGroup&quot;</span><span class="p">,</span> <span class="s">&quot;#twisted&quot;</span><span class="p">,</span>
+                                       <span class="n">allowMattress</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gotGroup</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">gotGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;send&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remoteUser</span><span class="p">,</span> <span class="s">&quot;hi everybody&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">User</span></code> object is sent from the server side, and is turned
+into a <code class="docutils literal"><span class="pre">pb.RemoteReference</span></code> when it arrives at the client. The
+client sends it back to <code class="docutils literal"><span class="pre">Group.remote_send</span></code> , and PB turns it back
+into a reference to the original <code class="docutils literal"><span class="pre">User</span></code> when it gets there.
+<code class="docutils literal"><span class="pre">Group.remote_send</span></code> can then use its <code class="docutils literal"><span class="pre">.name</span></code> attribute
+as the sender of the message.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Third party references (there aren&#8217;t any)</p>
+<p>This technique also relies upon the fact that the
+<code class="docutils literal"><span class="pre">pb.Referenceable</span></code> reference can <em>only</em> come from someone
+who holds a corresponding <code class="docutils literal"><span class="pre">pb.RemoteReference</span></code> . The design of the
+serialization mechanism (implemented in <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.jelly.html">twisted.spread.jelly</a> : pb, jelly, spread.. get it?  Look for &#8220;banana&#8221; , too.  What other networking framework
+can claim API names based on sandwich ingredients?) makes it impossible for
+a client to obtain a reference that they weren&#8217;t explicitly given.
+References passed over the wire are given id numbers and recorded in a
+per-connection dictionary. If you didn&#8217;t give them the reference, the id
+number won&#8217;t be in the dict, and no amount of guessing by a malicious client
+will give them anything else. The dict goes away when the connection is
+dropped, further limiting the scope of those references.</p>
+<p>Furthermore, it is not possible for Bob to send <em>his</em>
+<code class="docutils literal"><span class="pre">User</span></code> reference to Alice (perhaps over some other PB channel
+just between the two of them). Outside the context of Bob&#8217;s connection to
+the server, that reference is just a meaningless number. To prevent
+confusion, PB will tell you if you try to give it away: when you try to hand
+a <code class="docutils literal"><span class="pre">pb.RemoteReference</span></code> to a third party, you&#8217;ll get an exception
+(implemented with an assert in pb.py:364 RemoteReference.jellyFor).</p>
+<p>This helps the security model somewhat: only the client you gave the
+reference to can cause any damage with it. Of course, the client might be a
+brainless zombie, simply doing anything some third party wants. When it&#8217;s
+not proxying <code class="docutils literal"><span class="pre">callRemote</span></code> invocations, it&#8217;s probably terrorizing
+the living and searching out human brains for sustenance. In short, if you
+don&#8217;t trust them, don&#8217;t give them that reference.</p>
+<p>And remember that everything you&#8217;ve ever given them over that connection
+can come back to you. If expect the client to invoke your method with some
+object A that you sent to them earlier, and instead they send you object B
+(that you also sent to them earlier), and you don&#8217;t check it somehow, then
+you&#8217;ve just opened up a security hole (we&#8217;ll see an example of this
+shortly). It may be better to keep such objects in a dictionary on the
+server side, and have the client send you an index string instead. Doing it
+that way makes it obvious that they can send you anything they want, and
+improves the chances that you&#8217;ll remember to implement the right checks.
+(This is exactly what PB is doing underneath, with a per-connection
+dictionary of <code class="docutils literal"><span class="pre">Referenceable</span></code> objects, indexed by a number).</p>
+<p class="last">And, of course, you have to make sure you don&#8217;t accidentally hand out a
+reference to the wrong object.</p>
+</div>
+<p>But again, note the vulnerability. If Alice holds a
+<code class="docutils literal"><span class="pre">RemoteReference</span></code> to <em>any</em> object on the server side that
+has a <code class="docutils literal"><span class="pre">.name</span></code> attribute, she can use that name as a spoofed&#8221;from&#8221; parameter. As a simple example, what if her client code looked
+like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ClientThing</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Referenceable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remoteUser</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;joinGroup&quot;</span><span class="p">,</span> <span class="s">&quot;#twisted&quot;</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gotGroup</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">gotGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;send&quot;</span><span class="p">,</span> <span class="n">from_user</span><span class="o">=</span><span class="n">group</span><span class="p">,</span> <span class="s">&quot;hi everybody&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This would let her send a message that appeared to come from &#8220;#twisted&#8221; rather than &#8220;Alice&#8221; . If she joined a group that
+happened to be named &#8220;bob&#8221; (perhaps it is the &#8220;How To Be Bob&#8221;
+channel, populated by Alice and countless others, a place where they can
+share stories about their best impersonating-Bob moments), then she would be
+able to emit a message that looked like &#8220;&lt;bob&gt; says: hi there&#8221; ,
+and she has accomplished her lifelong goal.</p>
+</div>
+<div class="section" id="argument-typechecking">
+<h3>Argument Typechecking<a class="headerlink" href="#argument-typechecking" title="Permalink to this headline">¶</a></h3>
+<p>There are two techniques to close this hole. The first is to have your
+remotely-invokable methods do type-checking on their arguments: if
+<code class="docutils literal"><span class="pre">Group.remote_send</span></code> asserted <code class="docutils literal"><span class="pre">isinstance(from_user,</span> <span class="pre">User)</span></code> then Alice couldn&#8217;t use non-User objects to do her spoofing,
+and hopefully the rest of the system is designed well enough to prevent her
+from obtaining access to somebody else&#8217;s User object.</p>
+</div>
+<div class="section" id="objects-as-capabilities">
+<h3>Objects as Capabilities<a class="headerlink" href="#objects-as-capabilities" title="Permalink to this headline">¶</a></h3>
+<p>The second technique is to avoid having the client send you the objects
+altogether. If they don&#8217;t send you anything, there is nothing to verify. In
+this case, you would have to have a per-user-per-group object, in which the
+<code class="docutils literal"><span class="pre">remote_send</span></code> method would only take a single
+<code class="docutils literal"><span class="pre">message</span></code> argument. The <code class="docutils literal"><span class="pre">UserGroup</span></code> object is created
+with references to the only <code class="docutils literal"><span class="pre">User</span></code> and <code class="docutils literal"><span class="pre">Group</span></code> objects
+that it will ever use, so no lookups are needed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">UserGroup</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Referenceable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">group</span>
+    <span class="k">def</span> <span class="nf">remote_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Group</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">allowMattress</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">groupname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allowMattress</span> <span class="o">=</span> <span class="n">allowMattress</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_user</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">allowMattress</span> <span class="ow">and</span> <span class="s">&quot;mattress&quot;</span> <span class="ow">in</span> <span class="n">message</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s">&quot;Don&#39;t say that word&quot;</span>
+        <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="p">:</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;&lt;</span><span class="si">%s</span><span class="s">&gt; says: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">from_user</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">addUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The only message-sending method Alice has left is
+<code class="docutils literal"><span class="pre">UserGroup.remote_send</span></code> , and it only accepts a message: there are
+no remaining ways to influence the &#8220;from&#8221; name.</p>
+<p>In this model, each remotely-accessible object represents a very small
+set of capabilities. Security is achieved by only granting a minimal set of
+abilities to each remote user.</p>
+<p>PB provides a shortcut which makes this technique easier to use. The
+<code class="docutils literal"><span class="pre">Viewable</span></code> class will be discussed <a class="reference internal" href="#core-howto-pb-cred-viewable"><span class="std std-ref">below</span></a> .</p>
+</div>
+</div>
+<div class="section" id="avatars-and-perspectives">
+<h2>Avatars and Perspectives<a class="headerlink" href="#avatars-and-perspectives" title="Permalink to this headline">¶</a></h2>
+<p>In Twisted&#8217;s <a class="reference internal" href="cred.html"><span class="doc">cred</span></a> system, an &#8220;Avatar&#8221; is
+an object that lives on the &#8220;server&#8221; side (defined here as the side
+farthest from the human who is trying to get something done) which lets the
+remote user get something done. The avatar isn&#8217;t really a particular class,
+it&#8217;s more like a description of a role that some object plays, as in &#8220;the Foo object here is acting as the user&#8217;s avatar for this particular service&#8221; . Generally, the remote user has some way of getting their avatar
+to run some code. The avatar object may enforce some security checks, and
+provide additional data, then call other methods which get things done.</p>
+<p>The two pieces in the cred puzzle (for any protocol, not just PB) are: &#8220;what serves as the Avatar?&#8221; , and &#8220;how does the user get access to it?&#8221; .</p>
+<p>For PB, the first question is easy. The Avatar is a remotely-accessible
+object which can run code: this is a perfect description of
+<code class="docutils literal"><span class="pre">pb.Referenceable</span></code> and its subclasses. We shall defer the second
+question until the next section.</p>
+<p>In the example above, you can think of the <code class="docutils literal"><span class="pre">ChatServer</span></code> and
+<code class="docutils literal"><span class="pre">Group</span></code> objects as a service. The <code class="docutils literal"><span class="pre">User</span></code> object is the
+user&#8217;s server-side representative: everything the user is capable of doing
+is done by running one of its methods. Anything that the server wants to do
+to the user (change their group membership, change their name, delete their
+pet cat, whatever) is done by manipulating the <code class="docutils literal"><span class="pre">User</span></code> object.</p>
+<p>There are multiple User objects living in peace and harmony around the
+ChatServer. Each has a different point of view on the services provided by
+the ChatServer and the Groups: each may belong to different groups, some
+might have more permissions than others (like the ability to create groups).
+These different points of view are called &#8220;Perspectives&#8221; . This is the
+origin of the term &#8220;Perspective&#8221; in &#8220;Perspective Broker&#8221; : PB
+provides and controls (i.e. &#8220;brokers&#8221; ) access to Perspectives.</p>
+<p>Once upon a time, these local-representative objects were actually called
+<code class="docutils literal"><span class="pre">pb.Perspective</span></code> . But this has changed with the advent of the
+rewritten cred system, and now the more generic term for a local
+representative object is an Avatar. But you will still see reference to
+&#8220;Perspective&#8221; in the code, the docs, and the module names <a class="footnote-reference" href="#id7" id="id3">[3]</a> . Just remember
+that perspectives and avatars are basically the same thing.</p>
+<p>Despite all we&#8217;ve been <a class="reference internal" href="cred.html"><span class="doc">telling you</span></a> about how
+Avatars are more of a concept than an actual class, the base class from
+which you can create your server-side avatar-ish objects is, in fact, named
+<code class="docutils literal"><span class="pre">pb.Avatar</span></code>  <a class="footnote-reference" href="#id8" id="id4">[4]</a> . These objects behave very much like
+<code class="docutils literal"><span class="pre">pb.Referenceable</span></code> . The only difference is that instead of
+offering &#8220;remote_FOO&#8221; methods, they offer &#8220;perspective_FOO&#8221;
+methods.</p>
+<p>The other way in which <code class="docutils literal"><span class="pre">pb.Avatar</span></code> differs from
+<code class="docutils literal"><span class="pre">pb.Referenceable</span></code> is that the avatar objects are designed to be
+the first thing retrieved by a cred-using remote client. Just as
+<code class="docutils literal"><span class="pre">PBClientFactory.getRootObject</span></code> gives the client access to a
+<code class="docutils literal"><span class="pre">pb.Root</span></code> object (which can then provide access to all kinds of
+other objects), <code class="docutils literal"><span class="pre">PBClientFactory.login</span></code> gives client access to a
+<code class="docutils literal"><span class="pre">pb.Avatar</span></code> object (which can return other references).</p>
+<p>So, the first half of using cred in your PB application is to create an
+Avatar object which implements <code class="docutils literal"><span class="pre">perspective_</span></code> methods and is
+careful to do useful things for the remote user while remaining vigilant
+against being tricked with unexpected argument values. It must also be
+careful to never give access to objects that the user should not have access
+to, whether by returning them directly, returning objects which contain
+them, or returning objects which can be asked (remotely) to provide
+them.</p>
+<p>The second half is how the user gets a <code class="docutils literal"><span class="pre">pb.RemoteReference</span></code> to
+your Avatar. As explained <a class="reference internal" href="cred.html"><span class="doc">elsewhere</span></a> , Avatars are
+obtained from a Realm. The Realm doesn&#8217;t deal with authentication at all
+(usernames, passwords, public keys, challenge-response systems, retinal
+scanners, real-time DNA sequencers, etc). It simply takes an &#8220;avatarID&#8221;
+(which is effectively a username) and returns an Avatar object. The Portal
+and its Checkers deal with authenticating the user: by the time they are
+done, the remote user has proved their right to access the avatarID that is
+given to the Realm, so the Realm can return a remotely-controllable object
+that has whatever powers you wish to grant to this particular user.</p>
+<p>For PB, the realm is expected to return a <code class="docutils literal"><span class="pre">pb.Avatar</span></code> (or
+anything which implements <code class="docutils literal"><span class="pre">pb.IPerspective</span></code> , really, but there&#8217;s
+no reason to not return a <code class="docutils literal"><span class="pre">pb.Avatar</span></code> subclass). This object will
+be given to the client just like a <code class="docutils literal"><span class="pre">pb.Root</span></code> would be without
+cred, and the user can get access to other objects through it (if you let
+them).</p>
+<p>The basic idea is that there is a separate IPerspective-implementing
+object (i.e. the Avatar subclass) (i.e. the &#8220;perspective&#8221; ) for each
+user, and <em>only</em> the authorized user gets a remote reference to that
+object. You can store whatever permissions or capabilities the user
+possesses in that object, and then use them when the user invokes a remote
+method. You give the user access to the perspective object instead of the
+objects that do the real work.</p>
+</div>
+<div class="section" id="perspective-examples">
+<h2>Perspective Examples<a class="headerlink" href="#perspective-examples" title="Permalink to this headline">¶</a></h2>
+<p>Here is a brief example of using a pb.Avatar. Most of the support code
+is magic for now: we&#8217;ll explain it later.</p>
+<div class="section" id="one-client">
+<h3>One Client<a class="headerlink" href="#one-client" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/pb5server.py"><code class="xref download docutils literal"><span class="pre">pb5server.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implements</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.cred</span> <span class="kn">import</span> <span class="n">checkers</span><span class="p">,</span> <span class="n">portal</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">MyPerspective</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Avatar</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">perspective_foo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;I am&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&quot;perspective_foo(&quot;</span><span class="p">,</span><span class="n">arg</span><span class="p">,</span><span class="s">&quot;) called on&quot;</span><span class="p">,</span> <span class="bp">self</span>
+
+<span class="k">class</span> <span class="nc">MyRealm</span><span class="p">:</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">portal</span><span class="o">.</span><span class="n">IRealm</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarId</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">interfaces</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="n">MyPerspective</span><span class="p">(</span><span class="n">avatarId</span><span class="p">),</span> <span class="k">lambda</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">portal</span><span class="o">.</span><span class="n">Portal</span><span class="p">(</span><span class="n">MyRealm</span><span class="p">())</span>
+<span class="n">p</span><span class="o">.</span><span class="n">registerChecker</span><span class="p">(</span>
+    <span class="n">checkers</span><span class="o">.</span><span class="n">InMemoryUsernamePasswordDatabaseDontUse</span><span class="p">(</span><span class="n">user1</span><span class="o">=</span><span class="s">&quot;pass1&quot;</span><span class="p">))</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8800</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/pb5client.py"><code class="xref download docutils literal"><span class="pre">pb5client.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.cred</span> <span class="kn">import</span> <span class="n">credentials</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBClientFactory</span><span class="p">()</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8800</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+    <span class="n">def1</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">credentials</span><span class="o">.</span><span class="n">UsernamePassword</span><span class="p">(</span><span class="s">&quot;user1&quot;</span><span class="p">,</span> <span class="s">&quot;pass1&quot;</span><span class="p">))</span>
+    <span class="n">def1</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">connected</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">connected</span><span class="p">(</span><span class="n">perspective</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;got perspective ref:&quot;</span><span class="p">,</span> <span class="n">perspective</span>
+    <span class="k">print</span> <span class="s">&quot;asking it to foo(12)&quot;</span>
+    <span class="n">perspective</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Ok, so that wasn&#8217;t really very exciting. It doesn&#8217;t accomplish much more
+than the first PB example, and used a lot more code to do it. Let&#8217;s try it
+again with two users this time.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>When the client runs <code class="docutils literal"><span class="pre">login</span></code> to request the Perspective,
+they can provide it with an optional <code class="docutils literal"><span class="pre">client</span></code> argument (which
+must be a <code class="docutils literal"><span class="pre">pb.Referenceable</span></code> object). If they do, then a
+reference to that object will be handed to the realm&#8217;s
+<code class="docutils literal"><span class="pre">requestAvatar</span></code> in the <code class="docutils literal"><span class="pre">mind</span></code> argument.</p>
+<p class="last">The server-side Perspective can use it to invoke remote methods on
+something in the client, so that the client doesn&#8217;t always have to drive the
+interaction. In a chat server, the client object would be the one to which&#8221;display text&#8221; messages were sent. In a board game server, this would
+provide a way to tell the clients that someone has made a move, so they can
+update their game boards.</p>
+</div>
+</div>
+<div class="section" id="two-clients">
+<h3>Two Clients<a class="headerlink" href="#two-clients" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/pb6server.py"><code class="xref download docutils literal"><span class="pre">pb6server.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implements</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.cred</span> <span class="kn">import</span> <span class="n">checkers</span><span class="p">,</span> <span class="n">portal</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">MyPerspective</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Avatar</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">perspective_foo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;I am&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&quot;perspective_foo(&quot;</span><span class="p">,</span><span class="n">arg</span><span class="p">,</span><span class="s">&quot;) called on&quot;</span><span class="p">,</span> <span class="bp">self</span>
+
+<span class="k">class</span> <span class="nc">MyRealm</span><span class="p">:</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">portal</span><span class="o">.</span><span class="n">IRealm</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarId</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">interfaces</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="n">MyPerspective</span><span class="p">(</span><span class="n">avatarId</span><span class="p">),</span> <span class="k">lambda</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">portal</span><span class="o">.</span><span class="n">Portal</span><span class="p">(</span><span class="n">MyRealm</span><span class="p">())</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">checkers</span><span class="o">.</span><span class="n">InMemoryUsernamePasswordDatabaseDontUse</span><span class="p">(</span><span class="n">user1</span><span class="o">=</span><span class="s">&quot;pass1&quot;</span><span class="p">,</span> 
+                                                     <span class="n">user2</span><span class="o">=</span><span class="s">&quot;pass2&quot;</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">registerChecker</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8800</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/pb6client1.py"><code class="xref download docutils literal"><span class="pre">pb6client1.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.cred</span> <span class="kn">import</span> <span class="n">credentials</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBClientFactory</span><span class="p">()</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8800</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+    <span class="n">def1</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">credentials</span><span class="o">.</span><span class="n">UsernamePassword</span><span class="p">(</span><span class="s">&quot;user1&quot;</span><span class="p">,</span> <span class="s">&quot;pass1&quot;</span><span class="p">))</span>
+    <span class="n">def1</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">connected</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">connected</span><span class="p">(</span><span class="n">perspective</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;got perspective1 ref:&quot;</span><span class="p">,</span> <span class="n">perspective</span>
+    <span class="k">print</span> <span class="s">&quot;asking it to foo(13)&quot;</span>
+    <span class="n">perspective</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/pb6client2.py"><code class="xref download docutils literal"><span class="pre">pb6client2.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.cred</span> <span class="kn">import</span> <span class="n">credentials</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBClientFactory</span><span class="p">()</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8800</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+    <span class="n">def1</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">credentials</span><span class="o">.</span><span class="n">UsernamePassword</span><span class="p">(</span><span class="s">&quot;user2&quot;</span><span class="p">,</span> <span class="s">&quot;pass2&quot;</span><span class="p">))</span>
+    <span class="n">def1</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">connected</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">connected</span><span class="p">(</span><span class="n">perspective</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;got perspective2 ref:&quot;</span><span class="p">,</span> <span class="n">perspective</span>
+    <span class="k">print</span> <span class="s">&quot;asking it to foo(14)&quot;</span>
+    <span class="n">perspective</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>While pb6server.py is running, try starting pb6client1, then pb6client2.
+Compare the argument passed by the <code class="docutils literal"><span class="pre">.callRemote()</span></code> in each
+client. You can see how each client gets connected to a different
+Perspective.</p>
+</div>
+<div class="section" id="how-that-example-worked">
+<h3>How that example worked<a class="headerlink" href="#how-that-example-worked" title="Permalink to this headline">¶</a></h3>
+<p id="core-howto-pb-cred-smallexample">Let&#8217;s walk through the previous example and see what was going on.</p>
+<p>First, we created a subclass called <code class="docutils literal"><span class="pre">MyPerspective</span></code> which is
+our server-side Avatar. It implements a <code class="docutils literal"><span class="pre">perspective_foo</span></code> method
+that is exposed to the remote client.</p>
+<p>Second, we created a realm (an object which implements
+<code class="docutils literal"><span class="pre">IRealm</span></code> , and therefore implements <code class="docutils literal"><span class="pre">requestAvatar</span></code> ).
+This realm manufactures <code class="docutils literal"><span class="pre">MyPerspective</span></code> objects. It makes as many
+as we want, and names each one with the avatarID (a username) that comes out
+of the checkers. This MyRealm object returns two other objects as well,
+which we will describe later.</p>
+<p>Third, we created a portal to hold this realm. The portal&#8217;s job is to
+dispatch incoming clients to the credential checkers, and then to request
+Avatars for any which survive the authentication process.</p>
+<p>Fourth, we made a simple checker (an object which implements
+<code class="docutils literal"><span class="pre">IChecker</span></code> ) to hold valid user/password pairs. The checker
+gets registered with the portal, so it knows who to ask when new
+clients connect.  We use a checker named
+<code class="docutils literal"><span class="pre">InMemoryUsernamePasswordDatabaseDontUse</span></code> , which suggests
+that 1: all the username/password pairs are kept in memory instead of
+being saved to a database or something, and 2: you shouldn&#8217;t use
+it. The admonition against using it is because there are better
+schemes: keeping everything in memory will not work when you have
+thousands or millions of users to keep track of, the passwords will be
+stored in the .tap file when the application shuts down (possibly a
+security risk), and finally it is a nuisance to add or remove users
+after the checker is constructed.</p>
+<p>Fifth, we create a <code class="docutils literal"><span class="pre">pb.PBServerFactory</span></code> to listen on a TCP
+port. This factory knows how to connect the remote client to the Portal, so
+incoming connections will be handed to the authentication process. Other
+protocols (non-PB) would do something similar: the factory that creates
+Protocol objects will give those objects access to the Portal so
+authentication can take place.</p>
+<p>On the client side, a <code class="docutils literal"><span class="pre">pb.PBClientFactory</span></code> is created (as <a class="reference internal" href="pb-usage.html"><span class="doc">before</span></a> ) and attached to a TCP connection. When the
+connection completes, the factory will be asked to produce a Protocol, and
+it will create a PB object. Unlike the previous chapter, where we used
+<code class="docutils literal"><span class="pre">.getRootObject</span></code> , here we use <code class="docutils literal"><span class="pre">factory.login</span></code> to
+initiate the cred authentication process. We provide a
+<code class="docutils literal"><span class="pre">credentials</span></code> object, which is the client-side agent for doing
+our half of the authentication process. This process may involve several
+messages: challenges, responses, encrypted passwords, secure hashes, etc. We
+give our credentials object everything it will need to respond correctly (in
+this case, a username and password, but you could write a credential that
+used public-key encryption or even fancier techniques).</p>
+<p><code class="docutils literal"><span class="pre">login</span></code> returns a Deferred which, when it fires, will return a
+<code class="docutils literal"><span class="pre">pb.RemoteReference</span></code> to the remote avatar. We can then do
+<code class="docutils literal"><span class="pre">callRemote</span></code> to invoke a <code class="docutils literal"><span class="pre">perspective_foo</span></code> method on
+that Avatar.</p>
+</div>
+<div class="section" id="anonymous-clients">
+<h3>Anonymous Clients<a class="headerlink" href="#anonymous-clients" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/pbAnonServer.py"><code class="xref download docutils literal"><span class="pre">pbAnonServer.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Implement the realm for and run on port 8800 a PB service which allows both</span>
+<span class="sd">anonymous and username/password based access.</span>
+
+<span class="sd">Successful username/password-based login requests given an instance of</span>
+<span class="sd">MyPerspective with a name which matches the username with which they</span>
+<span class="sd">authenticated.  Success anonymous login requests are given an instance of</span>
+<span class="sd">MyPerspective with the name &quot;Anonymous&quot;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span>
+
+<span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implements</span>
+
+<span class="kn">from</span> <span class="nn">twisted.python.log</span> <span class="kn">import</span> <span class="n">startLogging</span>
+<span class="kn">from</span> <span class="nn">twisted.cred.checkers</span> <span class="kn">import</span> <span class="n">ANONYMOUS</span><span class="p">,</span> <span class="n">AllowAnonymousAccess</span>
+<span class="kn">from</span> <span class="nn">twisted.cred.checkers</span> <span class="kn">import</span> <span class="n">InMemoryUsernamePasswordDatabaseDontUse</span>
+<span class="kn">from</span> <span class="nn">twisted.cred.portal</span> <span class="kn">import</span> <span class="n">IRealm</span><span class="p">,</span> <span class="n">Portal</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.spread.pb</span> <span class="kn">import</span> <span class="n">Avatar</span><span class="p">,</span> <span class="n">IPerspective</span><span class="p">,</span> <span class="n">PBServerFactory</span>
+
+
+<span class="k">class</span> <span class="nc">MyPerspective</span><span class="p">(</span><span class="n">Avatar</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Trivial avatar exposing a single remote method for demonstrative</span>
+<span class="sd">    purposes.  All successful login attempts in this example will result in</span>
+<span class="sd">    an avatar which is an instance of this class.</span>
+
+<span class="sd">    @type name: C{str}</span>
+<span class="sd">    @ivar name: The username which was used during login or C{&quot;Anonymous&quot;}</span>
+<span class="sd">    if the login was anonymous (a real service might want to avoid the</span>
+<span class="sd">    collision this introduces between anonoymous users and authenticated</span>
+<span class="sd">    users named &quot;Anonymous&quot;).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+
+    <span class="k">def</span> <span class="nf">perspective_foo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print a simple message which gives the argument this method was</span>
+<span class="sd">        called with and this avatar&#39;s name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;I am </span><span class="si">%s</span><span class="s">.  perspective_foo(</span><span class="si">%s</span><span class="s">) called on </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+
+
+<span class="k">class</span> <span class="nc">MyRealm</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Trivial realm which supports anonymous and named users by creating</span>
+<span class="sd">    avatars which are instances of MyPerspective for either.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">IRealm</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarId</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">IPerspective</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">interfaces</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;MyRealm only handles IPerspective&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">avatarId</span> <span class="ow">is</span> <span class="n">ANONYMOUS</span><span class="p">:</span>
+            <span class="n">avatarId</span> <span class="o">=</span> <span class="s">&quot;Anonymous&quot;</span>
+        <span class="k">return</span> <span class="n">IPerspective</span><span class="p">,</span> <span class="n">MyPerspective</span><span class="p">(</span><span class="n">avatarId</span><span class="p">),</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">None</span>
+
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a PB server using MyRealm and run it on port 8800.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">startLogging</span><span class="p">(</span><span class="n">stdout</span><span class="p">)</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Portal</span><span class="p">(</span><span class="n">MyRealm</span><span class="p">())</span>
+
+    <span class="c"># Here the username/password checker is registered.</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">InMemoryUsernamePasswordDatabaseDontUse</span><span class="p">(</span><span class="n">user1</span><span class="o">=</span><span class="s">&quot;pass1&quot;</span><span class="p">,</span> <span class="n">user2</span><span class="o">=</span><span class="s">&quot;pass2&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">registerChecker</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+
+    <span class="c"># Here the anonymous checker is registered.</span>
+    <span class="n">c2</span> <span class="o">=</span> <span class="n">AllowAnonymousAccess</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">registerChecker</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
+
+    <span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8800</span><span class="p">,</span> <span class="n">PBServerFactory</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/pbAnonClient.py"><code class="xref download docutils literal"><span class="pre">pbAnonClient.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Client which will talk to the server run by pbAnonServer.py, logging in</span>
+<span class="sd">either anonymously or with username/password credentials.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span>
+
+<span class="kn">from</span> <span class="nn">twisted.python.log</span> <span class="kn">import</span> <span class="n">err</span><span class="p">,</span> <span class="n">startLogging</span>
+<span class="kn">from</span> <span class="nn">twisted.cred.credentials</span> <span class="kn">import</span> <span class="n">Anonymous</span><span class="p">,</span> <span class="n">UsernamePassword</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.defer</span> <span class="kn">import</span> <span class="n">gatherResults</span>
+<span class="kn">from</span> <span class="nn">twisted.spread.pb</span> <span class="kn">import</span> <span class="n">PBClientFactory</span>
+
+
+<span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="n">why</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Catch-all errback which simply logs the failure.  This isn&#39;t expected to</span>
+<span class="sd">    be invoked in the normal case for this example.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">err</span><span class="p">(</span><span class="n">why</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">connected</span><span class="p">(</span><span class="n">perspective</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Login callback which invokes the remote &quot;foo&quot; method on the perspective</span>
+<span class="sd">    which the server returned.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s">&quot;got perspective1 ref:&quot;</span><span class="p">,</span> <span class="n">perspective</span>
+    <span class="k">print</span> <span class="s">&quot;asking it to foo(13)&quot;</span>
+    <span class="k">return</span> <span class="n">perspective</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">finished</span><span class="p">(</span><span class="n">ignored</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Callback invoked when both logins and method calls have finished to shut</span>
+<span class="sd">    down the reactor so the example exits.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Connect to a PB server running on port 8800 on localhost and log in to</span>
+<span class="sd">    it, both anonymously and using a username/password it will recognize.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">startLogging</span><span class="p">(</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">PBClientFactory</span><span class="p">()</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8800</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+
+    <span class="n">anonymousLogin</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">Anonymous</span><span class="p">())</span>
+    <span class="n">anonymousLogin</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">connected</span><span class="p">)</span>
+    <span class="n">anonymousLogin</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="s">&quot;Anonymous login failed&quot;</span><span class="p">)</span>
+
+    <span class="n">usernameLogin</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">UsernamePassword</span><span class="p">(</span><span class="s">&quot;user1&quot;</span><span class="p">,</span> <span class="s">&quot;pass1&quot;</span><span class="p">))</span>
+    <span class="n">usernameLogin</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">connected</span><span class="p">)</span>
+    <span class="n">usernameLogin</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="s">&quot;Username/password login failed&quot;</span><span class="p">)</span>
+
+    <span class="n">bothDeferreds</span> <span class="o">=</span> <span class="n">gatherResults</span><span class="p">([</span><span class="n">anonymousLogin</span><span class="p">,</span> <span class="n">usernameLogin</span><span class="p">])</span>
+    <span class="n">bothDeferreds</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">finished</span><span class="p">)</span>
+
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>pbAnonServer.py implements a server based on pb6server.py, extending it to
+permit anonymous logins in addition to authenticated logins. An
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.checkers.AllowAnonymousAccess.html">AllowAnonymousAccess</a>
+checker and an <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.checkers.InMemoryUsernamePasswordDatabaseDontUse.html">InMemoryUsernamePasswordDatabaseDontUse</a>
+checker are registered and the
+client&#8217;s choice of credentials object determines which is used to authenticate
+the login.  In either case, the realm will be called on to create an avatar for
+the login.  <code class="docutils literal"><span class="pre">AllowAnonymousAccess</span></code> always produces an <code class="docutils literal"><span class="pre">avatarId</span></code> of <code class="docutils literal"><span class="pre">twisted.cred.checkers.ANONYMOUS</span></code> .</p>
+<p>On the client side, the only change is the use of an instance of
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.cred.credentials.Anonymous.html">Anonymous</a> when calling
+<a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.PBClientFactory.login.html">PBClientFactory.login</a> .</p>
+</div>
+</div>
+<div class="section" id="using-avatars">
+<h2>Using Avatars<a class="headerlink" href="#using-avatars" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="avatar-interfaces">
+<h3>Avatar Interfaces<a class="headerlink" href="#avatar-interfaces" title="Permalink to this headline">¶</a></h3>
+<p>The first element of the 3-tuple returned by <code class="docutils literal"><span class="pre">requestAvatar</span></code>
+indicates which Interface this Avatar implements. For PB avatars, it will
+always be <code class="docutils literal"><span class="pre">pb.IPerspective</span></code> , because that&#8217;s the only interface
+these avatars implement.</p>
+<p>This element is present because <code class="docutils literal"><span class="pre">requestAvatar</span></code> is actually
+presented with a list of possible Interfaces. The question being posed to
+the Realm is: &#8220;do you have an avatar for (avatarID) that can implement one of the following set of Interfaces?&#8221; . Some portals and checkers might
+give a list of Interfaces and the Realm could pick; the PB code only knows
+how to do one, so we cannot take advantage of this feature.</p>
+</div>
+<div class="section" id="logging-out">
+<h3>Logging Out<a class="headerlink" href="#logging-out" title="Permalink to this headline">¶</a></h3>
+<p>The third element of the 3-tuple is a zero-argument callable, which will
+be invoked by the protocol when the connection has been lost. We can use
+this to notify the Avatar when the client has lost its connection. This will
+be described in more detail below.</p>
+</div>
+<div class="section" id="making-avatars">
+<h3>Making Avatars<a class="headerlink" href="#making-avatars" title="Permalink to this headline">¶</a></h3>
+<p>In the example above, we create Avatars upon request, during
+<code class="docutils literal"><span class="pre">requestAvatar</span></code> . Depending upon the service, these Avatars might
+already exist before the connection is received, and might outlive the
+connection. The Avatars might also accept multiple connections.</p>
+<p>Another possibility is that the Avatars might exist ahead of time, but in
+a different form (frozen in a pickle and/or saved in a database). In this
+case, <code class="docutils literal"><span class="pre">requestAvatar</span></code> may need to perform a database lookup and
+then do something with the result before it can provide an avatar. In this
+case, it would probably return a Deferred so it could provide the real
+Avatar later, once the lookup had completed.</p>
+<p>Here are some possible implementations of
+<code class="docutils literal"><span class="pre">MyRealm.requestAvatar</span></code> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># pre-existing, static avatars</span>
+<span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarID</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">in</span> <span class="n">interfaces</span>
+    <span class="n">avatar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span><span class="p">[</span><span class="n">avatarID</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="n">avatar</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="c"># database lookup and unpickling</span>
+<span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarID</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">in</span> <span class="n">interfaces</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">fetchAvatar</span><span class="p">(</span><span class="n">avatarID</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doUnpickle</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span><span class="bp">None</span>
+<span class="k">def</span> <span class="nf">doUnpickle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pickled</span><span class="p">):</span>
+    <span class="n">avatar</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">pickled</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">avatar</span>
+
+<span class="c"># everybody shares the same Avatar</span>
+<span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarID</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">in</span> <span class="n">interfaces</span>
+    <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theOneAvatar</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="c"># anonymous users share one Avatar, named users each get their own</span>
+<span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarID</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">in</span> <span class="n">interfaces</span>
+    <span class="k">if</span> <span class="n">avatarID</span> <span class="o">==</span> <span class="n">checkers</span><span class="o">.</span><span class="n">ANONYMOUS</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">anonAvatar</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span><span class="bp">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span><span class="p">[</span><span class="n">avatarID</span><span class="p">],</span> <span class="k">lambda</span><span class="p">:</span><span class="bp">None</span>
+
+<span class="c"># anonymous users get independent (but temporary) Avatars</span>
+<span class="c"># named users get their own persistent one</span>
+<span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarID</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">in</span> <span class="n">interfaces</span>
+    <span class="k">if</span> <span class="n">avatarID</span> <span class="o">==</span> <span class="n">checkers</span><span class="o">.</span><span class="n">ANONYMOUS</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="n">MyAvatar</span><span class="p">(),</span> <span class="k">lambda</span><span class="p">:</span><span class="bp">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span><span class="p">[</span><span class="n">avatarID</span><span class="p">],</span> <span class="k">lambda</span><span class="p">:</span><span class="bp">None</span>
+</pre></div>
+</div>
+<p>The last example, note that the new <code class="docutils literal"><span class="pre">MyAvatar</span></code> instance is not
+saved anywhere: it will vanish when the connection is dropped. By contrast,
+the avatars that live in the <code class="docutils literal"><span class="pre">self.avatars</span></code> dictionary will
+probably get persisted into the .tap file along with the Realm, the Portal,
+and anything else that is referenced by the top-level Application object.
+This is an easy way to manage saved user profiles.</p>
+</div>
+<div class="section" id="connecting-and-disconnecting">
+<h3>Connecting and Disconnecting<a class="headerlink" href="#connecting-and-disconnecting" title="Permalink to this headline">¶</a></h3>
+<p>It may be useful for your Avatars to be told when remote clients gain
+(and lose) access to them. For example, and Avatar might be updated by
+something in the server, and if there are clients attached, it should update
+them (through the &#8220;mind&#8221; argument which lets the Avatar do callRemote
+on the client).</p>
+<p>One common idiom which accomplishes this is to have the Realm tell the
+avatar that a remote client has just attached. The Realm can also ask the
+protocol to let it know when the connection goes away, so it can then inform
+the Avatar that the client has detached. The third member of the
+<code class="docutils literal"><span class="pre">requestAvatar</span></code> return tuple is a callable which will be invoked
+when the connection is lost.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyPerspective</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Avatar</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clients</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="nf">attached</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mind</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mind</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;attached to&quot;</span><span class="p">,</span> <span class="n">mind</span>
+    <span class="k">def</span> <span class="nf">detached</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mind</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">mind</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;detached from&quot;</span><span class="p">,</span> <span class="n">mind</span>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">:</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;update&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MyRealm</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarID</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">in</span> <span class="n">interfaces</span>
+        <span class="n">avatar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">avatars</span><span class="p">[</span><span class="n">avatarID</span><span class="p">]</span>
+        <span class="n">avatar</span><span class="o">.</span><span class="n">attached</span><span class="p">(</span><span class="n">mind</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="n">avatar</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="o">=</span><span class="n">avatar</span><span class="p">:</span><span class="n">a</span><span class="o">.</span><span class="n">detached</span><span class="p">(</span><span class="n">mind</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="viewable">
+<h3>Viewable<a class="headerlink" href="#viewable" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div></div></blockquote>
+<p id="core-howto-pb-cred-viewable">Once you have <code class="docutils literal"><span class="pre">IPerspective</span></code> objects (i.e. the Avatar) to
+represent users, the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.spread.pb.Viewable.html">Viewable</a> class can come into play. This
+class behaves a lot like <code class="docutils literal"><span class="pre">Referenceable</span></code> : it turns into a
+<code class="docutils literal"><span class="pre">RemoteReference</span></code> when sent over the wire, and certain methods
+can be invoked by the holder of that reference. However, the methods that
+can be called have names that start with <code class="docutils literal"><span class="pre">view_</span></code> instead of  <code class="docutils literal"><span class="pre">remote_</span></code> , and those methods are always called with an extra <code class="docutils literal"><span class="pre">perspective</span></code> argument that points to the Avatar through which
+the reference was sent:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Viewable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">view_doFoo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perspective</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>This is useful if you want to let multiple clients share a reference to
+the same object. The <code class="docutils literal"><span class="pre">view_</span></code> methods can use the
+&#8220;perspective&#8221; argument to figure out which client is calling them. This
+gives them a way to do additional permission checks, do per-user accounting,
+etc.</p>
+<p>This is the shortcut which makes per-user-per-group capability objects
+much easier to use. Instead of creating such per-(user,group) objects, you
+just have per-group objects which inherit from <code class="docutils literal"><span class="pre">pb.Viewable</span></code> , and
+give the user references to them. The local <code class="docutils literal"><span class="pre">pb.Avatar</span></code> object
+will automatically show up as the &#8220;perspective&#8221; argument in the
+<code class="docutils literal"><span class="pre">view_*</span></code> method calls, give you a chance to involve the Avatar in
+the process.</p>
+</div>
+<div class="section" id="chat-server-with-avatars">
+<h3>Chat Server with Avatars<a class="headerlink" href="#chat-server-with-avatars" title="Permalink to this headline">¶</a></h3>
+<p>Combining all the above techniques, here is an example chat server which
+uses a fixed set of identities (say, for the three members of your bridge
+club, who hang out in &#8220;#NeedAFourth&#8221; hoping that someone will discover
+your server, guess somebody&#8217;s password, break in, join the group, and also
+be available for a game next Saturday afternoon).</p>
+<p><a class="reference download internal" href="../../_downloads/chatserver1.py"><code class="xref download docutils literal"><span class="pre">chatserver.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">zope.interface</span> <span class="kn">import</span> <span class="n">implements</span>
+
+<span class="kn">from</span> <span class="nn">twisted.cred</span> <span class="kn">import</span> <span class="n">portal</span><span class="p">,</span> <span class="n">checkers</span>
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+
+<span class="k">class</span> <span class="nc">ChatServer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># indexed by name</span>
+
+    <span class="k">def</span> <span class="nf">joinGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">allowMattress</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">groupname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span> <span class="o">=</span> <span class="n">Group</span><span class="p">(</span><span class="n">groupname</span><span class="p">,</span> <span class="n">allowMattress</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span><span class="o">.</span><span class="n">addUser</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">groupname</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">ChatRealm</span><span class="p">:</span>
+    <span class="n">implements</span><span class="p">(</span><span class="n">portal</span><span class="o">.</span><span class="n">IRealm</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">requestAvatar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avatarID</span><span class="p">,</span> <span class="n">mind</span><span class="p">,</span> <span class="o">*</span><span class="n">interfaces</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span> <span class="ow">in</span> <span class="n">interfaces</span>
+        <span class="n">avatar</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">avatarID</span><span class="p">)</span>
+        <span class="n">avatar</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span>
+        <span class="n">avatar</span><span class="o">.</span><span class="n">attached</span><span class="p">(</span><span class="n">mind</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pb</span><span class="o">.</span><span class="n">IPerspective</span><span class="p">,</span> <span class="n">avatar</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">a</span><span class="o">=</span><span class="n">avatar</span><span class="p">:</span><span class="n">a</span><span class="o">.</span><span class="n">detached</span><span class="p">(</span><span class="n">mind</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Avatar</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">attached</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mind</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote</span> <span class="o">=</span> <span class="n">mind</span>
+    <span class="k">def</span> <span class="nf">detached</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mind</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">def</span> <span class="nf">perspective_joinGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">allowMattress</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">joinGroup</span><span class="p">(</span><span class="n">groupname</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">allowMattress</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;print&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Group</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Viewable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupname</span><span class="p">,</span> <span class="n">allowMattress</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">groupname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allowMattress</span> <span class="o">=</span> <span class="n">allowMattress</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="nf">addUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">view_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_user</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">allowMattress</span> <span class="ow">and</span> <span class="s">&quot;mattress&quot;</span> <span class="ow">in</span> <span class="n">message</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s">&quot;Don&#39;t say that word&quot;</span>
+        <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="p">:</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;&lt;</span><span class="si">%s</span><span class="s">&gt; says: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">from_user</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
+
+<span class="n">realm</span> <span class="o">=</span> <span class="n">ChatRealm</span><span class="p">()</span>
+<span class="n">realm</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">ChatServer</span><span class="p">()</span>
+<span class="n">checker</span> <span class="o">=</span> <span class="n">checkers</span><span class="o">.</span><span class="n">InMemoryUsernamePasswordDatabaseDontUse</span><span class="p">()</span>
+<span class="n">checker</span><span class="o">.</span><span class="n">addUser</span><span class="p">(</span><span class="s">&quot;alice&quot;</span><span class="p">,</span> <span class="s">&quot;1234&quot;</span><span class="p">)</span>
+<span class="n">checker</span><span class="o">.</span><span class="n">addUser</span><span class="p">(</span><span class="s">&quot;bob&quot;</span><span class="p">,</span> <span class="s">&quot;secret&quot;</span><span class="p">)</span>
+<span class="n">checker</span><span class="o">.</span><span class="n">addUser</span><span class="p">(</span><span class="s">&quot;carol&quot;</span><span class="p">,</span> <span class="s">&quot;fido&quot;</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">portal</span><span class="o">.</span><span class="n">Portal</span><span class="p">(</span><span class="n">realm</span><span class="p">,</span> <span class="p">[</span><span class="n">checker</span><span class="p">])</span>
+
+<span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8800</span><span class="p">,</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBServerFactory</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Notice that the client uses <code class="docutils literal"><span class="pre">perspective_joinGroup</span></code> to both
+join a group and retrieve a <code class="docutils literal"><span class="pre">RemoteReference</span></code> to the
+<code class="docutils literal"><span class="pre">Group</span></code> object. However, the reference they get is actually to a
+special intermediate object called a <code class="docutils literal"><span class="pre">pb.ViewPoint</span></code> . When they do
+<code class="docutils literal"><span class="pre">group.callRemote(&quot;send&quot;,</span> <span class="pre">&quot;message&quot;)</span></code> , their avatar is inserted
+into the argument list that <code class="docutils literal"><span class="pre">Group.view_send</span></code> actually sees. This
+lets the group get their username out of the Avatar without giving the
+client an opportunity to spoof someone else.</p>
+<p>The client side code that joins a group and sends a message would look
+like this:</p>
+<p><a class="reference download internal" href="../../_downloads/chatclient.py"><code class="xref download docutils literal"><span class="pre">chatclient.py</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># Copyright (c) Twisted Matrix Laboratories.</span>
+<span class="c"># See LICENSE for details.</span>
+
+<span class="kn">from</span> <span class="nn">twisted.spread</span> <span class="kn">import</span> <span class="n">pb</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.cred</span> <span class="kn">import</span> <span class="n">credentials</span>
+
+<span class="k">class</span> <span class="nc">Client</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">Referenceable</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">remote_print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">print</span> <span class="n">message</span>
+
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">factory</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">PBClientFactory</span><span class="p">()</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8800</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+        <span class="n">def1</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">credentials</span><span class="o">.</span><span class="n">UsernamePassword</span><span class="p">(</span><span class="s">&quot;alice&quot;</span><span class="p">,</span> <span class="s">&quot;1234&quot;</span><span class="p">),</span>
+                             <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">def1</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connected</span><span class="p">)</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">connected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perspective</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;connected, joining group #NeedAFourth&quot;</span>
+        <span class="c"># this perspective is a reference to our User object.  Save a reference</span>
+        <span class="c"># to it here, otherwise it will get garbage collected after this call,</span>
+        <span class="c"># and the server will think we logged out.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perspective</span> <span class="o">=</span> <span class="n">perspective</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">perspective</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;joinGroup&quot;</span><span class="p">,</span> <span class="s">&quot;#NeedAFourth&quot;</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gotGroup</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">gotGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;joined group, now sending a message to all members&quot;</span>
+        <span class="c"># &#39;group&#39; is a reference to the Group object (through a ViewPoint)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">callRemote</span><span class="p">(</span><span class="s">&quot;send&quot;</span><span class="p">,</span> <span class="s">&quot;You can call me Al.&quot;</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shutdown</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+
+<span class="n">Client</span><span class="p">()</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+</pre></div>
+</div>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Apparently Alice is one of those weirdos who has nothing
+better to do than to try and impersonate Bob. She will lie to her chat
+client, send incorrect objects to remote methods, even rewrite her local
+client code entirely to accomplish this juvenile prank. Given this
+adversarial relationship, one must wonder why she and Bob seem to spend so
+much time together: their adventures are clearly documented by the
+cryptographic literature.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>The
+obvious name is clearly
+<code class="docutils literal"><span class="pre">ServerSidePerUserObjectWhichNobodyElseHasAccessTo</span></code> , but because
+Python makes everything else so easy to read, it only seems fair to make
+your audience work for <em>something</em> .</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>We could just go ahead and rename Perspective Broker to be
+Avatar Broker, but 1) that would cause massive compatibility problems, and 2)
+&#8220;AB&#8221;  doesn&#8217;t fit into the whole sandwich-themed naming scheme nearly as
+well as &#8220;PB&#8221;  does. If we changed it to AB, we&#8217;d probably have to change
+Banana to be CD (CoderDecoder), and Jelly to be EF (EncapsulatorFragmentor).
+twisted.spread would then have to be renamed twisted.alphabetsoup, and then
+the whole food-pun thing would start all over again.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>The avatar-ish class is named
+<code class="docutils literal"><span class="pre">pb.Avatar</span></code>  because <code class="docutils literal"><span class="pre">pb.Perspective</span></code>  was already
+taken, by the (now obsolete) oldcred perspective-ish class. It is a pity,
+but it simply wasn&#8217;t possible both replace <code class="docutils literal"><span class="pre">pb.Perspective</span></code>
+in-place <em>and</em>  maintain a reasonable level of
+backwards-compatibility.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Authentication with Perspective Broker</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#compartmentalizing-services">Compartmentalizing Services</a><ul>
+<li><a class="reference internal" href="#incorrect-arguments">Incorrect Arguments</a></li>
+<li><a class="reference internal" href="#unforgeable-references">Unforgeable References</a></li>
+<li><a class="reference internal" href="#argument-typechecking">Argument Typechecking</a></li>
+<li><a class="reference internal" href="#objects-as-capabilities">Objects as Capabilities</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#avatars-and-perspectives">Avatars and Perspectives</a></li>
+<li><a class="reference internal" href="#perspective-examples">Perspective Examples</a><ul>
+<li><a class="reference internal" href="#one-client">One Client</a></li>
+<li><a class="reference internal" href="#two-clients">Two Clients</a></li>
+<li><a class="reference internal" href="#how-that-example-worked">How that example worked</a></li>
+<li><a class="reference internal" href="#anonymous-clients">Anonymous Clients</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-avatars">Using Avatars</a><ul>
+<li><a class="reference internal" href="#avatar-interfaces">Avatar Interfaces</a></li>
+<li><a class="reference internal" href="#logging-out">Logging Out</a></li>
+<li><a class="reference internal" href="#making-avatars">Making Avatars</a></li>
+<li><a class="reference internal" href="#connecting-and-disconnecting">Connecting and Disconnecting</a></li>
+<li><a class="reference internal" href="#viewable">Viewable</a></li>
+<li><a class="reference internal" href="#chat-server-with-avatars">Chat Server with Avatars</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="pb-copyable.html"
+                                  title="previous chapter">PB Copyable: Passing Complex Types</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="pb-limits.html"
+                                  title="next chapter">PB Limits</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/pb-cred.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

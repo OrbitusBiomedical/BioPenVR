@@ -1,0 +1,633 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Choosing a Reactor and GUI Toolkit Integration &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Getting Connected with Endpoints" href="endpoints.html" />
+    <link rel="prev" title="Producers and Consumers: Efficient High-Volume Streaming" href="producers.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="endpoints.html" title="Getting Connected with Endpoints"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="producers.html" title="Producers and Consumers: Efficient High-Volume Streaming"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="choosing-a-reactor-and-gui-toolkit-integration">
+<h1>Choosing a Reactor and GUI Toolkit Integration<a class="headerlink" href="#choosing-a-reactor-and-gui-toolkit-integration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Twisted provides a variety of implementations of the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.reactor.html">twisted.internet.reactor</a> .  The specialized
+implementations are suited for different purposes and are
+designed to integrate better with particular platforms.</p>
+<p>The <a class="reference internal" href="#core-howto-choosing-reactor-epoll"><span class="std std-ref">epoll()-based reactor</span></a> is Twisted&#8217;s default on
+Linux. Other platforms use <a class="reference internal" href="#core-howto-choosing-reactor-poll"><span class="std std-ref">poll()</span></a> , or the most
+cross-platform reactor, <a class="reference internal" href="#core-howto-choosing-reactor-select"><span class="std std-ref">select()</span></a> .</p>
+<p>Platform-specific reactor implementations exist for:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#core-howto-choosing-reactor-poll"><span class="std std-ref">Poll for Linux</span></a></li>
+<li><a class="reference internal" href="#core-howto-choosing-reactor-epoll"><span class="std std-ref">Epoll for Linux 2.6</span></a></li>
+<li><a class="reference internal" href="#core-howto-choosing-reactor-win32-wfmo"><span class="std std-ref">WaitForMultipleObjects (WFMO) for Win32</span></a></li>
+<li><a class="reference internal" href="#core-howto-choosing-reactor-win32-iocp"><span class="std std-ref">Input/Output Completion Port (IOCP) for Win32</span></a></li>
+<li><a class="reference internal" href="#core-howto-choosing-reactor-kqueue"><span class="std std-ref">KQueue for FreeBSD and Mac OS X</span></a></li>
+<li><a class="reference internal" href="#core-howto-choosing-reactor-cfreactor"><span class="std std-ref">CoreFoundation for Mac OS X</span></a></li>
+</ul>
+<p>The remaining custom reactor implementations provide support
+for integrating with the native event loops of various graphical
+toolkits.  This lets your Twisted application use all of the
+usual Twisted APIs while still being a graphical application.</p>
+<p>Twisted currently integrates with the following graphical
+toolkits:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#core-howto-choosing-reactor-gtk"><span class="std std-ref">GTK+ 2.0</span></a></li>
+<li><a class="reference internal" href="#core-howto-choosing-reactor-gtk3"><span class="std std-ref">GTK+ 3.0 and GObject Introspection</span></a></li>
+<li><a class="reference internal" href="#core-howto-choosing-reactor-tkinter"><span class="std std-ref">Tkinter</span></a></li>
+<li><a class="reference internal" href="#core-howto-choosing-reactor-wxpython"><span class="std std-ref">wxPython</span></a></li>
+<li><a class="reference internal" href="#core-howto-choosing-reactor-win32-wfmo"><span class="std std-ref">Win32</span></a></li>
+<li><a class="reference internal" href="#core-howto-choosing-reactor-cfreactor"><span class="std std-ref">CoreFoundation</span></a></li>
+<li><a class="reference internal" href="#core-howto-choosing-reactor-pyui"><span class="std std-ref">PyUI</span></a></li>
+</ul>
+<p>When using applications that are runnable using <code class="docutils literal"><span class="pre">twistd</span></code> , e.g.
+TACs or plugins, there is no need to choose a reactor explicitly, since
+this can be chosen using <code class="docutils literal"><span class="pre">twistd</span></code> &#8216;s -r option.</p>
+<p>In all cases, the event loop is started by calling <code class="docutils literal"><span class="pre">reactor.run()</span></code> . In all cases, the event loop
+should be stopped with <code class="docutils literal"><span class="pre">reactor.stop()</span></code> .</p>
+<p><strong>IMPORTANT:</strong> installing a reactor should be the first thing
+done in the app, since any code that does
+<code class="docutils literal"><span class="pre">from</span> <span class="pre">twisted.internet</span> <span class="pre">import</span> <span class="pre">reactor</span></code> will automatically
+install the default reactor if the code hasn&#8217;t already installed one.</p>
+</div>
+<div class="section" id="reactor-functionality">
+<h2>Reactor Functionality<a class="headerlink" href="#reactor-functionality" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="11%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="9%" />
+<col width="9%" />
+<col width="10%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"></th>
+<th class="head">Status</th>
+<th class="head">TCP</th>
+<th class="head">SSL</th>
+<th class="head">UDP</th>
+<th class="head">Threading</th>
+<th class="head">Processes</th>
+<th class="head">Scheduling</th>
+<th class="head">Platforms</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>select()</td>
+<td>Stable</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Unix, Win32</td>
+</tr>
+<tr class="row-odd"><td>poll</td>
+<td>Stable</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Unix</td>
+</tr>
+<tr class="row-even"><td>WaitForMultipleObjects (WFMO) for Win32</td>
+<td>Experimental</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Win32</td>
+</tr>
+<tr class="row-odd"><td>Input/Output Completion Port (IOCP) for Win32</td>
+<td>Experimental</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Win32</td>
+</tr>
+<tr class="row-even"><td>CoreFoundation</td>
+<td>Unmaintained</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Mac OS X</td>
+</tr>
+<tr class="row-odd"><td>epoll</td>
+<td>Stable</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Linux 2.6</td>
+</tr>
+<tr class="row-even"><td>GTK+</td>
+<td>Stable</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Unix, Win32</td>
+</tr>
+<tr class="row-odd"><td>wx</td>
+<td>Experimental</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Unix, Win32</td>
+</tr>
+<tr class="row-even"><td>kqueue</td>
+<td>Stable</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>FreeBSD</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="general-purpose-reactors">
+<h2>General Purpose Reactors<a class="headerlink" href="#general-purpose-reactors" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="select-based-reactor">
+<h3>Select()-based Reactor<a class="headerlink" href="#select-based-reactor" title="Permalink to this headline">¶</a></h3>
+<p id="core-howto-choosing-reactor-select">The <code class="docutils literal"><span class="pre">select</span></code> reactor is the default on platforms that don&#8217;t
+provide a better alternative that covers all use cases. If
+the <code class="docutils literal"><span class="pre">select</span></code> reactor is desired, it may be installed via:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">selectreactor</span>
+<span class="n">selectreactor</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="platform-specific-reactors">
+<h2>Platform-Specific Reactors<a class="headerlink" href="#platform-specific-reactors" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="poll-based-reactor">
+<h3>Poll-based Reactor<a class="headerlink" href="#poll-based-reactor" title="Permalink to this headline">¶</a></h3>
+<p id="core-howto-choosing-reactor-poll">The PollReactor will work on any platform that provides <code class="docutils literal"><span class="pre">select.poll</span></code> .  With larger numbers of connected
+sockets, it may provide for better performance than the SelectReactor.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">pollreactor</span>
+<span class="n">pollreactor</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="kqueue">
+<h3>KQueue<a class="headerlink" href="#kqueue" title="Permalink to this headline">¶</a></h3>
+<p id="core-howto-choosing-reactor-kqueue">The KQueue Reactor allows Twisted to use FreeBSD&#8217;s kqueue mechanism for
+event scheduling. See instructions in the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.kqreactor.html">twisted.internet.kqreactor</a> &#8216;s
+docstring for installation notes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">kqreactor</span>
+<span class="n">kqreactor</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="waitformultipleobjects-wfmo-for-win32">
+<h3>WaitForMultipleObjects (WFMO) for Win32<a class="headerlink" href="#waitformultipleobjects-wfmo-for-win32" title="Permalink to this headline">¶</a></h3>
+<p id="core-howto-choosing-reactor-win32-wfmo">The Win32 reactor is not yet complete and has various limitations
+and issues that need to be addressed.  The reactor supports GUI integration
+with the win32gui module, so it can be used for native Win32 GUI applications.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">win32eventreactor</span>
+<span class="n">win32eventreactor</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-output-completion-port-iocp-for-win32">
+<h3>Input/Output Completion Port (IOCP) for Win32<a class="headerlink" href="#input-output-completion-port-iocp-for-win32" title="Permalink to this headline">¶</a></h3>
+<p id="core-howto-choosing-reactor-win32-iocp">Windows provides a fast, scalable event notification system known as IO
+Completion Ports, or IOCP for short.  Twisted includes a reactor based
+on IOCP which is nearly complete.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">iocpreactor</span>
+<span class="n">iocpreactor</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="epoll-based-reactor">
+<h3>Epoll-based Reactor<a class="headerlink" href="#epoll-based-reactor" title="Permalink to this headline">¶</a></h3>
+<p id="core-howto-choosing-reactor-epoll">The EPollReactor will work on any platform that provides
+<code class="docutils literal"><span class="pre">epoll</span></code> , today only Linux 2.6 and over. The
+implementation of the epoll reactor currently uses the Level Triggered
+interface, which is basically like poll() but scales much better.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">epollreactor</span>
+<span class="n">epollreactor</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="gui-integration-reactors">
+<h2>GUI Integration Reactors<a class="headerlink" href="#gui-integration-reactors" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="gtk">
+<h3>GTK+<a class="headerlink" href="#gtk" title="Permalink to this headline">¶</a></h3>
+<p id="core-howto-choosing-reactor-gtk">Twisted integrates with <a class="reference external" href="http://www.pygtk.org/">PyGTK</a> version
+2.0 using the <code class="docutils literal"><span class="pre">gtk2reactor</span></code> . An example Twisted application that
+uses GTK+ can be found
+in <code class="docutils literal"><span class="pre">doc/core/examples/pbgtk2.py</span></code> .</p>
+<p>GTK-2.0 split the event loop out of the GUI toolkit and into a separate
+module called &#8220;glib&#8221; . To run an application using the glib event loop,
+use the <code class="docutils literal"><span class="pre">glib2reactor</span></code> . This will be slightly faster
+than <code class="docutils literal"><span class="pre">gtk2reactor</span></code> (and does not require a working X display),
+but cannot be used to run GUI applications.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">gtk2reactor</span> <span class="c"># for gtk-2.0</span>
+<span class="n">gtk2reactor</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">glib2reactor</span> <span class="c"># for non-GUI apps</span>
+<span class="n">glib2reactor</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gtk-3-0-and-gobject-introspection">
+<h3>GTK+ 3.0 and GObject Introspection<a class="headerlink" href="#gtk-3-0-and-gobject-introspection" title="Permalink to this headline">¶</a></h3>
+<p id="core-howto-choosing-reactor-gtk3">Twisted integrates with <a class="reference external" href="http://gtk.org">GTK+ 3</a> and GObject
+through <a class="reference external" href="http://live.gnome.org/PyGObject">PyGObject&#8217;s</a>
+introspection using the <code class="docutils literal"><span class="pre">gtk3reactor</span></code>
+and <code class="docutils literal"><span class="pre">gireactor</span></code> reactors.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">gtk3reactor</span>
+<span class="n">gtk3reactor</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">gireactor</span> <span class="c"># for non-GUI apps</span>
+<span class="n">gireactor</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</pre></div>
+</div>
+<p>GLib 3.0 introduces the concept of <code class="docutils literal"><span class="pre">GApplication</span></code> , a class
+that handles application uniqueness in a cross-platform way and provides
+its own main loop. Its counterpart <code class="docutils literal"><span class="pre">GtkApplication</span></code> also
+handles application lifetime with respect to open windows. Twisted
+supports registering these objects with the event loop, which should be
+done before running the reactor:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">gtk3reactor</span>
+<span class="n">gtk3reactor</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Application</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">twisted</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">registerGApplication</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="wxpython">
+<h3>wxPython<a class="headerlink" href="#wxpython" title="Permalink to this headline">¶</a></h3>
+<p id="core-howto-choosing-reactor-wxpython">Twisted currently supports two methods of integrating
+wxPython. Unfortunately, neither method will work on all wxPython
+platforms (such as GTK2 or Windows). It seems that the only
+portable way to integrate with wxPython is to run it in a separate
+thread. One of these methods may be sufficient if your wx app is
+limited to a single platform.</p>
+<p>As with <a class="reference internal" href="#core-howto-choosing-reactor-tkinter"><span class="std std-ref">Tkinter</span></a> , the support for integrating
+Twisted with a <a class="reference external" href="http://www.wxpython.org">wxPython</a>
+application uses specialized support code rather than a simple reactor.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">wxPython.wx</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">wxsupport</span><span class="p">,</span> <span class="n">reactor</span>
+
+<span class="n">myWxAppInstance</span> <span class="o">=</span> <span class="n">wxApp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">wxsupport</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">myWxAppInstance</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>However, this has issues when running on Windows, so Twisted now
+comes with alternative wxPython support using a reactor. Using
+this method is probably better. Initialization is done in two
+stages. In the first, the reactor is installed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">wxreactor</span>
+<span class="n">wxreactor</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</pre></div>
+</div>
+<p>Later, once a <code class="docutils literal"><span class="pre">wxApp</span></code> instance has
+been created, but before <code class="docutils literal"><span class="pre">reactor.run()</span></code>
+is called:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="n">myWxAppInstance</span> <span class="o">=</span> <span class="n">wxApp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">reactor</span><span class="o">.</span><span class="n">registerWxApp</span><span class="p">(</span><span class="n">myWxAppInstance</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>An example Twisted application that uses wxPython can be found
+in <code class="docutils literal"><span class="pre">doc/core/examples/wxdemo.py</span></code> .</p>
+</div>
+<div class="section" id="corefoundation">
+<h3>CoreFoundation<a class="headerlink" href="#corefoundation" title="Permalink to this headline">¶</a></h3>
+<p id="core-howto-choosing-reactor-cfreactor">Twisted integrates with <a class="reference external" href="http://pyobjc.sf.net/">PyObjC</a> version 1.0. Sample applications using Cocoa and Twisted
+are available in the examples directory under
+<code class="docutils literal"><span class="pre">doc/core/examples/threadedselect/Cocoa</span></code> .</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">cfreactor</span>
+<span class="n">cfreactor</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="non-reactor-gui-integration">
+<h2>Non-Reactor GUI Integration<a class="headerlink" href="#non-reactor-gui-integration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tkinter">
+<h3>Tkinter<a class="headerlink" href="#tkinter" title="Permalink to this headline">¶</a></h3>
+<p>The support for <a class="reference external" href="http://wiki.python.org/moin/TkInter">Tkinter</a> doesn&#8217;t use a specialized reactor.  Instead, there is
+some specialized support code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">Tkinter</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">tksupport</span><span class="p">,</span> <span class="n">reactor</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">Tk</span><span class="p">()</span>
+
+<span class="c"># Install the Reactor support</span>
+<span class="n">tksupport</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+
+<span class="c"># at this point build Tk app as usual using the root object,</span>
+<span class="c"># and start the program with &quot;reactor.run()&quot;, and stop it</span>
+<span class="c"># with &quot;reactor.stop()&quot;.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pyui">
+<h3>PyUI<a class="headerlink" href="#pyui" title="Permalink to this headline">¶</a></h3>
+<p>As with <a class="reference internal" href="#core-howto-choosing-reactor-tkinter"><span class="std std-ref">Tkinter</span></a> , the support for integrating
+Twisted with a <a class="reference external" href="http://pyui.sourceforge.net">PyUI</a>
+application uses specialized support code rather than a simple reactor.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">pyuisupport</span><span class="p">,</span> <span class="n">reactor</span>
+
+<span class="n">pyuisupport</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">),</span> <span class="n">kw</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;renderer&#39;</span><span class="p">:</span> <span class="s">&#39;gl&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>An example Twisted application that uses PyUI can be found in <code class="docutils literal"><span class="pre">doc/core/examples/pyuidemo.py</span></code> .</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Choosing a Reactor and GUI Toolkit Integration</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#reactor-functionality">Reactor Functionality</a></li>
+<li><a class="reference internal" href="#general-purpose-reactors">General Purpose Reactors</a><ul>
+<li><a class="reference internal" href="#select-based-reactor">Select()-based Reactor</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#platform-specific-reactors">Platform-Specific Reactors</a><ul>
+<li><a class="reference internal" href="#poll-based-reactor">Poll-based Reactor</a></li>
+<li><a class="reference internal" href="#kqueue">KQueue</a></li>
+<li><a class="reference internal" href="#waitformultipleobjects-wfmo-for-win32">WaitForMultipleObjects (WFMO) for Win32</a></li>
+<li><a class="reference internal" href="#input-output-completion-port-iocp-for-win32">Input/Output Completion Port (IOCP) for Win32</a></li>
+<li><a class="reference internal" href="#epoll-based-reactor">Epoll-based Reactor</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gui-integration-reactors">GUI Integration Reactors</a><ul>
+<li><a class="reference internal" href="#gtk">GTK+</a></li>
+<li><a class="reference internal" href="#gtk-3-0-and-gobject-introspection">GTK+ 3.0 and GObject Introspection</a></li>
+<li><a class="reference internal" href="#wxpython">wxPython</a></li>
+<li><a class="reference internal" href="#corefoundation">CoreFoundation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#non-reactor-gui-integration">Non-Reactor GUI Integration</a><ul>
+<li><a class="reference internal" href="#tkinter">Tkinter</a></li>
+<li><a class="reference internal" href="#pyui">PyUI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="producers.html"
+                                  title="previous chapter">Producers and Consumers: Efficient High-Volume Streaming</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="endpoints.html"
+                                  title="next chapter">Getting Connected with Endpoints</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/choosing-reactor.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

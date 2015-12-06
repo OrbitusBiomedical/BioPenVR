@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Twisted Pair: Device Configuration &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Examples" href="../examples/index.html" />
+    <link rel="prev" title="Twisted Pair: Tunnels And Network Taps" href="tunnels.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../examples/index.html" title="Examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tunnels.html" title="Twisted Pair: Tunnels And Network Taps"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Pair</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="twisted-pair-device-configuration">
+<h1>Twisted Pair: Device Configuration<a class="headerlink" href="#twisted-pair-device-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="twisted-pair-s-test-suite">
+<h2>Twisted Pair&#8217;s Test Suite<a class="headerlink" href="#twisted-pair-s-test-suite" title="Permalink to this headline">¶</a></h2>
+<p>Certain system configuration is required before the full Twisted Pair test suite can be run.
+Without this setup the test suite will lack the permission necessary to access tap and tun devices.
+Some tests will still run but the integration tests which verify Twisted Pair can successfully read from and write to real devices will be skipped.</p>
+<p>The following shell script creates two tun devices and two tap devices and grants permission to use them to whatever user the shell script is run as.
+Run it to configure your system so that you can perform a complete run of the Twisted Pair test suite.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">#</span> Needs to be short enough so that with prefix and suffix, fits into <span class="m">16</span> bytes
+<span class="go">IDENTIFIER=&quot;twtest&quot;</span>
+
+<span class="gp">#</span> A tap device without protocol information
+<span class="go">sudo ip tuntap add dev tap-${IDENTIFIER} mode tap user $(id -u -n) group $(id -g -n)</span>
+<span class="go">sudo ip link set up dev tap-${IDENTIFIER}</span>
+<span class="go">sudo ip addr add 172.16.0.1/24 dev tap-${IDENTIFIER}</span>
+<span class="go">sudo ip neigh add 172.16.0.2 lladdr de:ad:be:ef:ca:fe dev tap-${IDENTIFIER}</span>
+
+<span class="gp">#</span> A tap device with protocol information
+<span class="go">sudo ip tuntap add dev tap-${IDENTIFIER}-pi mode tap user $(id -u -n) group $(id -g -n) pi</span>
+<span class="go">sudo ip link set up dev tap-${IDENTIFIER}-pi</span>
+<span class="go">sudo ip addr add 172.16.1.1/24 dev tap-${IDENTIFIER}-pi</span>
+<span class="go">sudo ip neigh add 172.16.1.2 lladdr de:ad:ca:fe:be:ef dev tap-${IDENTIFIER}-pi</span>
+
+<span class="gp">#</span> A tun device without protocol information
+<span class="go">sudo ip tuntap add dev tun-${IDENTIFIER} mode tun user $(id -u -n) group $(id -g -n)</span>
+<span class="go">sudo ip link set up dev tun-${IDENTIFIER}</span>
+
+<span class="gp">#</span> A tun device with protocol information
+<span class="go">sudo ip tuntap add dev tun-${IDENTIFIER}-pi mode tun user $(id -u -n) group $(id -g -n) pi</span>
+<span class="go">sudo ip link set up dev tun-${IDENTIFIER}-pi</span>
+</pre></div>
+</div>
+<p>There are two things to keep in mind about this configuration.
+First, it uses addresses from the 172.16.0.0/12 private use range.
+If your network is configured to use these already then running the script may cause problems for your network.
+These addresses are hard-coded into the Twisted Pair test suite so this problem is not easily avoided.
+Second, the changes are not persistent across reboots.
+If you want this network configuration to be available even after a reboot you will need to integrate the above into your system&#8217;s init scripts somehow
+(the details of this for different systems is beyond the scope of this document).</p>
+<p>Certain platforms may also require a modification to their firewall rules in order to allow the traffic the test suite wants to transmit.
+Adding firewall rules which allowing traffic destined for the addresses used by the test suite should address this problem.
+If you encounter timeouts when running the Twisted Pair test suite then this may apply to you.
+For example, to configure an iptables firewall to allow this traffic:</p>
+<div class="highlight-python"><div class="highlight"><pre>iptables -I INPUT --dest 172.16.1.1 -j ACCEPT
+iptables -I INPUT --dest 172.16.2.1 -j ACCEPT
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Twisted Pair: Device Configuration</a><ul>
+<li><a class="reference internal" href="#twisted-pair-s-test-suite">Twisted Pair&#8217;s Test Suite</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="tunnels.html"
+                                  title="previous chapter">Twisted Pair: Tunnels And Network Taps</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../examples/index.html"
+                                  title="next chapter">Examples</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/pair/howto/configuration.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>

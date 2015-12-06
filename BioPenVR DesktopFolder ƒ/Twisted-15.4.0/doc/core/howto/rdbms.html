@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta name="Description" content="An event-driven networking engine written in Python and MIT licensed." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>twisted.enterprise.adbapi: Twisted RDBMS support &mdash; Twisted 15.4.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/twistedtrac.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '15.4.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Twisted 15.4.0 documentation" href="../../index.html" />
+    <link rel="up" title="Developer Guides" href="index.html" />
+    <link rel="next" title="Parsing command-lines with usage.Options" href="options.html" />
+    <link rel="prev" title="Symbolic Constants" href="constants.html" /> 
+    
+<!-- Can stuff between these comments go? -->
+        <link rel="search" href="/trac/search" />
+        <link rel="help" href="/trac/wiki/TracGuide" />
+        <link rel="alternate" href="/trac/wiki/Documentation?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="/trac/wiki" />
+
+        
+    <script type="text/javascript" src="/trac/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/trac/chrome/common/js/trac.js"></script><script type="text/javascript" src="/trac/chrome/common/js/search.js"></script>
+    
+    <!-- the following script tag is a holdover frome Trac, which shouldn't be needed in Sphinx
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+      });
+    </script>
+    -->
+<!-- Can stuff between these comments go? -->
+
+  </head>
+  
+  
+<body>
+
+<div id="banner">
+<div id="top_grad">
+         
+</div>
+<div id="tab">
+        <a href="http://twistedmatrix.com/trac/wiki">HOME</a>
+    <a href="http://twistedmatrix.com/trac/wiki/FrequentlyAskedQuestions">FAQ</a>
+    <a href="/">DOCS</a>
+    <a href="http://twistedmatrix.com/trac/wiki/Downloads">DOWNLOAD</a>
+
+</div>
+      <div id="header">
+        <a id="logo" href="http://twistedmatrix.com/trac/"><img src="../../_static/trac_banner.png" alt="Twisted" /></a>
+      </div>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <form id="topsearch" action="/trac/search" method="get"><div>
+        <label for="proj-search">Search:</label>
+        <input type="text" id="proj-search" name="q" size="10" value="" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="wiki" value="on" />
+
+        <input type="hidden" name="changeset" value="on" />
+        <input type="hidden" name="ticket" value="on" />
+      </div></form>
+      -->
+      <div id="metanav" class="nav">
+    <ul>
+      <li> </li>
+      <!-- taking this out for now, but might use 
+           the space for something else later 
+      -->
+      <!--
+      <li class="first">logged in as khorn</li><li class=""><a href="/trac/logout">Logout</a></li><li class=""><a href="/trac/wiki/TracGuide">Help/Guide</a></li><li class=""><a href="/trac/about">About Trac</a></li><li class="last"><a href="/trac/account">My Account</a></li>
+      -->
+    </ul>
+  </div>
+    </div>
+
+<!-- mainnav -->
+    <div id="mainnav" class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="options.html" title="Parsing command-lines with usage.Options"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="constants.html" title="Symbolic Constants"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Twisted 15.4.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Twisted Core</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Developer Guides</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div id="main">
+    <div id="ctxtnav" class="nav">
+      <h2>Wiki Navigation</h2>
+      <ul>
+        <li>
+        
+        </li>
+        <!-- taking this out for now, but might use 
+             the space for something else later 
+        -->
+        <!--
+        <li><a href="/trac/wiki/WikiStart">Start Page</a></li>
+        <li><a href="/trac/wiki/TitleIndex">Index by Title</a></li>
+
+        <li><a href="/trac/wiki/RecentChanges">Index by Date</a></li>
+        <li class="last">
+          <a href="/trac/wiki/Documentation?action=diff&amp;version=15">Last Change</a>
+        </li>
+        -->
+      </ul>
+      <hr />
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div id="current-docs-container" style="display: none">
+            <em>
+              <a id="current-docs-link">
+                Go to the latest version of this document.
+              </a>
+            </em>
+          </div>
+          <div class="body">
+            
+  <div class="section" id="twisted-enterprise-adbapi-twisted-rdbms-support">
+<h1>twisted.enterprise.adbapi: Twisted RDBMS support<a class="headerlink" href="#twisted-enterprise-adbapi-twisted-rdbms-support" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="abstract">
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this headline">¶</a></h2>
+<p>Twisted is an asynchronous networking framework, but most database API implementations unfortunately have blocking interfaces &#8211; for this reason, <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.enterprise.adbapi.html">twisted.enterprise.adbapi</a> was created.
+It is a non-blocking interface to the standardized DB-API 2.0 API, which allows you to access a number of different RDBMSes.</p>
+</div>
+<div class="section" id="what-you-should-already-know">
+<h2>What you should already know<a class="headerlink" href="#what-you-should-already-know" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Python :-)</li>
+<li>How to write a simple Twisted Server (see <a class="reference internal" href="servers.html"><span class="doc">this tutorial</span></a> to learn how)</li>
+<li>Familiarity with using database interfaces (see <a class="reference external" href="http://www.python.org/dev/peps/pep-0249/">the documentation for DBAPI 2.0</a>)</li>
+</ul>
+</div>
+<div class="section" id="quick-overview">
+<h2>Quick Overview<a class="headerlink" href="#quick-overview" title="Permalink to this headline">¶</a></h2>
+<p>Twisted is an asynchronous framework.
+This means standard database modules cannot be used directly, as they typically work something like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Create connection...</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">dbmodule</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;mydb&#39;</span><span class="p">,</span> <span class="s">&#39;andrew&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">)</span>
+<span class="c"># ...which blocks for an unknown amount of time</span>
+
+<span class="c"># Create a cursor</span>
+<span class="n">cursor</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+<span class="c"># Do a query...</span>
+<span class="n">resultset</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&#39;SELECT * FROM table WHERE ...&#39;</span><span class="p">)</span>
+<span class="c"># ...which could take a long time, perhaps even minutes.</span>
+</pre></div>
+</div>
+<p>Those delays are unacceptable when using an asynchronous framework such as Twisted.
+For this reason, Twisted provides <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.enterprise.adbapi.html">twisted.enterprise.adbapi</a>, an asynchronous wrapper for any <a class="reference external" href="http://www.python.org/dev/peps/pep-0249/">DB-API 2.0</a>-compliant module.</p>
+<p><a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.enterprise.adbapi.html">adbapi</a> will do blocking database operations in separate threads, which trigger callbacks in the originating thread when they complete.
+In the meantime, the original thread can continue doing normal work, like servicing other requests.</p>
+</div>
+<div class="section" id="how-do-i-use-adbapi">
+<h2>How do I use adbapi?<a class="headerlink" href="#how-do-i-use-adbapi" title="Permalink to this headline">¶</a></h2>
+<p>Rather than creating a database connection directly, use the <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.enterprise.adbapi.ConnectionPool.html">adbapi.ConnectionPool</a> class to manage a connections for you.
+This allows <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.enterprise.adbapi.html">adbapi</a> to use multiple connections, one per thread. This is easy:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Using the &quot;dbmodule&quot; from the previous example, create a ConnectionPool</span>
+<span class="kn">from</span> <span class="nn">twisted.enterprise</span> <span class="kn">import</span> <span class="n">adbapi</span>
+<span class="n">dbpool</span> <span class="o">=</span> <span class="n">adbapi</span><span class="o">.</span><span class="n">ConnectionPool</span><span class="p">(</span><span class="s">&quot;dbmodule&quot;</span><span class="p">,</span> <span class="s">&#39;mydb&#39;</span><span class="p">,</span> <span class="s">&#39;andrew&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Things to note about doing this:</p>
+<ul class="simple">
+<li>There is no need to import dbmodule directly.
+You just pass the name to <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.enterprise.adbapi.ConnectionPool.html">adbapi.ConnectionPool</a>&#8216;s constructor.</li>
+<li>The parameters you would pass to dbmodule.connect are passed as extra arguments to <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.enterprise.adbapi.ConnectionPool.html">adbapi.ConnectionPool</a>&#8216;s constructor.
+Keyword parameters work as well.</li>
+</ul>
+<p>Now we can do a database query:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># equivalent of cursor.execute(statement), return cursor.fetchall():</span>
+<span class="k">def</span> <span class="nf">getAge</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">dbpool</span><span class="o">.</span><span class="n">runQuery</span><span class="p">(</span><span class="s">&quot;SELECT age FROM users WHERE name = ?&quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">printResult</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">l</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s">&quot;years old&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;No such user&quot;</span>
+
+<span class="n">getAge</span><span class="p">(</span><span class="s">&quot;joe&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printResult</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is straightforward, except perhaps for the return value of <code class="docutils literal"><span class="pre">getAge</span></code>.
+It returns a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.internet.defer.Deferred.html">Deferred</a>, which allows arbitrary callbacks to be called upon completion (or upon failure).
+More documentation on Deferred is available <a class="reference internal" href="defer.html"><span class="doc">here</span></a>.</p>
+<p>In addition to <code class="docutils literal"><span class="pre">runQuery</span></code>, there is also <code class="docutils literal"><span class="pre">runOperation</span></code> and <code class="docutils literal"><span class="pre">runInteraction</span></code> that gets called with a callable (e.g. a function).
+The function will be called in the thread with a <a class="api reference external" href="https://twistedmatrix.com/documents/15.4.0/api/twisted.enterprise.adbapi.Transaction.html">adbapi.Transaction</a>, which basically mimics a DB-API cursor.
+In all cases a database transaction will be committed after your database usage is finished, unless an exception is raised in which case it will be rolled back.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">_getAge</span><span class="p">(</span><span class="n">txn</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+    <span class="c"># this will run in a thread, we can use blocking calls</span>
+    <span class="n">txn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;SELECT * FROM foo&quot;</span><span class="p">)</span>
+    <span class="c"># ... other cursor commands called on txn ...</span>
+    <span class="n">txn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;SELECT age FROM users WHERE name = ?&quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">txn</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+<span class="k">def</span> <span class="nf">getAge</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">dbpool</span><span class="o">.</span><span class="n">runInteraction</span><span class="p">(</span><span class="n">_getAge</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">printResult</span><span class="p">(</span><span class="n">age</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">age</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">age</span><span class="p">,</span> <span class="s">&quot;years old&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;No such user&quot;</span>
+
+<span class="n">getAge</span><span class="p">(</span><span class="s">&quot;joe&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="n">printResult</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Also worth noting is that these examples assumes that dbmodule uses the &#8220;qmarks&#8221; paramstyle (see the DB-API specification).
+If your dbmodule uses a different paramstyle (e.g. pyformat) then use that.
+Twisted doesn&#8217;t attempt to offer any sort of magic parameter munging &#8211; <code class="docutils literal"><span class="pre">runQuery(query,</span> <span class="pre">params,</span> <span class="pre">...)</span></code> maps directly onto <code class="docutils literal"><span class="pre">cursor.execute(query,</span> <span class="pre">params,</span> <span class="pre">...)</span></code>.</p>
+</div>
+<div class="section" id="examples-of-various-database-adapters">
+<h2>Examples of various database adapters<a class="headerlink" href="#examples-of-various-database-adapters" title="Permalink to this headline">¶</a></h2>
+<p>Notice that the first argument is the module name you would usually import and get <code class="docutils literal"><span class="pre">connect(...)</span></code> from, and that following arguments are whatever arguments you&#8217;d call <code class="docutils literal"><span class="pre">connect(...)</span></code> with.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">twisted.enterprise</span> <span class="kn">import</span> <span class="n">adbapi</span>
+
+<span class="c"># Gadfly</span>
+<span class="n">cp</span> <span class="o">=</span> <span class="n">adbapi</span><span class="o">.</span><span class="n">ConnectionPool</span><span class="p">(</span><span class="s">&quot;gadfly&quot;</span><span class="p">,</span> <span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;/tmp/gadflyDB&quot;</span><span class="p">)</span>
+
+<span class="c"># PostgreSQL PyPgSQL</span>
+<span class="n">cp</span> <span class="o">=</span> <span class="n">adbapi</span><span class="o">.</span><span class="n">ConnectionPool</span><span class="p">(</span><span class="s">&quot;pyPgSQL.PgSQL&quot;</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">)</span>
+
+<span class="c"># MySQL</span>
+<span class="n">cp</span> <span class="o">=</span> <span class="n">adbapi</span><span class="o">.</span><span class="n">ConnectionPool</span><span class="p">(</span><span class="s">&quot;MySQLdb&quot;</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="and-that-s-it">
+<h2>And that&#8217;s it!<a class="headerlink" href="#and-that-s-it" title="Permalink to this headline">¶</a></h2>
+<p>That&#8217;s all you need to know to use a database from within Twisted.
+You probably should read the adbapi module&#8217;s documentation to get an idea of the other functions it has, but hopefully this document presents the core ideas.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">twisted.enterprise.adbapi: Twisted RDBMS support</a><ul>
+<li><a class="reference internal" href="#abstract">Abstract</a></li>
+<li><a class="reference internal" href="#what-you-should-already-know">What you should already know</a></li>
+<li><a class="reference internal" href="#quick-overview">Quick Overview</a></li>
+<li><a class="reference internal" href="#how-do-i-use-adbapi">How do I use adbapi?</a></li>
+<li><a class="reference internal" href="#examples-of-various-database-adapters">Examples of various database adapters</a></li>
+<li><a class="reference internal" href="#and-that-s-it">And that&#8217;s it!</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="constants.html"
+                                  title="previous chapter">Symbolic Constants</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="options.html"
+                                  title="next chapter">Parsing command-lines with usage.Options</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/core/howto/rdbms.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <p>
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                </p>
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    </div>
+    <div id="footer"><hr />
+      <div>
+
+</div>
+      <p class="left2">
+        Site design<br />
+        By <a href="http://huw.ugbox.net/">huw.wilkins.</a>
+
+      </p>
+      <p class="right"></p>
+    </div>
+    <script type="text/javascript">
+      if (window.location.pathname.indexOf('/current/') == -1) {
+          <!-- Give the user a link to this page, but in the current version of the docs. -->
+          var link = document.getElementById('current-docs-link');
+          link.href = window.location.pathname.replace(/\/\d+\.\d+\.\d+/, '/current');
+          <!-- And make it visible -->
+          var container = document.getElementById('current-docs-container');
+          container.style.display = '';
+          delete link;
+          delete container;
+      }
+    </script>
+  </body>
+</html>
